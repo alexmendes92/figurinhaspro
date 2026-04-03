@@ -163,6 +163,11 @@ export default function InventoryManager({
               <h3 className="text-lg font-semibold">{section.name}</h3>
               <p className="text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
                 {sectionInStock}/{section.stickers.length} em estoque
+                {filter !== "all" && (
+                  <span className="ml-2 text-zinc-400">
+                    · {filteredStickers.length} exibidas
+                  </span>
+                )}
                 {saving && (
                   <span className="ml-2 text-amber-400">Salvando...</span>
                 )}

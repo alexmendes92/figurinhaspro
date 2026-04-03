@@ -49,14 +49,24 @@ export default async function DashboardPage() {
           <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <p className="text-[11px] text-emerald-400/70 font-semibold uppercase tracking-wider mb-3">Figurinhas</p>
           <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{inventoryCount}</p>
-          <p className="text-[11px] text-gray-500 mt-1">{(totalQty._sum.quantity || 0)} unidades no estoque</p>
+          <p className="text-[11px] text-gray-500 mt-1">
+            {inventoryCount > 0
+              ? `${totalQty._sum.quantity || 0} unidades no estoque`
+              : "Comece adicionando seu estoque →"}
+          </p>
         </Link>
 
         <Link href="/painel/pedidos" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/10 p-5 hover:border-blue-500/20 transition-all">
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <p className="text-[11px] text-blue-400/70 font-semibold uppercase tracking-wider mb-3">Pedidos</p>
           <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{orderCount}</p>
-          <p className="text-[11px] text-gray-500 mt-1">{quoteCount > 0 ? `${quoteCount} aguardando resposta` : "Nenhum pendente"}</p>
+          <p className="text-[11px] text-gray-500 mt-1">
+            {orderCount === 0
+              ? "Compartilhe sua vitrine →"
+              : quoteCount > 0
+                ? `${quoteCount} aguardando resposta`
+                : "Nenhum pendente"}
+          </p>
         </Link>
 
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/10 p-5">
@@ -65,7 +75,9 @@ export default async function DashboardPage() {
           <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">
             R${(revenue._sum.totalPrice || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-gray-500 mt-1">Total confirmado</p>
+          <p className="text-[11px] text-gray-500 mt-1">
+            {(revenue._sum.totalPrice || 0) > 0 ? "Total confirmado" : "Aguardando primeiras vendas"}
+          </p>
         </div>
 
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-5">

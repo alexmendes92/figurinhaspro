@@ -27,14 +27,14 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex bg-[#0b0e14]">
       {/* Lado esquerdo — branding */}
-      <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-emerald-950 via-[#0b0e14] to-[#0b0e14]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.12),transparent_60%)]" />
+      <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-amber-950 via-[#0b0e14] to-[#0b0e14]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(245,158,11,0.12),transparent_60%)]" />
         <div className="relative text-center px-12">
-          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-emerald-500/30">
+          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-amber-500/30">
             <span className="text-white text-3xl font-black font-[family-name:var(--font-geist-mono)]">F</span>
           </div>
           <h2 className="text-4xl font-black text-white tracking-tight mb-3">
-            Figurinhas<span className="text-emerald-400">Pro</span>
+            Figurinhas<span className="text-amber-400">Pro</span>
           </h2>
           <p className="text-gray-400 text-sm max-w-xs mx-auto leading-relaxed">
             A plataforma profissional para revendedores de figurinhas Panini de Copa do Mundo.
@@ -42,7 +42,7 @@ export default function LoginPage() {
           <div className="flex items-center justify-center gap-8 mt-10">
             {[{ v: "7.122", l: "figurinhas" }, { v: "13", l: "Copas" }, { v: "1970–2022", l: "cobertura" }].map((s) => (
               <div key={s.l} className="text-center">
-                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-emerald-400">{s.v}</p>
+                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">{s.v}</p>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{s.l}</p>
               </div>
             ))}
@@ -54,7 +54,7 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-6">
         <div className="w-full max-w-sm slide-up">
           <div className="lg:hidden text-center mb-10">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/20">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
               <span className="text-white text-xl font-black font-[family-name:var(--font-geist-mono)]">F</span>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
               <input
                 name="email" type="email" required
                 placeholder="seu@email.com"
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all"
               />
             </div>
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
                 <input
                   name="password" type={showPassword ? "text" : "password"} required
                   placeholder="Sua senha"
-                  className="w-full px-4 py-3 pr-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all"
                 />
                 <button
                   type="button"
@@ -109,7 +109,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <button type="submit" disabled={loading} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold text-sm transition-all shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/30 disabled:opacity-50 cursor-pointer">
+            <button type="submit" disabled={loading} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-sm transition-all shadow-xl shadow-amber-500/20 hover:shadow-amber-500/30 disabled:opacity-50 cursor-pointer">
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@ export default function LoginPage() {
 
           <p className="text-center text-[13px] text-gray-500 mt-8">
             Não tem conta?{" "}
-            <Link href="/registro" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">Criar conta grátis</Link>
+            <Link href="/registro" className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">Criar conta gratis</Link>
           </p>
         </div>
       </div>

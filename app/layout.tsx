@@ -15,9 +15,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FigurinhasPro — Gestão de figurinhas avulsas",
+  title: "FigurinhasPro — Plataforma #1 para revendedores de figurinhas",
   description:
-    "Plataforma profissional para revendedores de figurinhas Panini. Controle de estoque, preços customizados, vitrine online e orçamentos via WhatsApp.",
+    "Gerencie estoque, preços e pedidos de figurinhas avulsas. Vitrine online, orçamentos via WhatsApp e 13 Copas do Mundo catalogadas. Comece grátis.",
+  keywords: [
+    "figurinhas panini",
+    "vender figurinhas",
+    "estoque figurinhas",
+    "figurinhas avulsas",
+    "copa do mundo 2026",
+    "album panini",
+    "revenda figurinhas",
+  ],
+  openGraph: {
+    title: "FigurinhasPro — Venda figurinhas como um profissional",
+    description:
+      "Estoque visual, preços customizados, vitrine online e orçamentos via WhatsApp. A plataforma feita para quem vende figurinhas avulsas.",
+    type: "website",
+    locale: "pt_BR",
+    siteName: "FigurinhasPro",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FigurinhasPro — Plataforma para revendedores de figurinhas",
+    description:
+      "Gerencie estoque, preços e pedidos. Copa 2026 chegando — prepare-se agora.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

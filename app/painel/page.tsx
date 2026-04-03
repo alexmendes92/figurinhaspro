@@ -45,9 +45,9 @@ export default async function DashboardPage() {
 
       {/* Métricas — cards com gradiente */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Link href="/painel/estoque" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/10 p-5 hover:border-emerald-500/20 transition-all">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <p className="text-[11px] text-emerald-400/70 font-semibold uppercase tracking-wider mb-3">Figurinhas</p>
+        <Link href="/painel/estoque" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-5 hover:border-amber-500/20 transition-all">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-3">Figurinhas</p>
           <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{inventoryCount}</p>
           <p className="text-[11px] text-gray-500 mt-1">
             {inventoryCount > 0

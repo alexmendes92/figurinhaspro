@@ -34,7 +34,7 @@ export default function RegistroPage() {
       setLoading(false);
       return;
     }
-    router.push("/painel");
+    router.push("/onboarding");
   }
 
   return (

@@ -24,14 +24,17 @@ export async function PATCH(req: NextRequest) {
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
 
   const body = await req.json();
-  const { shopName, phone } = body;
+  const { shopName, phone, onboardingStep } = body;
 
-  const data: Record<string, string> = {};
+  const data: Record<string, string | number | null> = {};
   if (shopName && typeof shopName === "string" && shopName.trim()) {
     data.shopName = shopName.trim();
   }
   if (typeof phone === "string") {
-    data.phone = phone.trim() || null as unknown as string;
+    data.phone = phone.trim() || null;
+  }
+  if (typeof onboardingStep === "number" && onboardingStep >= 0 && onboardingStep <= 4) {
+    data.onboardingStep = onboardingStep;
   }
 
   if (Object.keys(data).length === 0) {
@@ -46,5 +49,6 @@ export async function PATCH(req: NextRequest) {
   return NextResponse.json({
     shopName: updated.shopName,
     phone: updated.phone,
+    onboardingStep: updated.onboardingStep,
   });
 }

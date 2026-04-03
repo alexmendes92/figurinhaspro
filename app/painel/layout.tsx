@@ -13,6 +13,10 @@ export default async function PainelLayout({
     redirect("/login");
   }
 
+  if (seller.onboardingStep < 4) {
+    redirect("/onboarding");
+  }
+
   return (
     <PainelShell
       seller={{

@@ -110,7 +110,7 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] font-medium text-gray-300 truncate">{seller.name}</p>
                 </div>
-                <button onClick={async () => { await fetch("/api/auth/logout", { method: "POST" }); router.push("/login"); }} className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                <button onClick={async () => { await fetch("/api/auth/logout", { method: "POST" }); router.push("/login"); }} className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all" aria-label="Sair">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                   </svg>
@@ -121,25 +121,25 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
         </div>
       </aside>
 
-      {mobileOpen && <div className="fixed inset-0 z-40 bg-black/60 lg:hidden" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && <div className="fixed inset-0 z-40 bg-black/60 lg:hidden" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-14 border-b border-white/[0.06] bg-[#0b0e14] flex items-center px-5 gap-3 sticky top-0 z-30">
-          <button onClick={() => setMobileOpen(true)} className="lg:hidden w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-gray-400">
+          <button onClick={() => setMobileOpen(true)} className="lg:hidden w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-gray-400" aria-label="Abrir menu">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <div className="flex items-center gap-1.5 text-[12px] text-gray-500">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-gray-500">
             <Link href="/painel" className="hover:text-white transition-colors">Painel</Link>
             {pathname.replace("/painel", "").split("/").filter(Boolean).map((seg, i, arr) => (
               <span key={i} className="flex items-center gap-1.5">
-                <span className="text-gray-700">/</span>
-                <span className={i === arr.length - 1 ? "text-white font-medium" : ""}>{seg.charAt(0).toUpperCase() + seg.slice(1)}</span>
+                <span className="text-gray-700" aria-hidden="true">/</span>
+                <span className={i === arr.length - 1 ? "text-white font-medium" : ""} aria-current={i === arr.length - 1 ? "page" : undefined}>{seg.charAt(0).toUpperCase() + seg.slice(1)}</span>
               </span>
             ))}
-          </div>
+          </nav>
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>

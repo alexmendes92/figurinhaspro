@@ -48,6 +48,7 @@ export default function CartDrawer() {
             <button
               onClick={() => setIsOpen(false)}
               className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors"
+              aria-label="Fechar carrinho"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -112,7 +113,8 @@ export default function CartDrawer() {
                           item.quantity - 1
                         )
                       }
-                      className="w-6 h-6 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      className="w-7 h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      aria-label={`Diminuir ${item.sticker.name}`}
                     >
                       −
                     </button>
@@ -126,7 +128,8 @@ export default function CartDrawer() {
                           item.quantity + 1
                         )
                       }
-                      className="w-6 h-6 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      className="w-7 h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      aria-label={`Aumentar ${item.sticker.name}`}
                     >
                       +
                     </button>
@@ -146,6 +149,7 @@ export default function CartDrawer() {
                       removeItem(item.sticker.code + "-" + item.albumYear)
                     }
                     className="text-zinc-600 hover:text-red-400 transition-colors"
+                    aria-label={`Remover ${item.sticker.name}`}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

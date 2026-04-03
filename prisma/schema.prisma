@@ -16,12 +16,33 @@ model Seller {
   shopSlug  String   @unique
   logo      String?
   plan      String   @default("FREE")
+
+  // Stripe billing
+  stripeCustomerId       String?  @unique
+  stripeSubscriptionId   String?
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+
+  // Onboarding
+  onboardingStep Int @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  inventory  Inventory[]
-  orders     Order[]
-  priceRules PriceRule[]
+  inventory          Inventory[]
+  orders             Order[]
+  priceRules         PriceRule[]
+  subscriptionEvents SubscriptionEvent[]
+}
+
+model SubscriptionEvent {
+  id            String   @id @default(cuid())
+  sellerId      String
+  seller        Seller   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  type          String
+  stripeEventId String   @unique
+  data          String
+  createdAt     DateTime @default(now())
 }
 
 model Inventory {

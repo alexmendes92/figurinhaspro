@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { hasFeature } from "@/lib/plan-limits";
 import { z } from "zod";
 
 // GET — lista regras de preço do revendedor
@@ -30,6 +31,14 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const data = priceSchema.parse(body);
+
+    // Guard: preços custom por álbum requer plano PRO+
+    if (data.albumSlug && !hasFeature(seller.plan, "custom_prices")) {
+      return NextResponse.json(
+        { error: "plan_limit", message: "Preços por álbum requer plano Pro", upgrade_url: "/painel/planos" },
+        { status: 403 }
+      );
+    }
 
     const rule = await db.priceRule.upsert({
       where: {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { checkOrderLimit } from "@/lib/plan-limits";
 import { z } from "zod";
 
 // GET — lista pedidos do revendedor
@@ -53,6 +54,15 @@ export async function POST(req: NextRequest) {
 
     if (!seller) {
       return NextResponse.json({ error: "Loja não encontrada" }, { status: 404 });
+    }
+
+    // Guard: limite de pedidos por plano
+    const orderCheck = await checkOrderLimit(seller.id, seller.plan);
+    if (!orderCheck.allowed) {
+      return NextResponse.json(
+        { error: "plan_limit", message: `Limite de ${orderCheck.max} pedidos/mês atingido`, upgrade_url: "/painel/planos" },
+        { status: 403 }
+      );
     }
 
     const totalPrice = data.items.reduce(

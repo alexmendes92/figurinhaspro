@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { checkStickerLimit, checkAlbumLimit } from "@/lib/plan-limits";
 import { z } from "zod";
 
 // GET — lista estoque do revendedor (opcionalmente filtrado por álbum)
@@ -36,6 +37,25 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const data = upsertSchema.parse(body);
+
+    // Guard: limite de figurinhas por plano
+    if (data.quantity > 0) {
+      const stickerCheck = await checkStickerLimit(seller.id, seller.plan);
+      if (!stickerCheck.allowed) {
+        return NextResponse.json(
+          { error: "plan_limit", message: `Limite de ${stickerCheck.max} figurinhas atingido`, upgrade_url: "/painel/planos" },
+          { status: 403 }
+        );
+      }
+
+      const albumCheck = await checkAlbumLimit(seller.id, seller.plan, data.albumSlug);
+      if (!albumCheck.allowed) {
+        return NextResponse.json(
+          { error: "plan_limit", message: `Limite de álbuns atingido no plano atual`, upgrade_url: "/painel/planos" },
+          { status: 403 }
+        );
+      }
+    }
 
     const item = await db.inventory.upsert({
       where: {

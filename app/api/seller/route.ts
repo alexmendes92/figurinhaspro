@@ -2,6 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 
+export async function GET() {
+  const seller = await getSession();
+  if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+
+  return NextResponse.json({
+    id: seller.id,
+    name: seller.name,
+    email: seller.email,
+    shopName: seller.shopName,
+    shopSlug: seller.shopSlug,
+    phone: seller.phone,
+    plan: seller.plan,
+    onboardingStep: seller.onboardingStep,
+    createdAt: seller.createdAt,
+  });
+}
+
 export async function PATCH(req: NextRequest) {
   const seller = await getSession();
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-nigeria-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-nigeria-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 6 3" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<title>Flag of Nigeria</title>
+	<path fill="#008751" d="m0 0h6v3H0z"/>
+	<path fill="#fff" d="m2 0h2v3H2z"/>
+    </svg>
+  </g>
+</svg>

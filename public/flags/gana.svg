@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-gana-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-gana-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<path fill="#006b3f" d="m0 0h900v600H0"/><path fill="#fcd116" d="m0 0h900v400H0"/><path fill="#ce1126" d="m0 0h900v200H0"/><path d="m450 200 64.98 200-170.13-123.61h210.3L385.02 400"/>
+    </svg>
+  </g>
+</svg>

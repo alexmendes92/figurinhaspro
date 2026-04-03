@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Seller {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  shopName  String
+  shopSlug  String   @unique
+  logo      String?
+  plan      String   @default("FREE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inventory  Inventory[]
+  orders     Order[]
+  priceRules PriceRule[]
+}
+
+model Inventory {
+  id          String   @id @default(cuid())
+  sellerId    String
+  seller      Seller   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  albumSlug   String
+  stickerCode String
+  quantity    Int      @default(0)
+  customPrice Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([sellerId, albumSlug, stickerCode])
+  @@index([sellerId, albumSlug])
+}
+
+model PriceRule {
+  id          String  @id @default(cuid())
+  sellerId    String
+  seller      Seller  @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  albumSlug   String?
+  stickerType String
+  price       Float
+
+  @@unique([sellerId, albumSlug, stickerType])
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  sellerId      String
+  seller        Seller   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  customerName  String
+  customerPhone String?
+  customerEmail String?
+  status        String   @default("QUOTE")
+  totalPrice    Float
+  channel       String   @default("SYSTEM")
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id          String @id @default(cuid())
+  orderId     String
+  order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  albumSlug   String
+  stickerCode String
+  stickerName String
+  quantity    Int
+  unitPrice   Float
+}

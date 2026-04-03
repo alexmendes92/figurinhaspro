@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-servia-e-montenegro-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-servia-e-montenegro-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<path d="M0 0h1200v600H0" fill="#d00"/><path d="M0 0h1200v400H0" fill="#fff"/><path d="M0 0h1200v200H0" fill="#003893"/>
+    </svg>
+  </g>
+</svg>

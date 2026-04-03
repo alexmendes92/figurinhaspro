@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-nova-zelandia-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-nova-zelandia-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<defs>
+	<clipPath id="f-nova-zelandia-Canton">
+		<path d="M 0,0 L 600,0 L 600,300 L 0,300 z"/>
+	</clipPath>
+	<clipPath id="f-nova-zelandia-Diagonals">
+		<path d="M 0,0 L 300,150 L 0,150 z M 300,0 L 600,0 L 300,150 z M 300,150 L 600,150 L 600,300 z M 300,150 L 300,300 L 0,300 z"/>
+	</clipPath>
+	<g id="f-nova-zelandia-Pentagram">
+		<g id="f-nova-zelandia-Arm" transform="translate(0,-0.324925)">
+			<path d="M 0,0 L 0,0.5 L 1,0 z"/>
+			<path d="M 0,0 L 0,-0.5 L 1,0 z" transform="rotate(-36,1,0)"/>
+		</g>
+		<use href="#f-nova-zelandia-Arm" transform="scale(-1,1)"/>
+		<use href="#f-nova-zelandia-Arm" transform="rotate(72,0,0)"/>
+		<use href="#f-nova-zelandia-Arm" transform="rotate(-72,0,0)"/>
+		<use href="#f-nova-zelandia-Arm" transform="rotate(-72,0,0) scale(-1,1)"/>
+	</g>
+</defs>
+
+<rect fill="#012169" x="0" y="0" width="1200" height="600"/>
+
+<g id="f-nova-zelandia-Flag_of_the_United_Kingdom">
+	<path id="f-nova-zelandia-Saint_Andrews_Cross" stroke="#FFF" d="M 0,0 L 600,300 M 0,300 L 600,0" stroke-width="60" clip-path="url(#f-nova-zelandia-Canton)"/>
+	<path id="f-nova-zelandia-Saint_Patricks_Cross" stroke="#C8102E" d="M 0,0 L 600,300 M 0,300 L 600,0" stroke-width="40" clip-path="url(#f-nova-zelandia-Diagonals)"/>
+	<g id="f-nova-zelandia-Saint_Georges_Cross">
+		<path stroke="#FFF" d="M 300,0 L 300,300 M 0,150 L 600,150" stroke-width="100" clip-path="url(#f-nova-zelandia-Canton)"/>
+		<path stroke="#C8102E" d="M 300,0 L 300,300 M 0,150 L 600,150" stroke-width="60" clip-path="url(#f-nova-zelandia-Canton)"/>
+	</g>
+</g>
+
+<g id="f-nova-zelandia-Southern_Cross">
+	<g id="f-nova-zelandia-Gamma_Crucis">
+		<use href="#f-nova-zelandia-Pentagram" fill="#FFF" transform="translate(900,120) scale(45.4)"/>
+		<use href="#f-nova-zelandia-Pentagram" fill="#C8102E" transform="translate(900,120) scale(30)"/>
+	</g>
+	<g transform="rotate(82,900,240)">
+		<g id="f-nova-zelandia-Delta_Crucis">
+			<use href="#f-nova-zelandia-Pentagram" fill="#FFF" transform="translate(900,120) rotate(-82) scale(40.4)"/>
+			<use href="#f-nova-zelandia-Pentagram" fill="#C8102E" transform="translate(900,120) rotate(-82) scale(25)"/>
+		</g>
+		<g id="f-nova-zelandia-Beta_Crucis">
+			<use href="#f-nova-zelandia-Pentagram" fill="#FFF" transform="translate(900,380) rotate(-82) scale(45.4)"/>
+			<use href="#f-nova-zelandia-Pentagram" fill="#C8102E" transform="translate(900,380) rotate(-82) scale(30)"/>
+		</g>
+	</g>
+	<g id="f-nova-zelandia-Alpha_Crucis">
+		<use href="#f-nova-zelandia-Pentagram" fill="#FFF" transform="translate(900,480) scale(50.4)"/>
+		<use href="#f-nova-zelandia-Pentagram" fill="#C8102E" transform="translate(900,480) scale(35)"/>
+	</g>
+</g>
+    </svg>
+  </g>
+</svg>

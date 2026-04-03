@@ -1,0 +1,2810 @@
+﻿{
+    "album":  {
+                  "titulo":  "Panini FIFA World Cup Munich 1974",
+                  "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1974/",
+                  "totalStickers":  400,
+                  "totalPages":  27
+              },
+    "stickers":  [
+                     {
+                         "Codigo":  "1",
+                         "Nome":  "Fifa Badge",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/1.jpg"
+                     },
+                     {
+                         "Codigo":  "2",
+                         "Nome":  "World Cup 74 Poster",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/2.jpg"
+                     },
+                     {
+                         "Codigo":  "3",
+                         "Nome":  "World Cup 74 Symbol",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/3.jpg"
+                     },
+                     {
+                         "Codigo":  "4",
+                         "Nome":  "FIFA Trophy",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/4.jpg"
+                     },
+                     {
+                         "Codigo":  "5",
+                         "Nome":  "Mascote",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/5.jpg"
+                     },
+                     {
+                         "Codigo":  "6",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/6.jpg"
+                     },
+                     {
+                         "Codigo":  "7",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/7.jpg"
+                     },
+                     {
+                         "Codigo":  "8",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/8.jpg"
+                     },
+                     {
+                         "Codigo":  "9",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/9.jpg"
+                     },
+                     {
+                         "Codigo":  "10",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/10.jpg"
+                     },
+                     {
+                         "Codigo":  "11",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/11.jpg"
+                     },
+                     {
+                         "Codigo":  "12",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/12.jpg"
+                     },
+                     {
+                         "Codigo":  "13",
+                         "Nome":  "Cupa Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/13.jpg"
+                     },
+                     {
+                         "Codigo":  "14",
+                         "Nome":  "Jules Rimet",
+                         "Section":  "Special",
+                         "Type":  "",
+                         "Imagem":  "images/14.jpg"
+                     },
+                     {
+                         "Codigo":  "15",
+                         "Nome":  "World Cup 30 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/15.jpg"
+                     },
+                     {
+                         "Codigo":  "16",
+                         "Nome":  "Uruguay 1930",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/16.jpg"
+                     },
+                     {
+                         "Codigo":  "17",
+                         "Nome":  "Nasazzi (uruguay) And Ferreira (argentina)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/17.jpg"
+                     },
+                     {
+                         "Codigo":  "18",
+                         "Nome":  "Uruguay – Argentina: 4-2",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/18.jpg"
+                     },
+                     {
+                         "Codigo":  "19",
+                         "Nome":  "World Cup 34 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/19.jpg"
+                     },
+                     {
+                         "Codigo":  "20",
+                         "Nome":  "Italia 1934",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/20.jpg"
+                     },
+                     {
+                         "Codigo":  "21",
+                         "Nome":  "Italia – Cehoslovacia 2-1",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/21.jpg"
+                     },
+                     {
+                         "Codigo":  "22",
+                         "Nome":  "Italia The Champions",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/22.jpg"
+                     },
+                     {
+                         "Codigo":  "23",
+                         "Nome":  "World Cup 38 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/23.jpg"
+                     },
+                     {
+                         "Codigo":  "24",
+                         "Nome":  "Italia 1938",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/24.jpg"
+                     },
+                     {
+                         "Codigo":  "25",
+                         "Nome":  "Meazza (italia) And Sarosi (ungaria)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/25.jpg"
+                     },
+                     {
+                         "Codigo":  "26",
+                         "Nome":  "Italia – Ungaria 4-2",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/26.jpg"
+                     },
+                     {
+                         "Codigo":  "27",
+                         "Nome":  "World Cup 50 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/27.jpg"
+                     },
+                     {
+                         "Codigo":  "28",
+                         "Nome":  "Uruguay 1950",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/28.jpg"
+                     },
+                     {
+                         "Codigo":  "29",
+                         "Nome":  "Uruguay-brazilia 2-1",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/29.jpg"
+                     },
+                     {
+                         "Codigo":  "30",
+                         "Nome":  "Varela And The Trophy",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/30.jpg"
+                     },
+                     {
+                         "Codigo":  "31",
+                         "Nome":  "World Cup 54 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/31.jpg"
+                     },
+                     {
+                         "Codigo":  "32",
+                         "Nome":  "Germania 54",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/32.jpg"
+                     },
+                     {
+                         "Codigo":  "33",
+                         "Nome":  "Hidegkuti, Lorant, Grosics, Puskas (ungaria)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/33.jpg"
+                     },
+                     {
+                         "Codigo":  "34",
+                         "Nome":  "Germania – Ungaria 3-2",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/34.jpg"
+                     },
+                     {
+                         "Codigo":  "35",
+                         "Nome":  "World Cup 58 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/35.jpg"
+                     },
+                     {
+                         "Codigo":  "36",
+                         "Nome":  "Brazil 58",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/36.jpg"
+                     },
+                     {
+                         "Codigo":  "37",
+                         "Nome":  "Just Fontaine (franta)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/37.jpg"
+                     },
+                     {
+                         "Codigo":  "38",
+                         "Nome":  "Sweden Federation Monument",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/38.jpg"
+                     },
+                     {
+                         "Codigo":  "39",
+                         "Nome":  "World Cup 62 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/39.jpg"
+                     },
+                     {
+                         "Codigo":  "40",
+                         "Nome":  "Brazil 62",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/40.jpg"
+                     },
+                     {
+                         "Codigo":  "41",
+                         "Nome":  "Brazil – Cehoslovacia",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/41.jpg"
+                     },
+                     {
+                         "Codigo":  "42",
+                         "Nome":  "Mauro (brazilia) And Trophy",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/42.jpg"
+                     },
+                     {
+                         "Codigo":  "43",
+                         "Nome":  "World Cup 66 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/43.jpg"
+                     },
+                     {
+                         "Codigo":  "44",
+                         "Nome":  "Anglia 66",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/44.jpg"
+                     },
+                     {
+                         "Codigo":  "45",
+                         "Nome":  "Bobby Charlton (anglia)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/45.jpg"
+                     },
+                     {
+                         "Codigo":  "46",
+                         "Nome":  "Uwe Seeler (germania)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/46.jpg"
+                     },
+                     {
+                         "Codigo":  "47",
+                         "Nome":  "World Cup 70 Poster",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/47.jpg"
+                     },
+                     {
+                         "Codigo":  "48",
+                         "Nome":  "Brazilia 70",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/48.jpg"
+                     },
+                     {
+                         "Codigo":  "49",
+                         "Nome":  "Brazilia – Italy 4-1",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/49.jpg"
+                     },
+                     {
+                         "Codigo":  "50",
+                         "Nome":  "Pele (brazilia)",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/50.jpg"
+                     },
+                     {
+                         "Codigo":  "51",
+                         "Nome":  "Stanley Rous",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/51.jpg"
+                     },
+                     {
+                         "Codigo":  "52",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/52.jpg"
+                     },
+                     {
+                         "Codigo":  "53",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/53.jpg"
+                     },
+                     {
+                         "Codigo":  "54",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/54.jpg"
+                     },
+                     {
+                         "Codigo":  "55",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/55.jpg"
+                     },
+                     {
+                         "Codigo":  "56",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/56.jpg"
+                     },
+                     {
+                         "Codigo":  "57",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/57.jpg"
+                     },
+                     {
+                         "Codigo":  "58",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/58.jpg"
+                     },
+                     {
+                         "Codigo":  "59",
+                         "Nome":  "FIFA Cup",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/59.jpg"
+                     },
+                     {
+                         "Codigo":  "60",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/60.jpg"
+                     },
+                     {
+                         "Codigo":  "61",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/61.jpg"
+                     },
+                     {
+                         "Codigo":  "62",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/62.jpg"
+                     },
+                     {
+                         "Codigo":  "63",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/63.jpg"
+                     },
+                     {
+                         "Codigo":  "64",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/64.jpg"
+                     },
+                     {
+                         "Codigo":  "65",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/65.jpg"
+                     },
+                     {
+                         "Codigo":  "66",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/66.jpg"
+                     },
+                     {
+                         "Codigo":  "67",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/67.jpg"
+                     },
+                     {
+                         "Codigo":  "68",
+                         "Nome":  "Mascots",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/68.jpg"
+                     },
+                     {
+                         "Codigo":  "69",
+                         "Nome":  "West Germany Harta",
+                         "Section":  "History",
+                         "Type":  "",
+                         "Imagem":  "images/69.jpg"
+                     },
+                     {
+                         "Codigo":  "70",
+                         "Nome":  "Olympia Stadion - Berlin",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/70.jpg"
+                     },
+                     {
+                         "Codigo":  "71",
+                         "Nome":  "Olympiastadion - Munchen",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/71.jpg"
+                     },
+                     {
+                         "Codigo":  "72",
+                         "Nome":  "Waldstadion - Frankfurt",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/72.jpg"
+                     },
+                     {
+                         "Codigo":  "73",
+                         "Nome":  "Volksparkstadion – Hamburg",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/73.jpg"
+                     },
+                     {
+                         "Codigo":  "74",
+                         "Nome":  "Rheinstadion – Dusseldorf",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/74.jpg"
+                     },
+                     {
+                         "Codigo":  "75",
+                         "Nome":  "Neckarstadion - Stuttgart",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/75.jpg"
+                     },
+                     {
+                         "Codigo":  "76",
+                         "Nome":  "Parkstadion - Gesenkirchen",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/76.jpg"
+                     },
+                     {
+                         "Codigo":  "77",
+                         "Nome":  "Westfalenstadion - Dortmund",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/77.jpg"
+                     },
+                     {
+                         "Codigo":  "78",
+                         "Nome":  "Niedersachsenstadion – Hannover",
+                         "Section":  "Stadiums",
+                         "Type":  "",
+                         "Imagem":  "images/78.jpg"
+                     },
+                     {
+                         "Codigo":  "79",
+                         "Nome":  "Stema Germania",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/79.jpg"
+                     },
+                     {
+                         "Codigo":  "80",
+                         "Nome":  "Echipa W. Germany",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/80.jpg"
+                     },
+                     {
+                         "Codigo":  "81",
+                         "Nome":  "Mascota",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/81.jpg"
+                     },
+                     {
+                         "Codigo":  "82",
+                         "Nome":  "Hermann Gosmann",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/82.jpg"
+                     },
+                     {
+                         "Codigo":  "83",
+                         "Nome":  "Helmut Schon",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/83.jpg"
+                     },
+                     {
+                         "Codigo":  "84",
+                         "Nome":  "Sepp Maier",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/84.jpg"
+                     },
+                     {
+                         "Codigo":  "85",
+                         "Nome":  "Wolfgang Kleff",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/85.jpg"
+                     },
+                     {
+                         "Codigo":  "86",
+                         "Nome":  "Horst-Dieter Hottges",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/86.jpg"
+                     },
+                     {
+                         "Codigo":  "87",
+                         "Nome":  "Hans- Hubert Vogts",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/87.jpg"
+                     },
+                     {
+                         "Codigo":  "88",
+                         "Nome":  "Paul Breitner",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/88.jpg"
+                     },
+                     {
+                         "Codigo":  "89",
+                         "Nome":  "Franz Beckenbauer",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/89.jpg"
+                     },
+                     {
+                         "Codigo":  "90",
+                         "Nome":  "Wolfgang Weber",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/90.jpg"
+                     },
+                     {
+                         "Codigo":  "91",
+                         "Nome":  "Bernard Cullmann",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/91.jpg"
+                     },
+                     {
+                         "Codigo":  "92",
+                         "Nome":  "Georg Schwarzenbeck",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/92.jpg"
+                     },
+                     {
+                         "Codigo":  "93",
+                         "Nome":  "Helmut Kremers",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/93.jpg"
+                     },
+                     {
+                         "Codigo":  "94",
+                         "Nome":  "Herbert Wimmer",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/94.jpg"
+                     },
+                     {
+                         "Codigo":  "95",
+                         "Nome":  "Heinz Flohe",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/95.jpg"
+                     },
+                     {
+                         "Codigo":  "96",
+                         "Nome":  "Wolfgang Overath",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/96.jpg"
+                     },
+                     {
+                         "Codigo":  "97",
+                         "Nome":  "Gunter Netzer",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/97.jpg"
+                     },
+                     {
+                         "Codigo":  "98",
+                         "Nome":  "Uli Honess",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/98.jpg"
+                     },
+                     {
+                         "Codigo":  "99",
+                         "Nome":  "Jurgen Grabowski",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/99.jpg"
+                     },
+                     {
+                         "Codigo":  "100",
+                         "Nome":  "Josef Heynckes",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/100.jpg"
+                     },
+                     {
+                         "Codigo":  "101",
+                         "Nome":  "Gerd Muller",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/101.jpg"
+                     },
+                     {
+                         "Codigo":  "102",
+                         "Nome":  "Erwin Kremers",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/102.jpg"
+                     },
+                     {
+                         "Codigo":  "103",
+                         "Nome":  "Siegfried Held",
+                         "Section":  "W. Germany",
+                         "Type":  "",
+                         "Imagem":  "images/103.jpg"
+                     },
+                     {
+                         "Codigo":  "104",
+                         "Nome":  "Stema Australia",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/104.jpg"
+                     },
+                     {
+                         "Codigo":  "105",
+                         "Nome":  "Echipa Australia",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/105.jpg"
+                     },
+                     {
+                         "Codigo":  "106",
+                         "Nome":  "Australia Mascota",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/106.jpg"
+                     },
+                     {
+                         "Codigo":  "107",
+                         "Nome":  "Jim Fraser",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/107.jpg"
+                     },
+                     {
+                         "Codigo":  "108",
+                         "Nome":  "Peter Wilson",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/108.jpg"
+                     },
+                     {
+                         "Codigo":  "109",
+                         "Nome":  "Manfred Schafer",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/109.jpg"
+                     },
+                     {
+                         "Codigo":  "110",
+                         "Nome":  "Ray Richards",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/110.jpg"
+                     },
+                     {
+                         "Codigo":  "111",
+                         "Nome":  "Jim McKay",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/111.jpg"
+                     },
+                     {
+                         "Codigo":  "112",
+                         "Nome":  "Ray Baartz",
+                         "Section":  "Australia",
+                         "Type":  "",
+                         "Imagem":  "images/112.jpg"
+                     },
+                     {
+                         "Codigo":  "113",
+                         "Nome":  "Steama East Germany",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/113.jpg"
+                     },
+                     {
+                         "Codigo":  "114",
+                         "Nome":  "Echipa East Germany",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/114.jpg"
+                     },
+                     {
+                         "Codigo":  "115",
+                         "Nome":  "Mascota East Germany",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/115.jpg"
+                     },
+                     {
+                         "Codigo":  "116",
+                         "Nome":  "Jurgen Croy",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/116.jpg"
+                     },
+                     {
+                         "Codigo":  "117",
+                         "Nome":  "Wolfgang Blochwitz",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/117.jpg"
+                     },
+                     {
+                         "Codigo":  "118",
+                         "Nome":  "Bernd Bransch",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/118.jpg"
+                     },
+                     {
+                         "Codigo":  "119",
+                         "Nome":  "Lothar Kurbjuweit",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/119.jpg"
+                     },
+                     {
+                         "Codigo":  "120",
+                         "Nome":  "Frank Ganzera",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/120.jpg"
+                     },
+                     {
+                         "Codigo":  "121",
+                         "Nome":  "Klaus Sammer",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/121.jpg"
+                     },
+                     {
+                         "Codigo":  "122",
+                         "Nome":  "Helmut Stein",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/122.jpg"
+                     },
+                     {
+                         "Codigo":  "123",
+                         "Nome":  "Hans-Jurgen Kreische",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/123.jpg"
+                     },
+                     {
+                         "Codigo":  "124",
+                         "Nome":  "Wolfgang Segun",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/124.jpg"
+                     },
+                     {
+                         "Codigo":  "125",
+                         "Nome":  "Reinhard Lauck",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/125.jpg"
+                     },
+                     {
+                         "Codigo":  "126",
+                         "Nome":  "Joachim Streich",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/126.jpg"
+                     },
+                     {
+                         "Codigo":  "127",
+                         "Nome":  "Jurgen Sparwasser",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/127.jpg"
+                     },
+                     {
+                         "Codigo":  "128",
+                         "Nome":  "Peter Ducke",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/128.jpg"
+                     },
+                     {
+                         "Codigo":  "129",
+                         "Nome":  "Wolfram Lowe",
+                         "Section":  "East Germany",
+                         "Type":  "",
+                         "Imagem":  "images/129.jpg"
+                     },
+                     {
+                         "Codigo":  "130",
+                         "Nome":  "Stema Chile",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/130.jpg"
+                     },
+                     {
+                         "Codigo":  "131",
+                         "Nome":  "Echipa Chile",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/131.jpg"
+                     },
+                     {
+                         "Codigo":  "132",
+                         "Nome":  "Chile Caricature",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/132.jpg"
+                     },
+                     {
+                         "Codigo":  "133",
+                         "Nome":  "Juan Olivares",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/133.jpg"
+                     },
+                     {
+                         "Codigo":  "134",
+                         "Nome":  "Adoflo Nef",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/134.jpg"
+                     },
+                     {
+                         "Codigo":  "135",
+                         "Nome":  "Rafael Gonzalez",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/135.jpg"
+                     },
+                     {
+                         "Codigo":  "136",
+                         "Nome":  "Juan Rodriguez",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/136.jpg"
+                     },
+                     {
+                         "Codigo":  "137",
+                         "Nome":  "Eduardo Herrera",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/137.jpg"
+                     },
+                     {
+                         "Codigo":  "138",
+                         "Nome":  "Mario Galindo",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/138.jpg"
+                     },
+                     {
+                         "Codigo":  "139",
+                         "Nome":  "Antonio Arias",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/139.jpg"
+                     },
+                     {
+                         "Codigo":  "140",
+                         "Nome":  "Francisco Valdes",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/140.jpg"
+                     },
+                     {
+                         "Codigo":  "141",
+                         "Nome":  "Nelson Vasquez",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/141.jpg"
+                     },
+                     {
+                         "Codigo":  "142",
+                         "Nome":  "Alfonso Lara",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/142.jpg"
+                     },
+                     {
+                         "Codigo":  "143",
+                         "Nome":  "Carlos Caszely",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/143.jpg"
+                     },
+                     {
+                         "Codigo":  "144",
+                         "Nome":  "Sergio Ahumada",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/144.jpg"
+                     },
+                     {
+                         "Codigo":  "145",
+                         "Nome":  "Leonardo Veliz",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/145.jpg"
+                     },
+                     {
+                         "Codigo":  "146",
+                         "Nome":  "Julio Crisosto",
+                         "Section":  "Chile",
+                         "Type":  "",
+                         "Imagem":  "images/146.jpg"
+                     },
+                     {
+                         "Codigo":  "147",
+                         "Nome":  "Stema Brazil",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/147.jpg"
+                     },
+                     {
+                         "Codigo":  "148",
+                         "Nome":  "Echipa Brazil",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/148.jpg"
+                     },
+                     {
+                         "Codigo":  "149",
+                         "Nome":  "Brazil Caricature",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/149.jpg"
+                     },
+                     {
+                         "Codigo":  "150",
+                         "Nome":  "Joao Havelange",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/150.jpg"
+                     },
+                     {
+                         "Codigo":  "151",
+                         "Nome":  "Mario Zagalo",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/151.jpg"
+                     },
+                     {
+                         "Codigo":  "152",
+                         "Nome":  "Felix",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/152.jpg"
+                     },
+                     {
+                         "Codigo":  "153",
+                         "Nome":  "Leao",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/153.jpg"
+                     },
+                     {
+                         "Codigo":  "154",
+                         "Nome":  "Carlos Alberto",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/154.jpg"
+                     },
+                     {
+                         "Codigo":  "155",
+                         "Nome":  "Ze Maria",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/155.jpg"
+                     },
+                     {
+                         "Codigo":  "156",
+                         "Nome":  "Marco Antonio",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/156.jpg"
+                     },
+                     {
+                         "Codigo":  "157",
+                         "Nome":  "Marinho",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/157.jpg"
+                     },
+                     {
+                         "Codigo":  "158",
+                         "Nome":  "Luis Pereira",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/158.jpg"
+                     },
+                     {
+                         "Codigo":  "159",
+                         "Nome":  "Alfredo",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/159.jpg"
+                     },
+                     {
+                         "Codigo":  "160",
+                         "Nome":  "Piazza",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/160.jpg"
+                     },
+                     {
+                         "Codigo":  "161",
+                         "Nome":  "Clodoaldo",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/161.jpg"
+                     },
+                     {
+                         "Codigo":  "162",
+                         "Nome":  "Carbone",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/162.jpg"
+                     },
+                     {
+                         "Codigo":  "163",
+                         "Nome":  "Ademir",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/163.jpg"
+                     },
+                     {
+                         "Codigo":  "164",
+                         "Nome":  "Rivelino",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/164.jpg"
+                     },
+                     {
+                         "Codigo":  "165",
+                         "Nome":  "Paulo Cesar",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/165.jpg"
+                     },
+                     {
+                         "Codigo":  "166",
+                         "Nome":  "Jairzinho",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/166.jpg"
+                     },
+                     {
+                         "Codigo":  "167",
+                         "Nome":  "Valdomiro",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/167.jpg"
+                     },
+                     {
+                         "Codigo":  "168",
+                         "Nome":  "Mirandinha",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/168.jpg"
+                     },
+                     {
+                         "Codigo":  "169",
+                         "Nome":  "Leivinha",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/169.jpg"
+                     },
+                     {
+                         "Codigo":  "170",
+                         "Nome":  "Palinha",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/170.jpg"
+                     },
+                     {
+                         "Codigo":  "171",
+                         "Nome":  "Dirceu",
+                         "Section":  "Brazil",
+                         "Type":  "",
+                         "Imagem":  "images/171.jpg"
+                     },
+                     {
+                         "Codigo":  "172",
+                         "Nome":  "Stema Zair",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/172.jpg"
+                     },
+                     {
+                         "Codigo":  "173",
+                         "Nome":  "Echipa Zair",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/173.jpg"
+                     },
+                     {
+                         "Codigo":  "174",
+                         "Nome":  "Zaire Caricature",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/174.jpg"
+                     },
+                     {
+                         "Codigo":  "175",
+                         "Nome":  "Mwamba Kazadi",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/175.jpg"
+                     },
+                     {
+                         "Codigo":  "176",
+                         "Nome":  "Tshimen Bwanga",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/176.jpg"
+                     },
+                     {
+                         "Codigo":  "177",
+                         "Nome":  "Mafu Kibonge",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/177.jpg"
+                     },
+                     {
+                         "Codigo":  "178",
+                         "Nome":  "Mantantu Kidumu",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/178.jpg"
+                     },
+                     {
+                         "Codigo":  "179",
+                         "Nome":  "Etepe Kakoko",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/179.jpg"
+                     },
+                     {
+                         "Codigo":  "180",
+                         "Nome":  "Maku Mayanga",
+                         "Section":  "Zair",
+                         "Type":  "",
+                         "Imagem":  "images/180.jpg"
+                     },
+                     {
+                         "Codigo":  "181",
+                         "Nome":  "Stema Iugoslavia",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/181.jpg"
+                     },
+                     {
+                         "Codigo":  "182",
+                         "Nome":  "Echipa Iugoslavia",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/182.jpg"
+                     },
+                     {
+                         "Codigo":  "183",
+                         "Nome":  "Iugoslavia Caricature",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/183.jpg"
+                     },
+                     {
+                         "Codigo":  "184",
+                         "Nome":  "Enver Maric",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/184.jpg"
+                     },
+                     {
+                         "Codigo":  "185",
+                         "Nome":  "Ivan Buljan",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/185.jpg"
+                     },
+                     {
+                         "Codigo":  "186",
+                         "Nome":  "Enver Hadziabdic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/186.jpg"
+                     },
+                     {
+                         "Codigo":  "187",
+                         "Nome":  "Josip Katalinskin",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/187.jpg"
+                     },
+                     {
+                         "Codigo":  "188",
+                         "Nome":  "Vladislav Bogicevic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/188.jpg"
+                     },
+                     {
+                         "Codigo":  "189",
+                         "Nome":  "Miroslav Pavlovic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/189.jpg"
+                     },
+                     {
+                         "Codigo":  "190",
+                         "Nome":  "Brane Oblak",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/190.jpg"
+                     },
+                     {
+                         "Codigo":  "191",
+                         "Nome":  "Jovan Acimovic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/191.jpg"
+                     },
+                     {
+                         "Codigo":  "192",
+                         "Nome":  "Stanislav Karasi",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/192.jpg"
+                     },
+                     {
+                         "Codigo":  "193",
+                         "Nome":  "Slobodan Santrac",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/193.jpg"
+                     },
+                     {
+                         "Codigo":  "194",
+                         "Nome":  "Iljia Petkovic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/194.jpg"
+                     },
+                     {
+                         "Codigo":  "195",
+                         "Nome":  "Ivica Surjak",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/195.jpg"
+                     },
+                     {
+                         "Codigo":  "196",
+                         "Nome":  "Dusan Bajevic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/196.jpg"
+                     },
+                     {
+                         "Codigo":  "197",
+                         "Nome":  "Dragan Dzjic",
+                         "Section":  "Iugoslavia",
+                         "Type":  "",
+                         "Imagem":  "images/197.jpg"
+                     },
+                     {
+                         "Codigo":  "198",
+                         "Nome":  "Stema Scotia",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/198.jpg"
+                     },
+                     {
+                         "Codigo":  "199",
+                         "Nome":  "Echipa Scotia",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/199.jpg"
+                     },
+                     {
+                         "Codigo":  "200",
+                         "Nome":  "Scotia Caricature",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/200.jpg"
+                     },
+                     {
+                         "Codigo":  "201",
+                         "Nome":  "Alistair Hunter",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/201.jpg"
+                     },
+                     {
+                         "Codigo":  "202",
+                         "Nome":  "David Harvey",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/202.jpg"
+                     },
+                     {
+                         "Codigo":  "203",
+                         "Nome":  "Sandy Jardine",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/203.jpg"
+                     },
+                     {
+                         "Codigo":  "204",
+                         "Nome":  "Danny Mcgrain",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/204.jpg"
+                     },
+                     {
+                         "Codigo":  "205",
+                         "Nome":  "Jim Holton",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/205.jpg"
+                     },
+                     {
+                         "Codigo":  "206",
+                         "Nome":  "George Connelly",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/206.jpg"
+                     },
+                     {
+                         "Codigo":  "207",
+                         "Nome":  "David Hay",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/207.jpg"
+                     },
+                     {
+                         "Codigo":  "208",
+                         "Nome":  "Billy Bremner",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/208.jpg"
+                     },
+                     {
+                         "Codigo":  "209",
+                         "Nome":  "Ken Dalglish",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/209.jpg"
+                     },
+                     {
+                         "Codigo":  "210",
+                         "Nome":  "Denis Law",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/210.jpg"
+                     },
+                     {
+                         "Codigo":  "211",
+                         "Nome":  "Willie Morgan",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/211.jpg"
+                     },
+                     {
+                         "Codigo":  "212",
+                         "Nome":  "Joe Jordan",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/212.jpg"
+                     },
+                     {
+                         "Codigo":  "213",
+                         "Nome":  "Derek Parlane",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/213.jpg"
+                     },
+                     {
+                         "Codigo":  "214",
+                         "Nome":  "Tommy Hutchison",
+                         "Section":  "Scotia",
+                         "Type":  "",
+                         "Imagem":  "images/214.jpg"
+                     },
+                     {
+                         "Codigo":  "215",
+                         "Nome":  "Stema Uruguay",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/215.jpg"
+                     },
+                     {
+                         "Codigo":  "216",
+                         "Nome":  "Echipa Uruguay",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/216.jpg"
+                     },
+                     {
+                         "Codigo":  "217",
+                         "Nome":  "Uruguay Caricature",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/217.jpg"
+                     },
+                     {
+                         "Codigo":  "218",
+                         "Nome":  "Hector Santos",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/218.jpg"
+                     },
+                     {
+                         "Codigo":  "219",
+                         "Nome":  "Ladislao Mazurkiewicz",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/219.jpg"
+                     },
+                     {
+                         "Codigo":  "220",
+                         "Nome":  "Walter Olivera",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/220.jpg"
+                     },
+                     {
+                         "Codigo":  "221",
+                         "Nome":  "Gustavo De Simone",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/221.jpg"
+                     },
+                     {
+                         "Codigo":  "222",
+                         "Nome":  "Juan Masnik",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/222.jpg"
+                     },
+                     {
+                         "Codigo":  "223",
+                         "Nome":  "Mario Soryez",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/223.jpg"
+                     },
+                     {
+                         "Codigo":  "224",
+                         "Nome":  "Atilio Ancheta",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/224.jpg"
+                     },
+                     {
+                         "Codigo":  "225",
+                         "Nome":  "Mario Gonzalez",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/225.jpg"
+                     },
+                     {
+                         "Codigo":  "226",
+                         "Nome":  "Pedro Rocha",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/226.jpg"
+                     },
+                     {
+                         "Codigo":  "227",
+                         "Nome":  "Alberto Cardaccio",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/227.jpg"
+                     },
+                     {
+                         "Codigo":  "228",
+                         "Nome":  "Victor Esparrago",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/228.jpg"
+                     },
+                     {
+                         "Codigo":  "229",
+                         "Nome":  "Luis Cubilla",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/229.jpg"
+                     },
+                     {
+                         "Codigo":  "230",
+                         "Nome":  "Fernando Morena",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/230.jpg"
+                     },
+                     {
+                         "Codigo":  "231",
+                         "Nome":  "Denis Milar",
+                         "Section":  "Uruguay",
+                         "Type":  "",
+                         "Imagem":  "images/231.jpg"
+                     },
+                     {
+                         "Codigo":  "232",
+                         "Nome":  "Stema Olanda",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/232.jpg"
+                     },
+                     {
+                         "Codigo":  "233",
+                         "Nome":  "Echipa Olanda",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/233.jpg"
+                     },
+                     {
+                         "Codigo":  "234",
+                         "Nome":  "Holland Caricature",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/234.jpg"
+                     },
+                     {
+                         "Codigo":  "235",
+                         "Nome":  "Piet Schrijvers",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/235.jpg"
+                     },
+                     {
+                         "Codigo":  "236",
+                         "Nome":  "Heinz Stuy",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/236.jpg"
+                     },
+                     {
+                         "Codigo":  "237",
+                         "Nome":  "Wim Suurbier",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/237.jpg"
+                     },
+                     {
+                         "Codigo":  "238",
+                         "Nome":  "Aad Mansveld",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/238.jpg"
+                     },
+                     {
+                         "Codigo":  "239",
+                         "Nome":  "Barry Hulshoff",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/239.jpg"
+                     },
+                     {
+                         "Codigo":  "240",
+                         "Nome":  "Ruud Krol",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/240.jpg"
+                     },
+                     {
+                         "Codigo":  "241",
+                         "Nome":  "Gerry Muhren",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/241.jpg"
+                     },
+                     {
+                         "Codigo":  "242",
+                         "Nome":  "Arie Haan",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/242.jpg"
+                     },
+                     {
+                         "Codigo":  "243",
+                         "Nome":  "Johan Neeskens",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/243.jpg"
+                     },
+                     {
+                         "Codigo":  "244",
+                         "Nome":  "Wim Van Hanegem",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/244.jpg"
+                     },
+                     {
+                         "Codigo":  "245",
+                         "Nome":  "Johnny Rep",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/245.jpg"
+                     },
+                     {
+                         "Codigo":  "246",
+                         "Nome":  "Johan Cruyff",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/246.jpg"
+                     },
+                     {
+                         "Codigo":  "247",
+                         "Nome":  "Piet Keizer",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/247.jpg"
+                     },
+                     {
+                         "Codigo":  "248",
+                         "Nome":  "Rob Rensenbrink",
+                         "Section":  "Holland",
+                         "Type":  "",
+                         "Imagem":  "images/248.jpg"
+                     },
+                     {
+                         "Codigo":  "249",
+                         "Nome":  "Stema Bulgaria",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/249.jpg"
+                     },
+                     {
+                         "Codigo":  "250",
+                         "Nome":  "Echipa Bulgaria",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/250.jpg"
+                     },
+                     {
+                         "Codigo":  "251",
+                         "Nome":  "Bulgaria Caricature",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/251.jpg"
+                     },
+                     {
+                         "Codigo":  "252",
+                         "Nome":  "Rumen Goranov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/252.jpg"
+                     },
+                     {
+                         "Codigo":  "253",
+                         "Nome":  "Ivan Zafirov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/253.jpg"
+                     },
+                     {
+                         "Codigo":  "254",
+                         "Nome":  "Dimitar Penev",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/254.jpg"
+                     },
+                     {
+                         "Codigo":  "255",
+                         "Nome":  "Kiril Ivkov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/255.jpg"
+                     },
+                     {
+                         "Codigo":  "256",
+                         "Nome":  "Stefan Aladjov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/256.jpg"
+                     },
+                     {
+                         "Codigo":  "257",
+                         "Nome":  "Bozhil Kolev",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/257.jpg"
+                     },
+                     {
+                         "Codigo":  "258",
+                         "Nome":  "Stefan Velitschkov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/258.jpg"
+                     },
+                     {
+                         "Codigo":  "259",
+                         "Nome":  "Ivan Stoianov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/259.jpg"
+                     },
+                     {
+                         "Codigo":  "260",
+                         "Nome":  "Hristo Bonev",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/260.jpg"
+                     },
+                     {
+                         "Codigo":  "261",
+                         "Nome":  "Pavel Panov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/261.jpg"
+                     },
+                     {
+                         "Codigo":  "262",
+                         "Nome":  "Dimitar Dimitrov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/262.jpg"
+                     },
+                     {
+                         "Codigo":  "263",
+                         "Nome":  "Atanas Mihailov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/263.jpg"
+                     },
+                     {
+                         "Codigo":  "264",
+                         "Nome":  "Petko Petkov",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/264.jpg"
+                     },
+                     {
+                         "Codigo":  "265",
+                         "Nome":  "Georgi Denev",
+                         "Section":  "Bulgaria",
+                         "Type":  "",
+                         "Imagem":  "images/265.jpg"
+                     },
+                     {
+                         "Codigo":  "266",
+                         "Nome":  "Stema Suedia",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/266.jpg"
+                     },
+                     {
+                         "Codigo":  "267",
+                         "Nome":  "Echipa Suedia",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/267.jpg"
+                     },
+                     {
+                         "Codigo":  "268",
+                         "Nome":  "Sweden Caricature",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/268.jpg"
+                     },
+                     {
+                         "Codigo":  "269",
+                         "Nome":  "Ronnie Hellstrom",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/269.jpg"
+                     },
+                     {
+                         "Codigo":  "270",
+                         "Nome":  "Roland Grip",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/270.jpg"
+                     },
+                     {
+                         "Codigo":  "271",
+                         "Nome":  "Jan Olsson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/271.jpg"
+                     },
+                     {
+                         "Codigo":  "272",
+                         "Nome":  "Kent Karlsson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/272.jpg"
+                     },
+                     {
+                         "Codigo":  "273",
+                         "Nome":  "Bjorn Nordqvist",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/273.jpg"
+                     },
+                     {
+                         "Codigo":  "274",
+                         "Nome":  "Bjorn Andersson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/274.jpg"
+                     },
+                     {
+                         "Codigo":  "275",
+                         "Nome":  "Ove Grahn",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/275.jpg"
+                     },
+                     {
+                         "Codigo":  "276",
+                         "Nome":  "Staffan Tapper",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/276.jpg"
+                     },
+                     {
+                         "Codigo":  "277",
+                         "Nome":  "Bo Larsson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/277.jpg"
+                     },
+                     {
+                         "Codigo":  "278",
+                         "Nome":  "Conny Torstensson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/278.jpg"
+                     },
+                     {
+                         "Codigo":  "279",
+                         "Nome":  "Harry Svensson",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/279.jpg"
+                     },
+                     {
+                         "Codigo":  "280",
+                         "Nome":  "Ove Kindvall",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/280.jpg"
+                     },
+                     {
+                         "Codigo":  "281",
+                         "Nome":  "Ralf Edstrom",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/281.jpg"
+                     },
+                     {
+                         "Codigo":  "282",
+                         "Nome":  "Roland Sandberg",
+                         "Section":  "Sweden",
+                         "Type":  "",
+                         "Imagem":  "images/282.jpg"
+                     },
+                     {
+                         "Codigo":  "283",
+                         "Nome":  "Stema Italia",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/283.jpg"
+                     },
+                     {
+                         "Codigo":  "284",
+                         "Nome":  "Echipa Italia",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/284.jpg"
+                     },
+                     {
+                         "Codigo":  "285",
+                         "Nome":  "Italy Caricature",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/285.jpg"
+                     },
+                     {
+                         "Codigo":  "286",
+                         "Nome":  "Artemio Franchi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/286.jpg"
+                     },
+                     {
+                         "Codigo":  "287",
+                         "Nome":  "Ferruccio Valcareggi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/287.jpg"
+                     },
+                     {
+                         "Codigo":  "288",
+                         "Nome":  "Dino Zoff",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/288.jpg"
+                     },
+                     {
+                         "Codigo":  "289",
+                         "Nome":  "Enrico Albertosi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/289.jpg"
+                     },
+                     {
+                         "Codigo":  "290",
+                         "Nome":  "Luciano Spinosi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/290.jpg"
+                     },
+                     {
+                         "Codigo":  "291",
+                         "Nome":  "Giuseppe Sabadini",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/291.jpg"
+                     },
+                     {
+                         "Codigo":  "292",
+                         "Nome":  "Giacinto Facchetti",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/292.jpg"
+                     },
+                     {
+                         "Codigo":  "293",
+                         "Nome":  "Mauro Bellugi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/293.jpg"
+                     },
+                     {
+                         "Codigo":  "294",
+                         "Nome":  "Francesco Morini",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/294.jpg"
+                     },
+                     {
+                         "Codigo":  "295",
+                         "Nome":  "Tarcisio Burgnich",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/295.jpg"
+                     },
+                     {
+                         "Codigo":  "296",
+                         "Nome":  "Giuseppe Wilson",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/296.jpg"
+                     },
+                     {
+                         "Codigo":  "297",
+                         "Nome":  "Romeo Benetti",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/297.jpg"
+                     },
+                     {
+                         "Codigo":  "298",
+                         "Nome":  "Fabio Capello",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/298.jpg"
+                     },
+                     {
+                         "Codigo":  "299",
+                         "Nome":  "Gianni Rivera",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/299.jpg"
+                     },
+                     {
+                         "Codigo":  "300",
+                         "Nome":  "Antonio Juliano",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/300.jpg"
+                     },
+                     {
+                         "Codigo":  "301",
+                         "Nome":  "Sandro Mazzola",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/301.jpg"
+                     },
+                     {
+                         "Codigo":  "302",
+                         "Nome":  "Franco Causio",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/302.jpg"
+                     },
+                     {
+                         "Codigo":  "303",
+                         "Nome":  "Giorgio Chinaglia",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/303.jpg"
+                     },
+                     {
+                         "Codigo":  "304",
+                         "Nome":  "Pietro Anastasi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/304.jpg"
+                     },
+                     {
+                         "Codigo":  "305",
+                         "Nome":  "Roberto Boninsegna",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/305.jpg"
+                     },
+                     {
+                         "Codigo":  "306",
+                         "Nome":  "Luigi Riva",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/306.jpg"
+                     },
+                     {
+                         "Codigo":  "307",
+                         "Nome":  "Luciano Chiarugi",
+                         "Section":  "Italia",
+                         "Type":  "",
+                         "Imagem":  "images/307.jpg"
+                     },
+                     {
+                         "Codigo":  "308",
+                         "Nome":  "Stema Haiti",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/308.jpg"
+                     },
+                     {
+                         "Codigo":  "309",
+                         "Nome":  "Echipa Haiti",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/309.jpg"
+                     },
+                     {
+                         "Codigo":  "310",
+                         "Nome":  "Haiti Caricature",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/310.jpg"
+                     },
+                     {
+                         "Codigo":  "311",
+                         "Nome":  "Henry Francillon",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/311.jpg"
+                     },
+                     {
+                         "Codigo":  "312",
+                         "Nome":  "Wilmer Nazaire",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/312.jpg"
+                     },
+                     {
+                         "Codigo":  "313",
+                         "Nome":  "Arsene Auguste",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/313.jpg"
+                     },
+                     {
+                         "Codigo":  "314",
+                         "Nome":  "Philippe Vorbe",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/314.jpg"
+                     },
+                     {
+                         "Codigo":  "315",
+                         "Nome":  "Jean Claude Desir",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/315.jpg"
+                     },
+                     {
+                         "Codigo":  "316",
+                         "Nome":  "Emmanuel Sanon",
+                         "Section":  "Haiti",
+                         "Type":  "",
+                         "Imagem":  "images/316.jpg"
+                     },
+                     {
+                         "Codigo":  "317",
+                         "Nome":  "Stema Argentina",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/317.jpg"
+                     },
+                     {
+                         "Codigo":  "318",
+                         "Nome":  "Echipa Argentina",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/318.jpg"
+                     },
+                     {
+                         "Codigo":  "319",
+                         "Nome":  "Argentina Caricature",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/319.jpg"
+                     },
+                     {
+                         "Codigo":  "320",
+                         "Nome":  "Daniel Carnevali",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/320.jpg"
+                     },
+                     {
+                         "Codigo":  "321",
+                         "Nome":  "Miguel Angel Santoro",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/321.jpg"
+                     },
+                     {
+                         "Codigo":  "322",
+                         "Nome":  "Francisco Sa",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/322.jpg"
+                     },
+                     {
+                         "Codigo":  "323",
+                         "Nome":  "Enrique Wolff",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/323.jpg"
+                     },
+                     {
+                         "Codigo":  "324",
+                         "Nome":  "Roberto Perfume",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/324.jpg"
+                     },
+                     {
+                         "Codigo":  "325",
+                         "Nome":  "Hugo Bargas",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/325.jpg"
+                     },
+                     {
+                         "Codigo":  "326",
+                         "Nome":  "Enrique Chazarreta",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/326.jpg"
+                     },
+                     {
+                         "Codigo":  "327",
+                         "Nome":  "Roberto Telch",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/327.jpg"
+                     },
+                     {
+                         "Codigo":  "328",
+                         "Nome":  "Miguel Angel Brindisi",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/328.jpg"
+                     },
+                     {
+                         "Codigo":  "329",
+                         "Nome":  "Ruben Galvan",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/329.jpg"
+                     },
+                     {
+                         "Codigo":  "330",
+                         "Nome":  "Norberto Alonso",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/330.jpg"
+                     },
+                     {
+                         "Codigo":  "331",
+                         "Nome":  "Hector Yazalde",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/331.jpg"
+                     },
+                     {
+                         "Codigo":  "332",
+                         "Nome":  "Roque Avallay",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/332.jpg"
+                     },
+                     {
+                         "Codigo":  "333",
+                         "Nome":  "Ruben Hugo Ayala",
+                         "Section":  "Argentina",
+                         "Type":  "",
+                         "Imagem":  "images/333.jpg"
+                     },
+                     {
+                         "Codigo":  "334",
+                         "Nome":  "Stema Polonia",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/334.jpg"
+                     },
+                     {
+                         "Codigo":  "335",
+                         "Nome":  "Echipa Polonia",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/335.jpg"
+                     },
+                     {
+                         "Codigo":  "336",
+                         "Nome":  "Poland Caricature",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/336.jpg"
+                     },
+                     {
+                         "Codigo":  "337",
+                         "Nome":  "Jan Tomasewski",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/337.jpg"
+                     },
+                     {
+                         "Codigo":  "338",
+                         "Nome":  "Jerzy Gorgon",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/338.jpg"
+                     },
+                     {
+                         "Codigo":  "339",
+                         "Nome":  "Antoni Szymanowski",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/339.jpg"
+                     },
+                     {
+                         "Codigo":  "340",
+                         "Nome":  "Adam Musial",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/340.jpg"
+                     },
+                     {
+                         "Codigo":  "341",
+                         "Nome":  "Miroslaw Bulzacki",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/341.jpg"
+                     },
+                     {
+                         "Codigo":  "342",
+                         "Nome":  "Zbigniew Gut",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/342.jpg"
+                     },
+                     {
+                         "Codigo":  "343",
+                         "Nome":  "Zygmunt Maszczyk",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/343.jpg"
+                     },
+                     {
+                         "Codigo":  "344",
+                         "Nome":  "Hendyk Kasperczak",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/344.jpg"
+                     },
+                     {
+                         "Codigo":  "345",
+                         "Nome":  "Leslaw Cmikiewicz",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/345.jpg"
+                     },
+                     {
+                         "Codigo":  "346",
+                         "Nome":  "Kazimierz Deyna",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/346.jpg"
+                     },
+                     {
+                         "Codigo":  "347",
+                         "Nome":  "Grzegorz Lato",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/347.jpg"
+                     },
+                     {
+                         "Codigo":  "348",
+                         "Nome":  "Wlodzimierz Lubanski",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/348.jpg"
+                     },
+                     {
+                         "Codigo":  "349",
+                         "Nome":  "Jan Domarski",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/349.jpg"
+                     },
+                     {
+                         "Codigo":  "350",
+                         "Nome":  "Robert Gadocha",
+                         "Section":  "Poland",
+                         "Type":  "",
+                         "Imagem":  "images/350.jpg"
+                     },
+                     {
+                         "Codigo":  "351",
+                         "Nome":  "Paul Van Himst",
+                         "Section":  "Belgium",
+                         "Type":  "",
+                         "Imagem":  "images/351.jpg"
+                     },
+                     {
+                         "Codigo":  "352",
+                         "Nome":  "Christian Piot",
+                         "Section":  "Belgium",
+                         "Type":  "",
+                         "Imagem":  "images/352.jpg"
+                     },
+                     {
+                         "Codigo":  "353",
+                         "Nome":  "Belgium Badge",
+                         "Section":  "Belgium",
+                         "Type":  "",
+                         "Imagem":  "images/353.jpg"
+                     },
+                     {
+                         "Codigo":  "354",
+                         "Nome":  "Maurice Martens",
+                         "Section":  "Belgium",
+                         "Type":  "",
+                         "Imagem":  "images/354.jpg"
+                     },
+                     {
+                         "Codigo":  "355",
+                         "Nome":  "Leon Semmeling",
+                         "Section":  "Belgium",
+                         "Type":  "",
+                         "Imagem":  "images/355.jpg"
+                     },
+                     {
+                         "Codigo":  "356",
+                         "Nome":  "Vladimir Muntian",
+                         "Section":  "USSR",
+                         "Type":  "",
+                         "Imagem":  "images/356.jpg"
+                     },
+                     {
+                         "Codigo":  "357",
+                         "Nome":  "Revaz Dzodzuashvili",
+                         "Section":  "USSR",
+                         "Type":  "",
+                         "Imagem":  "images/357.jpg"
+                     },
+                     {
+                         "Codigo":  "358",
+                         "Nome":  "Ussr Badge",
+                         "Section":  "USSR",
+                         "Type":  "",
+                         "Imagem":  "images/358.jpg"
+                     },
+                     {
+                         "Codigo":  "359",
+                         "Nome":  "Vladimir Kaplichnyi",
+                         "Section":  "USSR",
+                         "Type":  "",
+                         "Imagem":  "images/359.jpg"
+                     },
+                     {
+                         "Codigo":  "360",
+                         "Nome":  "Murtaz Khurtsilava",
+                         "Section":  "USSR",
+                         "Type":  "",
+                         "Imagem":  "images/360.jpg"
+                     },
+                     {
+                         "Codigo":  "361",
+                         "Nome":  "Ivo Viktor",
+                         "Section":  "Chzechoslovakia",
+                         "Type":  "",
+                         "Imagem":  "images/361.jpg"
+                     },
+                     {
+                         "Codigo":  "362",
+                         "Nome":  "Josef Adamec",
+                         "Section":  "Chzechoslovakia",
+                         "Type":  "",
+                         "Imagem":  "images/362.jpg"
+                     },
+                     {
+                         "Codigo":  "363",
+                         "Nome":  "Chzechoslovakia Badge",
+                         "Section":  "Chzechoslovakia",
+                         "Type":  "",
+                         "Imagem":  "images/363.jpg"
+                     },
+                     {
+                         "Codigo":  "364",
+                         "Nome":  "Jan Pivarnik",
+                         "Section":  "Chzechoslovakia",
+                         "Type":  "",
+                         "Imagem":  "images/364.jpg"
+                     },
+                     {
+                         "Codigo":  "365",
+                         "Nome":  "Pavel Stratil",
+                         "Section":  "Chzechoslovakia",
+                         "Type":  "",
+                         "Imagem":  "images/365.jpg"
+                     },
+                     {
+                         "Codigo":  "366",
+                         "Nome":  "Bobby Moore",
+                         "Section":  "England",
+                         "Type":  "",
+                         "Imagem":  "images/366.jpg"
+                     },
+                     {
+                         "Codigo":  "367",
+                         "Nome":  "Allan Clarke",
+                         "Section":  "England",
+                         "Type":  "",
+                         "Imagem":  "images/367.jpg"
+                     },
+                     {
+                         "Codigo":  "368",
+                         "Nome":  "England Badge",
+                         "Section":  "England",
+                         "Type":  "",
+                         "Imagem":  "images/368.jpg"
+                     },
+                     {
+                         "Codigo":  "369",
+                         "Nome":  "Martin Peters",
+                         "Section":  "England",
+                         "Type":  "",
+                         "Imagem":  "images/369.jpg"
+                     },
+                     {
+                         "Codigo":  "370",
+                         "Nome":  "Roy Mcfarland",
+                         "Section":  "England",
+                         "Type":  "",
+                         "Imagem":  "images/370.jpg"
+                     },
+                     {
+                         "Codigo":  "371",
+                         "Nome":  "Jose Angel Iribar",
+                         "Section":  "Spain",
+                         "Type":  "",
+                         "Imagem":  "images/371.jpg"
+                     },
+                     {
+                         "Codigo":  "372",
+                         "Nome":  "Juan Manuel Asensi",
+                         "Section":  "Spain",
+                         "Type":  "",
+                         "Imagem":  "images/372.jpg"
+                     },
+                     {
+                         "Codigo":  "373",
+                         "Nome":  "Spain Badge",
+                         "Section":  "Spain",
+                         "Type":  "",
+                         "Imagem":  "images/373.jpg"
+                     },
+                     {
+                         "Codigo":  "374",
+                         "Nome":  "Jose Martinez “pirri”",
+                         "Section":  "Spain",
+                         "Type":  "",
+                         "Imagem":  "images/374.jpg"
+                     },
+                     {
+                         "Codigo":  "375",
+                         "Nome":  "Jose Claramunt",
+                         "Section":  "Spain",
+                         "Type":  "",
+                         "Imagem":  "images/375.jpg"
+                     },
+                     {
+                         "Codigo":  "376",
+                         "Nome":  "Henri Michel",
+                         "Section":  "France",
+                         "Type":  "",
+                         "Imagem":  "images/376.jpg"
+                     },
+                     {
+                         "Codigo":  "377",
+                         "Nome":  "Georges Bereta",
+                         "Section":  "France",
+                         "Type":  "",
+                         "Imagem":  "images/377.jpg"
+                     },
+                     {
+                         "Codigo":  "378",
+                         "Nome":  "France Badge",
+                         "Section":  "France",
+                         "Type":  "",
+                         "Imagem":  "images/378.jpg"
+                     },
+                     {
+                         "Codigo":  "379",
+                         "Nome":  "Marius Tresor",
+                         "Section":  "France",
+                         "Type":  "",
+                         "Imagem":  "images/379.jpg"
+                     },
+                     {
+                         "Codigo":  "380",
+                         "Nome":  "Herve Revelli",
+                         "Section":  "France",
+                         "Type":  "",
+                         "Imagem":  "images/380.jpg"
+                     },
+                     {
+                         "Codigo":  "381",
+                         "Nome":  "Karl Odermatt",
+                         "Section":  "Switzerland",
+                         "Type":  "",
+                         "Imagem":  "images/381.jpg"
+                     },
+                     {
+                         "Codigo":  "382",
+                         "Nome":  "Kurt Muller",
+                         "Section":  "Switzerland",
+                         "Type":  "",
+                         "Imagem":  "images/382.jpg"
+                     },
+                     {
+                         "Codigo":  "383",
+                         "Nome":  "Switzerland Badge",
+                         "Section":  "Switzerland",
+                         "Type":  "",
+                         "Imagem":  "images/383.jpg"
+                     },
+                     {
+                         "Codigo":  "384",
+                         "Nome":  "Pierre Chapuisat",
+                         "Section":  "Switzerland",
+                         "Type":  "",
+                         "Imagem":  "images/384.jpg"
+                     },
+                     {
+                         "Codigo":  "385",
+                         "Nome":  "Jakob Kuhn",
+                         "Section":  "Switzerland",
+                         "Type":  "",
+                         "Imagem":  "images/385.jpg"
+                     },
+                     {
+                         "Codigo":  "386",
+                         "Nome":  "Ferenc Bene",
+                         "Section":  "Hungaria",
+                         "Type":  "",
+                         "Imagem":  "images/386.jpg"
+                     },
+                     {
+                         "Codigo":  "387",
+                         "Nome":  "Istvan Juhasz",
+                         "Section":  "Hungaria",
+                         "Type":  "",
+                         "Imagem":  "images/387.jpg"
+                     },
+                     {
+                         "Codigo":  "388",
+                         "Nome":  "Hungaria Badge",
+                         "Section":  "Hungaria",
+                         "Type":  "",
+                         "Imagem":  "images/388.jpg"
+                     },
+                     {
+                         "Codigo":  "389",
+                         "Nome":  "Sandor Zambo",
+                         "Section":  "Hungaria",
+                         "Type":  "",
+                         "Imagem":  "images/389.jpg"
+                     },
+                     {
+                         "Codigo":  "390",
+                         "Nome":  "Mihaly Kozma",
+                         "Section":  "Hungaria",
+                         "Type":  "",
+                         "Imagem":  "images/390.jpg"
+                     },
+                     {
+                         "Codigo":  "391",
+                         "Nome":  "Kurt Jara",
+                         "Section":  "Austria",
+                         "Type":  "",
+                         "Imagem":  "images/391.jpg"
+                     },
+                     {
+                         "Codigo":  "392",
+                         "Nome":  "August Starek",
+                         "Section":  "Austria",
+                         "Type":  "",
+                         "Imagem":  "images/392.jpg"
+                     },
+                     {
+                         "Codigo":  "393",
+                         "Nome":  "Austria Badge",
+                         "Section":  "Austria",
+                         "Type":  "",
+                         "Imagem":  "images/393.jpg"
+                     },
+                     {
+                         "Codigo":  "394",
+                         "Nome":  "Thomas Parits",
+                         "Section":  "Austria",
+                         "Type":  "",
+                         "Imagem":  "images/394.jpg"
+                     },
+                     {
+                         "Codigo":  "395",
+                         "Nome":  "Franz Hasil",
+                         "Section":  "Austria",
+                         "Type":  "",
+                         "Imagem":  "images/395.jpg"
+                     },
+                     {
+                         "Codigo":  "396",
+                         "Nome":  "Eusebio",
+                         "Section":  "Portugal",
+                         "Type":  "",
+                         "Imagem":  "images/396.jpg"
+                     },
+                     {
+                         "Codigo":  "397",
+                         "Nome":  "Jose Henrique",
+                         "Section":  "Portugal",
+                         "Type":  "",
+                         "Imagem":  "images/397.jpg"
+                     },
+                     {
+                         "Codigo":  "398",
+                         "Nome":  "Portugal Badge",
+                         "Section":  "Portugal",
+                         "Type":  "",
+                         "Imagem":  "images/398.jpg"
+                     },
+                     {
+                         "Codigo":  "399",
+                         "Nome":  "Jose Torres",
+                         "Section":  "Portugal",
+                         "Type":  "",
+                         "Imagem":  "images/399.jpg"
+                     },
+                     {
+                         "Codigo":  "400",
+                         "Nome":  "Antonio Simoes",
+                         "Section":  "Portugal",
+                         "Type":  "",
+                         "Imagem":  "images/400.jpg"
+                     }
+                 ]
+}

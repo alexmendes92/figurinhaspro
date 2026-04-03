@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-irlanda-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-irlanda-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<rect fill="#169b62" width="1200" height="600" />
+   <rect fill="#fff" x="400" width="800" height="600" />
+   <rect fill="#ff883e" x="800" width="400" height="600" />
+    </svg>
+  </g>
+</svg>

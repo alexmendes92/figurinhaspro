@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/lib/generated/prisma
+
+# database
+*.db
+*.db-journal
+
+# capas originais (usar .webp)
+/public/covers/*.png
+
+.vercel

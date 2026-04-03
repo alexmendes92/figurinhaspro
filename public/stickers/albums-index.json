@@ -1,0 +1,106 @@
+﻿[
+    {
+        "slug":  "panini_fifa_world_cup_2022",
+        "titulo":  "Panini FIFA World Cup Qatar 2022. Standard Edition",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2022/",
+        "totalStickers":  670,
+        "totalPages":  45,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2022\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_2018",
+        "titulo":  "Panini FIFA World Cup Russia 2018",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2018/",
+        "totalStickers":  844,
+        "totalPages":  57,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2018\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_2014",
+        "titulo":  "Panini FIFA World Cup Brazil 2014",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2014/",
+        "totalStickers":  782,
+        "totalPages":  53,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2014\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_2010",
+        "titulo":  "Panini FIFA World Cup South Africa 2010",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2010/",
+        "totalStickers":  806,
+        "totalPages":  54,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2010\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_2006",
+        "titulo":  "Panini FIFA World Cup Germany 2006",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2006/",
+        "totalStickers":  605,
+        "totalPages":  41,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2006\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_2002",
+        "titulo":  "Panini FIFA World Cup Korea/Japan 2002",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_2002/",
+        "totalStickers":  581,
+        "totalPages":  39,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_2002\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1994",
+        "titulo":  "Panini FIFA World Cup USA 1994",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1994/",
+        "totalStickers":  444,
+        "totalPages":  30,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1994\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1990",
+        "titulo":  "Panini FIFA World Cup Italia 1990",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1990/",
+        "totalStickers":  448,
+        "totalPages":  30,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1990\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1986",
+        "titulo":  "Panini FIFA World Cup Mexico 1986",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1986/",
+        "totalStickers":  427,
+        "totalPages":  29,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1986\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1982",
+        "titulo":  "Panini FIFA World Cup Spain 1982",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1982/",
+        "totalStickers":  427,
+        "totalPages":  29,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1982\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1978",
+        "titulo":  "Panini FIFA World Cup Argentina 1978",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1978/",
+        "totalStickers":  400,
+        "totalPages":  27,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1978\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1974",
+        "titulo":  "Panini FIFA World Cup Munich 1974",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1974/",
+        "totalStickers":  400,
+        "totalPages":  27,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1974\\stickers.json"
+    },
+    {
+        "slug":  "panini_fifa_world_cup_1970",
+        "titulo":  "Panini FIFA World Cup Mexico 1970",
+        "previewUrl":  "https://www.laststicker.com/cards/preview/panini_fifa_world_cup_1970/",
+        "totalStickers":  288,
+        "totalPages":  20,
+        "file":  "laststicker-world-cups-json\\panini_fifa_world_cup_1970\\stickers.json"
+    }
+]

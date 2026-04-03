@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="f-dinamarca-circle-clip">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#f-dinamarca-circle-clip)">
+    <svg x="0" y="0" width="512" height="512" viewBox="0 0 37 28" preserveAspectRatio="xMidYMid slice" overflow="hidden">
+<path fill="#c8102e" d="M0,0H37V28H0Z"/><path stroke="#fff" stroke-width="4" d="M0,14h37M14,0v28"/>
+    </svg>
+  </g>
+</svg>

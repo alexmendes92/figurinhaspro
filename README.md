@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FigurinhasPro
 
-## Getting Started
+> App moderno de album digital de figurinhas com loja, painel administrativo e controle de estoque. Construido com Next.js 16 + Prisma + SQLite.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Framework | Next.js 16.2 (App Router) |
+| Frontend | React 19 + TypeScript 5 |
+| Estilizacao | Tailwind CSS 4 |
+| Banco de dados | SQLite via Better-SQLite3 + Prisma 7.5 |
+| Validacao | Zod 4 |
+| Imagens | Sharp |
+| Compilador | React Compiler (babel-plugin-react-compiler) |
+
+## Estrutura
+
+```
+FigurinhasPro/
+├── app/
+│   ├── (auth)/            → Autenticacao
+│   │   ├── login/         → Tela de login
+│   │   └── registro/      → Tela de registro
+│   ├── (marketing)/       → Paginas publicas/marketing
+│   ├── albuns/            → Visualizacao de albums
+│   │   └── [year]/        → Album por ano (viewer)
+│   ├── loja/              → Loja publica
+│   │   └── [slug]/        → Loja por vendedor
+│   │       └── [albumSlug]/ → Album especifico na loja
+│   ├── painel/            → Painel administrativo
+│   │   ├── estoque/       → Gestao de estoque
+│   │   ├── loja/          → Config da loja
+│   │   ├── pedidos/       → Gestao de pedidos
+│   │   └── precos/        → Gestao de precos
+│   ├── api/               → API Routes
+│   │   ├── auth/          → Login, logout, registro
+│   │   ├── inventory/     → Estoque (CRUD + bulk)
+│   │   ├── orders/        → Pedidos
+│   │   └── prices/        → Precos
+│   ├── layout.tsx         → Layout raiz
+│   └── page.tsx           → Home
+│
+├── components/
+│   ├── album-shelf.tsx    → Prateleira de albums
+│   ├── album-viewer.tsx   → Visualizador de album
+│   ├── app-shell.tsx      → Shell da aplicacao
+│   ├── cart-drawer.tsx    → Carrinho lateral
+│   ├── sticker-panel.tsx  → Painel de figurinhas
+│   ├── toast.tsx          → Notificacoes
+│   ├── loja/              → Componentes da loja
+│   └── painel/            → Componentes do painel
+│
+├── lib/
+│   ├── db.ts              → Conexao Prisma/SQLite
+│   ├── auth.ts            → Logica de autenticacao
+│   ├── albums.ts          → Dados de albums
+│   ├── albums-data.ts     → Catalogo de albums
+│   ├── album-covers.ts    → Capas dos albums
+│   ├── page-sticker-map.ts → Mapeamento figurinha-pagina
+│   ├── cart-context.tsx   → Contexto do carrinho
+│   └── toast-context.tsx  → Contexto de notificacoes
+│
+├── public/                → Assets estaticos
+└── dev.db                 → Banco SQLite local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O banco SQLite (`dev.db`) ja esta incluido no projeto.
 
-## Learn More
+## Comandos
 
-To learn more about Next.js, take a look at the following resources:
+| Comando | O que faz |
+|---------|-----------|
+| `npm run dev` | Inicia dev server (Next.js) |
+| `npm run build` | Build de producao |
+| `npm run start` | Inicia producao |
+| `npm run lint` | Linter ESLint |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Albums:** Visualizacao de albums de figurinhas por ano com viewer interativo
+- **Loja:** Loja publica por vendedor com carrinho de compras
+- **Painel Admin:** Estoque, pedidos, precos, configuracao da loja
+- **Auth:** Login/registro com rotas protegidas
+- **API REST:** Endpoints para auth, inventario, pedidos e precos
 
-## Deploy on Vercel
+## Notas Importantes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js 16**: APIs de request assincronas (`await params`, `await cookies()`), `proxy.ts` substitui `middleware.ts`, Turbopack como bundler padrao. Consultar `AGENTS.md` ou `node_modules/next/dist/docs/`.
+- **Prisma 7**: Config centralizada em `prisma.config.ts`, driver adapters obrigatorios, `.env` nao carrega automaticamente.
+- **Tailwind CSS 4**: Config via CSS (`@theme inline` em `globals.css`), sem `tailwind.config.js`.
+- **Zod 4**: Reescrita completa — APIs podem diferir do Zod 3.
+- **React Compiler**: Ativado — `useMemo`/`useCallback`/`React.memo` sao desnecessarios.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Hospedagem
+
+Configurado para Vercel (`.vercel/` presente). SQLite local funciona em dev mas tem limitacoes em serverless.

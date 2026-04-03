@@ -1,0 +1,10 @@
+# Capas PNG originais (usar .webp comprimidas)
+public/covers/*.png
+
+# Banco local
+*.db
+*.db-journal
+prisma/dev.db
+
+# Prisma gerado
+lib/generated

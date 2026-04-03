@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { createSession } from "@/lib/auth";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -17,7 +18,31 @@ export async function POST(req: NextRequest) {
       where: { email: data.email },
     });
 
-    if (!seller || seller.password !== data.password) {
+    if (!seller) {
+      return NextResponse.json(
+        { error: "Email ou senha incorretos" },
+        { status: 401 }
+      );
+    }
+
+    // Compara senha com hash bcrypt
+    // Suporte a migração: se senha não é hash bcrypt, compara diretamente e rehasheia
+    let passwordValid = false;
+    if (seller.password.startsWith("$2")) {
+      passwordValid = await bcrypt.compare(data.password, seller.password);
+    } else {
+      // Senha legada em texto puro — migrar para bcrypt no primeiro login
+      passwordValid = seller.password === data.password;
+      if (passwordValid) {
+        const hashedPassword = await bcrypt.hash(data.password, 12);
+        await db.seller.update({
+          where: { id: seller.id },
+          data: { password: hashedPassword },
+        });
+      }
+    }
+
+    if (!passwordValid) {
       return NextResponse.json(
         { error: "Email ou senha incorretos" },
         { status: 401 }
@@ -33,7 +58,10 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Dados inválidos" },
+        { status: 400 }
+      );
     }
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }

@@ -42,13 +42,13 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
       >
         {/* Brand */}
         <div className={`h-16 flex items-center border-b border-white/[0.06] ${collapsed ? "px-3 justify-center" : "px-5 gap-3"}`}>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20 shrink-0">
             <span className="text-white text-sm font-black font-[family-name:var(--font-geist-mono)]">F</span>
           </div>
           {!collapsed && (
             <div className="min-w-0">
               <p className="text-[13px] font-bold text-white leading-tight truncate">{seller.shopName}</p>
-              <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">{seller.plan}</p>
+              <p className="text-[10px] text-amber-400 font-semibold uppercase tracking-wider">{seller.plan}</p>
             </div>
           )}
         </div>
@@ -67,17 +67,17 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
                   collapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5"
                 } text-[13px] ${
                   active
-                    ? "bg-emerald-500/10 text-emerald-400"
+                    ? "bg-amber-500/10 text-amber-400"
                     : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
                 }`}
               >
-                <svg className={`w-[18px] h-[18px] shrink-0 ${active ? "text-emerald-400" : "text-gray-500"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <svg className={`w-[18px] h-[18px] shrink-0 ${active ? "text-amber-400" : "text-gray-500"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                 </svg>
                 {!collapsed && (
                   <>
                     {item.label}
-                    {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400" />}
+                    {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />}
                   </>
                 )}
                 {/* Tooltip no modo colapsado */}
@@ -94,7 +94,7 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
         {/* Footer */}
         <div className={`border-t border-white/[0.06] space-y-1 ${collapsed ? "p-1.5" : "p-3"}`}>
           {!collapsed && (
-            <Link href={`/loja/${seller.shopSlug}`} target="_blank" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[12px] text-gray-500 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all">
+            <Link href={`/loja/${seller.shopSlug}`} target="_blank" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[12px] text-gray-500 hover:text-amber-400 hover:bg-amber-500/5 transition-all">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
               </svg>
@@ -102,7 +102,7 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
             </Link>
           )}
           <div className={`flex items-center ${collapsed ? "justify-center py-2" : "gap-2.5 px-3 py-2"}`}>
-            <div className={`rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center font-bold text-white shadow-md shrink-0 ${collapsed ? "w-8 h-8 text-[10px]" : "w-8 h-8 text-[11px]"}`}>
+            <div className={`rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-bold text-white shadow-md shrink-0 ${collapsed ? "w-8 h-8 text-[10px]" : "w-8 h-8 text-[11px]"}`}>
               {initials}
             </div>
             {!collapsed && (

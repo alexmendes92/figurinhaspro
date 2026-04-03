@@ -39,7 +39,7 @@ export default async function DashboardPage() {
         <p className="text-gray-500 text-sm">Bem-vindo de volta,</p>
         <h1 className="text-3xl font-black tracking-tight text-white mt-0.5">
           {seller.name.split(" ")[0]}
-          <span className="text-emerald-400">.</span>
+          <span className="text-amber-400">.</span>
         </h1>
       </div>
 
@@ -85,11 +85,11 @@ export default async function DashboardPage() {
               <p className="text-sm font-bold text-white">Sua vitrine</p>
               <p className="text-[11px] text-gray-500 mt-0.5">Compartilhe com seus clientes</p>
             </div>
-            <Link href={`/loja/${seller.shopSlug}`} target="_blank" className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-lg shadow-emerald-500/20">
+            <Link href={`/loja/${seller.shopSlug}`} target="_blank" className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20">
               Abrir vitrine
             </Link>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-sm text-emerald-400">
+          <div className="px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-sm text-amber-400">
             /loja/{seller.shopSlug}
           </div>
         </div>
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
           <p className="text-sm font-bold text-white mb-4">Ações rápidas</p>
           <div className="space-y-2">
             {[
-              { href: "/painel/estoque", label: "Gerenciar estoque", color: "text-emerald-400" },
+              { href: "/painel/estoque", label: "Gerenciar estoque", color: "text-amber-400" },
               { href: "/painel/precos", label: "Editar preços", color: "text-blue-400" },
               { href: "/painel/pedidos", label: "Ver pedidos", color: "text-purple-400" },
             ].map((a) => (
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm font-bold text-white">Pedidos recentes</p>
-          <Link href="/painel/pedidos" className="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+          <Link href="/painel/pedidos" className="text-[11px] text-amber-400 hover:text-amber-300 font-semibold transition-colors">
             Ver todos →
           </Link>
         </div>

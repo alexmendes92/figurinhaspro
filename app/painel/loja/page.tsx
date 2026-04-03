@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import Link from "next/link";
+import LojaEditor from "@/components/painel/loja-editor";
 
 export default async function MinhaLojaPage() {
   const seller = await getSession();
@@ -15,13 +16,6 @@ export default async function MinhaLojaPage() {
   const priceMap = new Map<string, number>(
     priceRules.map((r: { stickerType: string; price: number }) => [r.stickerType, r.price])
   );
-
-  const infoItems = [
-    { label: "Nome da loja", value: seller.shopName },
-    { label: "WhatsApp", value: seller.phone || "Não configurado", dim: !seller.phone },
-    { label: "Email", value: seller.email },
-    { label: "Plano", value: seller.plan, badge: true },
-  ];
 
   return (
     <div className="p-6 lg:p-8 max-w-2xl slide-up">
@@ -69,29 +63,13 @@ export default async function MinhaLojaPage() {
         ))}
       </div>
 
-      {/* Info da loja */}
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden mb-6">
-        <div className="px-5 py-3 border-b border-[var(--border)]">
-          <p className="text-xs font-semibold text-[var(--muted)]">Informações</p>
-        </div>
-        {infoItems.map((item, i) => (
-          <div
-            key={item.label}
-            className={`px-5 py-3 flex items-center justify-between ${
-              i > 0 ? "border-t border-[var(--border)]" : ""
-            }`}
-          >
-            <span className="text-xs text-[var(--muted)]">{item.label}</span>
-            {item.badge ? (
-              <span className="badge badge-amber">{item.value}</span>
-            ) : (
-              <span className={`text-sm font-medium ${item.dim ? "text-zinc-600" : ""}`}>
-                {item.value}
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
+      {/* Info da loja - agora editável */}
+      <LojaEditor
+        shopName={seller.shopName}
+        phone={seller.phone}
+        email={seller.email}
+        plan={seller.plan}
+      />
 
       {/* Preços atuais */}
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">

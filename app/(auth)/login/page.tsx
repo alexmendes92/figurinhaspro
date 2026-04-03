@@ -69,7 +69,8 @@ export default function LoginPage() {
             <div>
               <label className="block text-[12px] font-semibold text-gray-400 uppercase tracking-wider mb-2">Email</label>
               <input
-                name="email" type="email" required defaultValue="admin@figurinhas.com"
+                name="email" type="email" required
+                placeholder="seu@email.com"
                 className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/10 transition-all"
               />
             </div>
@@ -77,7 +78,8 @@ export default function LoginPage() {
             <div>
               <label className="block text-[12px] font-semibold text-gray-400 uppercase tracking-wider mb-2">Senha</label>
               <input
-                name="password" type="password" required defaultValue="123456"
+                name="password" type="password" required
+                placeholder="Sua senha"
                 className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/10 transition-all"
               />
             </div>

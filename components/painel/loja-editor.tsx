@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/lib/toast-context";
 
 interface LojaEditorProps {
   shopName: string;
@@ -10,6 +11,7 @@ interface LojaEditorProps {
 }
 
 export default function LojaEditor({ shopName: initialName, phone: initialPhone, email, plan }: LojaEditorProps) {
+  const toast = useToast();
   const [shopName, setShopName] = useState(initialName);
   const [phone, setPhone] = useState(initialPhone || "");
   const [saving, setSaving] = useState(false);
@@ -18,15 +20,22 @@ export default function LojaEditor({ shopName: initialName, phone: initialPhone,
 
   async function handleSave() {
     setSaving(true);
-    const res = await fetch("/api/seller", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ shopName, phone }),
-    });
-    if (res.ok) {
-      setSaved(true);
-      setEditing(false);
-      setTimeout(() => setSaved(false), 2000);
+    try {
+      const res = await fetch("/api/seller", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shopName, phone }),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setEditing(false);
+        toast.success("Dados da loja salvos");
+        setTimeout(() => setSaved(false), 2000);
+      } else {
+        toast.error("Erro ao salvar dados da loja");
+      }
+    } catch {
+      toast.error("Erro de conexão ao salvar");
     }
     setSaving(false);
   }

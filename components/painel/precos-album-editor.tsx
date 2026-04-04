@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { STICKER_TYPE_CONFIG, getStickerTypeShortLabel, getDefaultPrice } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
 
 // ── Tipos ──
 
@@ -51,11 +53,13 @@ export default function PrecosAlbumEditor({
   albumFlag: string;
   sectionNames: string[];
 }) {
+  const toast = useToast();
   const [data, setData] = useState<AlbumPriceData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("types");
   const [saving, setSaving] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<{ label: string; action: () => void } | null>(null);
 
   useEffect(() => {
     fetch(`/api/prices/${albumSlug}`)
@@ -94,17 +98,20 @@ export default function PrecosAlbumEditor({
   }
 
   async function deleteTypePrice(type: string) {
+    try {
     const res = await fetch("/api/prices", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ albumSlug, stickerType: type }),
     });
     if (res.ok) {
+      toast.success("Regra de preço removida");
       setData((prev) => {
         if (!prev) return prev;
         return { ...prev, albumRules: prev.albumRules.filter((r) => r.stickerType !== type) };
       });
-    }
+    } else { toast.error("Erro ao remover regra"); }
+    } catch { toast.error("Erro de conexão"); }
   }
 
   // ── Handlers: Section Rules ──
@@ -133,17 +140,20 @@ export default function PrecosAlbumEditor({
   }
 
   async function deleteSectionRule(sectionName: string) {
+    try {
     const res = await fetch("/api/prices/sections", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ albumSlug, sectionName }),
     });
     if (res.ok) {
+      toast.success("Ajuste de seção removido");
       setData((prev) => {
         if (!prev) return prev;
         return { ...prev, sectionRules: prev.sectionRules.filter((r) => r.sectionName !== sectionName) };
       });
-    }
+    } else { toast.error("Erro ao remover ajuste"); }
+    } catch { toast.error("Erro de conexão"); }
   }
 
   // ── Handlers: Quantity Tiers ──
@@ -172,17 +182,20 @@ export default function PrecosAlbumEditor({
   }
 
   async function deleteTier(minQuantity: number) {
+    try {
     const res = await fetch("/api/prices/tiers", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ albumSlug, minQuantity }),
     });
     if (res.ok) {
+      toast.success("Faixa de desconto removida");
       setData((prev) => {
         if (!prev) return prev;
         return { ...prev, quantityTiers: prev.quantityTiers.filter((t) => t.minQuantity !== minQuantity) };
       });
-    }
+    } else { toast.error("Erro ao remover faixa"); }
+    } catch { toast.error("Erro de conexão"); }
   }
 
   if (loading) {
@@ -298,7 +311,7 @@ export default function PrecosAlbumEditor({
                     />
                     {hasOverride && (
                       <button
-                        onClick={() => deleteTypePrice(tc.type)}
+                        onClick={() => setConfirmDelete({ label: `regra de preço "${tc.label}"`, action: () => deleteTypePrice(tc.type) })}
                         className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
                         title="Remover e herdar global"
                       >
@@ -341,7 +354,7 @@ export default function PrecosAlbumEditor({
           saving={saving}
           saved={saved}
           onSave={saveSectionRule}
-          onDelete={deleteSectionRule}
+          onDelete={(name: string) => setConfirmDelete({ label: `ajuste de seção "${name}"`, action: () => deleteSectionRule(name) })}
         />
       )}
 
@@ -353,9 +366,19 @@ export default function PrecosAlbumEditor({
           saved={saved}
           albumSlug={albumSlug}
           onSave={saveTier}
-          onDelete={deleteTier}
+          onDelete={(qty: number) => setConfirmDelete({ label: `faixa de desconto a partir de ${qty} un.`, action: () => deleteTier(qty) })}
         />
       )}
+
+      <ConfirmDialog
+        open={!!confirmDelete}
+        title="Remover regra?"
+        description={`Tem certeza que deseja remover ${confirmDelete?.label || "esta regra"}?`}
+        confirmLabel="Remover"
+        variant="danger"
+        onConfirm={() => { confirmDelete?.action(); setConfirmDelete(null); }}
+        onCancel={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }

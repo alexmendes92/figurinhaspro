@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { STICKER_TYPE_CONFIG } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
 
 interface PriceRule {
   id: string;
@@ -11,6 +12,7 @@ interface PriceRule {
 }
 
 export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string }) {
+  const toast = useToast();
   const [rules, setRules] = useState<PriceRule[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
 import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -154,6 +155,7 @@ export default function InventoryManager({
   initialStock: StockMap;
   sellerPlan: string;
 }) {
+  const toast = useToast();
   const [stock, setStock] = useState<StockMap>(initialStock);
   const [activeSection, setActiveSection] = useState(0);
   const [filter, setFilter] = useState<"all" | "in-stock" | "missing">("all");
@@ -210,18 +212,22 @@ export default function InventoryManager({
       setStock(newStock);
 
       startSaving(async () => {
-        await fetch("/api/inventory", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            albumSlug: album.slug,
-            stickerCode,
-            quantity: Math.max(0, quantity),
-            customPrice: newStock[stickerCode]?.customPrice ?? null,
-          }),
-        });
-        setLastSaved(stickerCode);
-        setTimeout(() => setLastSaved(null), 1500);
+        try {
+          await fetch("/api/inventory", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              albumSlug: album.slug,
+              stickerCode,
+              quantity: Math.max(0, quantity),
+              customPrice: newStock[stickerCode]?.customPrice ?? null,
+            }),
+          });
+          setLastSaved(stickerCode);
+          setTimeout(() => setLastSaved(null), 1500);
+        } catch {
+          toast.error("Erro ao salvar estoque");
+        }
       });
     },
     [stock, album.slug]
@@ -245,17 +251,22 @@ export default function InventoryManager({
 
       if (items.length === 0) return;
 
-      await fetch("/api/inventory/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ albumSlug: album.slug, items }),
-      });
+      try {
+        await fetch("/api/inventory/bulk", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ albumSlug: album.slug, items }),
+        });
 
-      const newStock = { ...stock };
-      items.forEach((item) => {
-        newStock[item.stickerCode] = { quantity: 1, customPrice: null };
-      });
-      setStock(newStock);
+        const newStock = { ...stock };
+        items.forEach((item) => {
+          newStock[item.stickerCode] = { quantity: 1, customPrice: null };
+        });
+        setStock(newStock);
+        toast.success("Estoque atualizado");
+      } catch {
+        toast.error("Erro ao salvar estoque");
+      }
     });
   }
 
@@ -270,18 +281,22 @@ export default function InventoryManager({
       setStock(newStock);
 
       startSaving(async () => {
-        await fetch("/api/inventory", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            albumSlug: album.slug,
-            stickerCode,
-            quantity: current.quantity,
-            customPrice,
-          }),
-        });
-        setLastSaved(stickerCode);
-        setTimeout(() => setLastSaved(null), 1500);
+        try {
+          await fetch("/api/inventory", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              albumSlug: album.slug,
+              stickerCode,
+              quantity: current.quantity,
+              customPrice,
+            }),
+          });
+          setLastSaved(stickerCode);
+          setTimeout(() => setLastSaved(null), 1500);
+        } catch {
+          toast.error("Erro ao salvar estoque");
+        }
       });
       setPriceModalSticker(null);
     },
@@ -297,17 +312,22 @@ export default function InventoryManager({
 
       if (items.length === 0) return;
 
-      await fetch("/api/inventory/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ albumSlug: album.slug, items }),
-      });
+      try {
+        await fetch("/api/inventory/bulk", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ albumSlug: album.slug, items }),
+        });
 
-      const newStock = { ...stock };
-      items.forEach((item) => {
-        newStock[item.stickerCode] = { quantity: 0, customPrice: null };
-      });
-      setStock(newStock);
+        const newStock = { ...stock };
+        items.forEach((item) => {
+          newStock[item.stickerCode] = { quantity: 0, customPrice: null };
+        });
+        setStock(newStock);
+        toast.success("Estoque atualizado");
+      } catch {
+        toast.error("Erro ao salvar estoque");
+      }
     });
   }
 

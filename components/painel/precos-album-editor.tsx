@@ -586,7 +586,7 @@ function QuantityTiersTab({
       ) : (
         <>
           {/* Tabela de faixas */}
-          <div className="rounded-2xl border border-[var(--border)] overflow-hidden">
+          <div className="rounded-2xl border border-[var(--border)] overflow-hidden overflow-x-auto">
             {/* Header */}
             <div className="grid grid-cols-3 px-4 py-2 bg-zinc-900/50 border-b border-[var(--border)]">
               <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">A partir de</span>

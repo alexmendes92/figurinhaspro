@@ -43,6 +43,51 @@ export default function StoreAlbumView({
   const [showCheckout, setShowCheckout] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [search, setSearch] = useState("");
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [missingCodes, setMissingCodes] = useState<Set<string>>(new Set());
+  const [importText, setImportText] = useState("");
+
+  const filterByMissing = missingCodes.size > 0;
+
+  function parseMissingList(text: string): Set<string> {
+    // Aceita: vírgula, espaço, tab, quebra de linha, ponto-e-vírgula
+    const raw = text
+      .split(/[,;\t\n\r]+/)
+      .flatMap((chunk) => chunk.trim().split(/\s+/))
+      .map((code) => code.trim().toUpperCase())
+      .filter((code) => code.length > 0);
+    return new Set(raw);
+  }
+
+  function handleImport() {
+    const codes = parseMissingList(importText);
+    setMissingCodes(codes);
+    setShowImportModal(false);
+    setSearch("");
+  }
+
+  function clearMissingFilter() {
+    setMissingCodes(new Set());
+    setImportText("");
+  }
+
+  function addAllMissingToCart() {
+    const allStickers = album.sections.flatMap((s) => s.stickers);
+    const toAdd = allStickers.filter(
+      (s) =>
+        missingCodes.has(s.code.toUpperCase()) &&
+        (stockMap[s.code]?.quantity || 0) > 0 &&
+        !cartCodes.has(s.code)
+    );
+    setCart((prev) => {
+      const newItems: CartItem[] = toAdd.map((sticker) => ({
+        sticker,
+        price: getPrice(sticker, stockMap, priceMap),
+        quantity: 1,
+      }));
+      return [...prev, ...newItems];
+    });
+  }
 
   const section = album.sections[activeSection];
 
@@ -61,9 +106,23 @@ export default function StoreAlbumView({
       );
   }, [search, isSearching, album.sections, stockMap]);
 
+  // Figurinhas da lista que falta e que estão em estoque (cross-album)
+  const missingMatches = useMemo(() => {
+    if (!filterByMissing) return [];
+    return album.sections
+      .flatMap((s) => s.stickers)
+      .filter(
+        (s) =>
+          missingCodes.has(s.code.toUpperCase()) &&
+          (stockMap[s.code]?.quantity || 0) > 0
+      );
+  }, [filterByMissing, missingCodes, album.sections, stockMap]);
+
   const availableStickers = isSearching
     ? searchResults
-    : section.stickers.filter((s) => (stockMap[s.code]?.quantity || 0) > 0);
+    : filterByMissing
+      ? missingMatches
+      : section.stickers.filter((s) => (stockMap[s.code]?.quantity || 0) > 0);
 
   const totalAvailable = useMemo(
     () => album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0).length,
@@ -165,6 +224,23 @@ export default function StoreAlbumView({
             </div>
           </div>
 
+          <div className="flex items-center gap-2">
+          {/* Importar lista */}
+          <button
+            onClick={() => setShowImportModal(true)}
+            className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg border text-xs font-medium transition-all ${
+              filterByMissing
+                ? "border-blue-500/40 bg-blue-500/10 text-blue-400"
+                : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-amber-500/40 hover:text-zinc-200"
+            }`}
+            title="Importar lista que falta"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
+            </svg>
+            <span className="hidden sm:inline">{filterByMissing ? `Lista (${missingCodes.size})` : "Importar lista"}</span>
+          </button>
+
           {/* Carrinho */}
           <button
             onClick={() => setShowCart(true)}
@@ -184,6 +260,7 @@ export default function StoreAlbumView({
               </>
             )}
           </button>
+          </div>
         </div>
 
         {/* Barra de busca */}
@@ -215,8 +292,8 @@ export default function StoreAlbumView({
 
       {/* Conteúdo */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Sidebar seções — oculta durante busca */}
-        {!isSearching && (
+        {/* Sidebar seções — oculta durante busca ou filtro de lista */}
+        {!isSearching && !filterByMissing && (
           <aside className="lg:w-48 border-b lg:border-b-0 lg:border-r border-zinc-800 overflow-x-auto lg:overflow-y-auto">
             <div className="flex lg:flex-col p-2 gap-1">
               {album.sections.map((sec, i) => {
@@ -246,12 +323,46 @@ export default function StoreAlbumView({
 
         {/* Grid de figurinhas */}
         <div className="flex-1 overflow-y-auto p-4 lg:p-6">
+          {/* Banner filtro lista que falta */}
+          {filterByMissing && !isSearching && (
+            <div className="mb-4 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-blue-400">
+                  Lista que falta ativa
+                </p>
+                <p className="text-xs text-zinc-400">
+                  {missingCodes.size} códigos importados · {missingMatches.length} disponíveis em estoque
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {missingMatches.length > 0 && (
+                  <button
+                    onClick={addAllMissingToCart}
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors"
+                  >
+                    Adicionar todas ao carrinho
+                  </button>
+                )}
+                <button
+                  onClick={clearMissingFilter}
+                  className="px-3 py-1.5 rounded-lg border border-zinc-700 text-zinc-400 text-xs hover:text-white hover:border-zinc-500 transition-colors"
+                >
+                  Limpar filtro
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">
-              {isSearching ? `Resultados para "${search.trim()}"` : section.name}
+              {isSearching
+                ? `Resultados para "${search.trim()}"`
+                : filterByMissing
+                  ? "Figurinhas que faltam"
+                  : section.name}
             </h3>
             <span className="text-xs text-zinc-500">
-              {availableStickers.length} {isSearching ? "encontradas" : "disponíveis"}
+              {availableStickers.length} {isSearching ? "encontradas" : filterByMissing ? "em estoque" : "disponíveis"}
             </span>
           </div>
 
@@ -345,6 +456,59 @@ export default function StoreAlbumView({
           )}
         </div>
       </div>
+
+      {/* Modal importar lista que falta */}
+      {showImportModal && (
+        <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-semibold mb-1">Importar lista que falta</h3>
+            <p className="text-xs text-zinc-500 mb-4">
+              Cole os códigos das figurinhas que você precisa. Vamos mostrar só as que o vendedor tem em estoque.
+            </p>
+            <textarea
+              value={importText}
+              onChange={(e) => setImportText(e.target.value)}
+              placeholder={"Ex: 1, 2, 3, FWC1, BRA5, ARG10\n\nAceita separados por vírgula, espaço ou um por linha"}
+              rows={6}
+              className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all resize-none placeholder:text-zinc-600"
+            />
+            <p className="text-[10px] text-zinc-600 mt-1.5 mb-4">
+              {importText.trim()
+                ? `${parseMissingList(importText).size} códigos detectados`
+                : "Dica: copie direto de um grupo de WhatsApp ou planilha"}
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setShowImportModal(false)}
+                className="flex-1 py-2.5 rounded-xl border border-zinc-700 text-zinc-400 text-sm hover:bg-zinc-800 transition-colors"
+              >
+                Cancelar
+              </button>
+              {filterByMissing && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    clearMissingFilter();
+                    setShowImportModal(false);
+                  }}
+                  className="py-2.5 px-4 rounded-xl border border-red-500/30 text-red-400 text-sm hover:bg-red-500/10 transition-colors"
+                >
+                  Limpar
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleImport}
+                disabled={!importText.trim()}
+                className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:hover:bg-blue-600 text-white font-semibold text-sm transition-colors"
+              >
+                Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Carrinho drawer */}
       {showCart && (

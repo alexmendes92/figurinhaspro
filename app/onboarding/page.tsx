@@ -26,6 +26,8 @@ export default function OnboardingPage() {
   const [saving, setSaving] = useState(false);
   const [seller, setSeller] = useState<{ name: string; shopName: string; shopSlug: string; phone: string } | null>(null);
   const [selectedAlbum, setSelectedAlbum] = useState<string>("");
+  const [prices, setPrices] = useState({ regular: "1.50", foil: "4.00", shiny: "10.00" });
+  const [setupError, setSetupError] = useState("");
 
   useEffect(() => {
     fetch("/api/seller")
@@ -215,42 +217,79 @@ export default function OnboardingPage() {
                   Voltar
                 </button>
                 <button
-                  onClick={() => advanceStep(3)}
+                  onClick={async () => {
+                    setSaving(true);
+                    setSetupError("");
+                    try {
+                      // Inicializa estoque do álbum com qty=0 para todas as figurinhas
+                      const albumData = ALBUM_OPTIONS.find((a) => a.slug === selectedAlbum);
+                      if (albumData) {
+                        const res = await fetch("/api/inventory/setup", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ albumSlug: selectedAlbum }),
+                        });
+                        if (!res.ok) {
+                          const err = await res.json().catch(() => ({}));
+                          setSetupError(err.error || "Erro ao configurar album");
+                          setSaving(false);
+                          return;
+                        }
+                      }
+                      advanceStep(3);
+                    } catch {
+                      setSetupError("Erro de conexao. Tente novamente.");
+                      setSaving(false);
+                    }
+                  }}
                   disabled={saving || !selectedAlbum}
                   className="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold text-sm hover:from-amber-400 hover:to-amber-500 transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
                 >
-                  {saving ? "..." : "Continuar →"}
+                  {saving ? "Configurando album..." : "Continuar →"}
                 </button>
               </div>
+              {setupError && (
+                <p className="text-sm text-red-400 text-center">{setupError}</p>
+              )}
             </div>
           )}
 
-          {/* Step 3: Pricing tips + finish */}
+          {/* Step 3: Pricing — editável */}
           {step === 3 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-xl font-black text-white mb-1">Dicas de precos</h2>
-                <p className="text-sm text-gray-400">Sugestoes baseadas no mercado. Voce personaliza depois no painel.</p>
+                <h2 className="text-xl font-black text-white mb-1">Defina seus precos</h2>
+                <p className="text-sm text-gray-400">Valores iniciais por tipo de figurinha. Ajuste depois no painel.</p>
               </div>
 
               <div className="space-y-3">
                 {[
-                  { type: "Normal", price: "R$ 1,00 – R$ 2,00", desc: "Figurinhas comuns" },
-                  { type: "Especial (Foil)", price: "R$ 3,00 – R$ 5,00", desc: "Brilhantes e holograficas" },
-                  { type: "Brilhante (Shiny)", price: "R$ 8,00 – R$ 15,00", desc: "Raras, bordless, extra" },
+                  { key: "regular" as const, label: "Normal", desc: "Figurinhas comuns", placeholder: "1.50" },
+                  { key: "foil" as const, label: "Especial (Foil)", desc: "Brilhantes e holograficas", placeholder: "4.00" },
+                  { key: "shiny" as const, label: "Brilhante (Shiny)", desc: "Raras, bordless, extra", placeholder: "10.00" },
                 ].map((tip) => (
-                  <div key={tip.type} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                  <div key={tip.key} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                     <div>
-                      <p className="text-sm font-medium text-white">{tip.type}</p>
+                      <p className="text-sm font-medium text-white">{tip.label}</p>
                       <p className="text-xs text-gray-500">{tip.desc}</p>
                     </div>
-                    <span className="text-sm font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">{tip.price}</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-gray-500">R$</span>
+                      <input
+                        type="number"
+                        step="0.50"
+                        min="0.01"
+                        value={prices[tip.key]}
+                        onChange={(e) => setPrices((p) => ({ ...p, [tip.key]: e.target.value }))}
+                        className="w-20 text-right font-[family-name:var(--font-geist-mono)] text-amber-400 font-bold text-sm py-1.5 px-2 rounded-lg bg-white/[0.04] border border-white/[0.08] focus:border-amber-500/40 focus:outline-none"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
 
               <div className="p-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20">
-                <p className="text-sm text-amber-400 font-medium">Voce pode definir precos por album, por tipo ou individualmente na pagina de Precos do painel.</p>
+                <p className="text-sm text-amber-400 font-medium">Voce pode ajustar por album, por secao ou por figurinha individual depois.</p>
               </div>
 
               <div className="flex gap-3">
@@ -261,11 +300,29 @@ export default function OnboardingPage() {
                   Voltar
                 </button>
                 <button
-                  onClick={() => advanceStep(4)}
+                  onClick={async () => {
+                    setSaving(true);
+                    try {
+                      // Salvar preços por tipo
+                      for (const [type, val] of Object.entries(prices)) {
+                        const price = parseFloat(val);
+                        if (price > 0) {
+                          await fetch("/api/prices", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ stickerType: type, price }),
+                          });
+                        }
+                      }
+                      advanceStep(4);
+                    } catch {
+                      setSaving(false);
+                    }
+                  }}
                   disabled={saving}
                   className="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold text-sm hover:from-amber-400 hover:to-amber-500 transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
                 >
-                  {saving ? "Preparando seu painel..." : "Abrir meu painel →"}
+                  {saving ? "Salvando precos..." : "Abrir meu painel →"}
                 </button>
               </div>
             </div>

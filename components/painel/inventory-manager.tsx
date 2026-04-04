@@ -163,7 +163,7 @@ export default function InventoryManager({
   const [priceModalSticker, setPriceModalSticker] = useState<Sticker | null>(null);
 
   // PRO+ check para preço customizado
-  const canUseCustomPrices = sellerPlan === "PRO" || sellerPlan === "UNLIMITED";
+  const canUseCustomPrices = true; // TODO: restaurar gate de plano depois → sellerPlan === "PRO" || sellerPlan === "UNLIMITED"
 
   const section = album.sections[activeSection];
   const isSearching = search.trim().length >= 2;

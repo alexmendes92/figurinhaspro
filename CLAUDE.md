@@ -2,10 +2,13 @@
 
 # FigurinhasPro
 
+Repo: `github.com/amendes92/figurinhaspro` (privado) | Branch: `master`
+
 ## Stack
 Next.js 16.2.1 + React 19.2 + Prisma 7.5 + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe
 
 ## Producao
+- **Vercel project:** `album-digital`
 - **URL**: https://album-digital-ashen.vercel.app
 - **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `lib/db.ts`)
 - **Auth**: iron-session (cookies criptografados) + bcryptjs (hash de senhas)
@@ -26,15 +29,22 @@ Configurados em `.claude/settings.json`:
 - **Seguranca**: bloqueia `git add` de `.env`, `dev.db`, credentials
 - **Destrutivos**: bloqueia `rm -rf`, `drop table`, `git push --force`
 
-## Deploy (OBRIGATORIO)
+## Deploy (OBRIGATORIO — NUNCA PULAR)
 
-Apos CADA alteracao que builda com sucesso:
+Apos CADA alteracao que builda com sucesso, executar os 3 passos:
 ```bash
 git add <arquivos> && git commit -m "tipo(escopo): descricao"
 git push
-vercel deploy --prod
+npx vercel deploy --prod
 ```
-**Sempre** commit → push → `vercel deploy --prod`. Nunca terminar sem deploy em producao.
+
+**Regras inviolaveis:**
+- **NUNCA** terminar uma tarefa sem fazer deploy em producao
+- **NUNCA** perguntar "quer que eu faca deploy?" — SEMPRE fazer automaticamente
+- **NUNCA** acumular multiplos commits sem deploy — deployar apos cada commit
+- O deploy faz parte da tarefa. Tarefa sem deploy = tarefa incompleta
+- Se `vercel deploy --prod` falhar, investigar e resolver antes de declarar concluido
+- Se o schema Prisma mudou, rodar `npx prisma db push` antes do deploy
 
 ## Comandos
 ```bash
@@ -42,6 +52,11 @@ npm run dev        # Dev server (Turbopack, porta 3009)
 npm run build      # Build producao (prisma generate && next build)
 npm run lint       # ESLint
 vercel deploy --prod  # Deploy producao (obrigatorio apos push)
+
+# Stripe CLI (testar webhooks localmente)
+stripe listen --forward-to localhost:3009/api/stripe/webhook
+stripe trigger checkout.session.completed
+stripe logs tail
 ```
 
 ## Arquivos-chave
@@ -54,6 +69,7 @@ vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 | `lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
 | `lib/stripe.ts` | Cliente Stripe |
 | `lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
+| `lib/price-resolver.ts` | Resolucao centralizada de precos (3 eixos) + mapa sticker→secao |
 | `lib/cart-context.tsx` | Contexto do carrinho (client) |
 | `prisma.config.ts` | Config centralizada do Prisma 7 |
-| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, CustomAlbum, SubscriptionEvent |
+| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent |

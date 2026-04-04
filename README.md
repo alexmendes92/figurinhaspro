@@ -1,6 +1,6 @@
 # FigurinhasPro
 
-> App moderno de album digital de figurinhas com loja, painel administrativo e controle de estoque. Construido com Next.js 16 + Prisma + SQLite.
+> App moderno de album digital de figurinhas com loja, painel administrativo e controle de estoque. Construido com Next.js 16 + Prisma + Neon Postgres.
 
 ---
 
@@ -11,7 +11,7 @@
 | Framework | Next.js 16.2 (App Router) |
 | Frontend | React 19 + TypeScript 5 |
 | Estilizacao | Tailwind CSS 4 |
-| Banco de dados | SQLite via Better-SQLite3 + Prisma 7.5 |
+| Banco de dados | Neon Postgres via `@prisma/adapter-neon` + Prisma 7.5 |
 | Validacao | Zod 4 |
 | Imagens | Sharp |
 | Compilador | React Compiler (babel-plugin-react-compiler) |
@@ -54,7 +54,7 @@ FigurinhasPro/
 │   └── painel/            → Componentes do painel
 │
 ├── lib/
-│   ├── db.ts              → Conexao Prisma/SQLite
+│   ├── db.ts              → Conexao Prisma/Neon (Lazy Proxy)
 │   ├── auth.ts            → Logica de autenticacao
 │   ├── albums.ts          → Dados de albums
 │   ├── albums-data.ts     → Catalogo de albums
@@ -63,18 +63,18 @@ FigurinhasPro/
 │   ├── cart-context.tsx   → Contexto do carrinho
 │   └── toast-context.tsx  → Contexto de notificacoes
 │
-├── public/                → Assets estaticos
-└── dev.db                 → Banco SQLite local
+└── public/                → Assets estaticos
 ```
 
 ## Setup Local
 
 ```bash
 npm install
+# Configurar DATABASE_URL no .env.local apontando para Neon Postgres
 npm run dev
 ```
 
-O banco SQLite (`dev.db`) ja esta incluido no projeto.
+O banco de producao e Neon Postgres. A variavel `DATABASE_URL` deve apontar para a connection string do Neon (formato `postgresql://...`).
 
 ## Comandos
 
@@ -103,4 +103,8 @@ O banco SQLite (`dev.db`) ja esta incluido no projeto.
 
 ## Hospedagem
 
-Configurado para Vercel (`.vercel/` presente). SQLite local funciona em dev mas tem limitacoes em serverless.
+Deploy na **Vercel** com banco **Neon Postgres**.
+- URL: https://album-digital-ashen.vercel.app
+- Env vars configuradas no painel Vercel (`DATABASE_URL`, `SESSION_SECRET`)
+- `.env` e `.env.local` excluidos do deploy via `.vercelignore`
+- Build script: `prisma generate && next build`

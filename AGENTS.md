@@ -76,12 +76,15 @@ Toda config agora fica em `prisma.config.ts` (ja configurado neste projeto):
 - URLs SQLite resolvem relativo ao config file, nao ao schema
 
 ### Driver Adapters (obrigatorio)
-Prisma 7 exige driver adapter explicito. Este projeto usa:
+Prisma 7 exige driver adapter explicito. Este projeto usa **PrismaNeon** (WebSocket Pool):
 ```ts
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
-const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` })
-const prisma = new PrismaClient({ adapter })
+import { PrismaNeon } from "@prisma/adapter-neon";
+const adapter = new PrismaNeon({ connectionString: url }, {});
+const prisma = new PrismaClient({ adapter });
 ```
+- PrismaNeon usa WebSocket Pool — suporta transacoes (`createMany`, etc.)
+- PrismaNeonHttp (HTTP) NAO suporta transacoes — nao usar
+- `lib/db.ts` usa Lazy Proxy para evitar conexao durante build
 
 ### Generator Provider
 O nome do provider mudou em Prisma 7:
@@ -146,7 +149,7 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 
 | Camada | Detalhes |
 |--------|----------|
-| DB | SQLite local (`dev.db`) via `@prisma/adapter-better-sqlite3` |
+| DB | Neon Postgres (producao) via `@prisma/adapter-neon` (WebSocket Pool) |
 | ORM | Prisma 7.5 com `prisma.config.ts` centralizado |
 | Auth | Custom (cookie-based em `lib/auth.ts`) |
 | Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts |

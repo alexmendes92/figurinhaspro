@@ -1,6 +1,10 @@
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { albums } from "@/lib/albums";
 import Link from "next/link";
+import CopyLinkButton from "@/components/painel/copy-link-button";
+
+const totalCatalog = albums.reduce((s, a) => s + a.totalStickers, 0);
 
 export default async function DashboardPage() {
   const seller = await getSession();
@@ -31,6 +35,8 @@ export default async function DashboardPage() {
     QUOTE: "Orçamento", CONFIRMED: "Confirmado", PAID: "Pago",
     SHIPPED: "Enviado", DELIVERED: "Entregue", CANCELLED: "Cancelado",
   };
+
+  const storeUrl = `/loja/${seller.shopSlug}`;
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl slide-up">
@@ -83,8 +89,8 @@ export default async function DashboardPage() {
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-5">
           <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-3">Catálogo</p>
-          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">7.122</p>
-          <p className="text-[11px] text-gray-500 mt-1">Figurinhas em 13 Copas</p>
+          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{totalCatalog.toLocaleString("pt-BR")}</p>
+          <p className="text-[11px] text-gray-500 mt-1">Figurinhas em {albums.length} Copas</p>
         </div>
       </div>
 
@@ -97,12 +103,15 @@ export default async function DashboardPage() {
               <p className="text-sm font-bold text-white">Sua vitrine</p>
               <p className="text-[11px] text-gray-500 mt-0.5">Compartilhe com seus clientes</p>
             </div>
-            <Link href={`/loja/${seller.shopSlug}`} target="_blank" className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20">
+            <Link href={storeUrl} target="_blank" className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20">
               Abrir vitrine
             </Link>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-sm text-amber-400">
-            /loja/{seller.shopSlug}
+          <div className="flex items-center gap-2">
+            <div className="flex-1 px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-sm text-amber-400 truncate">
+              {storeUrl}
+            </div>
+            <CopyLinkButton path={storeUrl} />
           </div>
         </div>
 

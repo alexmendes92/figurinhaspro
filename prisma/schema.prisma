@@ -26,6 +26,10 @@ model Seller {
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
 
+  // Password reset
+  resetToken       String?
+  resetTokenExpiry DateTime?
+
   // Onboarding
   onboardingStep Int @default(0)
 

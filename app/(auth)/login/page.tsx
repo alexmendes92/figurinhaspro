@@ -103,9 +103,9 @@ export default function LoginPage() {
                 </button>
               </div>
               <div className="flex justify-end mt-2">
-                <span className="text-[12px] text-gray-500 cursor-not-allowed" title="Em breve">
+                <Link href="/esqueci-senha" className="text-[12px] text-gray-500 hover:text-amber-400 transition-colors">
                   Esqueci minha senha
-                </span>
+                </Link>
               </div>
             </div>
 

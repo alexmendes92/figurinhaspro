@@ -48,37 +48,63 @@ export default async function LojaPage({
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-zinc-800/50">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20">
-              <span className="text-black font-bold text-sm font-[family-name:var(--font-geist-mono)]">
-                {seller.shopName[0].toUpperCase()}
-              </span>
+      {/* Header com identidade */}
+      <header className="sticky top-0 z-50 bg-[#0b0e14]/90 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
+                <span className="text-black font-bold text-sm font-[family-name:var(--font-geist-mono)]">
+                  {seller.shopName[0].toUpperCase()}
+                </span>
+              </div>
+              <div className="min-w-0">
+                <h1 className="text-sm font-bold text-white truncate">{seller.shopName}</h1>
+                <p className="text-[10px] text-gray-500 font-[family-name:var(--font-geist-mono)]">
+                  {totalAvailable} figurinhas disponiveis
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-sm font-bold text-white">{seller.shopName}</h1>
-              <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
-                {totalAvailable} figurinhas disponíveis
-              </p>
-            </div>
+
+            {seller.phone && (
+              <a
+                href={`https://wa.me/55${seller.phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white text-xs font-bold transition-all shadow-lg shadow-green-600/20 shrink-0"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                </svg>
+                <span className="hidden sm:inline">{seller.phone}</span>
+                <span className="sm:hidden">WhatsApp</span>
+              </a>
+            )}
           </div>
 
-          {seller.phone && (
-            <a
-              href={`https://wa.me/55${seller.phone.replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white text-xs font-bold transition-all shadow-lg shadow-green-600/20"
-              aria-label={`Contatar via WhatsApp`}
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-              </svg>
-              <span className="hidden sm:inline">{seller.phone}</span>
-              <span className="sm:hidden">WhatsApp</span>
-            </a>
+          {/* Info expandida — descrição, horário, pagamento */}
+          {(seller.shopDescription || seller.businessHours || seller.paymentMethods) && (
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-[10px] text-gray-500">
+              {seller.shopDescription && (
+                <span className="text-gray-400">{seller.shopDescription}</span>
+              )}
+              {seller.businessHours && (
+                <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {seller.businessHours}
+                </span>
+              )}
+              {seller.paymentMethods && (
+                <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                  </svg>
+                  {seller.paymentMethods}
+                </span>
+              )}
+            </div>
           )}
         </div>
       </header>

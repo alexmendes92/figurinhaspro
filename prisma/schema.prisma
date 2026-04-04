@@ -13,9 +13,12 @@ model Seller {
   password  String
   phone     String?
   shopName  String
-  shopSlug  String   @unique
-  logo      String?
-  plan      String   @default("FREE")
+  shopSlug        String   @unique
+  logo            String?
+  shopDescription String?
+  businessHours   String?
+  paymentMethods  String?
+  plan            String   @default("FREE")
 
   // Stripe billing
   stripeCustomerId       String?  @unique

@@ -68,6 +68,9 @@ export default async function MinhaLojaPage() {
       <LojaEditor
         shopName={seller.shopName}
         phone={seller.phone}
+        shopDescription={seller.shopDescription}
+        businessHours={seller.businessHours}
+        paymentMethods={seller.paymentMethods}
         email={seller.email}
         plan={seller.plan}
       />

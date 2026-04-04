@@ -6,14 +6,28 @@ import { useToast } from "@/lib/toast-context";
 interface LojaEditorProps {
   shopName: string;
   phone: string | null;
+  shopDescription: string | null;
+  businessHours: string | null;
+  paymentMethods: string | null;
   email: string;
   plan: string;
 }
 
-export default function LojaEditor({ shopName: initialName, phone: initialPhone, email, plan }: LojaEditorProps) {
+export default function LojaEditor({
+  shopName: initialName,
+  phone: initialPhone,
+  shopDescription: initialDesc,
+  businessHours: initialHours,
+  paymentMethods: initialPayment,
+  email,
+  plan,
+}: LojaEditorProps) {
   const toast = useToast();
   const [shopName, setShopName] = useState(initialName);
   const [phone, setPhone] = useState(initialPhone || "");
+  const [shopDescription, setShopDescription] = useState(initialDesc || "");
+  const [businessHours, setBusinessHours] = useState(initialHours || "");
+  const [paymentMethods, setPaymentMethods] = useState(initialPayment || "");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -24,7 +38,7 @@ export default function LojaEditor({ shopName: initialName, phone: initialPhone,
       const res = await fetch("/api/seller", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ shopName, phone }),
+        body: JSON.stringify({ shopName, phone, shopDescription, businessHours, paymentMethods }),
       });
       if (res.ok) {
         setSaved(true);
@@ -40,15 +54,23 @@ export default function LojaEditor({ shopName: initialName, phone: initialPhone,
     setSaving(false);
   }
 
+  function resetFields() {
+    setShopName(initialName);
+    setPhone(initialPhone || "");
+    setShopDescription(initialDesc || "");
+    setBusinessHours(initialHours || "");
+    setPaymentMethods(initialPayment || "");
+    setEditing(false);
+  }
+
+  const inputClass = "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]";
+  const emptyClass = "text-sm font-medium text-zinc-600";
+
   const infoItems = [
     {
       label: "Nome da loja",
       value: editing ? (
-        <input
-          value={shopName}
-          onChange={(e) => setShopName(e.target.value)}
-          className="bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]"
-        />
+        <input value={shopName} onChange={(e) => setShopName(e.target.value)} className={inputClass} />
       ) : (
         <span className="text-sm font-medium">{shopName}</span>
       ),
@@ -56,16 +78,33 @@ export default function LojaEditor({ shopName: initialName, phone: initialPhone,
     {
       label: "WhatsApp",
       value: editing ? (
-        <input
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="(11) 99999-9999"
-          className="bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]"
-        />
+        <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(11) 99999-9999" className={inputClass} />
       ) : (
-        <span className={`text-sm font-medium ${!phone ? "text-zinc-600" : ""}`}>
-          {phone || "Não configurado"}
-        </span>
+        <span className={phone ? "text-sm font-medium" : emptyClass}>{phone || "Nao configurado"}</span>
+      ),
+    },
+    {
+      label: "Descricao",
+      value: editing ? (
+        <input value={shopDescription} onChange={(e) => setShopDescription(e.target.value.slice(0, 200))} placeholder="Sobre sua loja (max 200)" className={inputClass} />
+      ) : (
+        <span className={shopDescription ? "text-sm font-medium" : emptyClass}>{shopDescription || "Nao configurado"}</span>
+      ),
+    },
+    {
+      label: "Horario",
+      value: editing ? (
+        <input value={businessHours} onChange={(e) => setBusinessHours(e.target.value)} placeholder="Seg-Sex 9h-18h" className={inputClass} />
+      ) : (
+        <span className={businessHours ? "text-sm font-medium" : emptyClass}>{businessHours || "Nao configurado"}</span>
+      ),
+    },
+    {
+      label: "Pagamento",
+      value: editing ? (
+        <input value={paymentMethods} onChange={(e) => setPaymentMethods(e.target.value)} placeholder="PIX, Cartao" className={inputClass} />
+      ) : (
+        <span className={paymentMethods ? "text-sm font-medium" : emptyClass}>{paymentMethods || "Nao configurado"}</span>
       ),
     },
     {
@@ -94,11 +133,7 @@ export default function LojaEditor({ shopName: initialName, phone: initialPhone,
           {editing ? (
             <div className="flex gap-1.5">
               <button
-                onClick={() => {
-                  setShopName(initialName);
-                  setPhone(initialPhone || "");
-                  setEditing(false);
-                }}
+                onClick={resetFields}
                 className="text-[10px] text-zinc-500 hover:text-white px-2 py-1 rounded-lg border border-[var(--border)] transition-colors"
               >
                 Cancelar

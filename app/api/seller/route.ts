@@ -13,6 +13,9 @@ export async function GET() {
     shopName: seller.shopName,
     shopSlug: seller.shopSlug,
     phone: seller.phone,
+    shopDescription: seller.shopDescription,
+    businessHours: seller.businessHours,
+    paymentMethods: seller.paymentMethods,
     plan: seller.plan,
     onboardingStep: seller.onboardingStep,
     createdAt: seller.createdAt,
@@ -24,7 +27,7 @@ export async function PATCH(req: NextRequest) {
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
 
   const body = await req.json();
-  const { shopName, phone, onboardingStep } = body;
+  const { shopName, phone, onboardingStep, shopDescription, businessHours, paymentMethods } = body;
 
   const data: Record<string, string | number | null> = {};
   if (shopName && typeof shopName === "string" && shopName.trim()) {
@@ -33,8 +36,17 @@ export async function PATCH(req: NextRequest) {
   if (typeof phone === "string") {
     data.phone = phone.trim() || null;
   }
-  if (typeof onboardingStep === "number" && onboardingStep >= 0 && onboardingStep <= 4) {
+  if (typeof onboardingStep === "number" && onboardingStep >= 0 && onboardingStep <= 5) {
     data.onboardingStep = onboardingStep;
+  }
+  if (typeof shopDescription === "string") {
+    data.shopDescription = shopDescription.trim().slice(0, 200) || null;
+  }
+  if (typeof businessHours === "string") {
+    data.businessHours = businessHours.trim() || null;
+  }
+  if (typeof paymentMethods === "string") {
+    data.paymentMethods = paymentMethods.trim() || null;
   }
 
   if (Object.keys(data).length === 0) {

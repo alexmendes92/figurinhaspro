@@ -3,7 +3,14 @@
 # FigurinhasPro
 
 ## Stack
-Next.js 16.2.1 + React 19.2 + Prisma 7.5 + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler
+Next.js 16.2.1 + React 19.2 + Prisma 7.5 + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe
+
+## Producao
+- **URL**: https://album-digital-ashen.vercel.app
+- **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `lib/db.ts`)
+- **Auth**: iron-session (cookies criptografados) + bcryptjs (hash de senhas)
+- **Pagamentos**: Stripe SDK (checkout, webhook, portal) — endpoints em `api/stripe/*`
+- **Planos**: FREE / PRO / UNLIMITED — gates em `lib/plan-limits.ts` (temporariamente liberados)
 
 ## REGRAS XP (enforced por hooks)
 
@@ -31,8 +38,21 @@ vercel deploy --prod
 
 ## Comandos
 ```bash
-npm run dev        # Dev server (Turbopack)
-npm run build      # Build producao
+npm run dev        # Dev server (Turbopack, porta 3009)
+npm run build      # Build producao (prisma generate && next build)
 npm run lint       # ESLint
 vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 ```
+
+## Arquivos-chave
+
+| Arquivo | Funcao |
+|---------|--------|
+| `lib/db.ts` | Conexao Prisma/Neon (Lazy Proxy — evita conexao durante build) |
+| `lib/auth.ts` | Sessao iron-session + lookup do seller |
+| `lib/plan-limits.ts` | Limites por plano + guards (`checkStickerLimit`, `hasFeature`) |
+| `lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
+| `lib/stripe.ts` | Cliente Stripe |
+| `lib/cart-context.tsx` | Contexto do carrinho (client) |
+| `prisma.config.ts` | Config centralizada do Prisma 7 |
+| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SubscriptionEvent |

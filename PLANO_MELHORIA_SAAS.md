@@ -1,6 +1,7 @@
 # FigurinhasPro — Plano de Melhoria e Finalização para Vendas SaaS
 
-> Data: 03/04/2026 | Status: Planejamento | Versão: 1.0
+> Data: 03/04/2026 | Status: EM EXECUCAO | Versao: 1.1 (atualizado 04/04/2026)
+> **NOTA:** Este e o plano v1. Ver `PLANO_SAAS_V2.md` para a versao corrigida e ativa.
 
 ---
 
@@ -10,22 +11,25 @@ O FigurinhasPro é um MVP funcional com stack moderna (Next.js 16 + Prisma 7 + S
 
 | Área | Status | Detalhe |
 |------|--------|---------|
-| Landing page com pricing | ✅ Pronto | 3 planos (Starter/Pro/Ilimitado) com preços definidos |
-| Registro e login | ✅ Pronto | Cookie-based, funcional |
-| Catálogo de figurinhas | ✅ Pronto | 7.122 figurinhas, 13 Copas |
-| Estoque visual | ✅ Pronto | Grid com edição sticker-a-sticker |
-| Preços (global + custom) | ✅ Pronto | Regular/Foil/Shiny + override individual |
-| Vitrine pública (`/loja/[slug]`) | ✅ Pronto | Carrinho, checkout, geração de orçamento |
+| Landing page com pricing | ✅ Pronto | 3 planos (Starter/Pro/Ilimitado) com precos definidos |
+| Registro e login | ✅ Pronto | iron-session + bcryptjs (seguro) |
+| Catalogo de figurinhas | ✅ Pronto | 7.122 figurinhas, 13 Copas |
+| Estoque visual | ✅ Pronto | Grid com edicao sticker-a-sticker + bulk update |
+| Precos (global + custom) | ✅ Pronto | Normal/Especial/Brilhante + override por album |
+| Vitrine publica (`/loja/[slug]`) | ✅ Pronto | Carrinho, checkout, geracao de orcamento |
 | Pedidos com workflow | ✅ Pronto | QUOTE → CONFIRMED → PAID → SHIPPED → DELIVERED |
 | WhatsApp (links) | ✅ Pronto | wa.me com mensagem formatada |
-| **Pagamentos (Stripe)** | ❌ Ausente | Nenhuma integração de cobrança |
-| **Enforcement de planos** | ❌ Ausente | Limites não verificados nas APIs |
-| **Banco de produção** | ❌ Ausente | SQLite não funciona em serverless (Vercel) |
-| **Segurança de senhas** | ❌ Ausente | Senhas em texto puro |
-| **Email transacional** | ❌ Ausente | Nenhuma notificação por email |
-| **Relatórios/Analytics** | ❌ Ausente | Dashboard com métricas básicas, sem gráficos |
-| **SEO e conversão** | ⚠️ Parcial | Landing page existe, mas sem meta tags, OG, depoimentos |
-| **Onboarding do seller** | ⚠️ Parcial | Registro cria conta, mas não guia o usuário |
+| **Banco de producao** | ✅ FEITO | Neon Postgres via PrismaNeon (migrado 04/04) |
+| **Seguranca de senhas** | ✅ FEITO | bcryptjs hash + iron-session (migrado 04/04) |
+| **SEO e conversao** | ✅ FEITO | Meta tags, OpenGraph, Twitter cards, keywords |
+| **Onboarding do seller** | ✅ FEITO | Pagina `/onboarding` + checklist |
+| **Mobile optimization** | ✅ FEITO | Viewport cover, safe-area, bottom nav, touch targets |
+| **Legal (LGPD)** | ✅ FEITO | `/termos` + `/privacidade` |
+| **Error pages** | ✅ FEITO | 404, error generico, loading states |
+| **Pagamentos (Stripe)** | ⚠️ Parcial | SDK instalado, endpoints criados — falta ativar em producao |
+| **Enforcement de planos** | ⚠️ Parcial | `plan-limits.ts` criado — guards temporariamente desabilitados |
+| **Email transacional** | ❌ Ausente | Nenhuma notificacao por email |
+| **Relatorios/Analytics** | ❌ Ausente | Dashboard com metricas basicas, sem graficos |
 
 ---
 

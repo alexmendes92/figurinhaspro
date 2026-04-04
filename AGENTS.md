@@ -6,8 +6,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # FigurinhasPro — Guia para Agentes IA
 
-> Atualizado via Context7 em 2026-04-03. Versoes verificadas:
+> Atualizado em 2026-04-04. Versoes verificadas:
 > Next.js 16.2.1 | React 19.2.4 | Prisma 7.5.0 | Tailwind CSS 4 | Zod 4.3.6
+> iron-session 8 | bcryptjs 3 | Stripe SDK 22 | Sharp 0.34
 
 ---
 
@@ -141,7 +142,8 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 - React Compiler ativado via `babel-plugin-react-compiler` + `reactCompiler: true` no next.config.ts
 - `useMemo`, `useCallback`, `React.memo` sao **desnecessarios** — o compiler otimiza automaticamente
 - Server Components sao o padrao. `'use client'` so quando necessario
-- Este projeto usa `CartProvider` e `ToastProvider` como Client Components no layout raiz
+- Layout raiz usa `CartProvider` e `ToastProvider` como Client Components
+- Viewport configurado em `layout.tsx` via `export const viewport: Viewport` (NAO metadata.viewport)
 
 ---
 
@@ -151,10 +153,30 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 |--------|----------|
 | DB | Neon Postgres (producao) via `@prisma/adapter-neon` (WebSocket Pool) |
 | ORM | Prisma 7.5 com `prisma.config.ts` centralizado |
-| Auth | Custom (cookie-based em `lib/auth.ts`) |
-| Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts |
+| Auth | iron-session (cookies criptografados) + bcryptjs (hash senhas) em `lib/auth.ts` |
+| Pagamentos | Stripe SDK — checkout, webhook, customer portal (`api/stripe/*`) |
+| Planos | FREE / PRO / UNLIMITED com gates em `lib/plan-limits.ts` |
+| Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts, mobile-first responsive |
 | Imagens | Sharp para processamento, `images.unoptimized: true` |
 | Build | Turbopack (default Next.js 16), React Compiler ativado |
+| Deploy | Vercel — `commit → push → vercel deploy --prod` |
+
+### Padroes Importantes
+
+- **Tipos de figurinha**: Centralizados em `lib/sticker-types.ts`. Valores internos (`regular`, `foil`, `shiny`) nunca mudam — apenas labels visiveis (`Normal`, `Especial`, `Brilhante`). Sempre usar `getStickerTypeConfig()` / `getStickerTypeShortLabel()` para labels.
+- **Lazy Proxy DB**: `lib/db.ts` usa `Proxy` para inicializar conexao somente no primeiro acesso. Isso permite build sem DATABASE_URL ativo.
+- **Plan guards**: `lib/plan-limits.ts` exporta `checkStickerLimit()`, `checkOrderLimit()`, `checkAlbumLimit()`, `hasFeature()`. Temporariamente desabilitados (todos retornam `true`) — TODO restaurar.
+- **Mobile-first**: Viewport com `viewportFit: "cover"`, safe-area-bottom, bottom nav no painel, touch targets minimo 44px.
+
+### Schema Prisma (modelos)
+
+| Modelo | Funcao |
+|--------|--------|
+| `Seller` | Vendedor — plano, Stripe billing, onboarding |
+| `Inventory` | Estoque por figurinha (unique: sellerId+albumSlug+stickerCode) |
+| `PriceRule` | Regras de preco por tipo (global ou por album) |
+| `Order` + `OrderItem` | Pedidos com workflow QUOTE→CONFIRMED→PAID→SHIPPED→DELIVERED |
+| `SubscriptionEvent` | Log de eventos Stripe |
 
 ### Alias de Imports
 ```json

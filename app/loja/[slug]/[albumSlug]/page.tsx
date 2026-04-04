@@ -31,14 +31,31 @@ export default async function LojaAlbumPage({
     };
   }
 
-  // Busca regras de preço
+  // Busca regras de preço (globais + específicas deste álbum)
   const priceRules = await db.priceRule.findMany({
-    where: { sellerId: seller.id },
+    where: {
+      sellerId: seller.id,
+      OR: [
+        { albumSlug: null },
+        { albumSlug: "" },
+        { albumSlug },
+      ],
+    },
   });
 
+  // Monta priceMap com prioridade: albumRule > globalRule
   const priceMap: Record<string, number> = {};
+  // Primeiro globais (albumSlug null ou "")
   for (const rule of priceRules) {
-    priceMap[rule.stickerType] = rule.price;
+    if (!rule.albumSlug) {
+      priceMap[rule.stickerType] = rule.price;
+    }
+  }
+  // Depois album-specific (sobrescreve)
+  for (const rule of priceRules) {
+    if (rule.albumSlug === albumSlug) {
+      priceMap[rule.stickerType] = rule.price;
+    }
   }
 
   return (

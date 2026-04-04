@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "@neondatabase/serverless";
+import { PrismaNeon } from "@prisma/adapter-neon";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
@@ -7,17 +9,13 @@ function createClient(): PrismaClient {
 
   if (!url.startsWith("postgres")) {
     throw new Error(
-      "DATABASE_URL must be a Postgres connection string (Neon). " +
-        "SQLite is no longer supported. Get a free Neon DB at https://neon.tech"
+      "DATABASE_URL must be a Postgres connection string (Neon)."
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { neon } = require("@neondatabase/serverless");
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { PrismaNeon } = require("@prisma/adapter-neon");
-  const sql = neon(url);
-  const adapter = new PrismaNeon(sql);
+  const pool = new Pool({ connectionString: url });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const adapter = new PrismaNeon(pool as any);
   return new PrismaClient({ adapter });
 }
 

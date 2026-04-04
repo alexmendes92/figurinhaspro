@@ -63,6 +63,10 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+    console.error("Login error:", error);
+    return NextResponse.json(
+      { error: "Erro interno", detail: String(error) },
+      { status: 500 }
+    );
   }
 }

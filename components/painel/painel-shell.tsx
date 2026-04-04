@@ -30,7 +30,7 @@ const mobileNav = [
   nav[4], // Loja
 ];
 
-export default function PainelShell({ seller, children }: { seller: SellerInfo; children: React.ReactNode }) {
+export default function PainelShell({ seller, children, pendingOrders = 0 }: { seller: SellerInfo; children: React.ReactNode; pendingOrders?: number }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -87,7 +87,12 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
                 {!collapsed && (
                   <>
                     {item.label}
-                    {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />}
+                    {item.href === "/painel/pedidos" && pendingOrders > 0 && (
+                      <span className="ml-auto px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[9px] font-bold leading-none min-w-[18px] text-center">
+                        {pendingOrders > 99 ? "99+" : pendingOrders}
+                      </span>
+                    )}
+                    {item.href !== "/painel/pedidos" && active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />}
                   </>
                 )}
                 {/* Tooltip no modo colapsado */}
@@ -163,13 +168,20 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors active:bg-white/5 ${
+                className={`relative flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors active:bg-white/5 ${
                   active ? "text-amber-400" : "text-gray-500"
                 }`}
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                </svg>
+                <div className="relative">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                  </svg>
+                  {item.href === "/painel/pedidos" && pendingOrders > 0 && (
+                    <span className="absolute -top-1.5 -right-2 px-1 py-0.5 rounded-full bg-red-500 text-white text-[8px] font-bold leading-none min-w-[14px] text-center">
+                      {pendingOrders > 9 ? "9+" : pendingOrders}
+                    </span>
+                  )}
+                </div>
                 <span className="text-[10px] font-medium">{item.label}</span>
               </Link>
             );

@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { albums } from "@/lib/albums";
 import Link from "next/link";
 import CopyLinkButton from "@/components/painel/copy-link-button";
+import GettingStarted from "@/components/painel/getting-started";
 
 const totalCatalog = albums.reduce((s, a) => s + a.totalStickers, 0);
 
@@ -18,10 +19,13 @@ export default async function DashboardPage() {
     db.order.findMany({ where: { sellerId: seller.id }, orderBy: { createdAt: "desc" }, take: 6, include: { items: true } }),
   ]);
 
-  const revenue = await db.order.aggregate({
-    where: { sellerId: seller.id, status: { in: ["CONFIRMED", "PAID", "SHIPPED", "DELIVERED"] } },
-    _sum: { totalPrice: true },
-  });
+  const [revenue, priceRuleCount] = await Promise.all([
+    db.order.aggregate({
+      where: { sellerId: seller.id, status: { in: ["CONFIRMED", "PAID", "SHIPPED", "DELIVERED"] } },
+      _sum: { totalPrice: true },
+    }),
+    db.priceRule.count({ where: { sellerId: seller.id } }),
+  ]);
 
   const statusBadge: Record<string, string> = {
     QUOTE: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
@@ -48,6 +52,13 @@ export default async function DashboardPage() {
           <span className="text-amber-400">.</span>
         </h1>
       </div>
+
+      <GettingStarted
+        hasStock={inventoryCount > 0}
+        hasPrices={priceRuleCount > 0}
+        hasPhone={!!seller.phone}
+        storeUrl={storeUrl}
+      />
 
       {/* Métricas — cards com gradiente */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">

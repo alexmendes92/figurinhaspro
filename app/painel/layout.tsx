@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 import PainelShell from "@/components/painel/painel-shell";
 
 export default async function PainelLayout({
@@ -17,6 +18,10 @@ export default async function PainelLayout({
     redirect("/onboarding");
   }
 
+  const pendingOrders = await db.order.count({
+    where: { sellerId: seller.id, status: "QUOTE" },
+  });
+
   return (
     <PainelShell
       seller={{
@@ -26,6 +31,7 @@ export default async function PainelLayout({
         shopSlug: seller.shopSlug,
         plan: seller.plan,
       }}
+      pendingOrders={pendingOrders}
     >
       {children}
     </PainelShell>

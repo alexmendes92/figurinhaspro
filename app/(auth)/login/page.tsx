@@ -40,7 +40,7 @@ export default function LoginPage() {
             A plataforma profissional para revendedores de figurinhas Panini de Copa do Mundo.
           </p>
           <div className="flex items-center justify-center gap-8 mt-10">
-            {[{ v: "7.122", l: "figurinhas" }, { v: "13", l: "Copas" }, { v: "1970–2022", l: "cobertura" }].map((s) => (
+            {[{ v: "7.122", l: "figurinhas" }, { v: "13", l: "Copas" }, { v: "1970–2026", l: "cobertura" }].map((s) => (
               <div key={s.l} className="text-center">
                 <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">{s.v}</p>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{s.l}</p>

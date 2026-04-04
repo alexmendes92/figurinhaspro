@@ -38,16 +38,16 @@ export default function RegistroPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[#09090b]">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[#0b0e14]">
       <div className="w-full max-w-md slide-up">
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-8 shadow-2xl shadow-black/50">
+        <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219]/95 p-8 shadow-2xl shadow-black/50">
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
               <span className="text-black text-xl font-bold font-[family-name:var(--font-geist-mono)]">F</span>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-white">Criar conta</h1>
-            <p className="text-sm text-zinc-400 mt-1">Comece a vender figurinhas avulsas</p>
+            <p className="text-sm text-gray-400 mt-1">Comece a vender figurinhas avulsas</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,51 +59,51 @@ export default function RegistroPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">Seu nome</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Seu nome</label>
                 <input
                   name="name"
                   required
                   placeholder="João Silva"
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">WhatsApp</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">WhatsApp</label>
                 <input
                   name="phone"
                   type="tel"
                   placeholder="(11) 99999-9999"
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">Nome da loja</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Nome da loja</label>
               <input
                 name="shopName"
                 required
                 placeholder="Figurinhas do João"
-                className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
               />
-              <p className="text-xs text-zinc-600 mt-1.5 pl-1">
+              <p className="text-xs text-gray-600 mt-1.5 pl-1">
                 Será a URL da sua vitrine: /loja/figurinhas-do-joao
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
               <input
                 name="email"
                 type="email"
                 required
                 placeholder="seu@email.com"
-                className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">Senha</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Senha</label>
               <div className="relative">
                 <input
                   name="password"
@@ -111,12 +111,12 @@ export default function RegistroPage() {
                   required
                   minLength={6}
                   placeholder="Mínimo 6 caracteres"
-                  className="w-full px-4 py-3 pr-11 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? (
@@ -150,7 +150,7 @@ export default function RegistroPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-zinc-500 mt-6">
+          <p className="text-center text-sm text-gray-500 mt-6">
             Já tem conta?{" "}
             <Link href="/login" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
               Entrar

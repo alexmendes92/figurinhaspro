@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useToast } from "@/lib/toast-context";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
 
 interface OrderItem {
   id: string;
@@ -41,35 +43,46 @@ const channelLabels: Record<string, string> = {
 };
 
 export default function PedidosPage() {
+  const toast = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
   const [updating, setUpdating] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [cancelConfirm, setCancelConfirm] = useState<{ orderId: string; customerName: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/orders")
       .then((r) => r.json())
-      .then((data) => { setOrders(data); setLoading(false); });
+      .then((data) => { setOrders(data); setLoading(false); })
+      .catch(() => { toast.error("Erro ao carregar pedidos"); setLoading(false); });
   }, []);
 
   async function updateStatus(orderId: string, newStatus: string) {
     setUpdating(orderId);
-    const res = await fetch(`/api/orders/${orderId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    if (res.ok) {
-      const updated = await res.json();
-      setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+        toast.success(newStatus === "CANCELLED" ? "Pedido cancelado" : "Status atualizado");
+      } else {
+        const err = await res.json().catch(() => ({}));
+        toast.error(err.error || "Erro ao atualizar pedido");
+      }
+    } catch {
+      toast.error("Erro de conexão ao atualizar pedido");
     }
     setUpdating(null);
   }
 
-  const filtered = filter === "all"
-    ? orders
-    : orders.filter((o) => o.status === filter);
+  const filtered = (filter === "all" ? orders : orders.filter((o) => o.status === filter))
+    .filter((o) => !search.trim() || o.customerName.toLowerCase().includes(search.toLowerCase()));
 
   const counts = orders.reduce((acc, o) => {
     acc[o.status] = (acc[o.status] || 0) + 1;
@@ -113,6 +126,18 @@ export default function PedidosPage() {
           </button>
         ))}
       </div>
+
+      {/* Busca por nome */}
+      {orders.length > 0 && (
+        <div className="mb-4">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar por nome do cliente..."
+            className="w-full sm:max-w-xs px-4 py-2.5 rounded-xl bg-white/[0.04] border border-[var(--border)] text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all"
+          />
+        </div>
+      )}
 
       {loading ? (
         <div className="space-y-3">
@@ -276,7 +301,7 @@ export default function PedidosPage() {
                         )}
                         {order.status !== "CANCELLED" && order.status !== "DELIVERED" && (
                           <button
-                            onClick={() => updateStatus(order.id, "CANCELLED")}
+                            onClick={() => setCancelConfirm({ orderId: order.id, customerName: order.customerName })}
                             disabled={isUpdating}
                             className="btn-ghost !py-2.5 !px-4 !text-xs !text-red-400 !border-red-500/15 hover:!bg-red-500/5"
                           >
@@ -295,6 +320,19 @@ export default function PedidosPage() {
           })}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!cancelConfirm}
+        title="Cancelar pedido?"
+        description={`O pedido de ${cancelConfirm?.customerName || ""} será cancelado permanentemente.`}
+        confirmLabel="Cancelar pedido"
+        variant="danger"
+        onConfirm={() => {
+          if (cancelConfirm) updateStatus(cancelConfirm.orderId, "CANCELLED");
+          setCancelConfirm(null);
+        }}
+        onCancel={() => setCancelConfirm(null)}
+      />
     </div>
   );
 }

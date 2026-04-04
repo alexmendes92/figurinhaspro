@@ -41,7 +41,9 @@ export default function LandingPage() {
             </div>
             <span className="font-black text-sm text-white">Figurinhas<span className="text-amber-400">Pro</span></span>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-3">
+            <Link href="#features" className="hidden sm:inline px-3 py-2 text-sm text-gray-500 hover:text-white transition-colors font-medium">Features</Link>
+            <Link href="#planos" className="hidden sm:inline px-3 py-2 text-sm text-gray-500 hover:text-white transition-colors font-medium">Planos</Link>
             <Link href="/login" className="px-3 sm:px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors font-medium">Entrar</Link>
             <Link href="/registro" className="px-4 sm:px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs sm:text-sm font-bold transition-all shadow-lg shadow-amber-500/20 active:bg-amber-400">Criar conta</Link>
           </div>
@@ -286,8 +288,11 @@ export default function LandingPage() {
               </div>
               <span className="text-xs text-gray-500">FigurinhasPro</span>
             </div>
-            <div className="flex items-center gap-6">
-              <Link href="/termos" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Termos de Uso</Link>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <Link href="#features" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Features</Link>
+              <Link href="#planos" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Planos</Link>
+              <Link href="#faq" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">FAQ</Link>
+              <Link href="/termos" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Termos</Link>
               <Link href="/privacidade" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Privacidade</Link>
             </div>
             <span className="text-[10px] text-gray-600 font-[family-name:var(--font-geist-mono)]">7.122 figurinhas · 13 Copas · 1970–2026</span>

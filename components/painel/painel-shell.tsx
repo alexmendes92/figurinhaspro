@@ -52,9 +52,9 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
       >
         {/* Brand */}
         <div className={`h-16 flex items-center border-b border-white/[0.06] ${collapsed ? "px-3 justify-center" : "px-5 gap-3"}`}>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20 shrink-0">
+          <Link href="/painel" className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20 shrink-0 hover:shadow-amber-500/30 transition-shadow">
             <span className="text-white text-sm font-black font-[family-name:var(--font-geist-mono)]">F</span>
-          </div>
+          </Link>
           {!collapsed && (
             <div className="min-w-0">
               <p className="text-[13px] font-bold text-white leading-tight truncate">{seller.shopName}</p>

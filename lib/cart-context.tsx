@@ -1,7 +1,37 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import type { Sticker } from "./albums";
+
+const STORAGE_KEY = "fp_global_cart";
+const STORAGE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 dias
+
+function loadCartFromStorage(): CartItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const { items, updatedAt } = JSON.parse(raw);
+    if (Date.now() - updatedAt > STORAGE_TTL) {
+      localStorage.removeItem(STORAGE_KEY);
+      return [];
+    }
+    return items || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCartToStorage(items: CartItem[]) {
+  if (typeof window === "undefined") return;
+  try {
+    if (items.length === 0) {
+      localStorage.removeItem(STORAGE_KEY);
+    } else {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, updatedAt: Date.now() }));
+    }
+  } catch { /* quota exceeded — silent */ }
+}
 
 // Estende Sticker com preço para o carrinho
 export interface CartSticker extends Sticker {
@@ -34,8 +64,12 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(loadCartFromStorage);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    saveCartToStorage(items);
+  }, [items]);
 
   const addItem = useCallback((sticker: CartSticker, albumYear: string) => {
     const key = itemKey(sticker.code, albumYear);

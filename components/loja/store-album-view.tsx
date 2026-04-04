@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
@@ -35,11 +35,34 @@ export default function StoreAlbumView({
   sectionRulesMap: Record<string, { adjustType: string; value: number }>;
   quantityTiers: { minQuantity: number; discount: number }[];
 }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const storageKey = `fp_cart_${sellerSlug}_${album.slug}`;
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return [];
+      const { items, updatedAt } = JSON.parse(raw);
+      if (Date.now() - updatedAt > 7 * 24 * 60 * 60 * 1000) {
+        localStorage.removeItem(storageKey);
+        return [];
+      }
+      return items || [];
+    } catch { return []; }
+  });
   const [activeSection, setActiveSection] = useState(0);
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (cart.length === 0) {
+        localStorage.removeItem(storageKey);
+      } else {
+        localStorage.setItem(storageKey, JSON.stringify({ items: cart, updatedAt: Date.now() }));
+      }
+    } catch { /* quota exceeded */ }
+  }, [cart, storageKey]);
   const [search, setSearch] = useState("");
   const [showImportModal, setShowImportModal] = useState(false);
   const [missingCodes, setMissingCodes] = useState<Set<string>>(new Set());

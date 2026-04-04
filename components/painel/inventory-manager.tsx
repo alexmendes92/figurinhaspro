@@ -1,19 +1,158 @@
 "use client";
 
-import { useState, useCallback, useTransition, useMemo } from "react";
+import { useState, useCallback, useTransition, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
-import { getStickerTypeConfig } from "@/lib/sticker-types";
+import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
+
+/* ─── Modal de preço customizado ─── */
+function PriceModal({
+  sticker,
+  currentCustomPrice,
+  canUseCustomPrices,
+  onSave,
+  onClear,
+  onClose,
+}: {
+  sticker: Sticker;
+  currentCustomPrice: number | null;
+  canUseCustomPrices: boolean;
+  onSave: (price: number) => void;
+  onClear: () => void;
+  onClose: () => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const defaultPrice = getDefaultPrice(sticker.type);
+  const typeConf = getStickerTypeConfig(sticker.type);
+
+  useEffect(() => {
+    if (canUseCustomPrices) inputRef.current?.focus();
+  }, [canUseCustomPrices]);
+
+  function handleSave() {
+    const val = parseFloat(inputRef.current?.value || "");
+    if (!isNaN(val) && val > 0) onSave(val);
+  }
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="relative w-full max-w-xs mx-4 bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl"
+        style={{ animation: "scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+      >
+        {/* Header com imagem */}
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800/50">
+          <div className="relative w-10 h-14 rounded-lg overflow-hidden border border-zinc-700 shrink-0">
+            <Image src={sticker.image} alt={sticker.name} fill className="object-cover" sizes="40px" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-white truncate">{sticker.name}</p>
+            <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)] flex items-center gap-1.5">
+              {sticker.code}
+              {sticker.type !== "regular" && (
+                <span className={`px-1 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
+                  {typeConf.shortLabel}
+                </span>
+              )}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="ml-auto w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all shrink-0"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="px-4 py-4 space-y-3">
+          {/* Preço padrão */}
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-zinc-500">Preço padrão ({typeConf.shortLabel})</span>
+            <span className="font-[family-name:var(--font-geist-mono)] text-zinc-400">
+              R${defaultPrice.toFixed(2).replace(".", ",")}
+            </span>
+          </div>
+
+          {canUseCustomPrices ? (
+            <>
+              {/* Input de preço */}
+              <div>
+                <label className="text-[10px] text-zinc-500 font-medium block mb-1">Preço customizado</label>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-zinc-400">R$</span>
+                  <input
+                    ref={inputRef}
+                    type="number"
+                    step="0.50"
+                    min="0.50"
+                    defaultValue={currentCustomPrice?.toFixed(2) ?? ""}
+                    placeholder={defaultPrice.toFixed(2)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleSave(); }}
+                    className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Botões */}
+              <div className="flex gap-2">
+                <button
+                  onClick={handleSave}
+                  className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors"
+                >
+                  Salvar preço
+                </button>
+                {currentCustomPrice !== null && (
+                  <button
+                    onClick={onClear}
+                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all"
+                  >
+                    Limpar
+                  </button>
+                )}
+              </div>
+            </>
+          ) : (
+            /* Gate PRO+ */
+            <div className="p-3 rounded-xl bg-amber-500/5 border border-amber-500/20">
+              <p className="text-xs text-amber-400 font-medium mb-1">Recurso PRO</p>
+              <p className="text-[11px] text-zinc-500 leading-relaxed">
+                Preço customizado por figurinha requer plano PRO ou superior.
+              </p>
+              <Link
+                href="/painel/planos"
+                className="inline-block mt-2 text-[10px] text-amber-400 font-semibold hover:underline"
+              >
+                Ver planos →
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes scaleIn {
+          from { transform: scale(0.95); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 export default function InventoryManager({
   album,
   initialStock,
+  sellerPlan,
 }: {
   album: Album;
   initialStock: StockMap;
+  sellerPlan: string;
 }) {
   const [stock, setStock] = useState<StockMap>(initialStock);
   const [activeSection, setActiveSection] = useState(0);
@@ -21,6 +160,10 @@ export default function InventoryManager({
   const [saving, startSaving] = useTransition();
   const [lastSaved, setLastSaved] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [priceModalSticker, setPriceModalSticker] = useState<Sticker | null>(null);
+
+  // PRO+ check para preço customizado
+  const canUseCustomPrices = sellerPlan === "PRO" || sellerPlan === "UNLIMITED";
 
   const section = album.sections[activeSection];
   const isSearching = search.trim().length >= 2;
@@ -115,6 +258,35 @@ export default function InventoryManager({
       setStock(newStock);
     });
   }
+
+  // Atualiza preço customizado de uma figurinha
+  const updateCustomPrice = useCallback(
+    (stickerCode: string, customPrice: number | null) => {
+      const current = stock[stickerCode] ?? { quantity: 0, customPrice: null };
+      const newStock = {
+        ...stock,
+        [stickerCode]: { ...current, customPrice },
+      };
+      setStock(newStock);
+
+      startSaving(async () => {
+        await fetch("/api/inventory", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            albumSlug: album.slug,
+            stickerCode,
+            quantity: current.quantity,
+            customPrice,
+          }),
+        });
+        setLastSaved(stickerCode);
+        setTimeout(() => setLastSaved(null), 1500);
+      });
+      setPriceModalSticker(null);
+    },
+    [stock, album.slug]
+  );
 
   // Zerar seção
   function clearSection() {
@@ -365,6 +537,28 @@ export default function InventoryManager({
                         )}
                       </div>
                       <p className="text-[9px] text-zinc-600 truncate mb-1">{sticker.name}</p>
+
+                      {/* Preço customizado badge + botão */}
+                      {hasIt && (
+                        <button
+                          onClick={() => setPriceModalSticker(sticker)}
+                          className={`w-full mb-1 px-1.5 py-1 rounded text-[9px] font-[family-name:var(--font-geist-mono)] font-semibold transition-all flex items-center justify-center gap-1 ${
+                            stock[sticker.code]?.customPrice
+                              ? "bg-amber-500/15 border border-amber-500/30 text-amber-400 hover:bg-amber-500/25"
+                              : "bg-zinc-800/50 border border-zinc-700/50 text-zinc-500 hover:text-zinc-300 hover:border-zinc-600"
+                          }`}
+                          title={stock[sticker.code]?.customPrice ? "Preço customizado" : "Definir preço"}
+                        >
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {stock[sticker.code]?.customPrice
+                            ? `R$${stock[sticker.code].customPrice!.toFixed(2).replace(".", ",")}`
+                            : "Preço"
+                          }
+                        </button>
+                      )}
+
                       {hasIt && (
                         <div className="flex items-center justify-center gap-1">
                           <button
@@ -392,6 +586,18 @@ export default function InventoryManager({
           )}
         </div>
       </div>
+
+      {/* Modal de preço customizado */}
+      {priceModalSticker && (
+        <PriceModal
+          sticker={priceModalSticker}
+          currentCustomPrice={stock[priceModalSticker.code]?.customPrice ?? null}
+          canUseCustomPrices={canUseCustomPrices}
+          onSave={(price) => updateCustomPrice(priceModalSticker.code, price)}
+          onClear={() => updateCustomPrice(priceModalSticker.code, null)}
+          onClose={() => setPriceModalSticker(null)}
+        />
+      )}
     </div>
   );
 }

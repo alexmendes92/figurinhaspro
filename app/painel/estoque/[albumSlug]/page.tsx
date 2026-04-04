@@ -31,6 +31,6 @@ export default async function AlbumEstoquePage({
   }
 
   return (
-    <InventoryManager album={album} initialStock={stockMap} />
+    <InventoryManager album={album} initialStock={stockMap} sellerPlan={seller.plan} />
   );
 }

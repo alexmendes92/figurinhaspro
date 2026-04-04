@@ -50,3 +50,4 @@ next-env.d.ts
 /public/covers/*.png
 
 .vercel
+.env*.local

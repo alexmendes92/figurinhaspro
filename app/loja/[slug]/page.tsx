@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { albums } from "@/lib/albums";
+import type { Album } from "@/lib/albums";
 import { albumCovers } from "@/lib/album-covers";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,9 +26,24 @@ export default async function LojaPage({
   const stockByAlbum = new Map<string, number>(
     inventory.map((i: { albumSlug: string; _count: { stickerCode: number } }) => [i.albumSlug, i._count.stickerCode])
   );
-  const availableAlbums = albums
+
+  // Busca álbuns customizados do seller
+  const customAlbumsDb = await db.customAlbum.findMany({
+    where: { sellerId: seller.id },
+  });
+  const customAlbumsList = customAlbumsDb.map(customAlbumToAlbum);
+  const allAlbums: Album[] = [...albums, ...customAlbumsList];
+  const customSlugs = new Set(customAlbumsList.map((a) => a.slug));
+
+  const availableAlbums = allAlbums
     .filter((a) => (stockByAlbum.get(a.slug) || 0) > 0)
-    .sort((a, b) => parseInt(b.year) - parseInt(a.year));
+    .sort((a, b) => {
+      // Estáticos por ano desc, customizados no final
+      const aCustom = customSlugs.has(a.slug) ? 1 : 0;
+      const bCustom = customSlugs.has(b.slug) ? 1 : 0;
+      if (aCustom !== bCustom) return aCustom - bCustom;
+      return parseInt(b.year || "0") - parseInt(a.year || "0");
+    });
   const totalAvailable = inventory.reduce((s: number, i: { _count: { stickerCode: number } }) => s + i._count.stickerCode, 0);
 
   return (
@@ -88,6 +105,7 @@ export default async function LojaPage({
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
               {availableAlbums.map((album) => {
+                const isCustom = customSlugs.has(album.slug);
                 const count = stockByAlbum.get(album.slug) || 0;
                 const coverData = albumCovers[album.slug];
                 const coverSrc = coverData?.cover;
@@ -97,7 +115,9 @@ export default async function LojaPage({
                   <Link
                     key={album.slug}
                     href={`/loja/${slug}/${album.slug}`}
-                    className="group rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30"
+                    className={`group rounded-2xl border bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30 ${
+                      isCustom ? "border-amber-500/20" : "border-zinc-800"
+                    }`}
                   >
                     {/* Capa */}
                     <div className="relative aspect-[3/4] bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden">
@@ -109,6 +129,17 @@ export default async function LojaPage({
                           className="object-contain p-3 group-hover:scale-105 transition-transform duration-500"
                           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         />
+                      ) : isCustom ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-2">
+                              <svg className="w-7 h-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                              </svg>
+                            </div>
+                            {album.year && <p className="text-xs text-zinc-500">{album.year}</p>}
+                          </div>
+                        </div>
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <span className="text-5xl">{album.flag}</span>
@@ -122,7 +153,9 @@ export default async function LojaPage({
                         {flagSrc && (
                           <Image src={flagSrc} alt="" width={16} height={16} className="rounded-full" />
                         )}
-                        <p className="text-sm font-bold text-white">Copa {album.year}</p>
+                        <p className="text-sm font-bold text-white truncate">
+                          {isCustom ? album.title : `Copa ${album.year}`}
+                        </p>
                       </div>
                       <p className="text-xs text-amber-400 font-[family-name:var(--font-geist-mono)] font-semibold">
                         {count} figurinhas disponíveis

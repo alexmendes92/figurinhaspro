@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { albums } from "@/lib/albums";
+import type { Album } from "@/lib/albums";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
 import StoreAlbumView from "@/components/loja/store-album-view";
 
 export default async function LojaAlbumPage({
@@ -15,7 +17,14 @@ export default async function LojaAlbumPage({
   });
   if (!seller) notFound();
 
-  const album = albums.find((a) => a.slug === albumSlug);
+  // Busca estático ou customizado
+  let album: Album | undefined = albums.find((a) => a.slug === albumSlug);
+  if (!album) {
+    const custom = await db.customAlbum.findUnique({
+      where: { sellerId_slug: { sellerId: seller.id, slug: albumSlug } },
+    });
+    if (custom) album = customAlbumToAlbum(custom);
+  }
   if (!album) notFound();
 
   // Busca estoque desse álbum

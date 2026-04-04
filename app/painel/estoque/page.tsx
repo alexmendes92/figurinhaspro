@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
 
 export default async function EstoquePage() {
   const seller = await getSession();
@@ -19,13 +20,24 @@ export default async function EstoquePage() {
     inventoryCounts.map((c: { albumSlug: string; _count: { stickerCode: number } }) => [c.albumSlug, c._count.stickerCode])
   );
 
-  const totalInStock = inventoryCounts.reduce((s: number, c: { _count: { stickerCode: number } }) => s + c._count.stickerCode, 0);
-  const totalStickers = albums.reduce((s: number, a: { totalStickers: number }) => s + a.totalStickers, 0);
+  // Busca álbuns customizados do seller
+  const customAlbumsDb = await db.customAlbum.findMany({
+    where: { sellerId: seller.id },
+    orderBy: { createdAt: "desc" },
+  });
+  const customAlbumsList = customAlbumsDb.map(customAlbumToAlbum);
 
-  // Ordena do mais recente para o mais antigo
-  const sortedAlbums = [...albums].sort(
+  const allAlbums = [...albums, ...customAlbumsList];
+
+  const totalInStock = inventoryCounts.reduce((s: number, c: { _count: { stickerCode: number } }) => s + c._count.stickerCode, 0);
+  const totalStickers = allAlbums.reduce((s: number, a: { totalStickers: number }) => s + a.totalStickers, 0);
+
+  // Estáticos ordenados por ano, customizados no final
+  const sortedStaticAlbums = [...albums].sort(
     (a, b) => parseInt(b.year) - parseInt(a.year)
   );
+  const sortedAlbums = [...sortedStaticAlbums, ...customAlbumsList];
+  const customSlugs = new Set(customAlbumsList.map((a) => a.slug));
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl slide-up">
@@ -37,6 +49,16 @@ export default async function EstoquePage() {
             Selecione um álbum para gerenciar suas figurinhas
           </p>
         </div>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/painel/estoque/novo"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span className="hidden sm:inline">Cadastrar álbum</span>
+          </Link>
         <div className="text-right hidden sm:block">
           <p className="text-3xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
             {totalInStock.toLocaleString("pt-BR")}
@@ -45,11 +67,13 @@ export default async function EstoquePage() {
             de {totalStickers.toLocaleString("pt-BR")} figurinhas
           </p>
         </div>
+        </div>
       </div>
 
       {/* Grid de álbuns com capas oficiais */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {sortedAlbums.map((album) => {
+          const isCustom = customSlugs.has(album.slug);
           const inStock = countMap.get(album.slug) || 0;
           const pct = Math.round((inStock / album.totalStickers) * 100);
           const coverData = albumCovers[album.slug];
@@ -60,7 +84,9 @@ export default async function EstoquePage() {
             <Link
               key={album.slug}
               href={`/painel/estoque/${album.slug}`}
-              className="group relative rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30"
+              className={`group relative rounded-2xl border bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30 ${
+                isCustom ? "border-amber-500/20" : "border-zinc-800"
+              }`}
             >
               {/* Capa do álbum */}
               <div className="relative aspect-[3/4] bg-gradient-to-b from-zinc-800 to-zinc-900 flex items-center justify-center p-4 overflow-hidden">
@@ -72,6 +98,15 @@ export default async function EstoquePage() {
                     className="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
+                ) : isCustom ? (
+                  <div className="text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                      </svg>
+                    </div>
+                    <p className="text-xs text-amber-400/70 font-medium">Personalizado</p>
+                  </div>
                 ) : (
                   <div className="text-center">
                     <span className="text-4xl">{album.flag}</span>
@@ -104,10 +139,12 @@ export default async function EstoquePage() {
                   )}
                   <div className="min-w-0">
                     <p className="text-sm font-bold text-white truncate">
-                      Copa {album.year}
+                      {isCustom ? album.title : `Copa ${album.year}`}
                     </p>
                     <p className="text-[10px] text-zinc-500 truncate">
-                      {coverData?.host || album.host}
+                      {isCustom
+                        ? `${album.totalStickers} figurinhas`
+                        : coverData?.host || album.host}
                     </p>
                   </div>
                 </div>

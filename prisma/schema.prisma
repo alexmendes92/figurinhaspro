@@ -33,6 +33,7 @@ model Seller {
   orders             Order[]
   priceRules         PriceRule[]
   subscriptionEvents SubscriptionEvent[]
+  customAlbums       CustomAlbum[]
 }
 
 model SubscriptionEvent {
@@ -97,4 +98,19 @@ model OrderItem {
   stickerName String
   quantity    Int
   unitPrice   Float
+}
+
+model CustomAlbum {
+  id        String   @id @default(cuid())
+  sellerId  String
+  seller    Seller   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  slug      String
+  title     String
+  year      String   @default("")
+  stickers  String   // JSON: [{code, name, type}]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sellerId, slug])
+  @@index([sellerId])
 }

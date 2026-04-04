@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { albums } from "@/lib/albums";
+import type { Album } from "@/lib/albums";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
 import InventoryManager from "@/components/painel/inventory-manager";
 
 export default async function AlbumEstoquePage({
@@ -13,7 +15,14 @@ export default async function AlbumEstoquePage({
   const seller = await getSession();
   if (!seller) return null;
 
-  const album = albums.find((a) => a.slug === albumSlug);
+  // Busca primeiro nos estáticos, depois nos customizados
+  let album: Album | undefined = albums.find((a) => a.slug === albumSlug);
+  if (!album) {
+    const custom = await db.customAlbum.findUnique({
+      where: { sellerId_slug: { sellerId: seller.id, slug: albumSlug } },
+    });
+    if (custom) album = customAlbumToAlbum(custom);
+  }
   if (!album) notFound();
 
   // Carrega estoque atual

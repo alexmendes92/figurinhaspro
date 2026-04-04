@@ -408,7 +408,7 @@ export default function StoreAlbumView({
             </div>
           )}
 
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 gap-2">
             <h3 className="text-lg font-semibold">
               {isSearching
                 ? `Resultados para "${search.trim()}"`
@@ -416,9 +416,27 @@ export default function StoreAlbumView({
                   ? "Figurinhas que faltam"
                   : section.name}
             </h3>
-            <span className="text-xs text-zinc-500">
-              {availableStickers.length} {isSearching ? "encontradas" : filterByMissing ? "em estoque" : "disponíveis"}
-            </span>
+            <div className="flex items-center gap-2 shrink-0">
+              {availableStickers.length > 0 && (
+                <button
+                  onClick={() => {
+                    const cartCodes = new Set(cart.map((c) => c.sticker.code));
+                    const toAdd = availableStickers.filter((s) => !cartCodes.has(s.code));
+                    if (toAdd.length === 0) return;
+                    setCart((prev) => [
+                      ...prev,
+                      ...toAdd.map((s) => ({ sticker: s, price: getPrice(s), quantity: 1 })),
+                    ]);
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 text-[10px] font-bold hover:bg-amber-500/20 transition-all"
+                >
+                  + Todas ({availableStickers.length})
+                </button>
+              )}
+              <span className="text-xs text-zinc-500">
+                {availableStickers.length} {isSearching ? "encontradas" : filterByMissing ? "em estoque" : "disponiveis"}
+              </span>
+            </div>
           </div>
 
           {availableStickers.length === 0 ? (

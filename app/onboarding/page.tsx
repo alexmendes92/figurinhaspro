@@ -4,19 +4,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const ALBUM_OPTIONS = [
-  { year: 2022, host: "Qatar", slug: "qatar-2022" },
-  { year: 2018, host: "Russia", slug: "russia-2018" },
-  { year: 2014, host: "Brazil", slug: "brazil-2014" },
-  { year: 2010, host: "South Africa", slug: "south-africa-2010" },
-  { year: 2006, host: "Germany", slug: "germany-2006" },
-  { year: 2002, host: "Korea/Japan", slug: "korea-japan-2002" },
-  { year: 1998, host: "France", slug: "france-1998" },
-  { year: 1994, host: "USA", slug: "usa-1994" },
-  { year: 1990, host: "Italy", slug: "italy-1990" },
-  { year: 1986, host: "Mexico", slug: "mexico-1986" },
-  { year: 1982, host: "Spain", slug: "spain-1982" },
-  { year: 1978, host: "Argentina", slug: "argentina-1978" },
-  { year: 1974, host: "West Germany", slug: "west-germany-1974" },
+  { year: 2022, host: "Qatar", slug: "panini_fifa_world_cup_2022" },
+  { year: 2018, host: "Russia", slug: "panini_fifa_world_cup_2018" },
+  { year: 2014, host: "Brazil", slug: "panini_fifa_world_cup_2014" },
+  { year: 2010, host: "South Africa", slug: "panini_fifa_world_cup_2010" },
+  { year: 2006, host: "Germany", slug: "panini_fifa_world_cup_2006" },
+  { year: 2002, host: "Korea/Japan", slug: "panini_fifa_world_cup_2002" },
+  { year: 1998, host: "France", slug: "panini_fifa_world_cup_1998" },
+  { year: 1994, host: "USA", slug: "panini_fifa_world_cup_1994" },
+  { year: 1990, host: "Italy", slug: "panini_fifa_world_cup_1990" },
+  { year: 1986, host: "Mexico", slug: "panini_fifa_world_cup_1986" },
+  { year: 1982, host: "Spain", slug: "panini_fifa_world_cup_1982" },
+  { year: 1978, host: "Argentina", slug: "panini_fifa_world_cup_1978" },
+  { year: 1974, host: "West Germany", slug: "panini_fifa_world_cup_1974" },
 ];
 
 export default function OnboardingPage() {

@@ -104,10 +104,10 @@ export default function PrecosEditor({
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-2xl slide-up">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight">Preços</h1>
-        <p className="text-sm text-[var(--muted)] mt-1">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-2xl slide-up">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Preços</h1>
+        <p className="text-xs sm:text-sm text-[var(--muted)] mt-1">
           Defina o valor por tipo de figurinha. Aplicado a todos os álbuns.
         </p>
       </div>
@@ -131,49 +131,47 @@ export default function PrecosEditor({
               return (
                 <div
                   key={tc.type}
-                  className="p-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--border-hover)] transition-all"
+                  className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--border-hover)] transition-all"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
-                      <div className={`w-10 h-10 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0 mt-0.5`}>
-                        <svg className={`w-5 h-5 ${tc.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d={tc.icon} />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold">{tc.label}</p>
-                        <p className="text-xs text-[var(--muted)] mt-0.5">{tc.desc}</p>
-                      </div>
+                  <div className="flex items-center gap-3 mb-3 sm:mb-0">
+                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0`}>
+                      <svg className={`w-4 h-4 sm:w-5 sm:h-5 ${tc.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d={tc.icon} />
+                      </svg>
                     </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold">{tc.label}</p>
+                      <p className="text-[11px] sm:text-xs text-[var(--muted)] mt-0.5 truncate">{tc.desc}</p>
+                    </div>
+                  </div>
 
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-xs text-[var(--muted)]">R$</span>
-                      <input
-                        type="number"
-                        step="0.50"
-                        min="0.50"
-                        defaultValue={currentPrice.toFixed(2)}
-                        onBlur={(e) => {
-                          const val = parseFloat(e.target.value);
-                          if (!isNaN(val) && val > 0 && val !== currentPrice) {
-                            updatePrice(tc.type, val);
-                          }
-                        }}
-                        className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold"
-                      />
-                      <div className="w-14 text-right">
-                        {isSaving && (
-                          <span className="text-[10px] text-[var(--accent)] pulse-dot">Salvando</span>
-                        )}
-                        {isSaved && (
-                          <span className="text-[10px] text-[var(--success)] flex items-center gap-1 justify-end">
-                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                            Salvo
-                          </span>
-                        )}
-                      </div>
+                  <div className="flex items-center justify-end gap-2 mt-2 sm:mt-0">
+                    <span className="text-xs text-[var(--muted)]">R$</span>
+                    <input
+                      type="number"
+                      step="0.50"
+                      min="0.50"
+                      defaultValue={currentPrice.toFixed(2)}
+                      onBlur={(e) => {
+                        const val = parseFloat(e.target.value);
+                        if (!isNaN(val) && val > 0 && val !== currentPrice) {
+                          updatePrice(tc.type, val);
+                        }
+                      }}
+                      className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-amber-500/40 focus:outline-none transition-colors"
+                    />
+                    <div className="w-14 text-right">
+                      {isSaving && (
+                        <span className="text-[10px] text-[var(--accent)] pulse-dot">Salvando</span>
+                      )}
+                      {isSaved && (
+                        <span className="text-[10px] text-[var(--success)] flex items-center gap-1 justify-end">
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                          Salvo
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -301,13 +299,13 @@ export default function PrecosEditor({
             {addingAlbumRule && canUseAlbumRules && (
               <div className="mt-3 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5">
                 <p className="text-xs font-semibold text-amber-400 mb-3">Nova regra por álbum</p>
-                <div className="grid grid-cols-3 gap-2 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
                   <select
                     value={newAlbumSlug}
                     onChange={(e) => setNewAlbumSlug(e.target.value)}
-                    className="px-2 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-xs text-white"
+                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white"
                   >
-                    <option value="">Álbum...</option>
+                    <option value="">Selecionar álbum...</option>
                     {albumList.map((a) => (
                       <option key={a.slug} value={a.slug}>
                         {a.flag} Copa {a.year}
@@ -317,14 +315,14 @@ export default function PrecosEditor({
                   <select
                     value={newStickerType}
                     onChange={(e) => setNewStickerType(e.target.value)}
-                    className="px-2 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-xs text-white"
+                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white"
                   >
                     {STICKER_TYPE_CONFIG.map((tc) => (
                       <option key={tc.type} value={tc.type}>{tc.shortLabel}</option>
                     ))}
                   </select>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-zinc-400">R$</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm sm:text-xs text-zinc-400">R$</span>
                     <input
                       type="number"
                       step="0.50"
@@ -333,7 +331,7 @@ export default function PrecosEditor({
                       onChange={(e) => setNewPrice(e.target.value)}
                       placeholder={getDefaultPrice(newStickerType).toFixed(2)}
                       onKeyDown={(e) => { if (e.key === "Enter") addAlbumRule(); }}
-                      className="flex-1 px-2 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600"
+                      className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600"
                     />
                   </div>
                 </div>
@@ -341,13 +339,13 @@ export default function PrecosEditor({
                   <button
                     onClick={addAlbumRule}
                     disabled={!newAlbumSlug || !newPrice}
-                    className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-xs font-semibold transition-colors"
+                    className="flex-1 py-2.5 sm:py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-sm sm:text-xs font-semibold transition-colors active:bg-amber-400"
                   >
                     Adicionar
                   </button>
                   <button
                     onClick={() => setAddingAlbumRule(false)}
-                    className="px-4 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white transition-colors"
+                    className="px-4 py-2.5 sm:py-2 rounded-lg border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white transition-colors active:bg-zinc-800"
                   >
                     Cancelar
                   </button>

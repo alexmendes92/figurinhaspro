@@ -19,9 +19,20 @@ Configurados em `.claude/settings.json`:
 - **Seguranca**: bloqueia `git add` de `.env`, `dev.db`, credentials
 - **Destrutivos**: bloqueia `rm -rf`, `drop table`, `git push --force`
 
+## Deploy (OBRIGATORIO)
+
+Apos CADA alteracao que builda com sucesso:
+```bash
+git add <arquivos> && git commit -m "tipo(escopo): descricao"
+git push
+vercel deploy --prod
+```
+**Sempre** commit → push → `vercel deploy --prod`. Nunca terminar sem deploy em producao.
+
 ## Comandos
 ```bash
 npm run dev        # Dev server (Turbopack)
 npm run build      # Build producao
 npm run lint       # ESLint
+vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 ```

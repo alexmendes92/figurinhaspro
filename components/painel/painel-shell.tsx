@@ -25,9 +25,9 @@ const nav = [
 const mobileNav = [
   nav[0], // Início
   nav[1], // Estoque
+  nav[2], // Preços
   nav[3], // Pedidos
   nav[4], // Loja
-  nav[5], // Planos
 ];
 
 export default function PainelShell({ seller, children }: { seller: SellerInfo; children: React.ReactNode }) {

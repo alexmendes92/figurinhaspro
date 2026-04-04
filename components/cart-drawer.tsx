@@ -28,7 +28,7 @@ export default function CartDrawer() {
       />
 
       {/* Drawer */}
-      <div className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-zinc-950 border-l border-zinc-800 flex flex-col slide-in">
+      <div className="absolute right-0 top-0 bottom-0 w-full sm:max-w-md bg-zinc-950 border-l border-zinc-800 flex flex-col slide-in safe-area-bottom">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-800">
           <div>
@@ -77,10 +77,10 @@ export default function CartDrawer() {
               {items.map((item) => (
                 <div
                   key={item.sticker.code + "-" + item.albumYear}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-zinc-900/50"
+                  className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-3 hover:bg-zinc-900/50"
                 >
                   {/* Thumb */}
-                  <div className="relative w-10 h-14 rounded overflow-hidden border border-zinc-700 shrink-0">
+                  <div className="relative w-9 h-12 sm:w-10 sm:h-14 rounded overflow-hidden border border-zinc-700 shrink-0">
                     <Image
                       src={item.sticker.image}
                       alt={item.sticker.name}
@@ -92,21 +92,25 @@ export default function CartDrawer() {
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
+                    <p className="text-[13px] sm:text-sm font-medium truncate">
                       {item.sticker.name}
                     </p>
                     <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
                       {item.albumYear} · {item.sticker.code}
                       {item.sticker.type !== "regular" && (
                         <span className="ml-1 text-amber-400">
-                          ✨ {getStickerTypeShortLabel(item.sticker.type)}
+                          {getStickerTypeShortLabel(item.sticker.type)}
                         </span>
                       )}
+                    </p>
+                    {/* Preço - inline no mobile */}
+                    <p className="text-[11px] font-[family-name:var(--font-geist-mono)] text-amber-400 mt-0.5 sm:hidden">
+                      R${(item.sticker.price * item.quantity).toFixed(2).replace(".", ",")}
                     </p>
                   </div>
 
                   {/* Quantidade */}
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 shrink-0">
                     <button
                       onClick={() =>
                         updateQuantity(
@@ -114,7 +118,7 @@ export default function CartDrawer() {
                           item.quantity - 1
                         )
                       }
-                      className="w-7 h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      className="w-8 h-8 sm:w-7 sm:h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs active:bg-zinc-700"
                       aria-label={`Diminuir ${item.sticker.name}`}
                     >
                       −
@@ -129,15 +133,15 @@ export default function CartDrawer() {
                           item.quantity + 1
                         )
                       }
-                      className="w-7 h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs"
+                      className="w-8 h-8 sm:w-7 sm:h-7 rounded border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 text-xs active:bg-zinc-700"
                       aria-label={`Aumentar ${item.sticker.name}`}
                     >
                       +
                     </button>
                   </div>
 
-                  {/* Preço */}
-                  <span className="text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 w-16 text-right">
+                  {/* Preço - só desktop */}
+                  <span className="hidden sm:inline text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 w-16 text-right">
                     R$
                     {(item.sticker.price * item.quantity)
                       .toFixed(2)
@@ -149,7 +153,7 @@ export default function CartDrawer() {
                     onClick={() =>
                       removeItem(item.sticker.code + "-" + item.albumYear)
                     }
-                    className="text-zinc-600 hover:text-red-400 transition-colors"
+                    className="w-8 h-8 sm:w-auto sm:h-auto rounded-lg sm:rounded-none flex items-center justify-center text-zinc-600 hover:text-red-400 active:bg-red-500/10 transition-colors shrink-0"
                     aria-label={`Remover ${item.sticker.name}`}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -164,7 +168,7 @@ export default function CartDrawer() {
 
         {/* Footer com total */}
         {items.length > 0 && (
-          <div className="border-t border-zinc-800 p-4 space-y-3">
+          <div className="border-t border-zinc-800 p-4 space-y-3 safe-area-bottom">
             <div className="flex items-center justify-between">
               <span className="text-sm text-zinc-400">Total</span>
               <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">

@@ -92,21 +92,21 @@ export default function LandingPage() {
       </section>
 
       {/* Copa 2026 Banner */}
-      <section className="px-6 py-12">
+      <section className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto">
-          <div className="relative overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-500/[0.06] to-transparent p-8 sm:p-10">
+          <div className="relative overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-500/[0.06] to-transparent p-5 sm:p-8 lg:p-10">
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                <span className="text-3xl font-black font-[family-name:var(--font-geist-mono)] text-amber-400">26</span>
+            <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <span className="text-2xl sm:text-3xl font-black font-[family-name:var(--font-geist-mono)] text-amber-400">26</span>
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-white mb-1">Copa do Mundo 2026 — A maior de todas</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <h3 className="text-base sm:text-lg font-bold text-white mb-1">Copa do Mundo 2026 — A maior de todas</h3>
+                <p className="text-[13px] sm:text-sm text-gray-400 leading-relaxed">
                   48 selecoes. 3 paises-sede. O album mais esperado da historia. Revendedores que se prepararem agora vao dominar o mercado quando o album lancar. Monte sua loja hoje e esteja pronto.
                 </p>
               </div>
-              <Link href="/registro" className="shrink-0 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-all shadow-lg shadow-amber-500/20">
+              <Link href="/registro" className="w-full sm:w-auto text-center shrink-0 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-all shadow-lg shadow-amber-500/20 active:bg-amber-400">
                 Garantir minha loja
               </Link>
             </div>
@@ -115,7 +115,7 @@ export default function LandingPage() {
       </section>
 
       {/* Como Funciona */}
-      <section id="como-funciona" className="px-6 py-24 border-t border-white/[0.04]">
+      <section id="como-funciona" className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">3 passos simples</p>
@@ -140,7 +140,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="px-6 py-24 border-t border-white/[0.04]">
+      <section id="features" className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Funcionalidades</p>
@@ -164,7 +164,7 @@ export default function LandingPage() {
       </section>
 
       {/* Social Proof */}
-      <section className="px-6 py-24 border-t border-white/[0.04]">
+      <section className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Depoimentos</p>
@@ -198,7 +198,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="planos" className="px-6 py-24 border-t border-white/[0.04]">
+      <section id="planos" className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Planos</p>
@@ -246,7 +246,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="px-6 py-24 border-t border-white/[0.04]">
+      <section id="faq" className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Duvidas</p>
@@ -265,7 +265,7 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="px-6 py-24 border-t border-white/[0.04]">
+      <section className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Pronto para profissionalizar suas vendas?</h2>
           <p className="text-gray-400 mb-8">Crie sua conta em 30 segundos. Sem cartao de credito. Sem compromisso.</p>
@@ -277,7 +277,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.04] px-6 py-8">
+      <footer className="border-t border-white/[0.04] px-4 sm:px-6 py-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">

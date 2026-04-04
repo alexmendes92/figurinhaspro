@@ -396,55 +396,38 @@ export default function InventoryManager({
           </div>
 
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <div className="min-w-0">
-              <h3 className="text-base sm:text-lg font-semibold truncate">
-                {isSearching ? `Resultados para "${search.trim()}"` : section.name}
-              </h3>
-              <p className="text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
-                {isSearching ? (
-                  <>{filteredStickers.length} encontradas</>
-                ) : (
-                  <>
-                    {sectionInStock}/{section.stickers.length} em estoque
-                    {filter !== "all" && (
-                      <span className="ml-2 text-zinc-400">
-                        · {filteredStickers.length} exibidas
-                      </span>
-                    )}
-                  </>
-                )}
-                {saving && (
-                  <span className="ml-2 text-amber-400">Salvando...</span>
-                )}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 flex-wrap">
-              {/* Filtros */}
-              <div className="flex rounded-lg border border-zinc-800 overflow-hidden">
-                {(["all", "in-stock", "missing"] as const).map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setFilter(f)}
-                    className={`px-3 py-2 text-xs font-medium transition-colors ${
-                      filter === f
-                        ? "bg-amber-500/10 text-amber-400"
-                        : "text-zinc-500 hover:text-zinc-300"
-                    }`}
-                  >
-                    {f === "all" ? "Todas" : f === "in-stock" ? "Tenho" : "Faltam"}
-                  </button>
-                ))}
+          <div className="space-y-3 mb-4">
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <h3 className="text-base sm:text-lg font-semibold truncate">
+                  {isSearching ? `Resultados para "${search.trim()}"` : section.name}
+                </h3>
+                <p className="text-[11px] sm:text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+                  {isSearching ? (
+                    <>{filteredStickers.length} encontradas</>
+                  ) : (
+                    <>
+                      {sectionInStock}/{section.stickers.length} em estoque
+                      {filter !== "all" && (
+                        <span className="ml-2 text-zinc-400">
+                          · {filteredStickers.length} exibidas
+                        </span>
+                      )}
+                    </>
+                  )}
+                  {saving && (
+                    <span className="ml-2 text-amber-400">Salvando...</span>
+                  )}
+                </p>
               </div>
 
-              {/* Ações em lote */}
+              {/* Ações em lote - compacto */}
               {!isSearching && (
-                <div className="flex gap-1.5">
+                <div className="flex gap-1.5 shrink-0">
                   <button
                     onClick={markAllSection}
                     title="Marcar todas como tenho 1"
-                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all"
+                    className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all active:bg-green-500/10"
                   >
                     Marcar todas
                   </button>
@@ -452,13 +435,30 @@ export default function InventoryManager({
                     <button
                       onClick={clearSection}
                       title="Zerar esta seção"
-                      className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all"
+                      className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all active:bg-red-500/10"
                     >
                       Zerar
                     </button>
                   )}
                 </div>
               )}
+            </div>
+
+            {/* Filtros - full width no mobile */}
+            <div className="flex rounded-lg border border-zinc-800 overflow-hidden">
+              {(["all", "in-stock", "missing"] as const).map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={`flex-1 px-3 py-2.5 sm:py-2 text-xs font-medium transition-colors text-center active:bg-white/5 ${
+                    filter === f
+                      ? "bg-amber-500/10 text-amber-400"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+                >
+                  {f === "all" ? "Todas" : f === "in-stock" ? "Tenho" : "Faltam"}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -563,7 +563,7 @@ export default function InventoryManager({
                         <div className="flex items-center justify-center gap-1">
                           <button
                             onClick={() => updateQuantity(sticker.code, qty - 1)}
-                            className="w-8 h-7 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+                            className="w-9 h-8 sm:w-8 sm:h-7 rounded bg-zinc-800 border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
                           >
                             −
                           </button>
@@ -572,7 +572,7 @@ export default function InventoryManager({
                           </span>
                           <button
                             onClick={() => updateQuantity(sticker.code, qty + 1)}
-                            className="w-8 h-7 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+                            className="w-9 h-8 sm:w-8 sm:h-7 rounded bg-zinc-800 border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
                           >
                             +
                           </button>

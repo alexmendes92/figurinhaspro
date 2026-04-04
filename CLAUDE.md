@@ -53,6 +53,7 @@ vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 | `lib/plan-limits.ts` | Limites por plano + guards (`checkStickerLimit`, `hasFeature`) |
 | `lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
 | `lib/stripe.ts` | Cliente Stripe |
+| `lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
 | `lib/cart-context.tsx` | Contexto do carrinho (client) |
 | `prisma.config.ts` | Config centralizada do Prisma 7 |
-| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SubscriptionEvent |
+| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, CustomAlbum, SubscriptionEvent |

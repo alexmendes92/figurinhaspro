@@ -167,12 +167,15 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 - **Lazy Proxy DB**: `lib/db.ts` usa `Proxy` para inicializar conexao somente no primeiro acesso. Isso permite build sem DATABASE_URL ativo.
 - **Plan guards**: `lib/plan-limits.ts` exporta `checkStickerLimit()`, `checkOrderLimit()`, `checkAlbumLimit()`, `hasFeature()`. Temporariamente desabilitados (todos retornam `true`) — TODO restaurar.
 - **Mobile-first**: Viewport com `viewportFit: "cover"`, safe-area-bottom, bottom nav no painel, touch targets minimo 44px.
+- **Albuns customizados**: Vendedor cria albuns proprios via `/painel/estoque/novo`. `lib/custom-albums.ts` converte `CustomAlbum` (DB) para interface `Album` (usada em todo o sistema). Slugs customizados usam prefixo `custom_` para evitar conflito com albums estaticos. Parser suporta ranges (`1-670`), prefixos (`BRA1-BRA20`) e listas mistas. API CRUD em `/api/albums`.
+- **Importacao de lista faltante**: Na loja publica (`/loja/[slug]/[albumSlug]`), clientes podem colar sua lista de figurinhas que faltam e filtrar apenas as disponiveis no estoque do vendedor.
 
 ### Schema Prisma (modelos)
 
 | Modelo | Funcao |
 |--------|--------|
 | `Seller` | Vendedor — plano, Stripe billing, onboarding |
+| `CustomAlbum` | Albums personalizados do vendedor (stickers em JSON, unique: sellerId+slug) |
 | `Inventory` | Estoque por figurinha (unique: sellerId+albumSlug+stickerCode) |
 | `PriceRule` | Regras de preco por tipo (global ou por album) |
 | `Order` + `OrderItem` | Pedidos com workflow QUOTE→CONFIRMED→PAID→SHIPPED→DELIVERED |

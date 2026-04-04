@@ -235,9 +235,9 @@ export default function OnboardingPage() {
 
               <div className="space-y-3">
                 {[
-                  { type: "Regular", price: "R$ 1,00 – R$ 2,00", desc: "Figurinhas comuns" },
-                  { type: "Especial / Foil", price: "R$ 3,00 – R$ 5,00", desc: "Brilhantes e holograficas" },
-                  { type: "Lendaria", price: "R$ 8,00 – R$ 15,00", desc: "Raras, bordless, extra" },
+                  { type: "Normal", price: "R$ 1,00 – R$ 2,00", desc: "Figurinhas comuns" },
+                  { type: "Especial (Foil)", price: "R$ 3,00 – R$ 5,00", desc: "Brilhantes e holograficas" },
+                  { type: "Brilhante (Shiny)", price: "R$ 8,00 – R$ 15,00", desc: "Raras, bordless, extra" },
                 ].map((tip) => (
                   <div key={tip.type} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                     <div>

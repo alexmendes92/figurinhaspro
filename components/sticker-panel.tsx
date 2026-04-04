@@ -5,17 +5,10 @@ import { useState, useEffect, useRef } from "react";
 import { useCart, type CartSticker } from "@/lib/cart-context";
 import { getStickersForPage, getSectionNameForPage } from "@/lib/page-sticker-map";
 import type { Sticker } from "@/lib/albums";
-
-// Preço padrão por tipo de figurinha
-const DEFAULT_PRICES: Record<string, number> = {
-  regular: 1.50,
-  foil: 3.00,
-  shiny: 5.00,
-  legend: 8.00,
-};
+import { getDefaultPrice, getStickerTypeShortLabel, getStickerTypeConfig } from "@/lib/sticker-types";
 
 function getPrice(sticker: Sticker): number {
-  return DEFAULT_PRICES[sticker.type] || 1.50;
+  return getDefaultPrice(sticker.type);
 }
 
 // Animação de "fly to cart" — partícula que voa para o ícone do carrinho
@@ -179,6 +172,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                 ? stickers.length
                 : stickers.filter((s) => s.type === type).length;
               if (count === 0 && type !== "all") return null;
+              const conf = type !== "all" ? getStickerTypeConfig(type) : null;
               return (
                 <span
                   key={type}
@@ -192,7 +186,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                           : "bg-zinc-800/50 text-zinc-400"
                   }`}
                 >
-                  {type === "all" ? "Todas" : type} ({count})
+                  {type === "all" ? "Todas" : conf!.shortLabel} ({count})
                 </span>
               );
             })}
@@ -240,14 +234,8 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
                         {/* Badge de tipo especial */}
                         {sticker.type !== "regular" && (
-                          <span className={`absolute top-1 right-1 px-1 py-0.5 rounded text-[8px] font-bold ${
-                            sticker.type === "foil"
-                              ? "bg-amber-500/90 text-black"
-                              : sticker.type === "shiny"
-                                ? "bg-purple-500/90 text-white"
-                                : "bg-blue-500/90 text-white"
-                          }`}>
-                            {sticker.type.toUpperCase()}
+                          <span className={`absolute top-1 right-1 px-1 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}>
+                            {getStickerTypeShortLabel(sticker.type)}
                           </span>
                         )}
 

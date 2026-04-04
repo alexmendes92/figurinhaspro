@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
+import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
 
 interface CartItem {
   sticker: Sticker;
@@ -18,13 +19,8 @@ function getPrice(
 ): number {
   const custom = stockMap[sticker.code]?.customPrice;
   if (custom != null) return custom;
-  return priceMap[sticker.type] ?? (sticker.type === "foil" ? 5 : sticker.type === "shiny" ? 4 : 2.5);
+  return priceMap[sticker.type] ?? getDefaultPrice(sticker.type);
 }
-
-const typeLabels: Record<string, { label: string; color: string }> = {
-  foil: { label: "Especial", color: "bg-amber-500/80 text-black" },
-  shiny: { label: "Brilhante", color: "bg-purple-500/80 text-white" },
-};
 
 export default function StoreAlbumView({
   album,
@@ -278,7 +274,7 @@ export default function StoreAlbumView({
               {availableStickers.map((sticker) => {
                 const price = getPrice(sticker, stockMap, priceMap);
                 const inCart = cartCodes.has(sticker.code);
-                const typeInfo = typeLabels[sticker.type];
+                const typeConf = getStickerTypeConfig(sticker.type);
                 const qty = stockMap[sticker.code]?.quantity || 0;
 
                 return (
@@ -319,9 +315,9 @@ export default function StoreAlbumView({
                         </div>
                       )}
                       {/* Badge de tipo especial */}
-                      {typeInfo && (
-                        <div className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeInfo.color}`}>
-                          {typeInfo.label}
+                      {sticker.type !== "regular" && (
+                        <div className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
+                          {typeConf.shortLabel}
                         </div>
                       )}
                       {/* Quantidade em estoque */}

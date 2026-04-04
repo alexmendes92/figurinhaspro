@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
+import { getStickerTypeShortLabel } from "@/lib/sticker-types";
 
 export default function CartDrawer() {
   const {
@@ -98,7 +99,7 @@ export default function CartDrawer() {
                       {item.albumYear} · {item.sticker.code}
                       {item.sticker.type !== "regular" && (
                         <span className="ml-1 text-amber-400">
-                          ✨ {item.sticker.type}
+                          ✨ {getStickerTypeShortLabel(item.sticker.type)}
                         </span>
                       )}
                     </p>

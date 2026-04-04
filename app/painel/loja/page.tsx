@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import LojaEditor from "@/components/painel/loja-editor";
+import { getStickerTypeShortLabel, getDefaultPrice } from "@/lib/sticker-types";
 
 export default async function MinhaLojaPage() {
   const seller = await getSession();
@@ -86,9 +87,9 @@ export default async function MinhaLojaPage() {
               i > 0 ? "border-t border-[var(--border)]" : ""
             }`}
           >
-            <span className="text-xs text-[var(--muted)] capitalize">{type}</span>
+            <span className="text-xs text-[var(--muted)]">{getStickerTypeShortLabel(type)}</span>
             <span className="font-[family-name:var(--font-geist-mono)] text-sm text-[var(--accent)] font-semibold">
-              R${(priceMap.get(type) || (type === "foil" ? 5 : type === "shiny" ? 4 : 2.5)).toFixed(2).replace(".", ",")}
+              R${(priceMap.get(type) || getDefaultPrice(type)).toFixed(2).replace(".", ",")}
             </span>
           </div>
         ))}

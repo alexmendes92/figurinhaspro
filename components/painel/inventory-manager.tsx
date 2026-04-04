@@ -4,6 +4,7 @@ import { useState, useCallback, useTransition, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
+import { getStickerTypeConfig } from "@/lib/sticker-types";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -344,11 +345,9 @@ export default function InventoryManager({
                       )}
 
                       {/* Tipo especial */}
-                      {(sticker.type === "foil" || sticker.type === "shiny") && (
-                        <div className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${
-                          sticker.type === "foil" ? "bg-amber-500/80 text-black" : "bg-purple-500/80 text-white"
-                        }`}>
-                          {sticker.type === "foil" ? "Especial" : "Brilhante"}
+                      {sticker.type !== "regular" && (
+                        <div className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}>
+                          {getStickerTypeConfig(sticker.type).shortLabel}
                         </div>
                       )}
                     </button>

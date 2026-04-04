@@ -5,32 +5,10 @@ import Image from "next/image";
 import type { Album, Sticker } from "@/lib/albums";
 import { useCart, type CartSticker } from "@/lib/cart-context";
 import { useToast } from "@/lib/toast-context";
-
-// Preços por tipo de figurinha
-function getPrice(type: string): number {
-  switch (type) {
-    case "foil":
-      return 5.0;
-    case "shiny":
-      return 4.0;
-    default:
-      return 2.5;
-  }
-}
+import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
 
 function toCartSticker(s: Sticker): CartSticker {
-  return { ...s, price: getPrice(s.type) };
-}
-
-function getTypeLabel(type: string): string {
-  switch (type) {
-    case "foil":
-      return "Especial";
-    case "shiny":
-      return "Brilhante";
-    default:
-      return "";
-  }
+  return { ...s, price: getDefaultPrice(s.type) };
 }
 
 export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: () => void }) {
@@ -178,7 +156,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                         {sticker.code}
                       </span>
                       <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-amber-400">
-                        R${getPrice(sticker.type).toFixed(2).replace(".", ",")}
+                        R${getDefaultPrice(sticker.type).toFixed(2).replace(".", ",")}
                       </span>
                     </div>
                   </div>
@@ -227,14 +205,14 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                     {album.year} · {selectedSticker.code}
                   </p>
                   <h4 className="text-lg font-semibold">{selectedSticker.name}</h4>
-                  {getTypeLabel(selectedSticker.type) && (
+                  {selectedSticker.type !== "regular" && (
                     <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-medium">
-                      ✨ {getTypeLabel(selectedSticker.type)}
+                      ✨ {getStickerTypeShortLabel(selectedSticker.type)}
                     </span>
                   )}
                 </div>
                 <span className="text-xl font-bold text-amber-400 font-[family-name:var(--font-geist-mono)]">
-                  R${getPrice(selectedSticker.type).toFixed(2).replace(".", ",")}
+                  R${getDefaultPrice(selectedSticker.type).toFixed(2).replace(".", ",")}
                 </span>
               </div>
 

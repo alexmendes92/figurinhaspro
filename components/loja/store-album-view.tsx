@@ -4,22 +4,14 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
-import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
+import { getStickerTypeConfig } from "@/lib/sticker-types";
+import { resolveUnitPrice, resolveQuantityDiscount } from "@/lib/price-resolver";
+import type { SectionRule } from "@/lib/price-resolver";
 
 interface CartItem {
   sticker: Sticker;
   price: number;
   quantity: number;
-}
-
-function getPrice(
-  sticker: Sticker,
-  stockMap: Record<string, { quantity: number; customPrice: number | null }>,
-  priceMap: Record<string, number>
-): number {
-  const custom = stockMap[sticker.code]?.customPrice;
-  if (custom != null) return custom;
-  return priceMap[sticker.type] ?? getDefaultPrice(sticker.type);
 }
 
 export default function StoreAlbumView({
@@ -29,6 +21,9 @@ export default function StoreAlbumView({
   sellerSlug,
   sellerName,
   sellerPhone,
+  stickerSectionMap,
+  sectionRulesMap,
+  quantityTiers,
 }: {
   album: Album;
   stockMap: Record<string, { quantity: number; customPrice: number | null }>;
@@ -36,6 +31,9 @@ export default function StoreAlbumView({
   sellerSlug: string;
   sellerName: string;
   sellerPhone: string | null;
+  stickerSectionMap: Record<string, string>;
+  sectionRulesMap: Record<string, { adjustType: string; value: number }>;
+  quantityTiers: { minQuantity: number; discount: number }[];
 }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [activeSection, setActiveSection] = useState(0);
@@ -48,6 +46,30 @@ export default function StoreAlbumView({
   const [importText, setImportText] = useState("");
 
   const filterByMissing = missingCodes.size > 0;
+
+  // Monta Map de seção para resolveUnitPrice
+  const sectionRulesRef = useMemo(() => {
+    const map = new Map<string, SectionRule>();
+    for (const [name, rule] of Object.entries(sectionRulesMap)) {
+      map.set(name, {
+        sectionName: name,
+        adjustType: rule.adjustType as "FLAT" | "OFFSET",
+        value: rule.value,
+      });
+    }
+    return map;
+  }, [sectionRulesMap]);
+
+  function getPrice(sticker: Sticker): number {
+    return resolveUnitPrice({
+      customPrice: stockMap[sticker.code]?.customPrice ?? null,
+      stickerType: sticker.type,
+      sectionName: stickerSectionMap[sticker.code] ?? "",
+      albumTypeRules: priceMap,
+      globalTypeRules: {},
+      sectionRules: sectionRulesRef,
+    });
+  }
 
   function parseMissingList(text: string): Set<string> {
     // Aceita: vírgula, espaço, tab, quebra de linha, ponto-e-vírgula
@@ -82,7 +104,7 @@ export default function StoreAlbumView({
     setCart((prev) => {
       const newItems: CartItem[] = toAdd.map((sticker) => ({
         sticker,
-        price: getPrice(sticker, stockMap, priceMap),
+        price: getPrice(sticker),
         quantity: 1,
       }));
       return [...prev, ...newItems];
@@ -129,15 +151,19 @@ export default function StoreAlbumView({
     [album.sections, stockMap]
   );
 
-  const cartTotal = useMemo(
-    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [cart]
-  );
-
   const cartItemCount = useMemo(
     () => cart.reduce((sum, item) => sum + item.quantity, 0),
     [cart]
   );
+
+  const cartSubtotal = useMemo(
+    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cart]
+  );
+
+  const discountPercent = resolveQuantityDiscount(cartItemCount, quantityTiers);
+  const discountAmount = cartSubtotal * (discountPercent / 100);
+  const cartTotal = cartSubtotal - discountAmount;
 
   const cartCodes = useMemo(
     () => new Set(cart.map((i) => i.sticker.code)),
@@ -145,7 +171,7 @@ export default function StoreAlbumView({
   );
 
   function addToCart(sticker: Sticker) {
-    const price = getPrice(sticker, stockMap, priceMap);
+    const price = getPrice(sticker);
     const maxQty = stockMap[sticker.code]?.quantity || 1;
     setCart((prev) => {
       const existing = prev.find((i) => i.sticker.code === sticker.code);
@@ -188,7 +214,13 @@ export default function StoreAlbumView({
       msg += ` → R$${(item.price * item.quantity).toFixed(2).replace(".", ",")}\n`;
     });
     msg += `────────────────\n`;
-    msg += `*Total: R$${cartTotal.toFixed(2).replace(".", ",")}*\n`;
+    if (discountPercent > 0) {
+      msg += `Subtotal: R$${cartSubtotal.toFixed(2).replace(".", ",")}\n`;
+      msg += `Desconto: ${discountPercent}% (${cartItemCount}+ figurinhas)\n`;
+      msg += `*Total: R$${cartTotal.toFixed(2).replace(".", ",")}*\n`;
+    } else {
+      msg += `*Total: R$${cartTotal.toFixed(2).replace(".", ",")}*\n`;
+    }
     msg += `*${cartItemCount} figurinhas*\n\n`;
     msg += `Pedido feito pela loja online.`;
     return msg;
@@ -383,7 +415,7 @@ export default function StoreAlbumView({
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 sm:gap-3">
               {availableStickers.map((sticker) => {
-                const price = getPrice(sticker, stockMap, priceMap);
+                const price = getPrice(sticker);
                 const inCart = cartCodes.has(sticker.code);
                 const typeConf = getStickerTypeConfig(sticker.type);
                 const qty = stockMap[sticker.code]?.quantity || 0;
@@ -592,16 +624,45 @@ export default function StoreAlbumView({
 
             {cart.length > 0 && (
               <div className="border-t border-zinc-800 p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-sm text-zinc-400">{cartItemCount} figurinhas</span>
-                    {cart.length !== cartItemCount && (
-                      <span className="text-[10px] text-zinc-600 ml-1">({cart.length} tipos)</span>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-sm text-zinc-400">{cartItemCount} figurinhas</span>
+                      {cart.length !== cartItemCount && (
+                        <span className="text-[10px] text-zinc-600 ml-1">({cart.length} tipos)</span>
+                      )}
+                    </div>
+                    {discountPercent > 0 ? (
+                      <span className="text-sm text-zinc-500 line-through font-[family-name:var(--font-geist-mono)]">
+                        R${cartSubtotal.toFixed(2).replace(".", ",")}
+                      </span>
+                    ) : (
+                      <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+                        R${cartTotal.toFixed(2).replace(".", ",")}
+                      </span>
                     )}
                   </div>
-                  <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
-                    R${cartTotal.toFixed(2).replace(".", ",")}
-                  </span>
+                  {discountPercent > 0 && (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-green-400 flex items-center gap-1">
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 14l-4-4m0 0l4-4m-4 4h11.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          Desconto {discountPercent}%
+                        </span>
+                        <span className="text-xs text-green-400 font-[family-name:var(--font-geist-mono)]">
+                          -R${discountAmount.toFixed(2).replace(".", ",")}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between pt-1 border-t border-zinc-800/50">
+                        <span className="text-sm font-semibold text-white">Total</span>
+                        <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+                          R${cartTotal.toFixed(2).replace(".", ",")}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <button
                   onClick={() => { setShowCart(false); setShowCheckout(true); }}
@@ -639,6 +700,7 @@ export default function StoreAlbumView({
                     customerName: name,
                     customerPhone: form.get("phone") || undefined,
                     channel: sellerPhone ? "WHATSAPP" : "SYSTEM",
+                    discountPercent,
                     items: cart.map((item) => ({
                       albumSlug: album.slug,
                       stickerCode: item.sticker.code,
@@ -693,11 +755,31 @@ export default function StoreAlbumView({
                     </div>
                   ))}
                 </div>
-                <div className="px-3 py-2 border-t border-zinc-700 flex justify-between">
-                  <span className="text-xs text-zinc-400 font-medium">{cartItemCount} figurinhas</span>
-                  <span className="font-bold text-amber-400 font-[family-name:var(--font-geist-mono)] text-sm">
-                    R${cartTotal.toFixed(2).replace(".", ",")}
-                  </span>
+                <div className="px-3 py-2 border-t border-zinc-700 space-y-1">
+                  {discountPercent > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-zinc-500">Subtotal ({cartItemCount} fig.)</span>
+                      <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+                        R${cartSubtotal.toFixed(2).replace(".", ",")}
+                      </span>
+                    </div>
+                  )}
+                  {discountPercent > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-green-400">Desconto {discountPercent}%</span>
+                      <span className="text-[10px] text-green-400 font-[family-name:var(--font-geist-mono)]">
+                        -R${discountAmount.toFixed(2).replace(".", ",")}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-xs text-zinc-400 font-medium">
+                      {discountPercent > 0 ? "Total" : `${cartItemCount} figurinhas`}
+                    </span>
+                    <span className="font-bold text-amber-400 font-[family-name:var(--font-geist-mono)] text-sm">
+                      R${cartTotal.toFixed(2).replace(".", ",")}
+                    </span>
+                  </div>
                 </div>
               </div>
 

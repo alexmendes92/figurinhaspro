@@ -32,6 +32,8 @@ model Seller {
   inventory          Inventory[]
   orders             Order[]
   priceRules         PriceRule[]
+  sectionPriceRules  SectionPriceRule[]
+  quantityTiers      QuantityTier[]
   subscriptionEvents SubscriptionEvent[]
   customAlbums       CustomAlbum[]
 }
@@ -98,6 +100,31 @@ model OrderItem {
   stickerName String
   quantity    Int
   unitPrice   Float
+}
+
+model SectionPriceRule {
+  id          String @id @default(cuid())
+  sellerId    String
+  seller      Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  albumSlug   String
+  sectionName String
+  adjustType  String @default("FLAT") // "FLAT" = preço absoluto | "OFFSET" = +/- sobre preço base
+  value       Float
+
+  @@unique([sellerId, albumSlug, sectionName])
+  @@index([sellerId, albumSlug])
+}
+
+model QuantityTier {
+  id          String @id @default(cuid())
+  sellerId    String
+  seller      Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  albumSlug   String
+  minQuantity Int
+  discount    Float  // percentual de desconto (ex: 10 = 10% off)
+
+  @@unique([sellerId, albumSlug, minQuantity])
+  @@index([sellerId, albumSlug])
 }
 
 model CustomAlbum {

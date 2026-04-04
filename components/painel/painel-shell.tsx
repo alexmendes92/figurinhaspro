@@ -17,8 +17,17 @@ const nav = [
   { href: "/painel/estoque", label: "Estoque", icon: "M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" },
   { href: "/painel/precos", label: "Preços", icon: "M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z M6 6h.008v.008H6V6z" },
   { href: "/painel/pedidos", label: "Pedidos", icon: "M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" },
-  { href: "/painel/loja", label: "Minha Loja", icon: "M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" },
+  { href: "/painel/loja", label: "Loja", icon: "M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" },
   { href: "/painel/planos", label: "Planos", icon: "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" },
+];
+
+// Bottom nav items for mobile (subset of nav)
+const mobileNav = [
+  nav[0], // Início
+  nav[1], // Estoque
+  nav[3], // Pedidos
+  nav[4], // Loja
+  nav[5], // Planos
 ];
 
 export default function PainelShell({ seller, children }: { seller: SellerInfo; children: React.ReactNode }) {
@@ -126,24 +135,47 @@ export default function PainelShell({ seller, children }: { seller: SellerInfo; 
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 border-b border-white/[0.06] bg-[#0b0e14] flex items-center px-5 gap-3 sticky top-0 z-30">
-          <button onClick={() => setMobileOpen(true)} className="lg:hidden w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-gray-400" aria-label="Abrir menu">
+        <header className="h-14 border-b border-white/[0.06] bg-[#0b0e14] flex items-center px-4 sm:px-5 gap-3 sticky top-0 z-30">
+          <button onClick={() => setMobileOpen(true)} className="lg:hidden w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-gray-400 active:bg-white/5" aria-label="Abrir menu">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-gray-500">
-            <Link href="/painel" className="hover:text-white transition-colors">Painel</Link>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-gray-500 min-w-0">
+            <Link href="/painel" className="hover:text-white transition-colors shrink-0">Painel</Link>
             {pathname.replace("/painel", "").split("/").filter(Boolean).map((seg, i, arr) => (
-              <span key={i} className="flex items-center gap-1.5">
-                <span className="text-gray-700" aria-hidden="true">/</span>
-                <span className={i === arr.length - 1 ? "text-white font-medium" : ""} aria-current={i === arr.length - 1 ? "page" : undefined}>{seg.charAt(0).toUpperCase() + seg.slice(1)}</span>
+              <span key={i} className="flex items-center gap-1.5 min-w-0">
+                <span className="text-gray-700 shrink-0" aria-hidden="true">/</span>
+                <span className={`truncate ${i === arr.length - 1 ? "text-white font-medium" : ""}`} aria-current={i === arr.length - 1 ? "page" : undefined}>{seg.charAt(0).toUpperCase() + seg.slice(1)}</span>
               </span>
             ))}
           </nav>
         </header>
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto pb-[72px] lg:pb-0">{children}</main>
       </div>
+
+      {/* Mobile bottom navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-[#0f1219]/95 backdrop-blur-xl border-t border-white/[0.06] safe-area-bottom">
+        <div className="flex items-center justify-around h-16">
+          {mobileNav.map((item) => {
+            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors active:bg-white/5 ${
+                  active ? "text-amber-400" : "text-gray-500"
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={active ? 2 : 1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                </svg>
+                <span className="text-[10px] font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

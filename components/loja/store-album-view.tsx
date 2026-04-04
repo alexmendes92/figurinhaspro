@@ -285,10 +285,10 @@ export default function StoreAlbumView({
                   <button
                     key={sticker.code}
                     onClick={() => addToCart(sticker)}
-                    className={`group relative rounded-lg overflow-hidden border transition-all hover:scale-105 focus:outline-none ${
+                    className={`group relative rounded-lg overflow-hidden border transition-all active:scale-95 sm:hover:scale-105 focus:outline-none ${
                       inCart
                         ? "border-green-500/40 ring-1 ring-green-500/20"
-                        : "border-zinc-700 hover:border-amber-500/40"
+                        : "border-zinc-700 hover:border-amber-500/40 active:border-amber-500/40"
                     }`}
                   >
                     <div className="relative aspect-[2/3] bg-zinc-800">
@@ -299,15 +299,18 @@ export default function StoreAlbumView({
                         className="object-cover"
                         sizes="(max-width: 640px) 33vw, 12vw"
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center">
-                            <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                            </svg>
+                      {/* Add-to-cart overlay — visible on hover (desktop) or always subtle on mobile */}
+                      {!inCart && (
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end sm:items-center justify-center pb-2 sm:pb-0">
+                          <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/90 sm:bg-amber-500 flex items-center justify-center shadow-lg">
+                              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                              </svg>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                       {inCart && (
                         <div className="absolute top-1 left-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
                           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -396,7 +399,7 @@ export default function StoreAlbumView({
                         <div className="flex items-center gap-1.5 mt-1.5">
                           <button
                             onClick={() => updateCartQty(item.sticker.code, -1)}
-                            className="w-6 h-6 rounded-md bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 transition-colors"
+                            className="w-8 h-8 rounded-md bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 active:bg-zinc-700 transition-colors"
                           >
                             <span className="text-sm leading-none">−</span>
                           </button>
@@ -405,7 +408,7 @@ export default function StoreAlbumView({
                           </span>
                           <button
                             onClick={() => updateCartQty(item.sticker.code, 1)}
-                            className="w-6 h-6 rounded-md bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 transition-colors"
+                            className="w-8 h-8 rounded-md bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 active:bg-zinc-700 transition-colors"
                           >
                             <span className="text-sm leading-none">+</span>
                           </button>
@@ -605,10 +608,10 @@ export default function StoreAlbumView({
 
       {/* Barra fixa do carrinho (mobile) */}
       {cart.length > 0 && !showCart && !showCheckout && !showSuccess && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-zinc-950/90 backdrop-blur-sm border-t border-zinc-800 lg:hidden">
+        <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-zinc-950/90 backdrop-blur-sm border-t border-zinc-800 lg:hidden safe-area-bottom">
           <button
             onClick={() => setShowCart(true)}
-            className="w-full py-3 rounded-xl bg-amber-500 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+            className="w-full py-3.5 rounded-xl bg-amber-500 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:bg-amber-400"
           >
             Ver orçamento ({cartItemCount}) — R${cartTotal.toFixed(2).replace(".", ",")}
           </button>

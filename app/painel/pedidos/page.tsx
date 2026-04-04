@@ -153,40 +153,41 @@ export default function PedidosPage() {
                 {/* Header */}
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : order.id)}
-                  className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.01] transition-colors"
+                  className="w-full px-4 sm:px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.01] transition-colors gap-2"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-400 shrink-0">
                       {order.customerName[0].toUpperCase()}
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold">{order.customerName}</p>
-                      <div className="flex items-center gap-2 mt-0.5">
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold truncate">{order.customerName}</p>
+                      <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 flex-wrap">
                         <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)]">
-                          {order.items.length} figurinhas
+                          {order.items.length} fig.
                         </span>
-                        <span className="text-zinc-700">·</span>
-                        <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)]">
+                        <span className="text-zinc-700 hidden sm:inline">·</span>
+                        <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)] hidden sm:inline">
                           {new Date(order.createdAt).toLocaleDateString("pt-BR", {
                             day: "2-digit", month: "2-digit", year: "numeric",
                             hour: "2-digit", minute: "2-digit",
                           })}
                         </span>
-                        <span className="text-zinc-700">·</span>
-                        <span className="text-[10px] text-zinc-600">
-                          {channelLabels[order.channel] || order.channel}
+                        <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)] sm:hidden">
+                          {new Date(order.createdAt).toLocaleDateString("pt-BR", {
+                            day: "2-digit", month: "2-digit",
+                          })}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                     <span className={`badge ${sc.badge}`}>{sc.label}</span>
                     <span className="font-[family-name:var(--font-geist-mono)] text-sm text-[var(--accent)] font-bold">
                       R${order.totalPrice.toFixed(2).replace(".", ",")}
                     </span>
                     <svg
-                      className={`w-4 h-4 text-zinc-600 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 text-zinc-600 transition-transform hidden sm:block ${isExpanded ? "rotate-180" : ""}`}
                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -241,19 +242,19 @@ export default function PedidosPage() {
                       {order.items.map((item, i) => (
                         <div
                           key={item.id}
-                          className={`px-4 py-2.5 flex items-center justify-between text-xs ${
+                          className={`px-3 sm:px-4 py-2.5 flex items-center justify-between text-xs gap-2 ${
                             i > 0 ? "border-t border-[var(--border)]" : ""
                           }`}
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="font-[family-name:var(--font-geist-mono)] text-zinc-500 w-14">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="font-[family-name:var(--font-geist-mono)] text-zinc-500 shrink-0">
                               {item.stickerCode}
                             </span>
-                            <span className="text-zinc-300">{item.stickerName}</span>
+                            <span className="text-zinc-300 truncate">{item.stickerName}</span>
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                             <span className="text-zinc-500">x{item.quantity}</span>
-                            <span className="font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-medium w-16 text-right">
+                            <span className="font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-medium text-right">
                               R${(item.unitPrice * item.quantity).toFixed(2).replace(".", ",")}
                             </span>
                           </div>
@@ -262,28 +263,28 @@ export default function PedidosPage() {
                     </div>
 
                     {/* Ações */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <div className="flex gap-2">
                         {sc.next && (
                           <button
                             onClick={() => updateStatus(order.id, sc.next!)}
                             disabled={isUpdating}
-                            className="btn-primary !py-2 !px-4 !text-xs"
+                            className="btn-primary !py-2.5 !px-4 !text-xs"
                           >
-                            {isUpdating ? "Atualizando..." : sc.nextLabel}
+                            {isUpdating ? "..." : sc.nextLabel}
                           </button>
                         )}
                         {order.status !== "CANCELLED" && order.status !== "DELIVERED" && (
                           <button
                             onClick={() => updateStatus(order.id, "CANCELLED")}
                             disabled={isUpdating}
-                            className="btn-ghost !py-2 !px-4 !text-xs !text-red-400 !border-red-500/15 hover:!bg-red-500/5"
+                            className="btn-ghost !py-2.5 !px-4 !text-xs !text-red-400 !border-red-500/15 hover:!bg-red-500/5"
                           >
                             Cancelar
                           </button>
                         )}
                       </div>
-                      <span className="font-[family-name:var(--font-geist-mono)] text-lg text-[var(--accent)] font-bold">
+                      <span className="font-[family-name:var(--font-geist-mono)] text-lg text-[var(--accent)] font-bold shrink-0">
                         R${order.totalPrice.toFixed(2).replace(".", ",")}
                       </span>
                     </div>

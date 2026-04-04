@@ -39,7 +39,7 @@ export default async function DashboardPage() {
   const storeUrl = `/loja/${seller.shopSlug}`;
 
   return (
-    <div className="p-6 lg:p-8 max-w-6xl slide-up">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl slide-up">
       {/* Boas vindas */}
       <div className="mb-8">
         <p className="text-gray-500 text-sm">Bem-vindo de volta,</p>
@@ -50,65 +50,65 @@ export default async function DashboardPage() {
       </div>
 
       {/* Métricas — cards com gradiente */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Link href="/painel/estoque" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-5 hover:border-amber-500/20 transition-all">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
+        <Link href="/painel/estoque" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-4 sm:p-5 hover:border-amber-500/20 transition-all">
           <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-3">Figurinhas</p>
-          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{inventoryCount}</p>
-          <p className="text-[11px] text-gray-500 mt-1">
+          <p className="text-[10px] sm:text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-2 sm:mb-3">Figurinhas</p>
+          <p className="text-2xl sm:text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{inventoryCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1 truncate">
             {inventoryCount > 0
-              ? `${totalQty._sum.quantity || 0} unidades no estoque`
-              : "Comece adicionando seu estoque →"}
+              ? `${totalQty._sum.quantity || 0} un. em estoque`
+              : "Adicione seu estoque →"}
           </p>
         </Link>
 
-        <Link href="/painel/pedidos" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/10 p-5 hover:border-blue-500/20 transition-all">
+        <Link href="/painel/pedidos" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/10 p-4 sm:p-5 hover:border-blue-500/20 transition-all">
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <p className="text-[11px] text-blue-400/70 font-semibold uppercase tracking-wider mb-3">Pedidos</p>
-          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{orderCount}</p>
-          <p className="text-[11px] text-gray-500 mt-1">
+          <p className="text-[10px] sm:text-[11px] text-blue-400/70 font-semibold uppercase tracking-wider mb-2 sm:mb-3">Pedidos</p>
+          <p className="text-2xl sm:text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{orderCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1 truncate">
             {orderCount === 0
               ? "Compartilhe sua vitrine →"
               : quoteCount > 0
-                ? `${quoteCount} aguardando resposta`
+                ? `${quoteCount} aguardando`
                 : "Nenhum pendente"}
           </p>
         </Link>
 
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/10 p-5">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/10 p-4 sm:p-5">
           <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <p className="text-[11px] text-purple-400/70 font-semibold uppercase tracking-wider mb-3">Faturamento</p>
-          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">
+          <p className="text-[10px] sm:text-[11px] text-purple-400/70 font-semibold uppercase tracking-wider mb-2 sm:mb-3">Faturamento</p>
+          <p className="text-2xl sm:text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">
             R${(revenue._sum.totalPrice || 0).toFixed(0)}
           </p>
-          <p className="text-[11px] text-gray-500 mt-1">
-            {(revenue._sum.totalPrice || 0) > 0 ? "Total confirmado" : "Aguardando primeiras vendas"}
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1 truncate">
+            {(revenue._sum.totalPrice || 0) > 0 ? "Total confirmado" : "Aguardando vendas"}
           </p>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-5">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/10 p-4 sm:p-5">
           <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-3">Catálogo</p>
-          <p className="text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{totalCatalog.toLocaleString("pt-BR")}</p>
-          <p className="text-[11px] text-gray-500 mt-1">Figurinhas em {albums.length} Copas</p>
+          <p className="text-[10px] sm:text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider mb-2 sm:mb-3">Catálogo</p>
+          <p className="text-2xl sm:text-3xl font-black text-white font-[family-name:var(--font-geist-mono)]">{totalCatalog.toLocaleString("pt-BR")}</p>
+          <p className="text-[10px] sm:text-[11px] text-gray-500 mt-1">em {albums.length} Copas</p>
         </div>
       </div>
 
       {/* Link vitrine + Ações */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 mb-8">
         {/* Vitrine */}
-        <div className="lg:col-span-2 rounded-2xl bg-[#0f1219] border border-white/[0.06] p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div>
+        <div className="lg:col-span-2 rounded-2xl bg-[#0f1219] border border-white/[0.06] p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-4 gap-2">
+            <div className="min-w-0">
               <p className="text-sm font-bold text-white">Sua vitrine</p>
               <p className="text-[11px] text-gray-500 mt-0.5">Compartilhe com seus clientes</p>
             </div>
-            <Link href={storeUrl} target="_blank" className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20">
+            <Link href={storeUrl} target="_blank" className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20 shrink-0 active:bg-amber-400">
               Abrir vitrine
             </Link>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex-1 px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-sm text-amber-400 truncate">
+            <div className="flex-1 px-3 sm:px-4 py-3 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-xs sm:text-sm text-amber-400 truncate">
               {storeUrl}
             </div>
             <CopyLinkButton path={storeUrl} />
@@ -157,23 +157,23 @@ export default async function DashboardPage() {
         ) : (
           <div className="rounded-2xl bg-[#0f1219] border border-white/[0.06] overflow-hidden">
             {recentOrders.map((order, i) => (
-              <div key={order.id} className={`px-5 py-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors ${i > 0 ? "border-t border-white/[0.04]" : ""}`}>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-[11px] font-bold text-gray-300">
+              <div key={order.id} className={`px-3 sm:px-5 py-3 sm:py-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors gap-2 ${i > 0 ? "border-t border-white/[0.04]" : ""}`}>
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-[10px] sm:text-[11px] font-bold text-gray-300 shrink-0">
                     {order.customerName[0].toUpperCase()}
                   </div>
-                  <div>
-                    <p className="text-[13px] font-semibold text-white">{order.customerName}</p>
-                    <p className="text-[11px] text-gray-500 font-[family-name:var(--font-geist-mono)]">
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-[13px] font-semibold text-white truncate">{order.customerName}</p>
+                    <p className="text-[10px] sm:text-[11px] text-gray-500 font-[family-name:var(--font-geist-mono)]">
                       {order.items.length} fig. · {new Date(order.createdAt).toLocaleDateString("pt-BR")}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${statusBadge[order.status] || ""}`}>
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                  <span className={`px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold border ${statusBadge[order.status] || ""}`}>
                     {statusLabel[order.status] || order.status}
                   </span>
-                  <span className="font-[family-name:var(--font-geist-mono)] text-sm font-bold text-white">
+                  <span className="font-[family-name:var(--font-geist-mono)] text-xs sm:text-sm font-bold text-white">
                     R${order.totalPrice.toFixed(2).replace(".", ",")}
                   </span>
                 </div>

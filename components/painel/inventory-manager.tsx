@@ -223,9 +223,9 @@ export default function InventoryManager({
           </div>
 
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div>
-              <h3 className="text-lg font-semibold">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div className="min-w-0">
+              <h3 className="text-base sm:text-lg font-semibold truncate">
                 {isSearching ? `Resultados para "${search.trim()}"` : section.name}
               </h3>
               <p className="text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
@@ -247,14 +247,14 @@ export default function InventoryManager({
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {/* Filtros */}
               <div className="flex rounded-lg border border-zinc-800 overflow-hidden">
                 {(["all", "in-stock", "missing"] as const).map((f) => (
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
-                    className={`px-2.5 py-1.5 text-[11px] font-medium transition-colors ${
+                    className={`px-3 py-2 text-xs font-medium transition-colors ${
                       filter === f
                         ? "bg-amber-500/10 text-amber-400"
                         : "text-zinc-500 hover:text-zinc-300"
@@ -271,7 +271,7 @@ export default function InventoryManager({
                   <button
                     onClick={markAllSection}
                     title="Marcar todas como tenho 1"
-                    className="px-3 py-1.5 rounded-lg border border-zinc-700 text-[11px] text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all"
+                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all"
                   >
                     Marcar todas
                   </button>
@@ -279,7 +279,7 @@ export default function InventoryManager({
                     <button
                       onClick={clearSection}
                       title="Zerar esta seção"
-                      className="px-3 py-1.5 rounded-lg border border-zinc-700 text-[11px] text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all"
+                      className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all"
                     >
                       Zerar
                     </button>
@@ -370,7 +370,7 @@ export default function InventoryManager({
                         <div className="flex items-center justify-center gap-1">
                           <button
                             onClick={() => updateQuantity(sticker.code, qty - 1)}
-                            className="w-7 h-6 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors"
+                            className="w-8 h-7 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
                           >
                             −
                           </button>
@@ -379,7 +379,7 @@ export default function InventoryManager({
                           </span>
                           <button
                             onClick={() => updateQuantity(sticker.code, qty + 1)}
-                            className="w-7 h-6 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors"
+                            className="w-8 h-7 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
                           >
                             +
                           </button>

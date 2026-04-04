@@ -34,22 +34,22 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#0b0e14]">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0b0e14]/80 backdrop-blur-xl border-b border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
               <span className="text-white font-black text-xs font-[family-name:var(--font-geist-mono)]">F</span>
             </div>
             <span className="font-black text-sm text-white">Figurinhas<span className="text-amber-400">Pro</span></span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors font-medium">Entrar</Link>
-            <Link href="/registro" className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-all shadow-lg shadow-amber-500/20">Criar conta gratis</Link>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link href="/login" className="px-3 sm:px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors font-medium">Entrar</Link>
+            <Link href="/registro" className="px-4 sm:px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs sm:text-sm font-bold transition-all shadow-lg shadow-amber-500/20 active:bg-amber-400">Criar conta</Link>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="relative pt-28 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-20 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(245,158,11,0.06),transparent_60%)]" />
         <div className="max-w-3xl mx-auto text-center relative">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/5 text-amber-400 text-xs font-bold mb-8">
@@ -63,7 +63,7 @@ export default function LandingPage() {
             <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">como um profissional</span>
           </h1>
 
-          <p className="text-lg text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed">
             Estoque visual, precos customizados, vitrine online e orcamentos via WhatsApp. A plataforma feita para quem vende figurinhas avulsas.
           </p>
 
@@ -76,15 +76,15 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className="flex items-center justify-center gap-8 sm:gap-12 mt-20">
+          <div className="flex items-center justify-center gap-6 sm:gap-12 mt-14 sm:mt-20">
             {[
-              { v: "7.122", l: "figurinhas catalogadas" },
-              { v: "13", l: "Copas do Mundo" },
-              { v: "1970–2026", l: "cobertura completa" },
+              { v: "7.122", l: "figurinhas" },
+              { v: "13", l: "Copas" },
+              { v: "1970–2026", l: "cobertura" },
             ].map((s) => (
               <div key={s.l} className="text-center">
-                <p className="text-2xl font-black font-[family-name:var(--font-geist-mono)] text-white">{s.v}</p>
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">{s.l}</p>
+                <p className="text-xl sm:text-2xl font-black font-[family-name:var(--font-geist-mono)] text-white">{s.v}</p>
+                <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest mt-1">{s.l}</p>
               </div>
             ))}
           </div>

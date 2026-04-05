@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart-context";
 import { ToastProvider } from "@/lib/toast-context";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -66,6 +68,8 @@ export default function RootLayout({
         <CartProvider>
           <ToastProvider>{children}</ToastProvider>
         </CartProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

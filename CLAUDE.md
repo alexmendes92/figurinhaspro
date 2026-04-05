@@ -73,3 +73,6 @@ stripe logs tail
 | `lib/cart-context.tsx` | Contexto do carrinho (client) |
 | `prisma.config.ts` | Config centralizada do Prisma 7 |
 | `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent |
+
+## Sincronizacao global
+Alteracao estrutural (porta, stack, deploy, servico compartilhado) → atualizar CLAUDE.md da raiz Arena Cards + propagar downstream. Ver `../.claude/rules/sync-global.md` na raiz Arena Cards.

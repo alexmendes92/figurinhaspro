@@ -4,6 +4,7 @@ import { albums } from "@/lib/albums";
 import type { Album } from "@/lib/albums";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
 import { buildStickerSectionMap } from "@/lib/price-resolver";
+import { getSellerCatalog } from "@/lib/seller-catalog";
 import StoreAlbumView from "@/components/loja/store-album-view";
 
 export default async function LojaAlbumPage({
@@ -28,8 +29,8 @@ export default async function LojaAlbumPage({
   }
   if (!album) notFound();
 
-  // Busca estoque, regras de preço, section rules e quantity tiers em paralelo
-  const [inventory, priceRules, sectionRules, quantityTiers] = await Promise.all([
+  // Busca estoque, regras de preço, section rules, quantity tiers e catálogo em paralelo
+  const [inventory, priceRules, sectionRules, quantityTiers, catalog] = await Promise.all([
     db.inventory.findMany({
       where: { sellerId: seller.id, albumSlug, quantity: { gt: 0 } },
     }),
@@ -46,6 +47,7 @@ export default async function LojaAlbumPage({
       where: { sellerId: seller.id, albumSlug },
       orderBy: { minQuantity: "asc" },
     }),
+    getSellerCatalog(seller.id),
   ]);
 
   const stockMap: Record<string, { quantity: number; customPrice: number | null }> = {};
@@ -95,6 +97,10 @@ export default async function LojaAlbumPage({
       sellerSlug={slug}
       sellerName={seller.shopName}
       sellerPhone={seller.phone}
+      sellerDescription={seller.shopDescription}
+      sellerBusinessHours={seller.businessHours}
+      sellerPaymentMethods={seller.paymentMethods}
+      availableAlbums={catalog}
       stickerSectionMap={stickerSectionMap}
       sectionRulesMap={sectionRulesMap}
       quantityTiers={tiersData}

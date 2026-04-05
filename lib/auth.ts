@@ -1,15 +1,14 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { db } from "./db";
+import { env } from "./env";
 
 interface SessionData {
   sellerId?: string;
 }
 
 const SESSION_OPTIONS = {
-  password:
-    process.env.SESSION_SECRET ||
-    "dev-secret-must-be-at-least-32-characters-long!",
+  password: env.SESSION_SECRET,
   cookieName: "fp_session",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

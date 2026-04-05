@@ -170,6 +170,31 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 - **Albuns customizados**: Vendedor cria albuns proprios via `/painel/estoque/novo`. `lib/custom-albums.ts` converte `CustomAlbum` (DB) para interface `Album` (usada em todo o sistema). Slugs customizados usam prefixo `custom_` para evitar conflito com albums estaticos. Parser suporta ranges (`1-670`), prefixos (`BRA1-BRA20`) e listas mistas. API CRUD em `/api/albums`.
 - **Importacao de lista faltante**: Na loja publica (`/loja/[slug]/[albumSlug]`), clientes podem colar sua lista de figurinhas que faltam e filtrar apenas as disponiveis no estoque do vendedor.
 
+### Sistema de Precos (3 eixos)
+
+Centralizado em `lib/price-resolver.ts`. Hierarquia de resolucao:
+```
+Individual (customPrice) > Regra de secao > Regra por tipo do album > Regra global por tipo > Preco padrao
+```
+
+| Eixo | Descricao | Modelo Prisma | API | Editor |
+|------|-----------|---------------|-----|--------|
+| Por tipo | Preco base por tipo de figurinha (global ou por album) | `PriceRule` | `api/prices` + `api/prices/[albumSlug]` | `precos-global-editor` + `precos-album-editor` (aba "Por Tipo") |
+| Por secao | Ajuste por secao/pais dentro de um album (FLAT ou OFFSET) | `SectionPriceRule` | `api/prices/sections` | `precos-album-editor` (aba "Por Secao") |
+| Quantidade | Desconto percentual progressivo por volume no carrinho | `QuantityTier` | `api/prices/tiers` | `precos-album-editor` (aba "Quantidade") |
+
+Funcoes-chave:
+- `resolveUnitPrice(ctx)` — resolve preco unitario seguindo a hierarquia
+- `resolveQuantityDiscount(totalQty, tiers)` — encontra o tier de desconto aplicavel
+- `applyDiscount(unitPrice, discountPercent)` — aplica desconto percentual
+- `buildStickerSectionMap(sections)` — pre-computa mapa stickerCode→sectionName (server-side, evita enviar albums.ts ao client)
+
+Padroes server↔client:
+- Server faz merge de regras globais+album em um unico `priceMap` (prioridade album > global)
+- `stickerSectionMap` e pre-computado server-side via `buildStickerSectionMap()`
+- `sectionRulesMap` enviado como Record, convertido para Map no client via useMemo
+- Desconto de quantidade e aplicado no total do carrinho, nao por item
+
 ### Schema Prisma (modelos)
 
 | Modelo | Funcao |
@@ -177,7 +202,9 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 | `Seller` | Vendedor — plano, Stripe billing, onboarding |
 | `CustomAlbum` | Albums personalizados do vendedor (stickers em JSON, unique: sellerId+slug) |
 | `Inventory` | Estoque por figurinha (unique: sellerId+albumSlug+stickerCode) |
-| `PriceRule` | Regras de preco por tipo (global ou por album) |
+| `PriceRule` | Regras de preco por tipo (global ou por album, unique: sellerId+stickerType+albumSlug) |
+| `SectionPriceRule` | Ajuste de preco por secao/pais dentro de um album (FLAT/OFFSET, unique: sellerId+albumSlug+sectionName) |
+| `QuantityTier` | Tier de desconto por volume por album (percentual, unique: sellerId+albumSlug+minQuantity) |
 | `Order` + `OrderItem` | Pedidos com workflow QUOTE→CONFIRMED→PAID→SHIPPED→DELIVERED |
 | `SubscriptionEvent` | Log de eventos Stripe |
 

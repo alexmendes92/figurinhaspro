@@ -148,3 +148,145 @@ model CustomAlbum {
   @@unique([sellerId, slug])
   @@index([sellerId])
 }
+
+// ===== COCKPIT COMERCIAL =====
+
+model BizLead {
+  id              String    @id @default(cuid())
+  name            String
+  phone           String?
+  email           String?
+  source          String
+  sourceDetail    String?
+  stage           String    @default("PROSPECT")
+  potentialValue  Float?
+  objections      String?
+  nextStep        String?
+  lastContactAt   DateTime?
+  priority        String    @default("MEDIUM")
+  lostReason      String?
+  notes           String?
+  convertedSellerId String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  activities BizActivity[]
+  tasks      BizTask[]
+}
+
+model BizActivity {
+  id        String   @id @default(cuid())
+  leadId    String?
+  lead      BizLead? @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type      String
+  channel   String?
+  summary   String
+  result    String?
+  createdAt DateTime @default(now())
+}
+
+model BizOffer {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  priceType   String
+  includes    String?
+  status      String    @default("ACTIVE")
+  validUntil  DateTime?
+  salesCount  Int       @default(0)
+  revenue     Float     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model BizExperiment {
+  id             String    @id @default(cuid())
+  hypothesis     String
+  channel        String?
+  priority       String    @default("MEDIUM")
+  effort         String?
+  cost           Float?
+  expectedResult String?
+  actualResult   String?
+  learning       String?
+  decision       String?
+  status         String    @default("PLANNED")
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  tasks BizTask[]
+}
+
+model BizInitiative {
+  id        String   @id @default(cuid())
+  title     String
+  category  String
+  phase     String   @default("BACKLOG")
+  impact    String?
+  effort    String?
+  owner     String?
+  nextStep  String?
+  notes     String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  milestones BizMilestone[]
+  tasks      BizTask[]
+}
+
+model BizMilestone {
+  id           String        @id @default(cuid())
+  initiativeId String
+  initiative   BizInitiative @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  title        String
+  targetDate   DateTime?
+  completedAt  DateTime?
+  status       String        @default("PENDING")
+  createdAt    DateTime      @default(now())
+}
+
+model BizTask {
+  id           String         @id @default(cuid())
+  title        String
+  description  String?
+  priority     String         @default("MEDIUM")
+  status       String         @default("TODO")
+  deadline     DateTime?
+  completedAt  DateTime?
+  leadId       String?
+  lead         BizLead?       @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  initiativeId String?
+  initiative   BizInitiative? @relation(fields: [initiativeId], references: [id], onDelete: SetNull)
+  experimentId String?
+  experiment   BizExperiment? @relation(fields: [experimentId], references: [id], onDelete: SetNull)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model BizKpi {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  category    String
+  unit        String
+  baseline    Float?
+  target      Float?
+  description String?
+  createdAt   DateTime         @default(now())
+
+  snapshots BizKpiSnapshot[]
+}
+
+model BizKpiSnapshot {
+  id         String   @id @default(cuid())
+  kpiId      String
+  kpi        BizKpi   @relation(fields: [kpiId], references: [id], onDelete: Cascade)
+  value      Float
+  note       String?
+  recordedAt DateTime @default(now())
+
+  @@index([kpiId, recordedAt])
+}

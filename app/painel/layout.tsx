@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
+import { isAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
 import PainelShell from "@/components/painel/painel-shell";
 
@@ -32,6 +33,7 @@ export default async function PainelLayout({
         plan: seller.plan,
       }}
       pendingOrders={pendingOrders}
+      isAdmin={isAdmin(seller.email)}
     >
       {children}
     </PainelShell>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
@@ -14,6 +14,14 @@ interface CartItem {
   quantity: number;
 }
 
+interface AlbumPill {
+  slug: string;
+  title: string;
+  flag: string;
+  inStockTypes: number;
+  isCustom: boolean;
+}
+
 export default function StoreAlbumView({
   album,
   stockMap,
@@ -21,6 +29,10 @@ export default function StoreAlbumView({
   sellerSlug,
   sellerName,
   sellerPhone,
+  sellerDescription,
+  sellerBusinessHours,
+  sellerPaymentMethods,
+  availableAlbums,
   stickerSectionMap,
   sectionRulesMap,
   quantityTiers,
@@ -31,6 +43,10 @@ export default function StoreAlbumView({
   sellerSlug: string;
   sellerName: string;
   sellerPhone: string | null;
+  sellerDescription?: string | null;
+  sellerBusinessHours?: string | null;
+  sellerPaymentMethods?: string | null;
+  availableAlbums?: AlbumPill[];
   stickerSectionMap: Record<string, string>;
   sectionRulesMap: Record<string, { adjustType: string; value: number }>;
   quantityTiers: { minQuantity: number; discount: number }[];
@@ -49,7 +65,7 @@ export default function StoreAlbumView({
       return items || [];
     } catch { return []; }
   });
-  const [activeSection, setActiveSection] = useState(0);
+  const [activeSection, setActiveSection] = useState<number | "all">("all");
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -134,7 +150,11 @@ export default function StoreAlbumView({
     });
   }
 
-  const section = album.sections[activeSection];
+  const section = activeSection === "all" ? null : album.sections[activeSection];
+  const allAvailableStickers = useMemo(
+    () => album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0),
+    [album.sections, stockMap]
+  );
 
   // Figurinhas em estoque (seção atual ou busca global)
   const isSearching = search.trim().length >= 2;
@@ -167,7 +187,9 @@ export default function StoreAlbumView({
     ? searchResults
     : filterByMissing
       ? missingMatches
-      : section.stickers.filter((s) => (stockMap[s.code]?.quantity || 0) > 0);
+      : section
+        ? section.stickers.filter((s) => (stockMap[s.code]?.quantity || 0) > 0)
+        : allAvailableStickers;
 
   const totalAvailable = useMemo(
     () => album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0).length,
@@ -260,26 +282,26 @@ export default function StoreAlbumView({
       {/* Header */}
       <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <Link
-              href={`/loja/${sellerSlug}`}
-              className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+              href={`/loja/${sellerSlug}?browse=true`}
+              className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors shrink-0"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
-            <div>
-              <h1 className="text-sm font-semibold">
-                {album.flag} Copa {album.year}
+            <div className="min-w-0">
+              <h1 className="text-sm font-semibold truncate">
+                {album.flag} {album.title || `Copa ${album.year}`}
               </h1>
-              <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+              <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)] truncate">
                 {sellerName} · {totalAvailable} disponíveis
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
           {/* Importar lista */}
           <button
             onClick={() => setShowImportModal(true)}
@@ -318,6 +340,68 @@ export default function StoreAlbumView({
           </div>
         </div>
 
+        {/* Info do vendedor (descrição, horário, pagamento) */}
+        {(sellerDescription || sellerBusinessHours || sellerPaymentMethods) && (
+          <div className="max-w-6xl mx-auto px-4 pb-2">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-zinc-500">
+              {sellerDescription && (
+                <span className="text-zinc-400">{sellerDescription}</span>
+              )}
+              {sellerBusinessHours && (
+                <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {sellerBusinessHours}
+                </span>
+              )}
+              {sellerPaymentMethods && (
+                <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                  </svg>
+                  {sellerPaymentMethods}
+                </span>
+              )}
+              {sellerPhone && (
+                <a
+                  href={`https://wa.me/55${sellerPhone.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-green-500 hover:text-green-400 transition-colors"
+                >
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                  </svg>
+                  WhatsApp
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Pills de álbum — troca rápida entre álbuns */}
+        {availableAlbums && availableAlbums.length > 1 && (
+          <div className="max-w-6xl mx-auto px-4 pb-2">
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide py-0.5">
+              {availableAlbums.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/loja/${sellerSlug}/${a.slug}`}
+                  className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                    a.slug === album.slug
+                      ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                      : "bg-zinc-900 text-zinc-500 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-300"
+                  }`}
+                >
+                  {a.flag} {a.title}
+                  <span className="ml-1 text-[10px] text-zinc-600">({a.inStockTypes})</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Barra de busca */}
         <div className="max-w-6xl mx-auto px-4 pb-3">
           <div className="relative">
@@ -351,6 +435,19 @@ export default function StoreAlbumView({
         {!isSearching && !filterByMissing && (
           <aside className="lg:w-48 border-b lg:border-b-0 lg:border-r border-zinc-800 overflow-x-auto lg:overflow-y-auto">
             <div className="flex lg:flex-col p-2 gap-1">
+              {/* Botão "Todas" */}
+              <button
+                onClick={() => setActiveSection("all")}
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                  activeSection === "all"
+                    ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border border-transparent"
+                }`}
+              >
+                Todas
+                <span className="ml-1 text-[10px] text-zinc-600">({totalAvailable})</span>
+              </button>
+
               {album.sections.map((sec, i) => {
                 const available = sec.stickers.filter(
                   (s) => (stockMap[s.code]?.quantity || 0) > 0
@@ -414,7 +511,9 @@ export default function StoreAlbumView({
                 ? `Resultados para "${search.trim()}"`
                 : filterByMissing
                   ? "Figurinhas que faltam"
-                  : section.name}
+                  : section
+                    ? section.name
+                    : "Todas as figurinhas"}
             </h3>
             <div className="flex items-center gap-2 shrink-0">
               {availableStickers.length > 0 && (
@@ -455,76 +554,98 @@ export default function StoreAlbumView({
             </div>
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 sm:gap-3">
-              {availableStickers.map((sticker) => {
-                const price = getPrice(sticker);
-                const inCart = cartCodes.has(sticker.code);
-                const typeConf = getStickerTypeConfig(sticker.type);
-                const qty = stockMap[sticker.code]?.quantity || 0;
-
-                return (
-                  <button
-                    key={sticker.code}
-                    onClick={() => addToCart(sticker)}
-                    className={`group relative rounded-lg overflow-hidden border transition-all active:scale-95 sm:hover:scale-105 focus:outline-none ${
-                      inCart
-                        ? "border-green-500/40 ring-1 ring-green-500/20"
-                        : "border-zinc-700 hover:border-amber-500/40 active:border-amber-500/40"
-                    }`}
-                  >
-                    <div className="relative aspect-[2/3] bg-zinc-800">
-                      <Image
-                        src={sticker.image}
-                        alt={`${sticker.code} - ${sticker.name}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 33vw, 12vw"
-                      />
-                      {/* Add-to-cart overlay — visible on hover (desktop) or always subtle on mobile */}
-                      {!inCart && (
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end sm:items-center justify-center pb-2 sm:pb-0">
-                          <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/90 sm:bg-amber-500 flex items-center justify-center shadow-lg">
-                              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                              </svg>
+              {(() => {
+                const renderSticker = (sticker: Sticker) => {
+                  const price = getPrice(sticker);
+                  const inCart = cartCodes.has(sticker.code);
+                  const typeConf = getStickerTypeConfig(sticker.type);
+                  const qty = stockMap[sticker.code]?.quantity || 0;
+                  return (
+                    <button
+                      key={sticker.code}
+                      onClick={() => addToCart(sticker)}
+                      className={`group relative rounded-lg overflow-hidden border transition-all active:scale-95 sm:hover:scale-105 focus:outline-none ${
+                        inCart
+                          ? "border-green-500/40 ring-1 ring-green-500/20"
+                          : "border-zinc-700 hover:border-amber-500/40 active:border-amber-500/40"
+                      }`}
+                    >
+                      <div className="relative aspect-[2/3] bg-zinc-800">
+                        <Image
+                          src={sticker.image}
+                          alt={`${sticker.code} - ${sticker.name}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 33vw, 12vw"
+                        />
+                        {!inCart && (
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end sm:items-center justify-center pb-2 sm:pb-0">
+                            <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/90 sm:bg-amber-500 flex items-center justify-center shadow-lg">
+                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
-                      {inCart && (
-                        <div className="absolute top-1 left-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
-                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                      )}
-                      {/* Badge de tipo especial */}
-                      {sticker.type !== "regular" && (
-                        <div className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
-                          {typeConf.shortLabel}
-                        </div>
-                      )}
-                      {/* Quantidade em estoque */}
-                      {qty > 1 && (
-                        <div className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/60 text-[8px] text-zinc-300 font-[family-name:var(--font-geist-mono)]">
-                          {qty}x
-                        </div>
-                      )}
-                    </div>
-                    <div className="px-1.5 py-1.5 bg-zinc-900/90">
-                      <div className="flex items-center justify-between">
-                        <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-400 truncate">
-                          {sticker.code}
-                        </span>
-                        <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-amber-400 font-semibold">
-                          R${price.toFixed(2).replace(".", ",")}
-                        </span>
+                        )}
+                        {inCart && (
+                          <div className="absolute top-1 left-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                        {sticker.type !== "regular" && (
+                          <div className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
+                            {typeConf.shortLabel}
+                          </div>
+                        )}
+                        {qty > 1 && (
+                          <div className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/60 text-[8px] text-zinc-300 font-[family-name:var(--font-geist-mono)]">
+                            {qty}x
+                          </div>
+                        )}
                       </div>
-                      <p className="text-[9px] text-zinc-600 truncate mt-0.5">{sticker.name}</p>
-                    </div>
-                  </button>
-                );
-              })}
+                      <div className="px-1.5 py-1.5 bg-zinc-900/90">
+                        <div className="flex items-center justify-between">
+                          <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-400 truncate">
+                            {sticker.code}
+                          </span>
+                          <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-amber-400 font-semibold">
+                            R${price.toFixed(2).replace(".", ",")}
+                          </span>
+                        </div>
+                        <p className="text-[9px] text-zinc-600 truncate mt-0.5">{sticker.name}</p>
+                      </div>
+                    </button>
+                  );
+                };
+
+                // Quando "all" está ativo e sem busca/filtro, renderizar com headers por seção
+                if (activeSection === "all" && !isSearching && !filterByMissing) {
+                  return album.sections.map((sec) => {
+                    const secAvailable = sec.stickers.filter(
+                      (s) => (stockMap[s.code]?.quantity || 0) > 0
+                    );
+                    if (secAvailable.length === 0) return null;
+                    return (
+                      <React.Fragment key={sec.name}>
+                        <div className="col-span-full">
+                          <div className="flex items-center gap-2 py-2 mt-2 first:mt-0">
+                            <span className="text-xs font-semibold text-zinc-400">{sec.name}</span>
+                            <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">({secAvailable.length})</span>
+                            <div className="flex-1 h-px bg-zinc-800" />
+                          </div>
+                        </div>
+                        {secAvailable.map(renderSticker)}
+                      </React.Fragment>
+                    );
+                  });
+                }
+                // Seção individual, busca ou filtro de lista
+                return availableStickers.map(renderSticker);
+              })()}
             </div>
           )}
         </div>
@@ -873,7 +994,7 @@ export default function StoreAlbumView({
             </p>
             <div className="flex gap-2">
               <Link
-                href={`/loja/${sellerSlug}`}
+                href={`/loja/${sellerSlug}?browse=true`}
                 className="flex-1 py-2.5 rounded-xl border border-zinc-700 text-zinc-400 text-sm font-medium hover:bg-zinc-800 transition-colors text-center"
               >
                 Ver outros álbuns

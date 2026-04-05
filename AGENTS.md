@@ -6,9 +6,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # FigurinhasPro — Guia para Agentes IA
 
-> Atualizado em 2026-04-04. Versoes verificadas:
+> Atualizado em 2026-04-05. Versoes verificadas:
 > Next.js 16.2.1 | React 19.2.4 | Prisma 7.5.0 | Tailwind CSS 4 | Zod 4.3.6
-> iron-session 8 | bcryptjs 3 | Stripe SDK 22 | Sharp 0.34
+> iron-session 8 | bcryptjs 3 | Stripe SDK 22 | Sharp 0.34 | Sentry 10.47
 
 ---
 
@@ -158,8 +158,12 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 | Planos | FREE / PRO / UNLIMITED com gates em `lib/plan-limits.ts` |
 | Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts, mobile-first responsive |
 | Imagens | Sharp para processamento, `images.unoptimized: true` |
+| Monitoring | Sentry (`@sentry/nextjs` 10.47) — client/server/edge + instrumentation.ts |
+| Analytics | Vercel Analytics (`@vercel/analytics`) + Speed Insights (`@vercel/speed-insights`) |
+| Env validation | Zod schema em `lib/env.ts` — strict em prod, fallbacks em dev |
+| Admin | `lib/admin.ts` — guard `isAdmin(email)` via `ADMIN_EMAIL` env var |
 | Build | Turbopack (default Next.js 16), React Compiler ativado |
-| Deploy | Vercel — `commit → push → vercel deploy --prod` |
+| Deploy | Vercel — `commit → push → vercel deploy --prod` (auto-deploy desativado) |
 
 ### Padroes Importantes
 
@@ -169,6 +173,7 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 - **Mobile-first**: Viewport com `viewportFit: "cover"`, safe-area-bottom, bottom nav no painel, touch targets minimo 44px.
 - **Albuns customizados**: Vendedor cria albuns proprios via `/painel/estoque/novo`. `lib/custom-albums.ts` converte `CustomAlbum` (DB) para interface `Album` (usada em todo o sistema). Slugs customizados usam prefixo `custom_` para evitar conflito com albums estaticos. Parser suporta ranges (`1-670`), prefixos (`BRA1-BRA20`) e listas mistas. API CRUD em `/api/albums`.
 - **Importacao de lista faltante**: Na loja publica (`/loja/[slug]/[albumSlug]`), clientes podem colar sua lista de figurinhas que faltam e filtrar apenas as disponiveis no estoque do vendedor.
+- **Cockpit comercial**: Modulo admin-only em `/painel/comercial` com 7 sub-modulos (Dashboard, CRM Leads, Ofertas, Experimentos, Iniciativas, Tarefas, KPIs). Acesso controlado por `ADMIN_EMAIL` env var. Server Actions centralizadas em `app/painel/comercial/actions.ts`. Seed idempotente em `api/comercial/seed`. Padrao `?new=1` para formularios de criacao em Server Components.
 
 ### Sistema de Precos (3 eixos)
 
@@ -207,6 +212,15 @@ Padroes server↔client:
 | `QuantityTier` | Tier de desconto por volume por album (percentual, unique: sellerId+albumSlug+minQuantity) |
 | `Order` + `OrderItem` | Pedidos com workflow QUOTE→CONFIRMED→PAID→SHIPPED→DELIVERED |
 | `SubscriptionEvent` | Log de eventos Stripe |
+| `BizLead` | Leads comerciais — pipeline PROSPECT→WON/LOST, source, potentialValue |
+| `BizActivity` | Log de atividades por lead (CALL, WHATSAPP, EMAIL, MEETING, DEMO, NOTE) |
+| `BizOffer` | Ofertas de produto — preco, tipo (ONE_TIME/MONTHLY/ANNUAL/PACKAGE), status ACTIVE/PAUSED |
+| `BizExperiment` | Experimentos de growth — hipotese, status PLANNED→RUNNING→COMPLETED/KILLED, resultados |
+| `BizInitiative` | Iniciativas estrategicas — fase BACKLOG→PLANNED→IN_PROGRESS→DONE, categoria, impacto/esforco |
+| `BizMilestone` | Marcos de uma iniciativa — titulo, status, data alvo |
+| `BizTask` | Tarefas operacionais — vinculavel a lead, iniciativa ou experimento |
+| `BizKpi` | Definicao de KPIs — nome, categoria, unidade, target |
+| `BizKpiSnapshot` | Snapshots historicos de valores de KPIs — valor, delta, data |
 
 ### Alias de Imports
 ```json

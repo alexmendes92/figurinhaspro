@@ -316,7 +316,7 @@ export default function InventoryManager({
   const [priceModalSticker, setPriceModalSticker] = useState<Sticker | null>(null);
 
   // PRO+ check para preço customizado
-  const canUseCustomPrices = true; // TODO: restaurar gate de plano depois → sellerPlan === "PRO" || sellerPlan === "UNLIMITED"
+  const canUseCustomPrices = sellerPlan === "PRO" || sellerPlan === "UNLIMITED";
 
   const section = activeSection === "all" ? null : album.sections[activeSection];
   const allStickers = useMemo(() => album.sections.flatMap((s) => s.stickers), [album.sections]);

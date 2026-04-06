@@ -34,13 +34,12 @@ export async function POST(req: NextRequest) {
 
     const albumSlug = data.albumSlug || null;
 
-    // TODO: restaurar gate de plano depois
-    // if (albumSlug && !hasFeature(seller.plan, "custom_prices")) {
-    //   return NextResponse.json(
-    //     { error: "plan_limit", message: "Preços por álbum requer plano Pro", upgrade_url: "/painel/planos" },
-    //     { status: 403 }
-    //   );
-    // }
+    if (albumSlug && !hasFeature(seller.plan, "custom_prices")) {
+      return NextResponse.json(
+        { error: "plan_limit", message: "Preços por álbum requer plano Pro", upgrade_url: "/painel/planos" },
+        { status: 403 }
+      );
+    }
 
     // Para o unique constraint: null → usar string vazia na busca (Prisma/Postgres)
     const slugForUnique = albumSlug ?? "";

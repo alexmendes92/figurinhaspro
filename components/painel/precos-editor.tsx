@@ -35,7 +35,7 @@ export default function PrecosEditor({
   const [newPrice, setNewPrice] = useState("");
   const [addingAlbumRule, setAddingAlbumRule] = useState(false);
 
-  const canUseAlbumRules = true; // TODO: restaurar gate de plano depois → sellerPlan === "PRO" || sellerPlan === "UNLIMITED"
+  const canUseAlbumRules = sellerPlan === "PRO" || sellerPlan === "UNLIMITED";
 
   useEffect(() => {
     fetch("/api/prices")

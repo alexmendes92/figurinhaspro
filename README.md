@@ -112,8 +112,7 @@ FigurinhasPro/
 ├── next.config.ts                 → Config Next.js 16
 ├── CLAUDE.md                      → Instrucoes para agentes IA
 ├── AGENTS.md                      → Breaking changes e guia tecnico
-├── PLANO_MELHORIA_SAAS.md         → Plano SaaS v1 (referencia)
-├── PLANO_SAAS_V2.md               → Plano SaaS v2 (ativo)
+├── docs/PLANO_SAAS_V2.md          → Plano SaaS v2 (ativo)
 └── public/                        → Assets estaticos
 ```
 

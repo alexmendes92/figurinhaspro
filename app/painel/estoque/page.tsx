@@ -5,6 +5,7 @@ import Image from "next/image";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { imgUrl } from "@/lib/images";
 
 export default async function EstoquePage() {
   const seller = await getSession();
@@ -93,7 +94,7 @@ export default async function EstoquePage() {
                 {coverSrc ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
-                    src={coverSrc}
+                    src={imgUrl(coverSrc)}
                     alt={`Copa ${album.year}`}
                     className="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
@@ -130,7 +131,7 @@ export default async function EstoquePage() {
                 <div className="flex items-center gap-2 mb-2">
                   {flagSrc && (
                     <Image
-                      src={flagSrc}
+                      src={imgUrl(flagSrc)}
                       alt={coverData?.host || ""}
                       width={18}
                       height={18}

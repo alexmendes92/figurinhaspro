@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { getStickerTypeShortLabel } from "@/lib/sticker-types";
+import { imgUrl } from "@/lib/images";
 
 export default function CartDrawer() {
   const {
@@ -82,7 +83,7 @@ export default function CartDrawer() {
                   {/* Thumb */}
                   <div className="relative w-9 h-12 sm:w-10 sm:h-14 rounded overflow-hidden border border-zinc-700 shrink-0">
                     <Image
-                      src={item.sticker.image}
+                      src={imgUrl(item.sticker.image)}
                       alt={item.sticker.name}
                       fill
                       className="object-cover"

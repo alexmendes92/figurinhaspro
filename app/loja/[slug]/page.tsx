@@ -4,6 +4,7 @@ import { albumCovers } from "@/lib/album-covers";
 import { getSellerCatalog, getDefaultAlbumSlug } from "@/lib/seller-catalog";
 import Image from "next/image";
 import Link from "next/link";
+import { imgUrl } from "@/lib/images";
 
 export default async function LojaPage({
   params,
@@ -130,7 +131,7 @@ export default async function LojaPage({
                     <div className="relative aspect-[3/4] bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden">
                       {coverSrc ? (
                         <Image
-                          src={coverSrc}
+                          src={imgUrl(coverSrc)}
                           alt={album.title}
                           fill
                           className="object-contain p-3 group-hover:scale-105 transition-transform duration-500"
@@ -158,7 +159,7 @@ export default async function LojaPage({
                     <div className="p-3 border-t border-zinc-800/50">
                       <div className="flex items-center gap-2 mb-2">
                         {flagSrc && (
-                          <Image src={flagSrc} alt="" width={16} height={16} className="rounded-full" />
+                          <Image src={imgUrl(flagSrc)} alt="" width={16} height={16} className="rounded-full" />
                         )}
                         <p className="text-sm font-bold text-white truncate">
                           {album.title}

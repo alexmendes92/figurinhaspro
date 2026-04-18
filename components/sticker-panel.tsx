@@ -6,6 +6,7 @@ import { useCart, type CartSticker } from "@/lib/cart-context";
 import { getStickersForPage, getSectionNameForPage } from "@/lib/page-sticker-map";
 import type { Sticker } from "@/lib/albums";
 import { getDefaultPrice, getStickerTypeShortLabel, getStickerTypeConfig } from "@/lib/sticker-types";
+import { imgUrl } from "@/lib/images";
 
 function getPrice(sticker: Sticker): number {
   return getDefaultPrice(sticker.type);
@@ -225,7 +226,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                       {/* Imagem da figurinha */}
                       <div className="relative aspect-[3/4] w-full bg-zinc-900">
                         <Image
-                          src={sticker.image}
+                          src={imgUrl(sticker.image)}
                           alt={sticker.name}
                           fill
                           className="object-cover"

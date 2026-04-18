@@ -7,6 +7,7 @@ import type { Album, Sticker } from "@/lib/albums";
 import { getStickerTypeConfig } from "@/lib/sticker-types";
 import { resolveUnitPrice, resolveQuantityDiscount } from "@/lib/price-resolver";
 import type { SectionRule } from "@/lib/price-resolver";
+import { imgUrl } from "@/lib/images";
 
 interface CartItem {
   sticker: Sticker;
@@ -572,7 +573,7 @@ export default function StoreAlbumView({
                     >
                       <div className="relative aspect-[2/3] bg-zinc-800">
                         <Image
-                          src={sticker.image}
+                          src={imgUrl(sticker.image)}
                           alt={`${sticker.code} - ${sticker.name}`}
                           fill
                           className="object-cover"
@@ -740,7 +741,7 @@ export default function StoreAlbumView({
                   {cart.map((item) => (
                     <div key={item.sticker.code} className="flex items-center gap-3 px-4 py-3">
                       <div className="relative w-10 h-14 rounded overflow-hidden border border-zinc-700 shrink-0">
-                        <Image src={item.sticker.image} alt={item.sticker.name} fill className="object-cover" sizes="40px" />
+                        <Image src={imgUrl(item.sticker.image)} alt={item.sticker.name} fill className="object-cover" sizes="40px" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.sticker.name}</p>

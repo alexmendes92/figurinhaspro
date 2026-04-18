@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { albums } from "@/lib/albums-data";
+import { imgUrl } from "@/lib/images";
 
 export const metadata = {
   title: "Álbuns Panini — Copa do Mundo 1974–2022",
@@ -59,7 +60,7 @@ export default function AlbunsPage() {
               {/* Card */}
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 group-hover:border-amber-500/40 group-hover:shadow-xl group-hover:shadow-amber-500/5 transition-all duration-300">
                 <Image
-                  src={album.cover}
+                  src={imgUrl(album.cover)}
                   alt={`Panini World Cup ${album.year}`}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"

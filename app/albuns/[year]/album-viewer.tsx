@@ -6,6 +6,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { useCart } from "@/lib/cart-context";
 import StickerPanel from "@/components/sticker-panel";
 import CartDrawer from "@/components/cart-drawer";
+import { imgUrl } from "@/lib/images";
 
 type AlbumViewerProps = {
   year: number;
@@ -444,7 +445,7 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
               }}
             >
               <Image
-                src={currentLeft}
+                src={imgUrl(currentLeft)}
                 alt={getPageLabel(currentLeft)}
                 fill
                 className="object-contain"
@@ -488,7 +489,7 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
                 }}
               >
                 <Image
-                  src={currentRight}
+                  src={imgUrl(currentRight)}
                   alt={getPageLabel(currentRight)}
                   fill
                   className="object-contain"
@@ -544,7 +545,7 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
               >
                 <div className="relative w-full h-full bg-[#1a1a1a]">
                   <Image
-                    src={flipDir === "next" ? flipTarget[0] : (flipTarget[1] || flipTarget[0])}
+                    src={imgUrl(flipDir === "next" ? flipTarget[0] : (flipTarget[1] || flipTarget[0]))}
                     alt="Flipping page"
                     fill
                     className="object-contain"
@@ -579,7 +580,7 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
         {/* Lupa */}
         {magnifierActive && currentLeft && (
           <Magnifier
-            src={currentLeft}
+            src={imgUrl(currentLeft)}
             containerRef={leftPageRef}
             zoom={3}
             size={200}
@@ -587,7 +588,7 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
         )}
         {magnifierActive && currentRight && rightPageRef.current && (
           <Magnifier
-            src={currentRight}
+            src={imgUrl(currentRight)}
             containerRef={rightPageRef}
             zoom={3}
             size={200}
@@ -611,11 +612,11 @@ export default function AlbumViewer({ year, host, pages, prevYear, nextYear, all
                 style={{ height: "56px" }}
               >
                 <div className="relative h-full" style={{ width: i === 0 ? "42px" : "42px" }}>
-                  <Image src={pair[0]} alt="" fill className="object-cover" sizes="42px" />
+                  <Image src={imgUrl(pair[0])} alt="" fill className="object-cover" sizes="42px" />
                 </div>
                 {pair[1] && i > 0 && (
                   <div className="relative h-full" style={{ width: "42px" }}>
-                    <Image src={pair[1]} alt="" fill className="object-cover" sizes="42px" />
+                    <Image src={imgUrl(pair[1])} alt="" fill className="object-cover" sizes="42px" />
                   </div>
                 )}
               </button>

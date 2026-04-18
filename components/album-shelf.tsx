@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import type { Album } from "@/lib/albums";
+import { imgUrl } from "@/lib/images";
 
 interface AlbumShelfProps {
   albums: Album[];
@@ -45,7 +46,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
                       .map((s, i) => (
                         <div key={i} className="relative overflow-hidden">
                           <Image
-                            src={s.image}
+                            src={imgUrl(s.image)}
                             alt={s.name}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-110"

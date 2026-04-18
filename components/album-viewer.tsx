@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Image from "next/image";
 import type { Album, Sticker } from "@/lib/albums";
+import { imgUrl } from "@/lib/images";
 import { useCart, type CartSticker } from "@/lib/cart-context";
 import { useToast } from "@/lib/toast-context";
 import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
@@ -114,7 +115,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                   {/* Imagem da figurinha */}
                   <div className="relative aspect-[2/3] bg-zinc-800">
                     <Image
-                      src={sticker.image}
+                      src={imgUrl(sticker.image)}
                       alt={`${sticker.code} - ${sticker.name}`}
                       fill
                       className="object-cover"
@@ -180,7 +181,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
             {/* Imagem grande */}
             <div className="relative aspect-[2/3] bg-zinc-800">
               <Image
-                src={selectedSticker.image}
+                src={imgUrl(selectedSticker.image)}
                 alt={selectedSticker.name}
                 fill
                 className="object-contain"

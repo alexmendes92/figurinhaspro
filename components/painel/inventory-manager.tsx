@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { Album, Sticker } from "@/lib/albums";
 import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
+import { imgUrl } from "@/lib/images";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -48,7 +49,7 @@ function PriceModal({
         {/* Header com imagem */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800/50">
           <div className="relative w-10 h-14 rounded-lg overflow-hidden border border-zinc-700 shrink-0">
-            <Image src={sticker.image} alt={sticker.name} fill className="object-cover" sizes="40px" />
+            <Image src={imgUrl(sticker.image)} alt={sticker.name} fill className="object-cover" sizes="40px" />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-white truncate">{sticker.name}</p>
@@ -179,7 +180,7 @@ function StickerCard({
         className="w-full relative aspect-[2/3] bg-zinc-800"
       >
         <Image
-          src={sticker.image}
+          src={imgUrl(sticker.image)}
           alt={`${sticker.code} - ${sticker.name}`}
           fill
           className="object-cover"

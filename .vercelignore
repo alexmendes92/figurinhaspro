@@ -6,6 +6,12 @@
 # Capas PNG originais (usar .webp comprimidas)
 public/covers/*.png
 
+# Imagens migradas para R2 (figurinhasproimg.arenacards.com.br)
+public/flags
+public/covers
+public/stickers
+public/albums
+
 # Banco local
 *.db
 *.db-journal

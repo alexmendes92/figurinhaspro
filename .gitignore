@@ -49,5 +49,11 @@ next-env.d.ts
 # capas originais (usar .webp)
 /public/covers/*.png
 
+# imagens servidas via R2 (figurinhaspromg.arenacards.com.br)
+/public/flags/
+/public/covers/
+/public/stickers/
+/public/albums/
+
 .vercel
 .env*.local

@@ -6,9 +6,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # FigurinhasPro — Guia para Agentes IA
 
-> Atualizado em 2026-04-05. Versoes verificadas:
-> Next.js 16.2.1 | React 19.2.4 | Prisma 7.5.0 | Tailwind CSS 4 | Zod 4.3.6
-> iron-session 8 | bcryptjs 3 | Stripe SDK 22 | Sharp 0.34 | Sentry 10.47
+> Atualizado em 2026-04-18. Versoes verificadas:
+> Next.js 16.2.4 | React 19.2.5 | Prisma 7.7 | Tailwind CSS 4 | Zod 4.3.6
+> iron-session 8 | bcryptjs 3 | Stripe SDK 22.0.2 | Sharp 0.34 | Sentry 10.49
 
 ---
 

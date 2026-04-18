@@ -2,7 +2,7 @@
 
 # FigurinhasPro
 
-Repo: `github.com/amendes92/figurinhaspro` (privado) | Branch: `master`
+Repo: `github.com/alexmendes92/figurinhaspro` (privado) | Branch: `master`
 
 ## Stack
 Next.js 16.2.1 + React 19.2 + Prisma 7.5 + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe + Sentry + Vercel Analytics

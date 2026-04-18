@@ -49,7 +49,16 @@ FigurinhasPro/
 │   │   ├── precos/page.tsx        → Gestao de precos (server/client split)
 │   │   ├── pedidos/page.tsx       → Gestao de pedidos
 │   │   ├── loja/page.tsx          → Configuracao da loja
-│   │   └── planos/page.tsx        → Planos e assinatura
+│   │   ├── planos/page.tsx        → Planos e assinatura
+│   │   └── comercial/             → Cockpit admin-only (7 sub-modulos)
+│   │       ├── page.tsx           → Dashboard comercial
+│   │       ├── leads/             → CRM de leads + detalhe [id]
+│   │       ├── ofertas/           → Ofertas de produto
+│   │       ├── experimentos/      → Hipoteses de growth
+│   │       ├── iniciativas/       → Kanban estrategico
+│   │       ├── tarefas/           → Checklist operacional
+│   │       ├── kpis/              → Metricas + snapshots
+│   │       └── actions.ts         → Server Actions centralizadas
 │   ├── onboarding/page.tsx        → Wizard pos-registro
 │   ├── termos/page.tsx            → Termos de uso
 │   ├── privacidade/page.tsx       → Politica de privacidade
@@ -107,7 +116,10 @@ FigurinhasPro/
 │   └── toast-context.tsx          → Context de notificacoes (client)
 │
 ├── prisma/
-│   └── schema.prisma              → Seller, Inventory, Order, PriceRule, SubscriptionEvent
+│   └── schema.prisma              → 18 modelos: Seller, CustomAlbum, Inventory, Order, OrderItem,
+│                                    PriceRule, SectionPriceRule, QuantityTier, SubscriptionEvent +
+│                                    9 modelos Biz* (Lead, Activity, Offer, Experiment, Initiative,
+│                                    Milestone, Task, Kpi, KpiSnapshot)
 ├── prisma.config.ts               → Config Prisma 7 centralizada
 ├── next.config.ts                 → Config Next.js 16
 ├── CLAUDE.md                      → Instrucoes para agentes IA
@@ -180,6 +192,23 @@ vercel deploy --prod
 - Error pages: 404, error generico, loading states
 - Legal: termos de uso e politica de privacidade
 
+## Cockpit Comercial (admin-only)
+
+Modulo de operacao comercial em `/painel/comercial`, visivel apenas para `ADMIN_EMAIL`. Responde: pipeline de leads, ofertas ativas, experimentos de growth, iniciativas estrategicas e KPIs.
+
+| Rota | Modulo | Descricao |
+|------|--------|-----------|
+| `/painel/comercial` | Dashboard | Metricas gerais, pipeline, tarefas urgentes |
+| `/painel/comercial/leads` | CRM | Pipeline PROSPECT → WON/LOST com filtro por estagio |
+| `/painel/comercial/leads/[id]` | Lead Detail | Atividades (CALL/WHATSAPP/EMAIL/MEETING/DEMO/NOTE) |
+| `/painel/comercial/ofertas` | Ofertas | Grid de ofertas ativas/pausadas (ONE_TIME/MONTHLY/ANNUAL/PACKAGE) |
+| `/painel/comercial/experimentos` | Experimentos | Hipoteses PLANNED → RUNNING → COMPLETED/KILLED |
+| `/painel/comercial/iniciativas` | Iniciativas | Kanban 4 colunas (BACKLOG→PLANNED→IN_PROGRESS→DONE) |
+| `/painel/comercial/tarefas` | Tarefas | Checklist vinculavel a lead/iniciativa/experimento |
+| `/painel/comercial/kpis` | KPIs | Metricas com historico, delta, target, mini-graficos |
+
+**Padroes:** Server Actions centralizadas em `app/painel/comercial/actions.ts`, forms de criacao via `?new=1` (Server Components sem estado client), seed idempotente em `/api/comercial/seed`. Guard via `lib/admin.ts` (`isAdmin(email)`).
+
 ## Variaveis de Ambiente
 
 | Variavel | Obrigatoria | Descricao |
@@ -189,6 +218,8 @@ vercel deploy --prod
 | `STRIPE_SECRET_KEY` | Para pagamentos | Chave secreta Stripe |
 | `STRIPE_WEBHOOK_SECRET` | Para pagamentos | Secret do webhook Stripe |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Para pagamentos | Chave publica Stripe |
+| `ADMIN_EMAIL` | Sim (prod) | Email do admin com acesso ao cockpit comercial |
+| `SENTRY_DSN` | Recomendado | DSN do Sentry (`@sentry/nextjs`) |
 
 ## Hospedagem
 

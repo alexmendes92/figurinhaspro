@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-04-19",
+  "detection_confidence": "high",
+  "stack": {
+    "framework": "Next.js 16 (App Router)",
+    "styling": "tailwindcss@4",
+    "component_library": "ad-hoc (badge, button-primary)",
+    "fonts": ["Geist Sans (next/font)", "Geist Mono (next/font)"],
+    "orm": "Prisma 7 + Neon",
+    "deploy": "Vercel",
+    "component_dir": "components"
+  },
+  "tokens": {
+    "color": {
+      "background": "#0b0e14",
+      "foreground": "#e8eaed",
+      "surface": { "1": "#121621", "2": "#1a1f2e", "3": "#242b3d" },
+      "accent": { "primary": "#fbbf24", "hover": "#f59e0b" },
+      "feedback": {
+        "success": "#34d399", "warning": "#fbbf24",
+        "error": "#f87171", "info": "#60a5fa"
+      },
+      "border": {
+        "subtle": "rgba(255,255,255,0.08)",
+        "strong": "rgba(255,255,255,0.14)"
+      }
+    },
+    "typography": {
+      "family": {
+        "sans": "var(--font-geist-sans)",
+        "mono": "var(--font-geist-mono)"
+      }
+    },
+    "spacing": "tailwind-default",
+    "radius": "tailwind-default",
+    "shadow": "tailwind-default",
+    "breakpoints": { "sm": 640, "md": 768, "lg": 1024, "xl": 1280, "2xl": 1536 },
+    "motion": {
+      "keyframes": ["sticker-glow", "cart-bounce", "toast-in"]
+    },
+    "theme": "dark-only"
+  },
+  "components": [
+    { "name": "badge", "type": "utility-class" },
+    { "name": "button-primary", "type": "utility-class" },
+    { "name": "button-secondary", "type": "utility-class" }
+  ],
+  "patterns": [
+    "Grid de stickers com sticker-glow",
+    "Cart drawer com cart-bounce",
+    "Toast notifications com toast-in",
+    "Product listing dashboard"
+  ],
+  "gaps": [
+    "Surface ladder de apenas 3 níveis",
+    "Sem shadcn — classes utilitárias manuais",
+    "Sem light mode"
+  ]
+}

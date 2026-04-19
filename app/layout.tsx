@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { CartProvider } from "@/lib/cart-context";
 import { ToastProvider } from "@/lib/toast-context";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+
+const UMAMI_WEBSITE_ID =
+  process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID ?? "946ed723-8d29-41c5-84a1-49fdcc13d0c0";
+const UMAMI_SRC =
+  process.env.NEXT_PUBLIC_UMAMI_SRC ?? "https://analytics.arenacards.com.br/script.js";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,6 +75,15 @@ export default function RootLayout({
         </CartProvider>
         <Analytics />
         <SpeedInsights />
+        {UMAMI_WEBSITE_ID && (
+          <Script
+            async
+            defer
+            strategy="afterInteractive"
+            src={UMAMI_SRC}
+            data-website-id={UMAMI_WEBSITE_ID}
+          />
+        )}
       </body>
     </html>
   );

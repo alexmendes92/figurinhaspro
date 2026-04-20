@@ -5,18 +5,20 @@
 Repo: `github.com/alexmendes92/figurinhaspro` (privado) | Branch: `master`
 
 ## Stack
-Next.js 16.2.1 + React 19.2 + Prisma 7.5 + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe + Sentry + Vercel Analytics
+Next.js 16.2.4 + React 19.2 + Prisma 7.7 (generator `prisma-client` novo) + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe + Sentry + Vercel Analytics + Biome (lint/format)
+
+Estrutura canonica: `src/app/`, `src/lib/`, `src/components/`, `src/generated/prisma/` (migrado em 2026-04-20, Fase 2).
 
 ## Producao
 - **Vercel project:** `album-digital`
 - **URL**: https://album-digital-ashen.vercel.app
-- **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `lib/db.ts`)
+- **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `src/lib/db.ts`)
 - **Auth**: iron-session (cookies criptografados) + bcryptjs (hash de senhas)
-- **Pagamentos**: Stripe SDK (checkout, webhook, portal) — endpoints em `api/stripe/*`
-- **Planos**: FREE / PRO / UNLIMITED — gates em `lib/plan-limits.ts` (temporariamente liberados)
+- **Pagamentos**: Stripe SDK (checkout, webhook, portal) — endpoints em `src/app/api/stripe/*`
+- **Planos**: FREE / PRO / UNLIMITED — gates em `src/lib/plan-limits.ts` (temporariamente liberados)
 - **Monitoring**: Sentry (`@sentry/nextjs`) + Vercel Analytics + Speed Insights
-- **Env validation**: Zod schema em `lib/env.ts` (valida rigorosamente em producao)
-- **Admin**: `lib/admin.ts` — guard via `ADMIN_EMAIL` env var (cockpit comercial)
+- **Env validation**: Zod schema em `src/lib/env.ts` (valida rigorosamente em producao)
+- **Admin**: `src/lib/admin.ts` — guard via `ADMIN_EMAIL` env var (cockpit comercial)
 
 ## REGRAS XP (enforced por hooks)
 
@@ -53,7 +55,9 @@ npx vercel deploy --prod
 ```bash
 npm run dev        # Dev server (Turbopack, porta 3009)
 npm run build      # Build producao (prisma generate && next build)
-npm run lint       # ESLint
+npm run lint       # Biome check
+npm run lint:fix   # Biome check --write
+npm run format     # Biome format --write
 vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 
 # Stripe CLI (testar webhooks localmente)
@@ -66,21 +70,22 @@ stripe logs tail
 
 | Arquivo | Funcao |
 |---------|--------|
-| `lib/db.ts` | Conexao Prisma/Neon (Lazy Proxy — evita conexao durante build) |
-| `lib/auth.ts` | Sessao iron-session + lookup do seller |
-| `lib/plan-limits.ts` | Limites por plano + guards (`checkStickerLimit`, `hasFeature`) |
-| `lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
-| `lib/stripe.ts` | Cliente Stripe |
-| `lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
-| `lib/price-resolver.ts` | Resolucao centralizada de precos (3 eixos) + mapa sticker→secao |
-| `lib/cart-context.tsx` | Contexto do carrinho (client) |
-| `lib/admin.ts` | Guard admin via `ADMIN_EMAIL` env var (trim + case-insensitive) |
-| `lib/env.ts` | Validacao de env vars com Zod (fallbacks em dev, strict em prod) |
-| `lib/seller-catalog.ts` | Catalogo do vendedor |
+| `src/lib/db.ts` | Conexao Prisma/Neon (Lazy Proxy — evita conexao durante build) |
+| `src/lib/auth.ts` | Sessao iron-session + lookup do seller |
+| `src/lib/plan-limits.ts` | Limites por plano + guards (`checkStickerLimit`, `hasFeature`) |
+| `src/lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
+| `src/lib/stripe.ts` | Cliente Stripe |
+| `src/lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
+| `src/lib/price-resolver.ts` | Resolucao centralizada de precos (3 eixos) + mapa sticker→secao |
+| `src/lib/cart-context.tsx` | Contexto do carrinho (client) |
+| `src/lib/admin.ts` | Guard admin via `ADMIN_EMAIL` env var (trim + case-insensitive) |
+| `src/lib/env.ts` | Validacao de env vars com Zod (fallbacks em dev, strict em prod) |
+| `src/lib/seller-catalog.ts` | Catalogo do vendedor |
+| `src/generated/prisma/` | Prisma Client gerado (gitignored) |
 | `prisma.config.ts` | Config centralizada do Prisma 7 |
-| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent + 9 modelos Biz* |
-| `app/painel/comercial/actions.ts` | Server Actions centralizadas do cockpit comercial (15 actions) |
-| `app/api/comercial/seed/route.ts` | Seed idempotente — popula dados iniciais do cockpit |
+| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent + 9 modelos Biz*. Generator `prisma-client` novo |
+| `src/app/painel/comercial/actions.ts` | Server Actions centralizadas do cockpit comercial (15 actions) |
+| `src/app/api/comercial/seed/route.ts` | Seed idempotente — popula dados iniciais do cockpit |
 
 ## Cockpit Comercial (`/painel/comercial`)
 
@@ -99,7 +104,7 @@ Modulo admin-only (visivel apenas para `ADMIN_EMAIL`). Cockpit de operacao comer
 
 **Padrao de formularios**: `?new=1` no searchParam mostra form de criacao (Server Component, sem estado client).
 
-**Componentes**: `components/painel/comercial/comercial-tabs.tsx` (navegacao), `seed-button.tsx` (popular dados).
+**Componentes**: `src/components/painel/comercial/comercial-tabs.tsx` (navegacao), `seed-button.tsx` (popular dados).
 
 **Env var obrigatoria em producao**: `ADMIN_EMAIL` (configurada no Vercel).
 

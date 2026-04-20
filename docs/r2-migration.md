@@ -58,7 +58,15 @@ npm run r2:upload-missing -- --public-root "C:\\Users\\conta\\Projetos\\ArenaCar
   - `/albuns` com `src` direto no dominio do R2
   - `/loja/santana?browse=true` com capas e bandeiras no dominio do R2
   - `/covers/2022.webp` respondendo com redirect `307` para `https://figurinhasproimg.arenacards.com.br/covers/2022.webp`
+- producao validada em:
+  - `https://album-digital-ashen.vercel.app/albuns` respondendo `200` com imagens no dominio do R2
+  - `https://album-digital-ashen.vercel.app/loja/santana?browse=true` renderizando capas e bandeiras no dominio do R2
+  - `https://album-digital-ashen.vercel.app/covers/2022.webp` respondendo `307` para `https://figurinhasproimg.arenacards.com.br/covers/2022.webp`
 
 ## Limpeza local dos assets
 
-As pastas `public/albums`, `public/stickers`, `public/covers` e `public/flags` ja estavam fora do controle de versao. A remocao fisica deve ser feita no checkout original depois da validacao final de producao.
+As pastas `public/albums`, `public/stickers`, `public/covers` e `public/flags` ja estavam fora do controle de versao. A remocao fisica foi feita no checkout original apos a validacao final, com backup em:
+
+```text
+C:\Users\conta\Projetos\ArenaCards\_backups\P8-FigurinhasPro-public-assets-2026-04-20
+```

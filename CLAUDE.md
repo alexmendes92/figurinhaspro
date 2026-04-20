@@ -55,9 +55,12 @@ npx vercel deploy --prod
 ```bash
 npm run dev        # Dev server (Turbopack, porta 3009)
 npm run build      # Build producao (prisma generate && next build)
+npm run test       # Baseline Vitest (imgUrl + smoke helpers)
 npm run lint       # Biome check
 npm run lint:fix   # Biome check --write
 npm run format     # Biome format --write
+npm run r2:audit -- --public-root "C:\\Users\\conta\\Projetos\\ArenaCards\\P8-FigurinhasPro\\public"
+npm run r2:upload-missing -- --public-root "C:\\Users\\conta\\Projetos\\ArenaCards\\P8-FigurinhasPro\\public"
 vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 
 # Stripe CLI (testar webhooks localmente)
@@ -91,6 +94,14 @@ stripe logs tail
 | `scripts/upload-missing.mjs` | Upload idempotente de faltantes para o R2 |
 | `docs/r2-migration.md` | Registro da migracao de imagens para Cloudflare R2 |
 
+## Imagens e R2
+
+- Dominio publico ativo: `https://figurinhasproimg.arenacards.com.br`
+- Alias de producao validado: `https://album-digital-ashen.vercel.app`
+- `src/lib/images.ts` e a porta de entrada para qualquer asset catalogado
+- Redirects legados ativos em `/albums/*`, `/stickers/*`, `/covers/*` e `/flags/*`
+- Backup local dos assets removidos do checkout principal: `C:\Users\conta\Projetos\ArenaCards\_backups\P8-FigurinhasPro-public-assets-2026-04-20`
+
 ## Cockpit Comercial (`/painel/comercial`)
 
 Modulo admin-only (visivel apenas para `ADMIN_EMAIL`). Cockpit de operacao comercial com 7 sub-modulos:
@@ -110,7 +121,7 @@ Modulo admin-only (visivel apenas para `ADMIN_EMAIL`). Cockpit de operacao comer
 
 **Componentes**: `src/components/painel/comercial/comercial-tabs.tsx` (navegacao), `seed-button.tsx` (popular dados).
 
-**Env var obrigatoria em producao**: `ADMIN_EMAIL` (configurada no Vercel).
+**Env vars obrigatorias em producao**: `ADMIN_EMAIL`, `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_IMAGES_BASE_URL`.
 
 ## Sincronizacao global
 Alteracao estrutural (porta, stack, deploy, servico compartilhado) → atualizar CLAUDE.md da raiz Arena Cards + propagar downstream. Ver `../.claude/rules/sync-global.md` na raiz Arena Cards.

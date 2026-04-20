@@ -1,5 +1,5 @@
 import type { Album, Sticker, Section } from "@/lib/albums";
-import type { CustomAlbum } from "@prisma/client";
+import type { CustomAlbum } from "@/src/generated/prisma/client";
 
 interface RawSticker {
   code: string;

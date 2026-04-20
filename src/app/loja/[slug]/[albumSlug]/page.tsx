@@ -1,3 +1,4 @@
+import { Bebas_Neue } from "next/font/google";
 import { notFound } from "next/navigation";
 import StoreAlbumView from "@/components/loja/store-album-view";
 import type { Album } from "@/lib/albums";
@@ -6,6 +7,13 @@ import { customAlbumToAlbum } from "@/lib/custom-albums";
 import { db } from "@/lib/db";
 import { buildStickerSectionMap } from "@/lib/price-resolver";
 import { getSellerCatalog } from "@/lib/seller-catalog";
+
+const bebas = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+});
 
 export default async function LojaAlbumPage({
   params,
@@ -90,20 +98,22 @@ export default async function LojaAlbumPage({
   }));
 
   return (
-    <StoreAlbumView
-      album={album}
-      stockMap={stockMap}
-      priceMap={priceMap}
-      sellerSlug={slug}
-      sellerName={seller.shopName}
-      sellerPhone={seller.phone}
-      sellerDescription={seller.shopDescription}
-      sellerBusinessHours={seller.businessHours}
-      sellerPaymentMethods={seller.paymentMethods}
-      availableAlbums={catalog}
-      stickerSectionMap={stickerSectionMap}
-      sectionRulesMap={sectionRulesMap}
-      quantityTiers={tiersData}
-    />
+    <div className={bebas.variable}>
+      <StoreAlbumView
+        album={album}
+        stockMap={stockMap}
+        priceMap={priceMap}
+        sellerSlug={slug}
+        sellerName={seller.shopName}
+        sellerPhone={seller.phone}
+        sellerDescription={seller.shopDescription}
+        sellerBusinessHours={seller.businessHours}
+        sellerPaymentMethods={seller.paymentMethods}
+        availableAlbums={catalog}
+        stickerSectionMap={stickerSectionMap}
+        sectionRulesMap={sectionRulesMap}
+        quantityTiers={tiersData}
+      />
+    </div>
   );
 }

@@ -149,7 +149,7 @@ export default async function LojaPage({
               {catalog.map((album) => {
                 const coverData = albumCovers[album.slug];
                 const coverSrc = coverData?.cover;
-                const flagSrc = coverData ? `/flags/${coverData.hostFlag}.svg` : null;
+                const flagSrc = coverData ? imgUrl(`/flags/${coverData.hostFlag}.svg`) : null;
 
                 return (
                   <Link
@@ -202,7 +202,7 @@ export default async function LojaPage({
                       <div className="flex items-center gap-2 mb-2">
                         {flagSrc && (
                           <Image
-                            src={imgUrl(flagSrc)}
+                            src={flagSrc}
                             alt=""
                             width={16}
                             height={16}

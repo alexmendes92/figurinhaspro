@@ -94,7 +94,7 @@ export default async function EstoquePage() {
           const pct = Math.round((inStock / album.totalStickers) * 100);
           const coverData = albumCovers[album.slug];
           const coverSrc = coverData?.cover;
-          const flagSrc = coverData ? `/flags/${coverData.hostFlag}.svg` : null;
+          const flagSrc = coverData ? imgUrl(`/flags/${coverData.hostFlag}.svg`) : null;
 
           return (
             <Link
@@ -156,7 +156,7 @@ export default async function EstoquePage() {
                 <div className="flex items-center gap-2 mb-2">
                   {flagSrc && (
                     <Image
-                      src={imgUrl(flagSrc)}
+                      src={flagSrc}
                       alt={coverData?.host || ""}
                       width={18}
                       height={18}

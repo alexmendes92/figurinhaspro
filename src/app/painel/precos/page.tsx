@@ -104,7 +104,7 @@ export default async function PrecosPage() {
             const rulesCount = rulesCountMap.get(album.slug) || 0;
             const coverData = albumCovers[album.slug];
             const coverSrc = coverData?.cover;
-            const flagSrc = coverData ? `/flags/${coverData.hostFlag}.svg` : null;
+            const flagSrc = coverData ? imgUrl(`/flags/${coverData.hostFlag}.svg`) : null;
 
             return (
               <Link
@@ -167,7 +167,7 @@ export default async function PrecosPage() {
                   <div className="flex items-center gap-2">
                     {flagSrc && (
                       <Image
-                        src={imgUrl(flagSrc)}
+                        src={flagSrc}
                         alt={coverData?.host || ""}
                         width={16}
                         height={16}

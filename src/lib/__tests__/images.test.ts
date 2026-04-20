@@ -7,7 +7,7 @@ describe("imgUrl", () => {
   });
 
   it("mantem URL absoluta intacta", async () => {
-    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhas.arenacards.com.br");
+    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhasproimg.arenacards.com.br");
     const { imgUrl } = await import("../images");
 
     expect(imgUrl("https://cdn.externo.com/teste.webp")).toBe(
@@ -16,14 +16,14 @@ describe("imgUrl", () => {
   });
 
   it("prefixa paths relativos com a base publica", async () => {
-    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhas.arenacards.com.br");
+    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhasproimg.arenacards.com.br");
     const { imgUrl } = await import("../images");
 
     expect(imgUrl("/covers/2022.webp")).toBe(
-      "https://figurinhas.arenacards.com.br/covers/2022.webp"
+      "https://figurinhasproimg.arenacards.com.br/covers/2022.webp"
     );
     expect(imgUrl("stickers/panini_fifa_world_cup_2022/images/FWC1.jpg")).toBe(
-      "https://figurinhas.arenacards.com.br/stickers/panini_fifa_world_cup_2022/images/FWC1.jpg"
+      "https://figurinhasproimg.arenacards.com.br/stickers/panini_fifa_world_cup_2022/images/FWC1.jpg"
     );
   });
 
@@ -36,16 +36,16 @@ describe("imgUrl", () => {
   });
 
   it("normaliza multiplas barras iniciais", async () => {
-    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhas.arenacards.com.br/");
+    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhasproimg.arenacards.com.br/");
     const { imgUrl } = await import("../images");
 
     expect(imgUrl("//covers/2022.webp")).toBe(
-      "https://figurinhas.arenacards.com.br/covers/2022.webp"
+      "https://figurinhasproimg.arenacards.com.br/covers/2022.webp"
     );
   });
 
   it("retorna string vazia para valores nulos", async () => {
-    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhas.arenacards.com.br");
+    vi.stubEnv("NEXT_PUBLIC_IMAGES_BASE_URL", "https://figurinhasproimg.arenacards.com.br");
     const { imgUrl } = await import("../images");
 
     expect(imgUrl("")).toBe("");

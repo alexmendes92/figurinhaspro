@@ -16,7 +16,7 @@ const CATEGORY_COLOR: Record<string, string> = {
   COST: "border-red-500/30",
 };
 
-const inputClass =
+const _inputClass =
   "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
 
 export default async function KpisPage() {
@@ -35,7 +35,7 @@ export default async function KpisPage() {
   for (const kpi of kpis) {
     const cat = kpi.category;
     if (!categories.has(cat)) categories.set(cat, []);
-    categories.get(cat)!.push(kpi);
+    categories.get(cat)?.push(kpi);
   }
 
   return (
@@ -43,8 +43,7 @@ export default async function KpisPage() {
       {kpis.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 text-sm">
-            Nenhum KPI configurado. Use o botao &quot;Popular dados iniciais&quot; no
-            Dashboard.
+            Nenhum KPI configurado. Use o botao &quot;Popular dados iniciais&quot; no Dashboard.
           </p>
         </div>
       ) : (
@@ -59,10 +58,7 @@ export default async function KpisPage() {
                 const latest = kpi.snapshots[0];
                 const previous = kpi.snapshots[1];
                 const currentValue = latest?.value ?? kpi.baseline ?? 0;
-                const delta =
-                  latest && previous
-                    ? latest.value - previous.value
-                    : null;
+                const delta = latest && previous ? latest.value - previous.value : null;
                 const progressPct =
                   kpi.target && kpi.baseline !== null
                     ? Math.min(
@@ -75,8 +71,7 @@ export default async function KpisPage() {
                         )
                       )
                     : null;
-                const borderColor =
-                  CATEGORY_COLOR[category] || "border-white/[0.06]";
+                const borderColor = CATEGORY_COLOR[category] || "border-white/[0.06]";
 
                 return (
                   <div
@@ -87,9 +82,7 @@ export default async function KpisPage() {
                       <div>
                         <p className="text-xs text-gray-500">{kpi.name}</p>
                         <div className="flex items-baseline gap-2 mt-1">
-                          <span className="text-xl font-bold text-white">
-                            {fmt(currentValue)}
-                          </span>
+                          <span className="text-xl font-bold text-white">{fmt(currentValue)}</span>
                           {delta !== null && (
                             <span
                               className={`text-xs font-medium ${
@@ -109,9 +102,7 @@ export default async function KpisPage() {
                       {kpi.target && (
                         <div className="text-right">
                           <p className="text-[10px] text-gray-600">Meta</p>
-                          <p className="text-xs text-gray-400">
-                            {fmt(kpi.target)}
-                          </p>
+                          <p className="text-xs text-gray-400">{fmt(kpi.target)}</p>
                         </div>
                       )}
                     </div>
@@ -144,10 +135,7 @@ export default async function KpisPage() {
                           .reverse()
                           .slice(-8)
                           .map((s, i) => {
-                            const max = Math.max(
-                              ...kpi.snapshots.map((x) => x.value),
-                              1
-                            );
+                            const max = Math.max(...kpi.snapshots.map((x) => x.value), 1);
                             const h = (s.value / max) * 100;
                             return (
                               <div
@@ -162,10 +150,7 @@ export default async function KpisPage() {
                     )}
 
                     {/* Add snapshot */}
-                    <form
-                      action={addKpiSnapshot}
-                      className="mt-3 flex gap-2"
-                    >
+                    <form action={addKpiSnapshot} className="mt-3 flex gap-2">
                       <input type="hidden" name="kpiId" value={kpi.id} />
                       <input
                         name="value"
@@ -184,9 +169,7 @@ export default async function KpisPage() {
                     </form>
 
                     {kpi.description && (
-                      <p className="text-[10px] text-gray-600 mt-2">
-                        {kpi.description}
-                      </p>
+                      <p className="text-[10px] text-gray-600 mt-2">{kpi.description}</p>
                     )}
                   </div>
                 );

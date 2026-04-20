@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/auth";
 import { isAdmin } from "@/lib/admin";
+import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 export async function POST() {
@@ -97,7 +97,8 @@ export async function POST() {
         description: "Plano PRO com 30% de desconto nos 3 primeiros meses",
         price: 27.3,
         priceType: "MONTHLY",
-        includes: "Ate 5 albums\nPrecos customizados\nCarrinho de compras\nLink da loja personalizado",
+        includes:
+          "Ate 5 albums\nPrecos customizados\nCarrinho de compras\nLink da loja personalizado",
         status: "ACTIVE",
         validUntil: new Date("2026-06-30"),
         salesCount: 2,
@@ -108,7 +109,8 @@ export async function POST() {
         description: "Acesso ilimitado por R$59/mes (preco especial early adopter)",
         price: 59,
         priceType: "MONTHLY",
-        includes: "Albums ilimitados\nTodos os recursos PRO\nSuporte prioritario\nBadge early adopter",
+        includes:
+          "Albums ilimitados\nTodos os recursos PRO\nSuporte prioritario\nBadge early adopter",
         status: "ACTIVE",
         validUntil: new Date("2026-05-31"),
         salesCount: 1,
@@ -116,7 +118,8 @@ export async function POST() {
       },
       {
         name: "Setup de Loja Completo",
-        description: "Configuracao completa: cadastro de estoque, precos, fotos e link personalizado",
+        description:
+          "Configuracao completa: cadastro de estoque, precos, fotos e link personalizado",
         price: 97,
         priceType: "ONE_TIME",
         includes: "Cadastro de ate 3 albums\nFotos de capa\nPrecos configurados\n1h de treinamento",
@@ -141,7 +144,8 @@ export async function POST() {
   await db.bizExperiment.createMany({
     data: [
       {
-        hypothesis: "Se postarmos 3 reels/semana mostrando a loja de um vendedor real, conseguimos 5 leads/semana no Instagram",
+        hypothesis:
+          "Se postarmos 3 reels/semana mostrando a loja de um vendedor real, conseguimos 5 leads/semana no Instagram",
         channel: "Instagram",
         priority: "HIGH",
         effort: "3h/sem",
@@ -169,7 +173,8 @@ export async function POST() {
         status: "PLANNED",
       },
       {
-        hypothesis: "Se fizermos parceria com 3 influencers de figurinhas, conseguimos 20 cadastros em 1 mes",
+        hypothesis:
+          "Se fizermos parceria com 3 influencers de figurinhas, conseguimos 20 cadastros em 1 mes",
         channel: "Instagram/YouTube",
         priority: "MEDIUM",
         effort: "2h contato + negociacao",
@@ -270,63 +275,275 @@ export async function POST() {
   // ===== MILESTONES =====
   await db.bizMilestone.createMany({
     data: [
-      { initiativeId: initiatives[0].id, title: "Restaurar checkStickerLimit", status: "DONE", completedAt: new Date() },
-      { initiativeId: initiatives[0].id, title: "Restaurar checkAlbumLimit", status: "IN_PROGRESS" },
+      {
+        initiativeId: initiatives[0].id,
+        title: "Restaurar checkStickerLimit",
+        status: "DONE",
+        completedAt: new Date(),
+      },
+      {
+        initiativeId: initiatives[0].id,
+        title: "Restaurar checkAlbumLimit",
+        status: "IN_PROGRESS",
+      },
       { initiativeId: initiatives[0].id, title: "Restaurar checkOrderLimit", status: "PENDING" },
-      { initiativeId: initiatives[0].id, title: "UI de upgrade quando atingir limite", status: "PENDING" },
-      { initiativeId: initiatives[1].id, title: "Instrumentar analytics no onboarding", status: "PENDING", targetDate: new Date("2026-04-15") },
-      { initiativeId: initiatives[1].id, title: "Otimizar step 2 (maior abandono)", status: "PENDING", targetDate: new Date("2026-04-22") },
-      { initiativeId: initiatives[5].id, title: "MVP com 3 metricas basicas", status: "PENDING", targetDate: new Date("2026-04-20") },
+      {
+        initiativeId: initiatives[0].id,
+        title: "UI de upgrade quando atingir limite",
+        status: "PENDING",
+      },
+      {
+        initiativeId: initiatives[1].id,
+        title: "Instrumentar analytics no onboarding",
+        status: "PENDING",
+        targetDate: new Date("2026-04-15"),
+      },
+      {
+        initiativeId: initiatives[1].id,
+        title: "Otimizar step 2 (maior abandono)",
+        status: "PENDING",
+        targetDate: new Date("2026-04-22"),
+      },
+      {
+        initiativeId: initiatives[5].id,
+        title: "MVP com 3 metricas basicas",
+        status: "PENDING",
+        targetDate: new Date("2026-04-20"),
+      },
     ],
   });
 
   // ===== TASKS =====
   await db.bizTask.createMany({
     data: [
-      { title: "Reativar guards em plan-limits.ts", priority: "HIGH", status: "IN_PROGRESS", initiativeId: initiatives[0].id },
-      { title: "Criar pagina de upgrade/upsell", priority: "HIGH", status: "TODO", initiativeId: initiatives[0].id },
-      { title: "Configurar Stripe prices para PRO e UNLIMITED", priority: "HIGH", status: "DONE", completedAt: new Date("2026-03-20") },
-      { title: "Postar 3 reels esta semana", priority: "HIGH", status: "TODO", deadline: new Date("2026-04-07") },
-      { title: "Ligar para Figurinhas da Mari - agendar demo", priority: "HIGH", status: "TODO", deadline: new Date("2026-04-06") },
-      { title: "Enviar proposta PRO para Banca do Joao", priority: "HIGH", status: "TODO", deadline: new Date("2026-04-05") },
+      {
+        title: "Reativar guards em plan-limits.ts",
+        priority: "HIGH",
+        status: "IN_PROGRESS",
+        initiativeId: initiatives[0].id,
+      },
+      {
+        title: "Criar pagina de upgrade/upsell",
+        priority: "HIGH",
+        status: "TODO",
+        initiativeId: initiatives[0].id,
+      },
+      {
+        title: "Configurar Stripe prices para PRO e UNLIMITED",
+        priority: "HIGH",
+        status: "DONE",
+        completedAt: new Date("2026-03-20"),
+      },
+      {
+        title: "Postar 3 reels esta semana",
+        priority: "HIGH",
+        status: "TODO",
+        deadline: new Date("2026-04-07"),
+      },
+      {
+        title: "Ligar para Figurinhas da Mari - agendar demo",
+        priority: "HIGH",
+        status: "TODO",
+        deadline: new Date("2026-04-06"),
+      },
+      {
+        title: "Enviar proposta PRO para Banca do Joao",
+        priority: "HIGH",
+        status: "TODO",
+        deadline: new Date("2026-04-05"),
+      },
       { title: "Escrever copy da landing page", priority: "MEDIUM", status: "TODO" },
-      { title: "Mapear 10 keywords para SEO", priority: "MEDIUM", status: "TODO", initiativeId: initiatives[3].id },
+      {
+        title: "Mapear 10 keywords para SEO",
+        priority: "MEDIUM",
+        status: "TODO",
+        initiativeId: initiatives[3].id,
+      },
       { title: "Criar template de email de boas-vindas", priority: "MEDIUM", status: "TODO" },
-      { title: "Testar fluxo de checkout como comprador", priority: "HIGH", status: "DONE", completedAt: new Date("2026-03-25") },
-      { title: "Implementar trial 7 dias PRO", priority: "HIGH", status: "TODO", initiativeId: initiatives[0].id },
-      { title: "Definir mecanica do programa de indicacao", priority: "LOW", status: "TODO", initiativeId: initiatives[4].id },
+      {
+        title: "Testar fluxo de checkout como comprador",
+        priority: "HIGH",
+        status: "DONE",
+        completedAt: new Date("2026-03-25"),
+      },
+      {
+        title: "Implementar trial 7 dias PRO",
+        priority: "HIGH",
+        status: "TODO",
+        initiativeId: initiatives[0].id,
+      },
+      {
+        title: "Definir mecanica do programa de indicacao",
+        priority: "LOW",
+        status: "TODO",
+        initiativeId: initiatives[4].id,
+      },
     ],
   });
 
   // ===== KPIs =====
   const kpiData = [
-    { name: "MRR", category: "REVENUE", unit: "CURRENCY", baseline: 0, target: 500, description: "Receita mensal recorrente" },
-    { name: "Sellers Pagantes", category: "REVENUE", unit: "COUNT", baseline: 0, target: 15, description: "Vendedores em planos pagos" },
-    { name: "ARR Projetado", category: "REVENUE", unit: "CURRENCY", baseline: 0, target: 6000, description: "Receita anual recorrente projetada" },
-    { name: "Total Sellers", category: "GROWTH", unit: "COUNT", baseline: 0, target: 50, description: "Total de vendedores cadastrados" },
-    { name: "Novos Sellers/Semana", category: "GROWTH", unit: "COUNT", baseline: 0, target: 5, description: "Cadastros por semana" },
-    { name: "Conversao Free→PRO", category: "CONVERSION", unit: "PERCENT", baseline: 0, target: 15, description: "% de free users que viram PRO" },
-    { name: "Conversao Lead→Seller", category: "CONVERSION", unit: "PERCENT", baseline: 0, target: 25, description: "% de leads que viram sellers" },
-    { name: "Retencao 30d", category: "ENGAGEMENT", unit: "PERCENT", baseline: 0, target: 70, description: "% de sellers ativos apos 30 dias" },
-    { name: "Pedidos/Semana", category: "ENGAGEMENT", unit: "COUNT", baseline: 0, target: 20, description: "Pedidos criados por semana" },
-    { name: "CAC", category: "COST", unit: "CURRENCY", baseline: 0, target: 30, description: "Custo de aquisicao por cliente" },
-    { name: "LTV", category: "REVENUE", unit: "CURRENCY", baseline: 0, target: 400, description: "Lifetime value medio por seller" },
-    { name: "LTV/CAC", category: "COST", unit: "COUNT", baseline: 0, target: 3, description: "Razao LTV sobre CAC (ideal >3)" },
+    {
+      name: "MRR",
+      category: "REVENUE",
+      unit: "CURRENCY",
+      baseline: 0,
+      target: 500,
+      description: "Receita mensal recorrente",
+    },
+    {
+      name: "Sellers Pagantes",
+      category: "REVENUE",
+      unit: "COUNT",
+      baseline: 0,
+      target: 15,
+      description: "Vendedores em planos pagos",
+    },
+    {
+      name: "ARR Projetado",
+      category: "REVENUE",
+      unit: "CURRENCY",
+      baseline: 0,
+      target: 6000,
+      description: "Receita anual recorrente projetada",
+    },
+    {
+      name: "Total Sellers",
+      category: "GROWTH",
+      unit: "COUNT",
+      baseline: 0,
+      target: 50,
+      description: "Total de vendedores cadastrados",
+    },
+    {
+      name: "Novos Sellers/Semana",
+      category: "GROWTH",
+      unit: "COUNT",
+      baseline: 0,
+      target: 5,
+      description: "Cadastros por semana",
+    },
+    {
+      name: "Conversao Free→PRO",
+      category: "CONVERSION",
+      unit: "PERCENT",
+      baseline: 0,
+      target: 15,
+      description: "% de free users que viram PRO",
+    },
+    {
+      name: "Conversao Lead→Seller",
+      category: "CONVERSION",
+      unit: "PERCENT",
+      baseline: 0,
+      target: 25,
+      description: "% de leads que viram sellers",
+    },
+    {
+      name: "Retencao 30d",
+      category: "ENGAGEMENT",
+      unit: "PERCENT",
+      baseline: 0,
+      target: 70,
+      description: "% de sellers ativos apos 30 dias",
+    },
+    {
+      name: "Pedidos/Semana",
+      category: "ENGAGEMENT",
+      unit: "COUNT",
+      baseline: 0,
+      target: 20,
+      description: "Pedidos criados por semana",
+    },
+    {
+      name: "CAC",
+      category: "COST",
+      unit: "CURRENCY",
+      baseline: 0,
+      target: 30,
+      description: "Custo de aquisicao por cliente",
+    },
+    {
+      name: "LTV",
+      category: "REVENUE",
+      unit: "CURRENCY",
+      baseline: 0,
+      target: 400,
+      description: "Lifetime value medio por seller",
+    },
+    {
+      name: "LTV/CAC",
+      category: "COST",
+      unit: "COUNT",
+      baseline: 0,
+      target: 3,
+      description: "Razao LTV sobre CAC (ideal >3)",
+    },
   ];
 
-  const kpis = await Promise.all(
-    kpiData.map((k) => db.bizKpi.create({ data: k }))
-  );
+  const kpis = await Promise.all(kpiData.map((k) => db.bizKpi.create({ data: k })));
 
   // ===== KPI SNAPSHOTS (dados iniciais) =====
   const snapshotData: { kpiName: string; values: { value: number; daysAgo: number }[] }[] = [
-    { kpiName: "MRR", values: [{ value: 0, daysAgo: 30 }, { value: 27, daysAgo: 20 }, { value: 66, daysAgo: 10 }, { value: 113, daysAgo: 0 }] },
-    { kpiName: "Sellers Pagantes", values: [{ value: 0, daysAgo: 30 }, { value: 1, daysAgo: 20 }, { value: 2, daysAgo: 10 }, { value: 3, daysAgo: 0 }] },
-    { kpiName: "Total Sellers", values: [{ value: 1, daysAgo: 30 }, { value: 3, daysAgo: 20 }, { value: 5, daysAgo: 10 }, { value: 8, daysAgo: 0 }] },
-    { kpiName: "Novos Sellers/Semana", values: [{ value: 0, daysAgo: 21 }, { value: 1, daysAgo: 14 }, { value: 1, daysAgo: 7 }, { value: 2, daysAgo: 0 }] },
-    { kpiName: "Pedidos/Semana", values: [{ value: 0, daysAgo: 21 }, { value: 2, daysAgo: 14 }, { value: 5, daysAgo: 7 }, { value: 8, daysAgo: 0 }] },
-    { kpiName: "Retencao 30d", values: [{ value: 50, daysAgo: 14 }, { value: 60, daysAgo: 0 }] },
-    { kpiName: "Conversao Free→PRO", values: [{ value: 0, daysAgo: 14 }, { value: 10, daysAgo: 0 }] },
+    {
+      kpiName: "MRR",
+      values: [
+        { value: 0, daysAgo: 30 },
+        { value: 27, daysAgo: 20 },
+        { value: 66, daysAgo: 10 },
+        { value: 113, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Sellers Pagantes",
+      values: [
+        { value: 0, daysAgo: 30 },
+        { value: 1, daysAgo: 20 },
+        { value: 2, daysAgo: 10 },
+        { value: 3, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Total Sellers",
+      values: [
+        { value: 1, daysAgo: 30 },
+        { value: 3, daysAgo: 20 },
+        { value: 5, daysAgo: 10 },
+        { value: 8, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Novos Sellers/Semana",
+      values: [
+        { value: 0, daysAgo: 21 },
+        { value: 1, daysAgo: 14 },
+        { value: 1, daysAgo: 7 },
+        { value: 2, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Pedidos/Semana",
+      values: [
+        { value: 0, daysAgo: 21 },
+        { value: 2, daysAgo: 14 },
+        { value: 5, daysAgo: 7 },
+        { value: 8, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Retencao 30d",
+      values: [
+        { value: 50, daysAgo: 14 },
+        { value: 60, daysAgo: 0 },
+      ],
+    },
+    {
+      kpiName: "Conversao Free→PRO",
+      values: [
+        { value: 0, daysAgo: 14 },
+        { value: 10, daysAgo: 0 },
+      ],
+    },
   ];
 
   for (const { kpiName, values } of snapshotData) {
@@ -346,10 +563,34 @@ export async function POST() {
   if (leads.length >= 3) {
     await db.bizActivity.createMany({
       data: [
-        { leadId: leads[0].id, type: "WHATSAPP", channel: "WHATSAPP", summary: "Primeiro contato via DM Instagram, migrou para WhatsApp", result: "Interessado, pediu mais detalhes sobre PRO" },
-        { leadId: leads[0].id, type: "DEMO", channel: "VIDEO", summary: "Demo de 20min mostrando cadastro de estoque e loja publica", result: "Gostou, pediu proposta com desconto" },
-        { leadId: leads[1].id, type: "CALL", channel: "PHONE", summary: "Ligacao de 10min, explicou necessidades", result: "Tem 3 albums, quer organizar estoque digital" },
-        { leadId: leads[2].id, type: "EMAIL", channel: "EMAIL", summary: "Email de apresentacao enviado", result: "Aguardando resposta" },
+        {
+          leadId: leads[0].id,
+          type: "WHATSAPP",
+          channel: "WHATSAPP",
+          summary: "Primeiro contato via DM Instagram, migrou para WhatsApp",
+          result: "Interessado, pediu mais detalhes sobre PRO",
+        },
+        {
+          leadId: leads[0].id,
+          type: "DEMO",
+          channel: "VIDEO",
+          summary: "Demo de 20min mostrando cadastro de estoque e loja publica",
+          result: "Gostou, pediu proposta com desconto",
+        },
+        {
+          leadId: leads[1].id,
+          type: "CALL",
+          channel: "PHONE",
+          summary: "Ligacao de 10min, explicou necessidades",
+          result: "Tem 3 albums, quer organizar estoque digital",
+        },
+        {
+          leadId: leads[2].id,
+          type: "EMAIL",
+          channel: "EMAIL",
+          summary: "Email de apresentacao enviado",
+          result: "Aguardando resposta",
+        },
       ],
     });
   }

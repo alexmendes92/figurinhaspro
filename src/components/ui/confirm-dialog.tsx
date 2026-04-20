@@ -46,17 +46,10 @@ export default function ConfirmDialog({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onCancel}
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
       <div className="relative w-full max-w-sm rounded-2xl border border-white/[0.08] bg-[#0f1219] p-6 shadow-2xl fade-in">
         <h3 className="text-base font-bold text-white mb-1">{title}</h3>
-        {description && (
-          <p className="text-sm text-gray-400 leading-relaxed mb-6">
-            {description}
-          </p>
-        )}
+        {description && <p className="text-sm text-gray-400 leading-relaxed mb-6">{description}</p>}
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onCancel}

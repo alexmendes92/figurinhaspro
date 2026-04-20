@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { createSession } from "@/lib/auth";
-import { z } from "zod";
 import bcrypt from "bcryptjs";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -33,10 +33,7 @@ export async function POST(req: NextRequest) {
     if (existing) {
       return NextResponse.json(
         {
-          error:
-            existing.email === data.email
-              ? "Email já cadastrado"
-              : "Nome de loja já em uso",
+          error: existing.email === data.email ? "Email já cadastrado" : "Nome de loja já em uso",
         },
         { status: 400 }
       );
@@ -80,9 +77,6 @@ export async function POST(req: NextRequest) {
       );
     }
     console.error("Register error:", error);
-    return NextResponse.json(
-      { error: "Erro interno", detail: String(error) },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro interno", detail: String(error) }, { status: 500 });
   }
 }

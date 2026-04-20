@@ -14,8 +14,8 @@ export const PLAN_LIMITS = {
     features: ["basic_store", "whatsapp", "custom_prices"] as string[],
   },
   UNLIMITED: {
-    maxStickers: Infinity,
-    maxOrdersPerMonth: Infinity,
+    maxStickers: Number.POSITIVE_INFINITY,
+    maxOrdersPerMonth: Number.POSITIVE_INFINITY,
     maxAlbums: 13,
     features: [
       "basic_store",
@@ -35,7 +35,8 @@ function getPlanLimits(plan: string) {
 
 export async function checkStickerLimit(sellerId: string, plan: string) {
   const limits = getPlanLimits(plan);
-  if (limits.maxStickers === Infinity) return { allowed: true, current: 0, max: Infinity };
+  if (limits.maxStickers === Number.POSITIVE_INFINITY)
+    return { allowed: true, current: 0, max: Number.POSITIVE_INFINITY };
 
   const count = await db.inventory.count({
     where: { sellerId, quantity: { gt: 0 } },
@@ -50,7 +51,8 @@ export async function checkStickerLimit(sellerId: string, plan: string) {
 
 export async function checkOrderLimit(sellerId: string, plan: string) {
   const limits = getPlanLimits(plan);
-  if (limits.maxOrdersPerMonth === Infinity) return { allowed: true, current: 0, max: Infinity };
+  if (limits.maxOrdersPerMonth === Number.POSITIVE_INFINITY)
+    return { allowed: true, current: 0, max: Number.POSITIVE_INFINITY };
 
   const startOfMonth = new Date();
   startOfMonth.setDate(1);
@@ -67,11 +69,7 @@ export async function checkOrderLimit(sellerId: string, plan: string) {
   };
 }
 
-export async function checkAlbumLimit(
-  sellerId: string,
-  plan: string,
-  albumSlug: string
-) {
+export async function checkAlbumLimit(sellerId: string, plan: string, albumSlug: string) {
   const limits = getPlanLimits(plan);
   if (limits.maxAlbums >= 13) return { allowed: true };
 

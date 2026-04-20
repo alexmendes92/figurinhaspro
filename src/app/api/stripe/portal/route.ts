@@ -9,10 +9,7 @@ export async function POST() {
   }
 
   if (!seller.stripeCustomerId) {
-    return NextResponse.json(
-      { error: "Nenhuma assinatura ativa" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Nenhuma assinatura ativa" }, { status: 400 });
   }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3009";

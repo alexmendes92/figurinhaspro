@@ -1,18 +1,12 @@
-import { getSession } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { albums } from "@/lib/albums";
 import Link from "next/link";
 import CopyLinkButton from "@/components/painel/copy-link-button";
+import { type DashboardAlert, DashboardAlerts } from "@/components/painel/dashboard-alerts";
+import { DashboardHot, type HotItem } from "@/components/painel/dashboard-hot";
 import GettingStarted from "@/components/painel/getting-started";
 import { Spark } from "@/components/painel/spark";
-import {
-  DashboardAlerts,
-  type DashboardAlert,
-} from "@/components/painel/dashboard-alerts";
-import {
-  DashboardHot,
-  type HotItem,
-} from "@/components/painel/dashboard-hot";
+import { albums } from "@/lib/albums";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 const totalCatalog = albums.reduce((s, a) => s + a.totalStickers, 0);
 const BR_DATE = new Intl.DateTimeFormat("pt-BR", {
@@ -186,9 +180,7 @@ export default async function DashboardPage() {
 
   const buckets = Array(15).fill(0) as number[];
   for (const o of revenueBuckets) {
-    const diffDays = Math.floor(
-      (today.getTime() - startOfDay(o.createdAt).getTime()) / 86400000,
-    );
+    const diffDays = Math.floor((today.getTime() - startOfDay(o.createdAt).getTime()) / 86400000);
     const idx = 14 - diffDays;
     if (idx >= 0 && idx < 15) buckets[idx] += o.totalPrice;
   }
@@ -200,7 +192,14 @@ export default async function DashboardPage() {
 
   const hotMap = new Map<
     string,
-    { stickerName: string; albumSlug: string; stickerCode: string; sales: number; recent: number; older: number }
+    {
+      stickerName: string;
+      albumSlug: string;
+      stickerCode: string;
+      sales: number;
+      recent: number;
+      older: number;
+    }
   >();
   for (const item of recentItems) {
     const key = `${item.albumSlug}:${item.stickerCode}`;
@@ -287,7 +286,8 @@ export default async function DashboardPage() {
             Olá, {firstName}.
             {todayRevenue > 0 ? (
               <>
-                {" "}Seu dia rende{" "}
+                {" "}
+                Seu dia rende{" "}
                 <span className="text-amber-400 font-[family-name:var(--font-geist-mono)]">
                   R$ {brl(todayRevenue)}
                 </span>{" "}
@@ -295,7 +295,8 @@ export default async function DashboardPage() {
               </>
             ) : openOrdersCount > 0 ? (
               <>
-                {" "}Você tem{" "}
+                {" "}
+                Você tem{" "}
                 <span className="text-amber-400 font-[family-name:var(--font-geist-mono)]">
                   {openOrdersCount} pedido{openOrdersCount > 1 ? "s" : ""}
                 </span>{" "}
@@ -303,7 +304,8 @@ export default async function DashboardPage() {
               </>
             ) : (
               <>
-                {" "}<span className="text-gray-500 font-normal">Bora vender hoje?</span>
+                {" "}
+                <span className="text-gray-500 font-normal">Bora vender hoje?</span>
               </>
             )}
           </h1>
@@ -313,18 +315,36 @@ export default async function DashboardPage() {
             href="/painel/estoque"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.75}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5"
+            >
               <path d="M4 7h3l2-3h6l2 3h3v13H4z" />
               <circle cx="12" cy="13" r="4" />
             </svg>
             Scanner
-            <span className="ml-0.5 px-1.5 py-0.5 rounded bg-white/[0.06] text-[9px] font-mono text-gray-400">em breve</span>
+            <span className="ml-0.5 px-1.5 py-0.5 rounded bg-white/[0.06] text-[9px] font-mono text-gray-400">
+              em breve
+            </span>
           </Link>
           <Link
             href="/painel/estoque"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.75}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5"
+            >
               <path d="M20 12a8 8 0 1 1-3-6.24L20 4l-1 3.3A8 8 0 0 1 20 12z" />
               <path d="M8 10c1 3 3 5 6 6l1.5-1.5a1 1 0 0 1 1-.25l2 .5a1 1 0 0 1 .75 1V17a2 2 0 0 1-2 2C11 19 5 13 5 8a2 2 0 0 1 2-2h1.2a1 1 0 0 1 1 .75l.5 2a1 1 0 0 1-.25 1L8 10z" />
             </svg>
@@ -334,7 +354,15 @@ export default async function DashboardPage() {
             href="/painel/estoque"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5"
+            >
               <path d="M12 5v14" />
               <path d="M5 12h14" />
             </svg>
@@ -355,7 +383,9 @@ export default async function DashboardPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5">
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Vendas hoje</p>
+          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+            Vendas hoje
+          </p>
           <p className="text-xl sm:text-2xl font-black text-white font-[family-name:var(--font-geist-mono)] mt-2">
             R$ {brl(todayRevenue)}
           </p>
@@ -363,12 +393,11 @@ export default async function DashboardPage() {
             {deltaPct !== 0 && (
               <span
                 className={`px-1.5 py-0.5 rounded font-semibold font-[family-name:var(--font-geist-mono)] ${
-                  deltaPct > 0
-                    ? "bg-emerald-500/10 text-emerald-400"
-                    : "bg-red-500/10 text-red-400"
+                  deltaPct > 0 ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"
                 }`}
               >
-                {deltaPct > 0 ? "+" : ""}{deltaPct}%
+                {deltaPct > 0 ? "+" : ""}
+                {deltaPct}%
               </span>
             )}
             <span className="text-gray-500">vs ontem</span>
@@ -379,7 +408,9 @@ export default async function DashboardPage() {
           href="/painel/pedidos"
           className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5 hover:border-white/[0.12] transition-all"
         >
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Pedidos abertos</p>
+          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+            Pedidos abertos
+          </p>
           <p className="text-xl sm:text-2xl font-black text-white font-[family-name:var(--font-geist-mono)] mt-2">
             {openOrdersCount}
           </p>
@@ -400,7 +431,9 @@ export default async function DashboardPage() {
           href="/painel/estoque"
           className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5 hover:border-white/[0.12] transition-all"
         >
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Figurinhas em estoque</p>
+          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+            Figurinhas em estoque
+          </p>
           <p className="text-xl sm:text-2xl font-black text-white font-[family-name:var(--font-geist-mono)] mt-2">
             {totalQty.toLocaleString("pt-BR")}
           </p>
@@ -410,7 +443,9 @@ export default async function DashboardPage() {
         </Link>
 
         <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5">
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">Faturamento do mês</p>
+          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+            Faturamento do mês
+          </p>
           <p className="text-xl sm:text-2xl font-black text-white font-[family-name:var(--font-geist-mono)] mt-2">
             R$ {brl(revenueMonth)}
           </p>
@@ -435,7 +470,9 @@ export default async function DashboardPage() {
       <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">Sua vitrine</p>
+            <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+              Sua vitrine
+            </p>
             <p className="text-sm font-bold text-white mt-0.5">Compartilhe com seus compradores</p>
           </div>
           <div className="flex items-center gap-2 min-w-0 sm:min-w-[380px]">
@@ -469,12 +506,24 @@ export default async function DashboardPage() {
         {recentOrders.length === 0 ? (
           <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-12 text-center">
             <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859" />
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859"
+                />
               </svg>
             </div>
             <p className="text-sm text-gray-400">Nenhum pedido ainda</p>
-            <p className="text-[11px] text-gray-600 mt-1">Compartilhe sua vitrine para receber pedidos</p>
+            <p className="text-[11px] text-gray-600 mt-1">
+              Compartilhe sua vitrine para receber pedidos
+            </p>
           </div>
         ) : (
           <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] overflow-hidden">
@@ -488,9 +537,12 @@ export default async function DashboardPage() {
                     {order.customerName[0].toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[13px] font-semibold text-white truncate">{order.customerName}</p>
+                    <p className="text-[13px] font-semibold text-white truncate">
+                      {order.customerName}
+                    </p>
                     <p className="text-[11px] text-gray-500 font-[family-name:var(--font-geist-mono)]">
-                      {order.items.length} fig. · {new Date(order.createdAt).toLocaleDateString("pt-BR")}
+                      {order.items.length} fig. ·{" "}
+                      {new Date(order.createdAt).toLocaleDateString("pt-BR")}
                     </p>
                   </div>
                 </div>
@@ -511,7 +563,8 @@ export default async function DashboardPage() {
       </div>
 
       <p className="text-[10px] text-gray-600 mt-8 text-center font-[family-name:var(--font-geist-mono)]">
-        {orderCount} pedidos no total · catálogo com {totalCatalog.toLocaleString("pt-BR")} figurinhas
+        {orderCount} pedidos no total · catálogo com {totalCatalog.toLocaleString("pt-BR")}{" "}
+        figurinhas
       </p>
     </div>
   );

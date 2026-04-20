@@ -1,10 +1,10 @@
-import { albums } from "@/lib/albums";
-import { albumCovers } from "@/lib/album-covers";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { albumCovers } from "@/lib/album-covers";
+import { albums } from "@/lib/albums";
 import { getSession } from "@/lib/auth";
-import { db } from "@/lib/db";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 import { imgUrl } from "@/lib/images";
 
 export default async function EstoquePage() {
@@ -18,7 +18,10 @@ export default async function EstoquePage() {
   });
 
   const countMap = new Map<string, number>(
-    inventoryCounts.map((c: { albumSlug: string; _count: { stickerCode: number } }) => [c.albumSlug, c._count.stickerCode])
+    inventoryCounts.map((c: { albumSlug: string; _count: { stickerCode: number } }) => [
+      c.albumSlug,
+      c._count.stickerCode,
+    ])
   );
 
   // Busca álbuns customizados do seller
@@ -30,12 +33,18 @@ export default async function EstoquePage() {
 
   const allAlbums = [...albums, ...customAlbumsList];
 
-  const totalInStock = inventoryCounts.reduce((s: number, c: { _count: { stickerCode: number } }) => s + c._count.stickerCode, 0);
-  const totalStickers = allAlbums.reduce((s: number, a: { totalStickers: number }) => s + a.totalStickers, 0);
+  const totalInStock = inventoryCounts.reduce(
+    (s: number, c: { _count: { stickerCode: number } }) => s + c._count.stickerCode,
+    0
+  );
+  const totalStickers = allAlbums.reduce(
+    (s: number, a: { totalStickers: number }) => s + a.totalStickers,
+    0
+  );
 
   // Estáticos ordenados por ano, customizados no final
   const sortedStaticAlbums = [...albums].sort(
-    (a, b) => parseInt(b.year) - parseInt(a.year)
+    (a, b) => Number.parseInt(b.year, 10) - Number.parseInt(a.year, 10)
   );
   const sortedAlbums = [...sortedStaticAlbums, ...customAlbumsList];
   const customSlugs = new Set(customAlbumsList.map((a) => a.slug));
@@ -55,19 +64,25 @@ export default async function EstoquePage() {
             href="/painel/estoque/novo"
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             <span className="hidden sm:inline">Cadastrar álbum</span>
           </Link>
-        <div className="text-right hidden sm:block">
-          <p className="text-3xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
-            {totalInStock.toLocaleString("pt-BR")}
-          </p>
-          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
-            de {totalStickers.toLocaleString("pt-BR")} figurinhas
-          </p>
-        </div>
+          <div className="text-right hidden sm:block">
+            <p className="text-3xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+              {totalInStock.toLocaleString("pt-BR")}
+            </p>
+            <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
+              de {totalStickers.toLocaleString("pt-BR")} figurinhas
+            </p>
+          </div>
         </div>
       </div>
 
@@ -102,8 +117,18 @@ export default async function EstoquePage() {
                 ) : isCustom ? (
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-3">
-                      <svg className="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                      <svg
+                        className="w-8 h-8 text-amber-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                        />
                       </svg>
                     </div>
                     <p className="text-xs text-amber-400/70 font-medium">Personalizado</p>
@@ -160,10 +185,10 @@ export default async function EstoquePage() {
                       pct === 0
                         ? "text-zinc-600"
                         : pct >= 80
-                        ? "text-green-400"
-                        : pct >= 30
-                        ? "text-amber-400"
-                        : "text-zinc-400"
+                          ? "text-green-400"
+                          : pct >= 30
+                            ? "text-amber-400"
+                            : "text-zinc-400"
                     }`}
                   >
                     {pct}%
@@ -175,10 +200,10 @@ export default async function EstoquePage() {
                       pct === 0
                         ? "bg-zinc-700"
                         : pct >= 80
-                        ? "bg-green-500"
-                        : pct >= 30
-                        ? "bg-amber-500"
-                        : "bg-zinc-500"
+                          ? "bg-green-500"
+                          : pct >= 30
+                            ? "bg-amber-500"
+                            : "bg-zinc-500"
                     }`}
                     style={{ width: `${Math.max(pct, 2)}%` }}
                   />

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import React, { useEffect, useMemo, useState } from "react";
 import type { Album, Sticker } from "@/lib/albums";
-import { getStickerTypeConfig } from "@/lib/sticker-types";
-import { resolveUnitPrice, resolveQuantityDiscount } from "@/lib/price-resolver";
-import type { SectionRule } from "@/lib/price-resolver";
 import { imgUrl } from "@/lib/images";
+import type { SectionRule } from "@/lib/price-resolver";
+import { resolveQuantityDiscount, resolveUnitPrice } from "@/lib/price-resolver";
+import { getStickerTypeConfig } from "@/lib/sticker-types";
 
 interface CartItem {
   sticker: Sticker;
@@ -64,7 +64,9 @@ export default function StoreAlbumView({
         return [];
       }
       return items || [];
-    } catch { return []; }
+    } catch {
+      return [];
+    }
   });
   const [activeSection, setActiveSection] = useState<number | "all">("all");
   const [showCart, setShowCart] = useState(false);
@@ -78,7 +80,9 @@ export default function StoreAlbumView({
       } else {
         localStorage.setItem(storageKey, JSON.stringify({ items: cart, updatedAt: Date.now() }));
       }
-    } catch { /* quota exceeded */ }
+    } catch {
+      /* quota exceeded */
+    }
   }, [cart, storageKey]);
   const [search, setSearch] = useState("");
   const [showImportModal, setShowImportModal] = useState(false);
@@ -153,7 +157,10 @@ export default function StoreAlbumView({
 
   const section = activeSection === "all" ? null : album.sections[activeSection];
   const allAvailableStickers = useMemo(
-    () => album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0),
+    () =>
+      album.sections
+        .flatMap((s) => s.stickers)
+        .filter((s) => (stockMap[s.code]?.quantity || 0) > 0),
     [album.sections, stockMap]
   );
 
@@ -178,9 +185,7 @@ export default function StoreAlbumView({
     return album.sections
       .flatMap((s) => s.stickers)
       .filter(
-        (s) =>
-          missingCodes.has(s.code.toUpperCase()) &&
-          (stockMap[s.code]?.quantity || 0) > 0
+        (s) => missingCodes.has(s.code.toUpperCase()) && (stockMap[s.code]?.quantity || 0) > 0
       );
   }, [filterByMissing, missingCodes, album.sections, stockMap]);
 
@@ -193,14 +198,13 @@ export default function StoreAlbumView({
         : allAvailableStickers;
 
   const totalAvailable = useMemo(
-    () => album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0).length,
+    () =>
+      album.sections.flatMap((s) => s.stickers).filter((s) => (stockMap[s.code]?.quantity || 0) > 0)
+        .length,
     [album.sections, stockMap]
   );
 
-  const cartItemCount = useMemo(
-    () => cart.reduce((sum, item) => sum + item.quantity, 0),
-    [cart]
-  );
+  const cartItemCount = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
   const cartSubtotal = useMemo(
     () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
@@ -211,10 +215,7 @@ export default function StoreAlbumView({
   const discountAmount = cartSubtotal * (discountPercent / 100);
   const cartTotal = cartSubtotal - discountAmount;
 
-  const cartCodes = useMemo(
-    () => new Set(cart.map((i) => i.sticker.code)),
-    [cart]
-  );
+  const cartCodes = useMemo(() => new Set(cart.map((i) => i.sticker.code)), [cart]);
 
   function addToCart(sticker: Sticker) {
     const price = getPrice(sticker);
@@ -224,9 +225,7 @@ export default function StoreAlbumView({
       if (existing) {
         if (existing.quantity >= maxQty) return prev;
         return prev.map((i) =>
-          i.sticker.code === sticker.code
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
+          i.sticker.code === sticker.code ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
       return [...prev, { sticker, price, quantity: 1 }];
@@ -253,13 +252,13 @@ export default function StoreAlbumView({
   function generateWhatsAppMessage(customerName: string): string {
     let msg = `Olá! Sou *${customerName}* e gostaria de comprar as seguintes figurinhas:\n\n`;
     msg += `*Copa ${album.year} - ${album.host}*\n`;
-    msg += `────────────────\n`;
+    msg += "────────────────\n";
     cart.forEach((item) => {
       msg += `${item.sticker.code} - ${item.sticker.name}`;
       if (item.quantity > 1) msg += ` (×${item.quantity})`;
       msg += ` → R$${(item.price * item.quantity).toFixed(2).replace(".", ",")}\n`;
     });
-    msg += `────────────────\n`;
+    msg += "────────────────\n";
     if (discountPercent > 0) {
       msg += `Subtotal: R$${cartSubtotal.toFixed(2).replace(".", ",")}\n`;
       msg += `Desconto: ${discountPercent}% (${cartItemCount}+ figurinhas)\n`;
@@ -268,7 +267,7 @@ export default function StoreAlbumView({
       msg += `*Total: R$${cartTotal.toFixed(2).replace(".", ",")}*\n`;
     }
     msg += `*${cartItemCount} figurinhas*\n\n`;
-    msg += `Pedido feito pela loja online.`;
+    msg += "Pedido feito pela loja online.";
     return msg;
   }
 
@@ -288,7 +287,13 @@ export default function StoreAlbumView({
               href={`/loja/${sellerSlug}?browse=true`}
               className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors shrink-0"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
@@ -303,41 +308,63 @@ export default function StoreAlbumView({
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-          {/* Importar lista */}
-          <button
-            onClick={() => setShowImportModal(true)}
-            className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg border text-xs font-medium transition-all ${
-              filterByMissing
-                ? "border-blue-500/40 bg-blue-500/10 text-blue-400"
-                : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-amber-500/40 hover:text-zinc-200"
-            }`}
-            title="Importar lista que falta"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
-            </svg>
-            <span className="hidden sm:inline">{filterByMissing ? `Lista (${missingCodes.size})` : "Importar lista"}</span>
-          </button>
+            {/* Importar lista */}
+            <button
+              onClick={() => setShowImportModal(true)}
+              className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg border text-xs font-medium transition-all ${
+                filterByMissing
+                  ? "border-blue-500/40 bg-blue-500/10 text-blue-400"
+                  : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-amber-500/40 hover:text-zinc-200"
+              }`}
+              title="Importar lista que falta"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"
+                />
+              </svg>
+              <span className="hidden sm:inline">
+                {filterByMissing ? `Lista (${missingCodes.size})` : "Importar lista"}
+              </span>
+            </button>
 
-          {/* Carrinho */}
-          <button
-            onClick={() => setShowCart(true)}
-            className="relative flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:border-amber-500/40 transition-all"
-          >
-            <svg className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-            </svg>
-            {cart.length > 0 && (
-              <>
-                <span className="text-xs font-bold text-amber-400 font-[family-name:var(--font-geist-mono)] hidden sm:inline">
-                  R${cartTotal.toFixed(2).replace(".", ",")}
-                </span>
-                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-amber-500 text-black text-[11px] font-bold flex items-center justify-center">
-                  {cartItemCount}
-                </span>
-              </>
-            )}
-          </button>
+            {/* Carrinho */}
+            <button
+              onClick={() => setShowCart(true)}
+              className="relative flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:border-amber-500/40 transition-all"
+            >
+              <svg
+                className="w-5 h-5 text-zinc-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+              {cart.length > 0 && (
+                <>
+                  <span className="text-xs font-bold text-amber-400 font-[family-name:var(--font-geist-mono)] hidden sm:inline">
+                    R${cartTotal.toFixed(2).replace(".", ",")}
+                  </span>
+                  <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-amber-500 text-black text-[11px] font-bold flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
@@ -345,21 +372,39 @@ export default function StoreAlbumView({
         {(sellerDescription || sellerBusinessHours || sellerPaymentMethods) && (
           <div className="max-w-6xl mx-auto px-4 pb-2">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-zinc-500">
-              {sellerDescription && (
-                <span className="text-zinc-400">{sellerDescription}</span>
-              )}
+              {sellerDescription && <span className="text-zinc-400">{sellerDescription}</span>}
               {sellerBusinessHours && (
                 <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   {sellerBusinessHours}
                 </span>
               )}
               {sellerPaymentMethods && (
                 <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+                    />
                   </svg>
                   {sellerPaymentMethods}
                 </span>
@@ -406,8 +451,18 @@ export default function StoreAlbumView({
         {/* Barra de busca */}
         <div className="max-w-6xl mx-auto px-4 pb-3">
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
             </svg>
             <input
               type="text"
@@ -421,7 +476,13 @@ export default function StoreAlbumView({
                 onClick={() => setSearch("")}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -480,11 +541,10 @@ export default function StoreAlbumView({
           {filterByMissing && !isSearching && (
             <div className="mb-4 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-blue-400">
-                  Lista que falta ativa
-                </p>
+                <p className="text-sm font-medium text-blue-400">Lista que falta ativa</p>
                 <p className="text-xs text-zinc-400">
-                  {missingCodes.size} códigos importados · {missingMatches.length} disponíveis em estoque
+                  {missingCodes.size} códigos importados · {missingMatches.length} disponíveis em
+                  estoque
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -534,7 +594,8 @@ export default function StoreAlbumView({
                 </button>
               )}
               <span className="text-xs text-zinc-500">
-                {availableStickers.length} {isSearching ? "encontradas" : filterByMissing ? "em estoque" : "disponiveis"}
+                {availableStickers.length}{" "}
+                {isSearching ? "encontradas" : filterByMissing ? "em estoque" : "disponiveis"}
               </span>
             </div>
           </div>
@@ -542,12 +603,24 @@ export default function StoreAlbumView({
           {availableStickers.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-3">
-                <svg className="w-5 h-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                <svg
+                  className="w-5 h-5 text-zinc-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
                 </svg>
               </div>
               <p className="text-zinc-400 text-sm font-medium">
-                {isSearching ? "Nenhuma figurinha encontrada" : "Nenhuma figurinha desta seção em estoque"}
+                {isSearching
+                  ? "Nenhuma figurinha encontrada"
+                  : "Nenhuma figurinha desta seção em estoque"}
               </p>
               {isSearching && (
                 <p className="text-zinc-600 text-xs mt-1">Tente buscar por outro código ou nome</p>
@@ -583,8 +656,18 @@ export default function StoreAlbumView({
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end sm:items-center justify-center pb-2 sm:pb-0">
                             <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/90 sm:bg-amber-500 flex items-center justify-center shadow-lg">
-                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                                <svg
+                                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={2.5}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4v16m8-8H4"
+                                  />
                                 </svg>
                               </div>
                             </div>
@@ -592,13 +675,25 @@ export default function StoreAlbumView({
                         )}
                         {inCart && (
                           <div className="absolute top-1 left-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
-                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            <svg
+                              className="w-3 h-3 text-white"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
                             </svg>
                           </div>
                         )}
                         {sticker.type !== "regular" && (
-                          <div className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
+                          <div
+                            className={`absolute top-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}
+                          >
                             {typeConf.shortLabel}
                           </div>
                         )}
@@ -635,7 +730,9 @@ export default function StoreAlbumView({
                         <div className="col-span-full">
                           <div className="flex items-center gap-2 py-2 mt-2 first:mt-0">
                             <span className="text-xs font-semibold text-zinc-400">{sec.name}</span>
-                            <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">({secAvailable.length})</span>
+                            <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">
+                              ({secAvailable.length})
+                            </span>
                             <div className="flex-1 h-px bg-zinc-800" />
                           </div>
                         </div>
@@ -655,15 +752,21 @@ export default function StoreAlbumView({
       {/* Modal importar lista que falta */}
       {showImportModal && (
         <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className="text-lg font-semibold mb-1">Importar lista que falta</h3>
             <p className="text-xs text-zinc-500 mb-4">
-              Cole os códigos das figurinhas que você precisa. Vamos mostrar só as que o vendedor tem em estoque.
+              Cole os códigos das figurinhas que você precisa. Vamos mostrar só as que o vendedor
+              tem em estoque.
             </p>
             <textarea
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
-              placeholder={"Ex: 1, 2, 3, FWC1, BRA5, ARG10\n\nAceita separados por vírgula, espaço ou um por linha"}
+              placeholder={
+                "Ex: 1, 2, 3, FWC1, BRA5, ARG10\n\nAceita separados por vírgula, espaço ou um por linha"
+              }
               rows={6}
               className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all resize-none placeholder:text-zinc-600"
             />
@@ -708,7 +811,10 @@ export default function StoreAlbumView({
       {/* Carrinho drawer */}
       {showCart && (
         <div className="fixed inset-0 z-[90]">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowCart(false)} />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowCart(false)}
+          />
           <div className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-zinc-950 border-l border-zinc-800 flex flex-col slide-in">
             <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-800">
               <div>
@@ -719,7 +825,13 @@ export default function StoreAlbumView({
                 onClick={() => setShowCart(false)}
                 className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -729,26 +841,48 @@ export default function StoreAlbumView({
               {cart.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center px-8">
                   <div className="w-14 h-14 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mb-3">
-                    <svg className="w-6 h-6 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    <svg
+                      className="w-6 h-6 text-zinc-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                      />
                     </svg>
                   </div>
                   <p className="text-zinc-400 text-sm font-medium">Carrinho vazio</p>
-                  <p className="text-zinc-600 text-xs mt-1">Clique nas figurinhas para adicioná-las</p>
+                  <p className="text-zinc-600 text-xs mt-1">
+                    Clique nas figurinhas para adicioná-las
+                  </p>
                 </div>
               ) : (
                 <div className="divide-y divide-zinc-800/50">
                   {cart.map((item) => (
                     <div key={item.sticker.code} className="flex items-center gap-3 px-4 py-3">
                       <div className="relative w-10 h-14 rounded overflow-hidden border border-zinc-700 shrink-0">
-                        <Image src={imgUrl(item.sticker.image)} alt={item.sticker.name} fill className="object-cover" sizes="40px" />
+                        <Image
+                          src={imgUrl(item.sticker.image)}
+                          alt={item.sticker.name}
+                          fill
+                          className="object-cover"
+                          sizes="40px"
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.sticker.name}</p>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">{item.sticker.code}</span>
+                          <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+                            {item.sticker.code}
+                          </span>
                           <span className="text-[10px] text-zinc-600">·</span>
-                          <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">R${item.price.toFixed(2).replace(".", ",")} un.</span>
+                          <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+                            R${item.price.toFixed(2).replace(".", ",")} un.
+                          </span>
                         </div>
                         {/* Controles de quantidade */}
                         <div className="flex items-center gap-1.5 mt-1.5">
@@ -773,9 +907,22 @@ export default function StoreAlbumView({
                         <span className="text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 font-bold">
                           R${(item.price * item.quantity).toFixed(2).replace(".", ",")}
                         </span>
-                        <button onClick={() => removeFromCart(item.sticker.code)} className="text-zinc-600 hover:text-red-400 transition-colors">
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        <button
+                          onClick={() => removeFromCart(item.sticker.code)}
+                          className="text-zinc-600 hover:text-red-400 transition-colors"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
                           </svg>
                         </button>
                       </div>
@@ -792,7 +939,9 @@ export default function StoreAlbumView({
                     <div>
                       <span className="text-sm text-zinc-400">{cartItemCount} figurinhas</span>
                       {cart.length !== cartItemCount && (
-                        <span className="text-[10px] text-zinc-600 ml-1">({cart.length} tipos)</span>
+                        <span className="text-[10px] text-zinc-600 ml-1">
+                          ({cart.length} tipos)
+                        </span>
                       )}
                     </div>
                     {discountPercent > 0 ? (
@@ -809,8 +958,18 @@ export default function StoreAlbumView({
                     <>
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-green-400 flex items-center gap-1">
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 14l-4-4m0 0l4-4m-4 4h11.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          <svg
+                            className="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 14l-4-4m0 0l4-4m-4 4h11.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
                           </svg>
                           Desconto {discountPercent}%
                         </span>
@@ -828,7 +987,10 @@ export default function StoreAlbumView({
                   )}
                 </div>
                 <button
-                  onClick={() => { setShowCart(false); setShowCheckout(true); }}
+                  onClick={() => {
+                    setShowCart(false);
+                    setShowCheckout(true);
+                  }}
                   className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-colors shadow-lg shadow-amber-500/20"
                 >
                   Finalizar Orçamento
@@ -842,7 +1004,10 @@ export default function StoreAlbumView({
       {/* Modal de checkout */}
       {showCheckout && (
         <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-sm w-full p-6" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-sm w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className="text-lg font-semibold mb-1">Finalizar Orçamento</h3>
             <p className="text-xs text-zinc-500 mb-4">Preencha seus dados para enviar o pedido</p>
             <form
@@ -902,15 +1067,24 @@ export default function StoreAlbumView({
               {/* Resumo do pedido */}
               <div className="rounded-xl bg-zinc-800/50 border border-zinc-800 overflow-hidden">
                 <div className="px-3 py-2 border-b border-zinc-800/80">
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Resumo do pedido</p>
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">
+                    Resumo do pedido
+                  </p>
                 </div>
                 <div className="max-h-32 overflow-y-auto divide-y divide-zinc-800/50">
                   {cart.map((item) => (
-                    <div key={item.sticker.code} className="px-3 py-1.5 flex items-center justify-between text-[11px]">
+                    <div
+                      key={item.sticker.code}
+                      className="px-3 py-1.5 flex items-center justify-between text-[11px]"
+                    >
                       <span className="text-zinc-400 truncate mr-2">
-                        <span className="font-[family-name:var(--font-geist-mono)] text-zinc-500">{item.sticker.code}</span>{" "}
+                        <span className="font-[family-name:var(--font-geist-mono)] text-zinc-500">
+                          {item.sticker.code}
+                        </span>{" "}
                         {item.sticker.name}
-                        {item.quantity > 1 && <span className="text-zinc-600"> ×{item.quantity}</span>}
+                        {item.quantity > 1 && (
+                          <span className="text-zinc-600"> ×{item.quantity}</span>
+                        )}
                       </span>
                       <span className="font-[family-name:var(--font-geist-mono)] text-amber-400 shrink-0">
                         R${(item.price * item.quantity).toFixed(2).replace(".", ",")}
@@ -921,7 +1095,9 @@ export default function StoreAlbumView({
                 <div className="px-3 py-2 border-t border-zinc-700 space-y-1">
                   {discountPercent > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-[10px] text-zinc-500">Subtotal ({cartItemCount} fig.)</span>
+                      <span className="text-[10px] text-zinc-500">
+                        Subtotal ({cartItemCount} fig.)
+                      </span>
                       <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
                         R${cartSubtotal.toFixed(2).replace(".", ",")}
                       </span>
@@ -929,7 +1105,9 @@ export default function StoreAlbumView({
                   )}
                   {discountPercent > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-[10px] text-green-400">Desconto {discountPercent}%</span>
+                      <span className="text-[10px] text-green-400">
+                        Desconto {discountPercent}%
+                      </span>
                       <span className="text-[10px] text-green-400 font-[family-name:var(--font-geist-mono)]">
                         -R${discountAmount.toFixed(2).replace(".", ",")}
                       </span>
@@ -980,7 +1158,13 @@ export default function StoreAlbumView({
         <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-sm w-full p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-green-500/15 border border-green-500/20 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-8 h-8 text-green-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>

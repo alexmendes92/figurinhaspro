@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 // GET — retorna dados completos de preço para um álbum específico
 // Inclui: PriceRules (globais + album), SectionPriceRules, QuantityTiers
-export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ albumSlug: string }> }
-) {
+export async function GET(_req: Request, { params }: { params: Promise<{ albumSlug: string }> }) {
   const seller = await getSession();
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
 

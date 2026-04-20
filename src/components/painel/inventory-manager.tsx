@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useCallback, useTransition, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { Album, Sticker } from "@/lib/albums";
-import { getStickerTypeConfig, getDefaultPrice } from "@/lib/sticker-types";
-import { useToast } from "@/lib/toast-context";
 import { imgUrl } from "@/lib/images";
+import { getDefaultPrice, getStickerTypeConfig } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -35,8 +35,8 @@ function PriceModal({
   }, [canUseCustomPrices]);
 
   function handleSave() {
-    const val = parseFloat(inputRef.current?.value || "");
-    if (!isNaN(val) && val > 0) onSave(val);
+    const val = Number.parseFloat(inputRef.current?.value || "");
+    if (!Number.isNaN(val) && val > 0) onSave(val);
   }
 
   return (
@@ -49,7 +49,13 @@ function PriceModal({
         {/* Header com imagem */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800/50">
           <div className="relative w-10 h-14 rounded-lg overflow-hidden border border-zinc-700 shrink-0">
-            <Image src={imgUrl(sticker.image)} alt={sticker.name} fill className="object-cover" sizes="40px" />
+            <Image
+              src={imgUrl(sticker.image)}
+              alt={sticker.name}
+              fill
+              className="object-cover"
+              sizes="40px"
+            />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-white truncate">{sticker.name}</p>
@@ -66,7 +72,13 @@ function PriceModal({
             onClick={onClose}
             className="ml-auto w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all shrink-0"
           >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -85,7 +97,9 @@ function PriceModal({
             <>
               {/* Input de preço */}
               <div>
-                <label className="text-[10px] text-zinc-500 font-medium block mb-1">Preço customizado</label>
+                <label className="text-[10px] text-zinc-500 font-medium block mb-1">
+                  Preço customizado
+                </label>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-zinc-400">R$</span>
                   <input
@@ -95,7 +109,9 @@ function PriceModal({
                     min="0.50"
                     defaultValue={currentCustomPrice?.toFixed(2) ?? ""}
                     placeholder={defaultPrice.toFixed(2)}
-                    onKeyDown={(e) => { if (e.key === "Enter") handleSave(); }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleSave();
+                    }}
                     className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
                   />
                 </div>
@@ -170,9 +186,7 @@ function StickerCard({
   return (
     <div
       className={`relative rounded-lg overflow-hidden border transition-all ${
-        hasIt
-          ? "border-green-500/40 ring-1 ring-green-500/10"
-          : "border-zinc-800 opacity-50"
+        hasIt ? "border-green-500/40 ring-1 ring-green-500/10" : "border-zinc-800 opacity-50"
       } ${justSaved ? "sticker-added" : ""}`}
     >
       <button
@@ -188,13 +202,21 @@ function StickerCard({
         />
         {hasIt && (
           <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
-            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <svg
+              className="w-3 h-3 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={3}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
         )}
         {sticker.type !== "regular" && (
-          <div className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}>
+          <div
+            className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}
+          >
             {getStickerTypeConfig(sticker.type).shortLabel}
           </div>
         )}
@@ -221,13 +243,22 @@ function StickerCard({
             }`}
             title={stock[sticker.code]?.customPrice ? "Preço customizado" : "Definir preço"}
           >
-            <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-2.5 h-2.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             {stock[sticker.code]?.customPrice
-              ? `R$${stock[sticker.code].customPrice!.toFixed(2).replace(".", ",")}`
-              : "Preço"
-            }
+              ? `R$${stock[sticker.code].customPrice?.toFixed(2).replace(".", ",")}`
+              : "Preço"}
           </button>
         )}
         {hasIt && (
@@ -279,7 +310,9 @@ function SectionBlock({
       <div className="col-span-full">
         <div className="flex items-center gap-2 py-2 mt-2 first:mt-0">
           <span className="text-xs font-semibold text-zinc-400">{sectionName}</span>
-          <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">{sectionCount}</span>
+          <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">
+            {sectionCount}
+          </span>
           <div className="flex-1 h-px bg-zinc-800" />
         </div>
       </div>
@@ -329,10 +362,7 @@ export default function InventoryManager({
     const q = search.trim().toLowerCase();
     return album.sections
       .flatMap((s) => s.stickers)
-      .filter(
-        (s) =>
-          s.code.toLowerCase().includes(q) || s.name.toLowerCase().includes(q)
-      );
+      .filter((s) => s.code.toLowerCase().includes(q) || s.name.toLowerCase().includes(q));
   }, [search, isSearching, album.sections]);
 
   // Filtra figurinhas
@@ -383,7 +413,7 @@ export default function InventoryManager({
         }
       });
     },
-    [stock, album.slug]
+    [stock, album.slug, toast.error]
   );
 
   // Toggle rápido: 0 → 1, >0 → 0
@@ -454,7 +484,7 @@ export default function InventoryManager({
       });
       setPriceModalSticker(null);
     },
-    [stock, album.slug]
+    [stock, album.slug, toast.error]
   );
 
   // Zerar seção (ou todas do álbum)
@@ -497,7 +527,13 @@ export default function InventoryManager({
               href="/painel/estoque"
               className="text-[10px] text-zinc-500 hover:text-amber-400 transition-colors flex items-center gap-1"
             >
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
               Voltar
@@ -532,9 +568,7 @@ export default function InventoryManager({
           </button>
 
           {album.sections.map((sec, i) => {
-            const secStock = sec.stickers.filter(
-              (s) => (stock[s.code]?.quantity || 0) > 0
-            ).length;
+            const secStock = sec.stickers.filter((s) => (stock[s.code]?.quantity || 0) > 0).length;
 
             return (
               <button
@@ -568,8 +602,18 @@ export default function InventoryManager({
           {/* Barra de busca */}
           <div className="mb-4">
             <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
               </svg>
               <input
                 type="text"
@@ -583,7 +627,13 @@ export default function InventoryManager({
                   onClick={() => setSearch("")}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -596,14 +646,19 @@ export default function InventoryManager({
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
                 <h3 className="text-base sm:text-lg font-semibold truncate">
-                  {isSearching ? `Resultados para "${search.trim()}"` : section ? section.name : "Todas as figurinhas"}
+                  {isSearching
+                    ? `Resultados para "${search.trim()}"`
+                    : section
+                      ? section.name
+                      : "Todas as figurinhas"}
                 </h3>
                 <p className="text-[11px] sm:text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
                   {isSearching ? (
                     <>{filteredStickers.length} encontradas</>
                   ) : (
                     <>
-                      {sectionInStock}/{section ? section.stickers.length : album.totalStickers} em estoque
+                      {sectionInStock}/{section ? section.stickers.length : album.totalStickers} em
+                      estoque
                       {filter !== "all" && (
                         <span className="ml-2 text-zinc-400">
                           · {filteredStickers.length} exibidas
@@ -611,9 +666,7 @@ export default function InventoryManager({
                       )}
                     </>
                   )}
-                  {saving && (
-                    <span className="ml-2 text-amber-400">Salvando...</span>
-                  )}
+                  {saving && <span className="ml-2 text-amber-400">Salvando...</span>}
                 </p>
               </div>
 
@@ -662,11 +715,25 @@ export default function InventoryManager({
           {filteredStickers.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-3">
-                <svg className="w-5 h-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <svg
+                  className="w-5 h-5 text-zinc-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
                   {isSearching ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
                   ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+                    />
                   )}
                 </svg>
               </div>
@@ -682,11 +749,14 @@ export default function InventoryManager({
                   return album.sections.map((sec) => {
                     const secStickers = sec.stickers.filter((s) => {
                       if (filter === "in-stock") return (stock[s.code]?.quantity || 0) > 0;
-                      if (filter === "missing") return !stock[s.code] || stock[s.code].quantity === 0;
+                      if (filter === "missing")
+                        return !stock[s.code] || stock[s.code].quantity === 0;
                       return true;
                     });
                     if (secStickers.length === 0) return null;
-                    const secInStock = sec.stickers.filter((s) => (stock[s.code]?.quantity || 0) > 0).length;
+                    const secInStock = sec.stickers.filter(
+                      (s) => (stock[s.code]?.quantity || 0) > 0
+                    ).length;
                     return (
                       <SectionBlock
                         key={sec.name}

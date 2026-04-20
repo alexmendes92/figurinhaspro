@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AuthLogo } from "@/components/auth/auth-logo";
-import { AuthInput } from "@/components/auth/auth-input";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthError } from "@/components/auth/auth-error";
 import { AuthFooterLink } from "@/components/auth/auth-footer-link";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthLogo } from "@/components/auth/auth-logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,7 +24,12 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: form.get("email"), password: form.get("password") }),
     });
-    if (!res.ok) { const d = await res.json(); setError(d.error || "Erro"); setLoading(false); return; }
+    if (!res.ok) {
+      const d = await res.json();
+      setError(d.error || "Erro");
+      setLoading(false);
+      return;
+    }
     router.push("/painel");
   }
 
@@ -34,16 +39,28 @@ export default function LoginPage() {
       <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-amber-950 via-[#0b0e14] to-[#0b0e14]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(245,158,11,0.12),transparent_60%)]" />
         {/* Grid pattern background */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          }}
+        />
         <div className="relative text-center px-12">
           <AuthLogo size="lg" showText />
           <p className="text-gray-400 text-sm max-w-xs mx-auto leading-relaxed mt-4">
             A plataforma profissional para revendedores de figurinhas Panini de Copa do Mundo.
           </p>
           <div className="flex items-center justify-center gap-8 mt-10">
-            {[{ v: "7.122", l: "figurinhas" }, { v: "13", l: "Copas" }, { v: "1970–2026", l: "cobertura" }].map((s) => (
+            {[
+              { v: "7.122", l: "figurinhas" },
+              { v: "13", l: "Copas" },
+              { v: "1970–2026", l: "cobertura" },
+            ].map((s) => (
               <div key={s.l} className="text-center">
-                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">{s.v}</p>
+                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+                  {s.v}
+                </p>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{s.l}</p>
               </div>
             ))}
@@ -87,7 +104,10 @@ export default function LoginPage() {
                 autoComplete="current-password"
               />
               <div className="flex justify-end mt-2">
-                <Link href="/esqueci-senha" className="text-[12px] text-gray-500 hover:text-amber-400 transition-colors">
+                <Link
+                  href="/esqueci-senha"
+                  className="text-[12px] text-gray-500 hover:text-amber-400 transition-colors"
+                >
                   Esqueci minha senha
                 </Link>
               </div>

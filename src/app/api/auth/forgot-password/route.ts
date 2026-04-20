@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { randomBytes } from "node:crypto";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { randomBytes } from "crypto";
+import { db } from "@/lib/db";
 
 const schema = z.object({
   email: z.string().email(),

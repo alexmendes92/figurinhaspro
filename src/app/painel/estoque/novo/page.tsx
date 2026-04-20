@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { parseStickersInput } from "@/lib/custom-albums";
 
 export default function NovoAlbumPage() {
@@ -13,9 +13,7 @@ export default function NovoAlbumPage() {
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const parsedCount = stickersText.trim()
-    ? parseStickersInput(stickersText).length
-    : 0;
+  const parsedCount = stickersText.trim() ? parseStickersInput(stickersText).length : 0;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -65,7 +63,13 @@ export default function NovoAlbumPage() {
           href="/painel/estoque"
           className="w-8 h-8 rounded-lg border border-zinc-700 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
@@ -80,9 +84,7 @@ export default function NovoAlbumPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Nome do álbum */}
         <div>
-          <label className="block text-sm font-medium text-zinc-300 mb-1.5">
-            Nome do álbum
-          </label>
+          <label className="block text-sm font-medium text-zinc-300 mb-1.5">Nome do álbum</label>
           <input
             type="text"
             value={title}
@@ -108,12 +110,12 @@ export default function NovoAlbumPage() {
 
         {/* Figurinhas */}
         <div>
-          <label className="block text-sm font-medium text-zinc-300 mb-1.5">
-            Figurinhas
-          </label>
+          <label className="block text-sm font-medium text-zinc-300 mb-1.5">Figurinhas</label>
           <p className="text-xs text-zinc-500 mb-2">
-            Digite um intervalo (ex: <code className="text-zinc-400 bg-zinc-800 px-1 rounded">1-670</code>) ou cole os códigos separados por vírgula, espaço ou um por linha.
-            Também aceita prefixos (ex: <code className="text-zinc-400 bg-zinc-800 px-1 rounded">BRA1-BRA20</code>).
+            Digite um intervalo (ex:{" "}
+            <code className="text-zinc-400 bg-zinc-800 px-1 rounded">1-670</code>) ou cole os
+            códigos separados por vírgula, espaço ou um por linha. Também aceita prefixos (ex:{" "}
+            <code className="text-zinc-400 bg-zinc-800 px-1 rounded">BRA1-BRA20</code>).
           </p>
           <textarea
             value={stickersText}

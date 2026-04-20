@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import Image from "next/image";
+import { useMemo, useState } from "react";
 import type { Album, Sticker } from "@/lib/albums";
+import { type CartSticker, useCart } from "@/lib/cart-context";
 import { imgUrl } from "@/lib/images";
-import { useCart, type CartSticker } from "@/lib/cart-context";
-import { useToast } from "@/lib/toast-context";
 import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
 
 function toCartSticker(s: Sticker): CartSticker {
   return { ...s, price: getDefaultPrice(s.type) };
@@ -22,7 +22,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
   const cartCodes = useMemo(() => {
     const codes = new Set<string>();
     items.forEach((item) => {
-      codes.add(item.sticker.code + "-" + item.albumYear);
+      codes.add(`${item.sticker.code}-${item.albumYear}`);
     });
     return codes;
   }, [items]);
@@ -76,18 +76,25 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
             <div>
               <h3 className="text-lg font-semibold">{section.name}</h3>
               <p className="text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
-                {section.stickers.length} figurinhas · Clique para adicionar ao
-                carrinho
+                {section.stickers.length} figurinhas · Clique para adicionar ao carrinho
               </p>
             </div>
             <button
               onClick={() => {
                 section.stickers.forEach((s) => handleAddToCart(s));
-                show(`Todas as ${section.stickers.length} figurinhas de "${section.name}" adicionadas!`);
+                show(
+                  `Todas as ${section.stickers.length} figurinhas de "${section.name}" adicionadas!`
+                );
               }}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 transition-all"
             >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
               Adicionar todas
@@ -97,7 +104,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
           {/* Grid */}
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 sm:gap-3">
             {section.stickers.map((sticker) => {
-              const inCart = cartCodes.has(sticker.code + "-" + album.year);
+              const inCart = cartCodes.has(`${sticker.code}-${album.year}`);
               const isSpecial = sticker.type === "foil" || sticker.type === "shiny";
 
               return (
@@ -108,8 +115,8 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                     inCart
                       ? "border-green-500/40 ring-1 ring-green-500/20"
                       : isSpecial
-                      ? "border-amber-500/30 hover:border-amber-400/60"
-                      : "border-zinc-700 hover:border-zinc-500"
+                        ? "border-amber-500/30 hover:border-amber-400/60"
+                        : "border-zinc-700 hover:border-zinc-500"
                   }`}
                 >
                   {/* Imagem da figurinha */}
@@ -126,7 +133,13 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                         <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shadow-lg">
-                          <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <svg
+                            className="w-4 h-4 text-black"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2.5}
+                          >
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                           </svg>
                         </div>
@@ -143,7 +156,13 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                     {/* Badge no carrinho */}
                     {inCart && (
                       <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
-                        <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <svg
+                          className="w-2.5 h-2.5 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={3}
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
@@ -192,7 +211,13 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                 onClick={() => setSelectedSticker(null)}
                 className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 border border-zinc-600 flex items-center justify-center text-zinc-300 hover:text-white transition-colors"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -224,8 +249,18 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                 }}
                 className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-colors flex items-center justify-center gap-2"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
                 </svg>
                 Adicionar ao Carrinho
               </button>

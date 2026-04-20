@@ -1,14 +1,10 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/admin";
-import { db } from "@/lib/db";
 import PainelShell from "@/components/painel/painel-shell";
+import { isAdmin } from "@/lib/admin";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
-export default async function PainelLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function PainelLayout({ children }: { children: React.ReactNode }) {
   const seller = await getSession();
 
   if (!seller) {

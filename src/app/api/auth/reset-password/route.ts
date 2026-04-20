@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { z } from "zod";
 import bcrypt from "bcryptjs";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { db } from "@/lib/db";
 
 const schema = z.object({
   token: z.string().min(1),

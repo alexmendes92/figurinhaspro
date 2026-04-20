@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { STICKER_TYPE_CONFIG } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
 
@@ -12,7 +12,7 @@ interface PriceRule {
 }
 
 export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string }) {
-  const toast = useToast();
+  const _toast = useToast();
   const [rules, setRules] = useState<PriceRule[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
@@ -67,7 +67,10 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer" />
+            <div
+              key={i}
+              className="h-20 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer"
+            />
           ))}
         </div>
       ) : (
@@ -85,8 +88,16 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0`}>
-                      <svg className={`w-4 h-4 ${tc.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <div
+                      className={`w-9 h-9 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0`}
+                    >
+                      <svg
+                        className={`w-4 h-4 ${tc.color}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" d={tc.icon} />
                       </svg>
                     </div>
@@ -104,8 +115,8 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
                       min="0.50"
                       defaultValue={currentPrice.toFixed(2)}
                       onBlur={(e) => {
-                        const val = parseFloat(e.target.value);
-                        if (!isNaN(val) && val > 0 && val !== currentPrice) {
+                        const val = Number.parseFloat(e.target.value);
+                        if (!Number.isNaN(val) && val > 0 && val !== currentPrice) {
                           updatePrice(tc.type, val);
                         }
                       }}
@@ -117,7 +128,13 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
                       )}
                       {isSaved && (
                         <span className="text-[10px] text-[var(--success)] flex items-center gap-1 justify-end">
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <svg
+                            className="w-3 h-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2.5}
+                          >
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                           Salvo

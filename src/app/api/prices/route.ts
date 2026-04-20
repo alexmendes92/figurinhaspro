@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { getSession } from "@/lib/auth";
-import { hasFeature } from "@/lib/plan-limits";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { hasFeature } from "@/lib/plan-limits";
 
 // GET — lista regras de preço do revendedor
 export async function GET() {
@@ -36,7 +36,11 @@ export async function POST(req: NextRequest) {
 
     if (albumSlug && !hasFeature(seller.plan, "custom_prices")) {
       return NextResponse.json(
-        { error: "plan_limit", message: "Preços por álbum requer plano Pro", upgrade_url: "/painel/planos" },
+        {
+          error: "plan_limit",
+          message: "Preços por álbum requer plano Pro",
+          upgrade_url: "/painel/planos",
+        },
         { status: 403 }
       );
     }

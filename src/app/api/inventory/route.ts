@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { getSession } from "@/lib/auth";
-import { checkStickerLimit, checkAlbumLimit } from "@/lib/plan-limits";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { checkAlbumLimit, checkStickerLimit } from "@/lib/plan-limits";
 
 // GET — lista estoque do revendedor (opcionalmente filtrado por álbum)
 export async function GET(req: NextRequest) {
@@ -43,7 +43,11 @@ export async function POST(req: NextRequest) {
       const stickerCheck = await checkStickerLimit(seller.id, seller.plan);
       if (!stickerCheck.allowed) {
         return NextResponse.json(
-          { error: "plan_limit", message: `Limite de ${stickerCheck.max} figurinhas atingido`, upgrade_url: "/painel/planos" },
+          {
+            error: "plan_limit",
+            message: `Limite de ${stickerCheck.max} figurinhas atingido`,
+            upgrade_url: "/painel/planos",
+          },
           { status: 403 }
         );
       }
@@ -51,7 +55,11 @@ export async function POST(req: NextRequest) {
       const albumCheck = await checkAlbumLimit(seller.id, seller.plan, data.albumSlug);
       if (!albumCheck.allowed) {
         return NextResponse.json(
-          { error: "plan_limit", message: `Limite de álbuns atingido no plano atual`, upgrade_url: "/painel/planos" },
+          {
+            error: "plan_limit",
+            message: "Limite de álbuns atingido no plano atual",
+            upgrade_url: "/painel/planos",
+          },
           { status: 403 }
         );
       }

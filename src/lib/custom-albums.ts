@@ -1,5 +1,5 @@
-import type { Album, Sticker, Section } from "@/lib/albums";
 import type { CustomAlbum } from "@/generated/prisma/client";
+import type { Album, Section, Sticker } from "@/lib/albums";
 
 interface RawSticker {
   code: string;
@@ -72,8 +72,8 @@ export function parseStickersInput(text: string): RawSticker[] {
     // Tenta interpretar como range numérico puro: "1-670"
     const numRange = part.match(/^(\d+)\s*[-–]\s*(\d+)$/);
     if (numRange) {
-      const start = parseInt(numRange[1]);
-      const end = parseInt(numRange[2]);
+      const start = Number.parseInt(numRange[1], 10);
+      const end = Number.parseInt(numRange[2], 10);
       if (end >= start && end - start < 2000) {
         for (let i = start; i <= end; i++) {
           codes.push(String(i));
@@ -86,8 +86,8 @@ export function parseStickersInput(text: string): RawSticker[] {
     const prefixRange = part.match(/^([A-Za-z]+)(\d+)\s*[-–]\s*\1(\d+)$/i);
     if (prefixRange) {
       const prefix = prefixRange[1];
-      const start = parseInt(prefixRange[2]);
-      const end = parseInt(prefixRange[3]);
+      const start = Number.parseInt(prefixRange[2], 10);
+      const end = Number.parseInt(prefixRange[3], 10);
       if (end >= start && end - start < 2000) {
         for (let i = start; i <= end; i++) {
           codes.push(`${prefix}${i}`);

@@ -15,9 +15,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
       <div className="max-w-7xl mx-auto">
         {/* Título da seção */}
         <div className="mb-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
-            Escolha um Álbum
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Escolha um Álbum</h2>
           <p className="text-zinc-500 text-sm">
             Navegue pelas figurinhas e adicione ao carrinho as que você precisa
           </p>
@@ -28,7 +26,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
           {albums.map((album) => {
             // Usa a primeira figurinha como thumbnail
             const firstSticker = album.sections[0]?.stickers[0];
-            const coverSrc = firstSticker?.image || "";
+            const _coverSrc = firstSticker?.image || "";
 
             return (
               <button
@@ -67,19 +65,13 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
                   </div>
 
                   {/* Flag */}
-                  <div className="absolute top-2 right-2 text-lg">
-                    {album.flag}
-                  </div>
+                  <div className="absolute top-2 right-2 text-lg">{album.flag}</div>
 
                   {/* Info na base */}
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-xs font-medium text-white truncate">
-                      {album.host}
-                    </p>
+                    <p className="text-xs font-medium text-white truncate">{album.host}</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[10px] text-amber-400/80">
-                        🏆 {album.champion}
-                      </span>
+                      <span className="text-[10px] text-amber-400/80">🏆 {album.champion}</span>
                     </div>
                   </div>
                 </div>

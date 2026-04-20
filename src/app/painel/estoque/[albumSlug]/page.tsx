@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { albums } from "@/lib/albums";
-import type { Album } from "@/lib/albums";
-import { getSession } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { customAlbumToAlbum } from "@/lib/custom-albums";
 import InventoryManager from "@/components/painel/inventory-manager";
+import type { Album } from "@/lib/albums";
+import { albums } from "@/lib/albums";
+import { getSession } from "@/lib/auth";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 
 export default async function AlbumEstoquePage({
   params,
@@ -39,7 +39,5 @@ export default async function AlbumEstoquePage({
     };
   }
 
-  return (
-    <InventoryManager album={album} initialStock={stockMap} sellerPlan={seller.plan} />
-  );
+  return <InventoryManager album={album} initialStock={stockMap} sellerPlan={seller.plan} />;
 }

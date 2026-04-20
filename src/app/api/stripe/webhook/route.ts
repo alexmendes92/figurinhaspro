@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getStripe } from "@/lib/stripe";
-import { db } from "@/lib/db";
+import { type NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
+import { db } from "@/lib/db";
+import { getStripe } from "@/lib/stripe";
 
 // Helper para extrair dados de subscription de forma type-safe
 async function getSubscriptionData(subscriptionId: string) {
@@ -12,9 +12,7 @@ async function getSubscriptionData(subscriptionId: string) {
     metadata: sub.metadata,
     priceId: item?.price?.id,
     // Na API basil, period_end fica no item, não na subscription
-    periodEnd: item?.current_period_end
-      ? new Date(item.current_period_end * 1000)
-      : null,
+    periodEnd: item?.current_period_end ? new Date(item.current_period_end * 1000) : null,
   };
 }
 
@@ -28,11 +26,7 @@ export async function POST(req: NextRequest) {
 
   let event: Stripe.Event;
   try {
-    event = getStripe().webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
+    event = getStripe().webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -76,12 +70,9 @@ export async function POST(req: NextRequest) {
     case "invoice.payment_succeeded": {
       const invoice = event.data.object as Stripe.Invoice;
       // Na API basil, subscription fica em parent.subscription_details
-      const subId =
-        invoice.parent?.subscription_details?.subscription;
+      const subId = invoice.parent?.subscription_details?.subscription;
       if (subId) {
-        const sub = await getSubscriptionData(
-          typeof subId === "string" ? subId : subId.id
-        );
+        const sub = await getSubscriptionData(typeof subId === "string" ? subId : subId.id);
         if (sub.metadata?.sellerId) {
           await db.seller.update({
             where: { id: sub.metadata.sellerId },

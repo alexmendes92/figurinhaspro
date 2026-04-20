@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { STICKER_TYPE_CONFIG, getStickerTypeShortLabel, getDefaultPrice } from "@/lib/sticker-types";
+import { useEffect, useState } from "react";
+import {
+  getDefaultPrice,
+  getStickerTypeShortLabel,
+  STICKER_TYPE_CONFIG,
+} from "@/lib/sticker-types";
 
 interface PriceRule {
   id: string;
@@ -40,7 +44,10 @@ export default function PrecosEditor({
   useEffect(() => {
     fetch("/api/prices")
       .then((r) => r.json())
-      .then((data) => { setRules(data); setLoading(false); });
+      .then((data) => {
+        setRules(data);
+        setLoading(false);
+      });
   }, []);
 
   async function updatePrice(type: string, price: number, albumSlug: string | null = null) {
@@ -57,7 +64,11 @@ export default function PrecosEditor({
         const idx = prev.findIndex(
           (r) => r.stickerType === type && (r.albumSlug || null) === (albumSlug || null)
         );
-        if (idx >= 0) { const copy = [...prev]; copy[idx] = updated; return copy; }
+        if (idx >= 0) {
+          const copy = [...prev];
+          copy[idx] = updated;
+          return copy;
+        }
         return [...prev, updated];
       });
       setSaved(key);
@@ -73,15 +84,15 @@ export default function PrecosEditor({
       body: JSON.stringify({ albumSlug, stickerType }),
     });
     if (res.ok) {
-      setRules((prev) => prev.filter(
-        (r) => !(r.albumSlug === albumSlug && r.stickerType === stickerType)
-      ));
+      setRules((prev) =>
+        prev.filter((r) => !(r.albumSlug === albumSlug && r.stickerType === stickerType))
+      );
     }
   }
 
   async function addAlbumRule() {
-    const price = parseFloat(newPrice);
-    if (!newAlbumSlug || !newStickerType || isNaN(price) || price <= 0) return;
+    const price = Number.parseFloat(newPrice);
+    if (!newAlbumSlug || !newStickerType || Number.isNaN(price) || price <= 0) return;
     await updatePrice(newStickerType, price, newAlbumSlug);
     setNewAlbumSlug("");
     setNewStickerType("regular");
@@ -100,7 +111,7 @@ export default function PrecosEditor({
   for (const rule of albumRules) {
     const slug = rule.albumSlug!;
     if (!albumRulesBySlug.has(slug)) albumRulesBySlug.set(slug, []);
-    albumRulesBySlug.get(slug)!.push(rule);
+    albumRulesBySlug.get(slug)?.push(rule);
   }
 
   return (
@@ -115,7 +126,10 @@ export default function PrecosEditor({
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-24 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer" />
+            <div
+              key={i}
+              className="h-24 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer"
+            />
           ))}
         </div>
       ) : (
@@ -134,14 +148,24 @@ export default function PrecosEditor({
                   className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--border-hover)] transition-all"
                 >
                   <div className="flex items-center gap-3 mb-3 sm:mb-0">
-                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0`}>
-                      <svg className={`w-4 h-4 sm:w-5 sm:h-5 ${tc.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <div
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${tc.bg} border flex items-center justify-center shrink-0`}
+                    >
+                      <svg
+                        className={`w-4 h-4 sm:w-5 sm:h-5 ${tc.color}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" d={tc.icon} />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold">{tc.label}</p>
-                      <p className="text-[11px] sm:text-xs text-[var(--muted)] mt-0.5 truncate">{tc.desc}</p>
+                      <p className="text-[11px] sm:text-xs text-[var(--muted)] mt-0.5 truncate">
+                        {tc.desc}
+                      </p>
                     </div>
                   </div>
 
@@ -153,8 +177,8 @@ export default function PrecosEditor({
                       min="0.50"
                       defaultValue={currentPrice.toFixed(2)}
                       onBlur={(e) => {
-                        const val = parseFloat(e.target.value);
-                        if (!isNaN(val) && val > 0 && val !== currentPrice) {
+                        const val = Number.parseFloat(e.target.value);
+                        if (!Number.isNaN(val) && val > 0 && val !== currentPrice) {
                           updatePrice(tc.type, val);
                         }
                       }}
@@ -166,7 +190,13 @@ export default function PrecosEditor({
                       )}
                       {isSaved && (
                         <span className="text-[10px] text-[var(--success)] flex items-center gap-1 justify-end">
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <svg
+                            className="w-3 h-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2.5}
+                          >
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                           Salvo
@@ -193,7 +223,13 @@ export default function PrecosEditor({
                   onClick={() => setAddingAlbumRule(true)}
                   className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-400 hover:bg-amber-500/20 transition-all flex items-center gap-1.5"
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                   </svg>
                   Nova regra
@@ -205,15 +241,25 @@ export default function PrecosEditor({
               <div className="p-5 rounded-2xl border border-amber-500/20 bg-amber-500/5">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                    <svg
+                      className="w-5 h-5 text-amber-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                      />
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-amber-400">Recurso PRO</p>
                     <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
-                      Defina preços diferentes por álbum — ex: cobrar mais por figurinhas da Copa 2022.
-                      Disponível nos planos PRO e Unlimited.
+                      Defina preços diferentes por álbum — ex: cobrar mais por figurinhas da Copa
+                      2022. Disponível nos planos PRO e Unlimited.
                     </p>
                     <Link
                       href="/painel/planos"
@@ -235,7 +281,10 @@ export default function PrecosEditor({
                 {Array.from(albumRulesBySlug.entries()).map(([slug, slugRules]) => {
                   const albumInfo = albumList.find((a) => a.slug === slug);
                   return (
-                    <div key={slug} className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
+                    <div
+                      key={slug}
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden"
+                    >
                       <div className="px-4 py-2.5 border-b border-[var(--border)] bg-[var(--card)]">
                         <p className="text-xs font-semibold flex items-center gap-2">
                           {albumInfo ? (
@@ -243,13 +292,18 @@ export default function PrecosEditor({
                               <span>{albumInfo.flag}</span>
                               Copa {albumInfo.year}
                             </>
-                          ) : slug}
+                          ) : (
+                            slug
+                          )}
                         </p>
                       </div>
                       {slugRules.map((rule) => {
                         const key = `${slug}-${rule.stickerType}`;
                         return (
-                          <div key={key} className="px-4 py-2.5 flex items-center justify-between border-t border-[var(--border)] first:border-t-0">
+                          <div
+                            key={key}
+                            className="px-4 py-2.5 flex items-center justify-between border-t border-[var(--border)] first:border-t-0"
+                          >
                             <span className="text-xs text-[var(--muted)]">
                               {getStickerTypeShortLabel(rule.stickerType)}
                             </span>
@@ -261,8 +315,8 @@ export default function PrecosEditor({
                                 min="0.50"
                                 defaultValue={rule.price.toFixed(2)}
                                 onBlur={(e) => {
-                                  const val = parseFloat(e.target.value);
-                                  if (!isNaN(val) && val > 0 && val !== rule.price) {
+                                  const val = Number.parseFloat(e.target.value);
+                                  if (!Number.isNaN(val) && val > 0 && val !== rule.price) {
                                     updatePrice(rule.stickerType, val, slug);
                                   }
                                 }}
@@ -270,7 +324,9 @@ export default function PrecosEditor({
                               />
                               <div className="w-14 text-right">
                                 {saving === key && (
-                                  <span className="text-[10px] text-[var(--accent)] pulse-dot">Salvando</span>
+                                  <span className="text-[10px] text-[var(--accent)] pulse-dot">
+                                    Salvando
+                                  </span>
                                 )}
                                 {saved === key && (
                                   <span className="text-[10px] text-[var(--success)]">Salvo</span>
@@ -281,8 +337,18 @@ export default function PrecosEditor({
                                 className="w-6 h-6 rounded flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
                                 title="Remover regra"
                               >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                <svg
+                                  className="w-3.5 h-3.5"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={2}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
                                 </svg>
                               </button>
                             </div>
@@ -318,7 +384,9 @@ export default function PrecosEditor({
                     className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white"
                   >
                     {STICKER_TYPE_CONFIG.map((tc) => (
-                      <option key={tc.type} value={tc.type}>{tc.shortLabel}</option>
+                      <option key={tc.type} value={tc.type}>
+                        {tc.shortLabel}
+                      </option>
                     ))}
                   </select>
                   <div className="flex items-center gap-2">
@@ -330,7 +398,9 @@ export default function PrecosEditor({
                       value={newPrice}
                       onChange={(e) => setNewPrice(e.target.value)}
                       placeholder={getDefaultPrice(newStickerType).toFixed(2)}
-                      onKeyDown={(e) => { if (e.key === "Enter") addAlbumRule(); }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") addAlbumRule();
+                      }}
                       className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600"
                     />
                   </div>
@@ -357,14 +427,24 @@ export default function PrecosEditor({
           {/* ── Info de hierarquia ── */}
           <div className="mt-8 p-4 rounded-2xl border border-[var(--border)] bg-[var(--card)]">
             <div className="flex items-start gap-3">
-              <svg className="w-4 h-4 text-[var(--info)] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              <svg
+                className="w-4 h-4 text-[var(--info)] mt-0.5 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
               </svg>
               <div>
                 <p className="text-xs font-medium text-[var(--muted)]">Hierarquia de preços</p>
                 <p className="text-[11px] text-zinc-600 mt-0.5 leading-relaxed">
-                  Preço individual da figurinha &gt; Regra do álbum &gt; Preço global &gt; Valor padrão.
-                  Defina preços individuais diretamente na tela de estoque.
+                  Preço individual da figurinha &gt; Regra do álbum &gt; Preço global &gt; Valor
+                  padrão. Defina preços individuais diretamente na tela de estoque.
                 </p>
               </div>
             </div>

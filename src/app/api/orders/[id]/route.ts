@@ -1,12 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { type NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 // PATCH — atualiza status do pedido
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const seller = await getSession();
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
 

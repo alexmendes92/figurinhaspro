@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const plans = [
   {
@@ -8,12 +8,7 @@ const plans = [
     name: "Starter",
     price: "0",
     period: "gratis",
-    features: [
-      "100 figurinhas no estoque",
-      "10 pedidos/mes",
-      "1 album",
-      "Vitrine basica",
-    ],
+    features: ["100 figurinhas no estoque", "10 pedidos/mes", "1 album", "Vitrine basica"],
     limits: "100 figurinhas · 10 pedidos · 1 album",
   },
   {
@@ -80,10 +75,7 @@ export default function PlanosPage() {
           ? orders.filter((o: { createdAt: string }) => {
               const d = new Date(o.createdAt);
               const now = new Date();
-              return (
-                d.getMonth() === now.getMonth() &&
-                d.getFullYear() === now.getFullYear()
-              );
+              return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
             }).length
           : 0;
         setUsage({
@@ -138,9 +130,7 @@ export default function PlanosPage() {
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-2xl font-bold text-white">Planos e Assinatura</h1>
-        <p className="text-sm text-zinc-500 mt-1">
-          Gerencie seu plano e acompanhe seu uso
-        </p>
+        <p className="text-sm text-zinc-500 mt-1">Gerencie seu plano e acompanhe seu uso</p>
       </div>
 
       {/* Uso atual */}
@@ -150,10 +140,7 @@ export default function PlanosPage() {
           { label: "Pedidos/mes", value: usage.orders, color: "blue" },
           { label: "Albuns", value: usage.albums, color: "emerald" },
         ].map((stat) => (
-          <div
-            key={stat.label}
-            className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800"
-          >
+          <div key={stat.label} className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
             <p className="text-xs text-zinc-500">{stat.label}</p>
             <p className="text-2xl font-bold font-[family-name:var(--font-geist-mono)] text-white mt-1">
               {stat.value}
@@ -177,8 +164,8 @@ export default function PlanosPage() {
                 isCurrent
                   ? "border-amber-500/40 bg-amber-500/[0.04] ring-1 ring-amber-500/20"
                   : plan.popular
-                  ? "border-amber-500/20 bg-zinc-900/60"
-                  : "border-zinc-800 bg-zinc-900/40"
+                    ? "border-amber-500/20 bg-zinc-900/60"
+                    : "border-zinc-800 bg-zinc-900/40"
               }`}
             >
               {plan.popular && !isCurrent && (
@@ -204,10 +191,7 @@ export default function PlanosPage() {
 
               <ul className="space-y-2.5 mb-6">
                 {plan.features.map((f) => (
-                  <li
-                    key={f}
-                    className="flex items-start gap-2 text-[13px] text-zinc-300"
-                  >
+                  <li key={f} className="flex items-start gap-2 text-[13px] text-zinc-300">
                     <svg
                       className="w-4 h-4 text-amber-400 shrink-0 mt-0.5"
                       fill="none"
@@ -215,11 +199,7 @@ export default function PlanosPage() {
                       stroke="currentColor"
                       strokeWidth={2.5}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5 13l4 4L19 7"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     {f}
                   </li>
@@ -233,9 +213,7 @@ export default function PlanosPage() {
                     disabled={loading === "portal"}
                     className="w-full py-2.5 rounded-xl border border-zinc-700 text-zinc-400 text-sm font-medium hover:border-zinc-500 hover:text-white transition-all disabled:opacity-50"
                   >
-                    {loading === "portal"
-                      ? "Abrindo..."
-                      : "Gerenciar assinatura"}
+                    {loading === "portal" ? "Abrindo..." : "Gerenciar assinatura"}
                   </button>
                 ) : (
                   <div className="w-full py-2.5 rounded-xl border border-zinc-800 text-zinc-600 text-sm font-medium text-center">
@@ -262,11 +240,7 @@ export default function PlanosPage() {
                 >
                   {loading === plan.key ? (
                     <span className="flex items-center justify-center gap-2">
-                      <svg
-                        className="animate-spin w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
                         <circle
                           className="opacity-25"
                           cx="12"
@@ -310,10 +284,7 @@ export default function PlanosPage() {
             a: "Cartao de credito (Visa, Mastercard, Elo) e PIX via Stripe.",
           },
         ].map((faq) => (
-          <div
-            key={faq.q}
-            className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800"
-          >
+          <div key={faq.q} className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800">
             <p className="text-sm font-medium text-white">{faq.q}</p>
             <p className="text-xs text-zinc-400 mt-1">{faq.a}</p>
           </div>

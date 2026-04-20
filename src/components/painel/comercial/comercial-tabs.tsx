@@ -19,9 +19,7 @@ export function ComercialTabs() {
   return (
     <nav className="flex gap-1 overflow-x-auto border-b border-white/[0.06] pb-px -mb-px scrollbar-none">
       {tabs.map((tab) => {
-        const active = tab.exact
-          ? pathname === tab.href
-          : pathname.startsWith(tab.href);
+        const active = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
         return (
           <Link
             key={tab.href}

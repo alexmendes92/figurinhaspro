@@ -77,10 +77,7 @@ export function resolveUnitPrice(ctx: PriceContext): number {
  * Retorna o percentual (ex: 10 para 10%).
  * Se não há tiers ou quantidade insuficiente, retorna 0.
  */
-export function resolveQuantityDiscount(
-  totalQty: number,
-  tiers: QuantityTier[]
-): number {
+export function resolveQuantityDiscount(totalQty: number, tiers: QuantityTier[]): number {
   if (tiers.length === 0 || totalQty <= 0) return 0;
 
   // Ordena por minQuantity decrescente para encontrar o maior tier aplicável

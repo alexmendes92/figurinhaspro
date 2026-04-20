@@ -10,7 +10,10 @@ export default function DashboardLoading() {
       {/* Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="rounded-2xl bg-[#0f1219] border border-white/[0.06] p-5 h-[120px] shimmer" />
+          <div
+            key={i}
+            className="rounded-2xl bg-[#0f1219] border border-white/[0.06] p-5 h-[120px] shimmer"
+          />
         ))}
       </div>
 
@@ -28,7 +31,10 @@ export default function DashboardLoading() {
         </div>
         <div className="rounded-2xl bg-[#0f1219] border border-white/[0.06] overflow-hidden">
           {[1, 2, 3].map((i) => (
-            <div key={i} className={`px-5 py-4 h-[68px] shimmer ${i > 1 ? "border-t border-white/[0.04]" : ""}`} />
+            <div
+              key={i}
+              className={`px-5 py-4 h-[68px] shimmer ${i > 1 ? "border-t border-white/[0.04]" : ""}`}
+            />
           ))}
         </div>
       </div>

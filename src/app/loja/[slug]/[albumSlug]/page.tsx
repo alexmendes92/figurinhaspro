@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { db } from "@/lib/db";
-import { albums } from "@/lib/albums";
+import StoreAlbumView from "@/components/loja/store-album-view";
 import type { Album } from "@/lib/albums";
+import { albums } from "@/lib/albums";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 import { buildStickerSectionMap } from "@/lib/price-resolver";
 import { getSellerCatalog } from "@/lib/seller-catalog";
-import StoreAlbumView from "@/components/loja/store-album-view";
 
 export default async function LojaAlbumPage({
   params,

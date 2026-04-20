@@ -63,9 +63,7 @@ export default function AlbumStatsCard({
   return (
     <div
       className={`rounded-2xl border overflow-hidden transition-all ${
-        isCustom
-          ? "border-amber-500/20 bg-amber-500/[0.02]"
-          : "border-white/[0.06] bg-white/[0.02]"
+        isCustom ? "border-amber-500/20 bg-amber-500/[0.02]" : "border-white/[0.06] bg-white/[0.02]"
       }`}
     >
       {/* Header do card */}
@@ -126,7 +124,9 @@ export default function AlbumStatsCard({
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className={`text-sm font-bold font-[family-name:var(--font-geist-mono)] ${progressTextColor}`}>
+              <span
+                className={`text-sm font-bold font-[family-name:var(--font-geist-mono)] ${progressTextColor}`}
+              >
                 {coveragePercent}%
               </span>
             </div>
@@ -136,19 +136,27 @@ export default function AlbumStatsCard({
           <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-2">
             <div>
               <p className="text-[10px] text-gray-500 uppercase tracking-wider">Em estoque</p>
-              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">{inStock}</p>
+              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">
+                {inStock}
+              </p>
             </div>
             <div>
               <p className="text-[10px] text-gray-500 uppercase tracking-wider">Faltam</p>
-              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">{missing}</p>
+              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">
+                {missing}
+              </p>
             </div>
             <div>
               <p className="text-[10px] text-gray-500 uppercase tracking-wider">Unidades</p>
-              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">{totalUnits}</p>
+              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">
+                {totalUnits}
+              </p>
             </div>
             <div>
               <p className="text-[10px] text-gray-500 uppercase tracking-wider">Completos</p>
-              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">{completedAlbums}</p>
+              <p className="text-sm font-bold text-white font-[family-name:var(--font-geist-mono)]">
+                {completedAlbums}
+              </p>
             </div>
           </div>
         </div>
@@ -162,7 +170,8 @@ export default function AlbumStatsCard({
             />
           </div>
           <p className="text-[10px] text-gray-500 mt-1.5">
-            {inStock} de {totalStickers} figurinhas distintas em estoque ({coveragePercent}% cobertura)
+            {inStock} de {totalStickers} figurinhas distintas em estoque ({coveragePercent}%
+            cobertura)
           </p>
         </div>
       </div>
@@ -175,7 +184,8 @@ export default function AlbumStatsCard({
             className="w-full px-4 sm:px-5 py-3 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
           >
             <span className="text-xs text-gray-400">
-              Faltam <span className="font-bold text-white">{blockers.length}</span> para o próximo completo
+              Faltam <span className="font-bold text-white">{blockers.length}</span> para o próximo
+              completo
             </span>
             <svg
               className={`w-4 h-4 text-gray-500 transition-transform ${expanded ? "rotate-180" : ""}`}
@@ -195,8 +205,18 @@ export default function AlbumStatsCard({
                 onClick={copyBlockers}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] text-gray-400 hover:text-white hover:border-white/10 transition-all"
               >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
+                  />
                 </svg>
                 {copied ? "Copiado!" : "Copiar lista"}
               </button>
@@ -214,7 +234,9 @@ export default function AlbumStatsCard({
                         {b.code}
                       </span>
                       {b.type !== "regular" && (
-                        <span className={`px-1 py-0.5 rounded text-[7px] font-bold ${typeConf.badgeClass}`}>
+                        <span
+                          className={`px-1 py-0.5 rounded text-[7px] font-bold ${typeConf.badgeClass}`}
+                        >
                           {typeConf.shortLabel}
                         </span>
                       )}

@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { createTask, toggleTask } from "../actions";
-import Link from "next/link";
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   TODO: { label: "A fazer", color: "bg-gray-500" },
@@ -52,9 +52,7 @@ export default async function TarefasPage({
     }),
   ]);
 
-  const todoCount = tasks.filter(
-    (t) => t.status === "TODO" || t.status === "IN_PROGRESS"
-  ).length;
+  const todoCount = tasks.filter((t) => t.status === "TODO" || t.status === "IN_PROGRESS").length;
   const doneCount = tasks.filter((t) => t.status === "DONE").length;
 
   return (
@@ -107,18 +105,8 @@ export default async function TarefasPage({
           className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 space-y-3"
         >
           <h3 className="text-sm font-medium text-white">Nova Tarefa</h3>
-          <input
-            name="title"
-            placeholder="Titulo *"
-            required
-            className={inputClass}
-          />
-          <textarea
-            name="description"
-            placeholder="Descricao"
-            rows={2}
-            className={inputClass}
-          />
+          <input name="title" placeholder="Titulo *" required className={inputClass} />
+          <textarea name="description" placeholder="Descricao" rows={2} className={inputClass} />
           <div className="grid sm:grid-cols-3 gap-3">
             <select name="priority" className={inputClass}>
               <option value="HIGH">Alta</option>
@@ -196,8 +184,18 @@ export default async function TarefasPage({
                     }`}
                   >
                     {task.status === "DONE" && (
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={3}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                     )}
                   </button>
@@ -215,31 +213,24 @@ export default async function TarefasPage({
                       {task.priority}
                     </span>
                     <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded font-medium bg-white/[0.04] text-gray-400`}
+                      className={
+                        "text-[10px] px-1.5 py-0.5 rounded font-medium bg-white/[0.04] text-gray-400"
+                      }
                     >
                       {cfg.label}
                     </span>
                   </div>
                   {task.description && (
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-1">
-                      {task.description}
-                    </p>
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-1">{task.description}</p>
                   )}
                   <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-600 flex-wrap">
                     {task.lead && <span>Lead: {task.lead.name}</span>}
-                    {task.initiative && (
-                      <span>Iniciativa: {task.initiative.title}</span>
-                    )}
+                    {task.initiative && <span>Iniciativa: {task.initiative.title}</span>}
                     {task.experiment && (
-                      <span>
-                        Exp: {task.experiment.hypothesis.slice(0, 30)}...
-                      </span>
+                      <span>Exp: {task.experiment.hypothesis.slice(0, 30)}...</span>
                     )}
                     {task.deadline && (
-                      <span>
-                        Prazo:{" "}
-                        {task.deadline.toLocaleDateString("pt-BR")}
-                      </span>
+                      <span>Prazo: {task.deadline.toLocaleDateString("pt-BR")}</span>
                     )}
                   </div>
                 </div>

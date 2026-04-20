@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { getSession } from "@/lib/auth";
-import { checkOrderLimit } from "@/lib/plan-limits";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { checkOrderLimit } from "@/lib/plan-limits";
 
 // GET — lista pedidos do revendedor
 export async function GET(req: NextRequest) {
@@ -30,15 +30,17 @@ const orderSchema = z.object({
   customerEmail: z.string().email().optional(),
   channel: z.enum(["SYSTEM", "WHATSAPP", "MANUAL"]).default("SYSTEM"),
   notes: z.string().optional(),
-  items: z.array(
-    z.object({
-      albumSlug: z.string(),
-      stickerCode: z.string(),
-      stickerName: z.string(),
-      quantity: z.number().int().positive(),
-      unitPrice: z.number().positive(),
-    })
-  ).min(1),
+  items: z
+    .array(
+      z.object({
+        albumSlug: z.string(),
+        stickerCode: z.string(),
+        stickerName: z.string(),
+        quantity: z.number().int().positive(),
+        unitPrice: z.number().positive(),
+      })
+    )
+    .min(1),
 });
 
 // POST — cria pedido/orçamento (chamado pelo cliente na vitrine)
@@ -60,15 +62,16 @@ export async function POST(req: NextRequest) {
     const orderCheck = await checkOrderLimit(seller.id, seller.plan);
     if (!orderCheck.allowed) {
       return NextResponse.json(
-        { error: "plan_limit", message: `Limite de ${orderCheck.max} pedidos/mês atingido`, upgrade_url: "/painel/planos" },
+        {
+          error: "plan_limit",
+          message: `Limite de ${orderCheck.max} pedidos/mês atingido`,
+          upgrade_url: "/painel/planos",
+        },
         { status: 403 }
       );
     }
 
-    const totalPrice = data.items.reduce(
-      (sum, item) => sum + item.unitPrice * item.quantity,
-      0
-    );
+    const totalPrice = data.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
     const order = await db.order.create({
       data: {
@@ -89,7 +92,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(order);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Dados inválidos", details: error.issues }, { status: 400 });
+      return NextResponse.json(
+        { error: "Dados inválidos", details: error.issues },
+        { status: 400 }
+      );
     }
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }

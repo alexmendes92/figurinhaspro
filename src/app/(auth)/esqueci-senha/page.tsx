@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { AuthLogo } from "@/components/auth/auth-logo";
-import { AuthInput } from "@/components/auth/auth-input";
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthError } from "@/components/auth/auth-error";
-import { AuthSuccess } from "@/components/auth/auth-success";
 import { AuthFooterLink } from "@/components/auth/auth-footer-link";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthLogo } from "@/components/auth/auth-logo";
+import { AuthSuccess } from "@/components/auth/auth-success";
 
 export default function EsqueciSenhaPage() {
   const [email, setEmail] = useState("");
@@ -50,7 +50,8 @@ export default function EsqueciSenhaPage() {
             title="Verifique seu email"
             description={
               <>
-                Se existe uma conta com <strong className="text-white">{email}</strong>, você receberá um link para redefinir sua senha.
+                Se existe uma conta com <strong className="text-white">{email}</strong>, você
+                receberá um link para redefinir sua senha.
               </>
             }
             actionLabel="Voltar ao login"
@@ -59,7 +60,9 @@ export default function EsqueciSenhaPage() {
         ) : (
           <>
             <h1 className="text-2xl font-black text-white mb-1">Esqueci minha senha</h1>
-            <p className="text-sm text-gray-500 mb-8">Enviaremos um link para redefinir sua senha.</p>
+            <p className="text-sm text-gray-500 mb-8">
+              Enviaremos um link para redefinir sua senha.
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <AuthError message={error} />

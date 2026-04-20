@@ -1,10 +1,10 @@
 // Dados dos álbuns Panini - gerado automaticamente
 export const albums = [
   {
-    "year": 1974,
-    "host": "West Germany",
-    "cover": "/albums/1974/001_Panini-World-Cup-1974-Complete-Album.webp",
-    "pages": [
+    year: 1974,
+    host: "West Germany",
+    cover: "/albums/1974/001_Panini-World-Cup-1974-Complete-Album.webp",
+    pages: [
       "/albums/1974/001_Panini-World-Cup-1974-Complete-Album.webp",
       "/albums/1974/002_Panini-World-Cup-1974-West-Germany-Deutschland.webp",
       "/albums/1974/003_Panini-World-Cup-1974-West-Germany-Deutschland-squad.webp",
@@ -43,15 +43,15 @@ export const albums = [
       "/albums/1974/036_Panini-World-Cup-1974-Spain-Espana-France.webp",
       "/albums/1974/037_Panini-World-Cup-1974-Switzerland-Helvetia-Hungary-Magyarorszag.webp",
       "/albums/1974/038_Panini-World-Cup-1974-Austria-Osterreich-Portugal.webp",
-      "/albums/1974/039_Panini-World-Cup-1974-Results.webp"
+      "/albums/1974/039_Panini-World-Cup-1974-Results.webp",
     ],
-    "pageCount": 39
+    pageCount: 39,
   },
   {
-    "year": 1978,
-    "host": "Argentina",
-    "cover": "/albums/1978/001_Panini-World-Cup-1978-Complete-Album.webp",
-    "pages": [
+    year: 1978,
+    host: "Argentina",
+    cover: "/albums/1978/001_Panini-World-Cup-1978-Complete-Album.webp",
+    pages: [
       "/albums/1978/001_Panini-World-Cup-1978-Complete-Album.webp",
       "/albums/1978/002_Panini-World-Cup-1978-Argentina.webp",
       "/albums/1978/003_Panini-World-Cup-1978-Argentina-squad.webp",
@@ -91,15 +91,15 @@ export const albums = [
       "/albums/1978/037_Panini-World-Cup-1978-Helvetia-Switzerland-Yugoslavia.webp",
       "/albums/1978/038_Panini-World-Cup-1978-Norway-Norge-Portugal.webp",
       "/albums/1978/039_Panini-World-Cup-1978-Romania-Soviet-Union-USSR.webp",
-      "/albums/1978/040_Panini-World-Cup-1978-Uruguay-Wales.webp"
+      "/albums/1978/040_Panini-World-Cup-1978-Uruguay-Wales.webp",
     ],
-    "pageCount": 40
+    pageCount: 40,
   },
   {
-    "year": 1982,
-    "host": "Spain",
-    "cover": "/albums/1982/001_Panini-World-Cup-1982-Complete-Album.webp",
-    "pages": [
+    year: 1982,
+    host: "Spain",
+    cover: "/albums/1982/001_Panini-World-Cup-1982-Complete-Album.webp",
+    pages: [
       "/albums/1982/001_Panini-World-Cup-1982-Complete-Album.webp",
       "/albums/1982/002_Panini-World-Cup-1982-Italy-Italia.webp",
       "/albums/1982/003_Panini-World-Cup-1982-Italy-Italia-squad.webp",
@@ -143,15 +143,15 @@ export const albums = [
       "/albums/1982/041_Panini-World-Cup-1982-Soviet-Union-USSR-squad.webp",
       "/albums/1982/042_Panini-World-Cup-1982-Scotland.webp",
       "/albums/1982/043_Panini-World-Cup-1982-Scotland-squad.webp",
-      "/albums/1982/044_Panini-World-Cup-1982-New-Zealand.webp"
+      "/albums/1982/044_Panini-World-Cup-1982-New-Zealand.webp",
     ],
-    "pageCount": 44
+    pageCount: 44,
   },
   {
-    "year": 1986,
-    "host": "Mexico",
-    "cover": "/albums/1986/001_Panini-World-Cup-1986-Complete-Album.webp",
-    "pages": [
+    year: 1986,
+    host: "Mexico",
+    cover: "/albums/1986/001_Panini-World-Cup-1986-Complete-Album.webp",
+    pages: [
       "/albums/1986/001_Panini-World-Cup-1986-Complete-Album.webp",
       "/albums/1986/002_Panini-World-Cup-1986-Italy-Italia.webp",
       "/albums/1986/003_Panini-World-Cup-1986-Italy-Italia-squad.webp",
@@ -195,15 +195,15 @@ export const albums = [
       "/albums/1986/041_Panini-World-Cup-1986-Portugal-squad.webp",
       "/albums/1986/042_Panini-World-Cup-1986-England.webp",
       "/albums/1986/043_Panini-World-Cup-1986-England-squad.webp",
-      "/albums/1986/044_Panini-World-Cup-1986-Morocco-Maroc.webp"
+      "/albums/1986/044_Panini-World-Cup-1986-Morocco-Maroc.webp",
     ],
-    "pageCount": 44
+    pageCount: 44,
   },
   {
-    "year": 1990,
-    "host": "Italy",
-    "cover": "/albums/1990/001_Panini-World-Cup-1990-Complete-Album.webp",
-    "pages": [
+    year: 1990,
+    host: "Italy",
+    cover: "/albums/1990/001_Panini-World-Cup-1990-Complete-Album.webp",
+    pages: [
       "/albums/1990/001_Panini-World-Cup-1990-Complete-Album.webp",
       "/albums/1990/002_Panini-World-Cup-1990-Italy-Italia.webp",
       "/albums/1990/003_Panini-World-Cup-1990-Italy-Italia-squad.webp",
@@ -247,15 +247,15 @@ export const albums = [
       "/albums/1990/041_Panini-World-Cup-1990-Netherlands-Nederland-Holland-squad.webp",
       "/albums/1990/042_Panini-World-Cup-1990-Ireland-Eire.webp",
       "/albums/1990/043_Panini-World-Cup-1990-Ireland-Eire-squad.webp",
-      "/albums/1990/044_Panini-World-Cup-1990-Egypt.webp"
+      "/albums/1990/044_Panini-World-Cup-1990-Egypt.webp",
     ],
-    "pageCount": 44
+    pageCount: 44,
   },
   {
-    "year": 1994,
-    "host": "USA",
-    "cover": "/albums/1994/001_Panini-World-Cup-1994-Complete-Album.webp",
-    "pages": [
+    year: 1994,
+    host: "USA",
+    cover: "/albums/1994/001_Panini-World-Cup-1994-Complete-Album.webp",
+    pages: [
       "/albums/1994/001_Panini-World-Cup-1994-Complete-Album.webp",
       "/albums/1994/002_Panini-World-Cup-1994-USA.webp",
       "/albums/1994/003_Panini-World-Cup-1994-USA-squad.webp",
@@ -301,15 +301,15 @@ export const albums = [
       "/albums/1994/043_Panini-World-Cup-1994-Morocco-Maroc-squad.webp",
       "/albums/1994/044_Panini-World-Cup-1994-Netherlands-Nederland-Holland.webp",
       "/albums/1994/045_Panini-World-Cup-1994-Netherlands-Nederland-Holland-squad.webp",
-      "/albums/1994/046_Panini-World-Cup-1994-Saudi-Arabia.webp"
+      "/albums/1994/046_Panini-World-Cup-1994-Saudi-Arabia.webp",
     ],
-    "pageCount": 46
+    pageCount: 46,
   },
   {
-    "year": 1998,
-    "host": "France",
-    "cover": "/albums/1998/001_Panini-World-Cup-1998-Album.webp",
-    "pages": [
+    year: 1998,
+    host: "France",
+    cover: "/albums/1998/001_Panini-World-Cup-1998-Album.webp",
+    pages: [
       "/albums/1998/001_Panini-World-Cup-1998-Album.webp",
       "/albums/1998/002_Panini-World-Cup-1998-Brazil.webp",
       "/albums/1998/003_Panini-World-Cup-1998-Brazil-Ronaldo.webp",
@@ -371,15 +371,15 @@ export const albums = [
       "/albums/1998/059_Panini-World-Cup-1998-Japan-Hidetoshi-Nakata-rookie-sticker.webp",
       "/albums/1998/060_Panini-World-Cup-1998-Croatia.webp",
       "/albums/1998/061_Panini-World-Cup-1998-Croatia-squad.webp",
-      "/albums/1998/062_Panini-World-Cup-1998-Jamaica.webp"
+      "/albums/1998/062_Panini-World-Cup-1998-Jamaica.webp",
     ],
-    "pageCount": 62
+    pageCount: 62,
   },
   {
-    "year": 2002,
-    "host": "South Korea / Japan",
-    "cover": "/albums/2002/001_Panini-World-Cup-2002-Album.webp",
-    "pages": [
+    year: 2002,
+    host: "South Korea / Japan",
+    cover: "/albums/2002/001_Panini-World-Cup-2002-Album.webp",
+    pages: [
       "/albums/2002/001_Panini-World-Cup-2002-Album.webp",
       "/albums/2002/002_Panini-World-Cup-2002-France.webp",
       "/albums/2002/003_Panini-World-Cup-2002-France-squad.webp",
@@ -441,15 +441,15 @@ export const albums = [
       "/albums/2002/059_Panini-World-Cup-2002-Japan-squad.webp",
       "/albums/2002/060_Panini-World-Cup-2002-Belgium.webp",
       "/albums/2002/061_Panini-World-Cup-2002-Belgium-squad.webp",
-      "/albums/2002/062_Panini-World-Cup-2002-Tunisia.webp"
+      "/albums/2002/062_Panini-World-Cup-2002-Tunisia.webp",
     ],
-    "pageCount": 62
+    pageCount: 62,
   },
   {
-    "year": 2006,
-    "host": "Germany",
-    "cover": "/albums/2006/001_Panini-World-Cup-2006-Album-1.webp",
-    "pages": [
+    year: 2006,
+    host: "Germany",
+    cover: "/albums/2006/001_Panini-World-Cup-2006-Album-1.webp",
+    pages: [
       "/albums/2006/001_Panini-World-Cup-2006-Album-1.webp",
       "/albums/2006/002_Panini-World-Cup-2006-Germany.webp",
       "/albums/2006/003_Panini-World-Cup-2006-Germany-squad.webp",
@@ -511,15 +511,15 @@ export const albums = [
       "/albums/2006/059_Panini-World-Cup-2006-Ukraine-squad-Shevchenko.webp",
       "/albums/2006/060_Panini-World-Cup-2006-Tunisia.webp",
       "/albums/2006/061_Panini-World-Cup-2006-Tunisia-squad.webp",
-      "/albums/2006/062_Panini-World-Cup-2006-Saudi-Arabia.webp"
+      "/albums/2006/062_Panini-World-Cup-2006-Saudi-Arabia.webp",
     ],
-    "pageCount": 62
+    pageCount: 62,
   },
   {
-    "year": 2010,
-    "host": "South Africa",
-    "cover": "/albums/2010/001_Panini-World-Cup-2010-Album.webp",
-    "pages": [
+    year: 2010,
+    host: "South Africa",
+    cover: "/albums/2010/001_Panini-World-Cup-2010-Album.webp",
+    pages: [
       "/albums/2010/001_Panini-World-Cup-2010-Album.webp",
       "/albums/2010/002_Panini-World-Cup-2010-South-Africa.webp",
       "/albums/2010/003_Panini-World-Cup-2010-South-Africa-squad.webp",
@@ -584,15 +584,15 @@ export const albums = [
       "/albums/2010/062_Panini-World-Cup-2010-Honduras.webp",
       "/albums/2010/063_Panini-World-Cup-2010-Honduras-squad.webp",
       "/albums/2010/064_Panini-World-Cup-2010-Chile.webp",
-      "/albums/2010/065_Panini-World-Cup-2010-Chile-squad.webp"
+      "/albums/2010/065_Panini-World-Cup-2010-Chile-squad.webp",
     ],
-    "pageCount": 65
+    pageCount: 65,
   },
   {
-    "year": 2014,
-    "host": "Brazil",
-    "cover": "/albums/2014/001_Panini-World-Cup-2014-Album-.webp",
-    "pages": [
+    year: 2014,
+    host: "Brazil",
+    cover: "/albums/2014/001_Panini-World-Cup-2014-Album-.webp",
+    pages: [
       "/albums/2014/001_Panini-World-Cup-2014-Album-.webp",
       "/albums/2014/002_Panini-World-Cup-2014-Brazil.webp",
       "/albums/2014/003_Panini-World-Cup-2014-Brazil-Neymar.webp",
@@ -657,15 +657,15 @@ export const albums = [
       "/albums/2014/062_Panini-World-Cup-2014-Russia.webp",
       "/albums/2014/063_Panini-World-Cup-2014-Russia-squad.webp",
       "/albums/2014/064_Panini-World-Cup-2014-South-Korea.webp",
-      "/albums/2014/065_Panini-World-Cup-2014-South-Korea-Son-Heung-min.webp"
+      "/albums/2014/065_Panini-World-Cup-2014-South-Korea-Son-Heung-min.webp",
     ],
-    "pageCount": 65
+    pageCount: 65,
   },
   {
-    "year": 2018,
-    "host": "Russia",
-    "cover": "/albums/2018/001_Panini-World-Cup-2018-Album.webp",
-    "pages": [
+    year: 2018,
+    host: "Russia",
+    cover: "/albums/2018/001_Panini-World-Cup-2018-Album.webp",
+    pages: [
       "/albums/2018/001_Panini-World-Cup-2018-Album.webp",
       "/albums/2018/002_Panini-World-Cup-2018-Russia.webp",
       "/albums/2018/003_Panini-World-Cup-2018-Russia-squad.webp",
@@ -730,15 +730,15 @@ export const albums = [
       "/albums/2018/062_Panini-World-Cup-2018-Colombia.webp",
       "/albums/2018/063_Panini-World-Cup-2018-Colombia-James-Rodriguez.webp",
       "/albums/2018/064_Panini-World-Cup-2018-Japan.webp",
-      "/albums/2018/065_Panini-World-Cup-2018-Japan-squad.webp"
+      "/albums/2018/065_Panini-World-Cup-2018-Japan-squad.webp",
     ],
-    "pageCount": 65
+    pageCount: 65,
   },
   {
-    "year": 2022,
-    "host": "Qatar",
-    "cover": "/albums/2022/001_Panini-World-Cup-2022-Album.webp",
-    "pages": [
+    year: 2022,
+    host: "Qatar",
+    cover: "/albums/2022/001_Panini-World-Cup-2022-Album.webp",
+    pages: [
       "/albums/2022/001_Panini-World-Cup-2022-Album.webp",
       "/albums/2022/002_Panini-World-Cup-2022-Qatar.webp",
       "/albums/2022/003_Panini-World-Cup-2022-Qatar-squad.webp",
@@ -803,10 +803,10 @@ export const albums = [
       "/albums/2022/062_Panini-World-Cup-2022-Uruguay.webp",
       "/albums/2022/063_Panini-World-Cup-2022-Uruguay-squad.webp",
       "/albums/2022/064_Panini-World-Cup-2022-Korea.webp",
-      "/albums/2022/065_Panini-World-Cup-2022-Korea-squad.webp"
+      "/albums/2022/065_Panini-World-Cup-2022-Korea-squad.webp",
     ],
-    "pageCount": 65
-  }
+    pageCount: 65,
+  },
 ] as const;
 
-export type Album = typeof albums[number];
+export type Album = (typeof albums)[number];

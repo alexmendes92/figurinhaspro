@@ -28,7 +28,12 @@ const steps = [
   },
 ];
 
-export default function GettingStarted({ hasStock, hasPrices, hasPhone, storeUrl }: GettingStartedProps) {
+export default function GettingStarted({
+  hasStock,
+  hasPrices,
+  hasPhone,
+  storeUrl,
+}: GettingStartedProps) {
   const flags = { hasStock, hasPrices, hasPhone };
   const completed = Object.values(flags).filter(Boolean).length;
   const total = steps.length;
@@ -40,11 +45,16 @@ export default function GettingStarted({ hasStock, hasPrices, hasPhone, storeUrl
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-sm font-bold text-white">Configure sua loja</h3>
-          <p className="text-[11px] text-gray-500 mt-0.5">{completed} de {total} concluidos</p>
+          <p className="text-[11px] text-gray-500 mt-0.5">
+            {completed} de {total} concluidos
+          </p>
         </div>
         <div className="flex gap-1">
           {Array.from({ length: total }).map((_, i) => (
-            <div key={i} className={`w-8 h-1.5 rounded-full ${i < completed ? "bg-amber-500" : "bg-white/[0.06]"}`} />
+            <div
+              key={i}
+              className={`w-8 h-1.5 rounded-full ${i < completed ? "bg-amber-500" : "bg-white/[0.06]"}`}
+            />
           ))}
         </div>
       </div>
@@ -62,25 +72,51 @@ export default function GettingStarted({ hasStock, hasPrices, hasPhone, storeUrl
                   : "bg-white/[0.03] border border-white/[0.06] hover:border-amber-500/20 hover:bg-amber-500/[0.03]"
               }`}
             >
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                done ? "bg-emerald-500/10" : "bg-amber-500/10"
-              }`}>
+              <div
+                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                  done ? "bg-emerald-500/10" : "bg-amber-500/10"
+                }`}
+              >
                 {done ? (
-                  <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <svg
+                    className="w-4 h-4 text-emerald-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 ) : (
-                  <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <svg
+                    className="w-4 h-4 text-amber-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d={step.icon} />
                   </svg>
                 )}
               </div>
-              <span className={`text-[13px] font-medium ${done ? "text-gray-500 line-through" : "text-white"}`}>
+              <span
+                className={`text-[13px] font-medium ${done ? "text-gray-500 line-through" : "text-white"}`}
+              >
                 {step.label}
               </span>
               {!done && (
-                <svg className="w-4 h-4 text-gray-600 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                <svg
+                  className="w-4 h-4 text-gray-600 ml-auto"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
                 </svg>
               )}
             </Link>

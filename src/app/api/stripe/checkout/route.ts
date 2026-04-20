@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
-import { getStripe, PLANS } from "@/lib/stripe";
-import type { PlanKey } from "@/lib/stripe";
 import { db } from "@/lib/db";
+import type { PlanKey } from "@/lib/stripe";
+import { getStripe, PLANS } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   const seller = await getSession();

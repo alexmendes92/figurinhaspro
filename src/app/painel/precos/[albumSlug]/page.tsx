@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
-import { getSession } from "@/lib/auth";
-import { albums } from "@/lib/albums";
-import { customAlbumToAlbum } from "@/lib/custom-albums";
-import { db } from "@/lib/db";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import PrecosAlbumEditor from "@/components/painel/precos-album-editor";
 import type { Album } from "@/lib/albums";
+import { albums } from "@/lib/albums";
+import { getSession } from "@/lib/auth";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 
 export default async function PrecosAlbumPage({
   params,
@@ -38,7 +38,13 @@ export default async function PrecosAlbumPage({
           href="/painel/precos"
           className="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
         >
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            className="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
           Voltar para Preços

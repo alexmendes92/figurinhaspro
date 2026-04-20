@@ -1,10 +1,6 @@
-import { db } from "@/lib/db";
-import {
-  createExperiment,
-  updateExperimentStatus,
-  saveExperimentResult,
-} from "../actions";
 import Link from "next/link";
+import { db } from "@/lib/db";
+import { createExperiment, saveExperimentResult, updateExperimentStatus } from "../actions";
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   PLANNED: { label: "Planejado", color: "bg-gray-500" },
@@ -101,11 +97,7 @@ export default async function ExperimentosPage({
               <option value="MEDIUM">Media</option>
               <option value="LOW">Baixa</option>
             </select>
-            <input
-              name="effort"
-              placeholder="Esforco (1h, 2d, 1sem)"
-              className={inputClass}
-            />
+            <input name="effort" placeholder="Esforco (1h, 2d, 1sem)" className={inputClass} />
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
             <input
@@ -115,11 +107,7 @@ export default async function ExperimentosPage({
               placeholder="Custo estimado (R$)"
               className={inputClass}
             />
-            <input
-              name="expectedResult"
-              placeholder="Resultado esperado"
-              className={inputClass}
-            />
+            <input name="expectedResult" placeholder="Resultado esperado" className={inputClass} />
           </div>
           <div className="flex gap-2">
             <button
@@ -165,39 +153,23 @@ export default async function ExperimentosPage({
                       >
                         {exp.priority}
                       </span>
-                      {exp.channel && (
-                        <span className="text-xs text-gray-600">
-                          {exp.channel}
-                        </span>
-                      )}
+                      {exp.channel && <span className="text-xs text-gray-600">{exp.channel}</span>}
                     </div>
-                    <p className="text-sm text-white mt-1.5">
-                      {exp.hypothesis}
-                    </p>
+                    <p className="text-sm text-white mt-1.5">{exp.hypothesis}</p>
                     <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-600 flex-wrap">
                       {exp.effort && <span>Esforco: {exp.effort}</span>}
                       {exp.cost !== null && exp.cost > 0 && (
                         <span>Custo: R$ {exp.cost.toFixed(0)}</span>
                       )}
-                      {exp.expectedResult && (
-                        <span>Esperado: {exp.expectedResult}</span>
-                      )}
-                      {exp._count.tasks > 0 && (
-                        <span>{exp._count.tasks} tarefas</span>
-                      )}
+                      {exp.expectedResult && <span>Esperado: {exp.expectedResult}</span>}
+                      {exp._count.tasks > 0 && <span>{exp._count.tasks} tarefas</span>}
                     </div>
                   </div>
 
                   {/* Status actions */}
                   <div className="flex gap-1 flex-shrink-0">
                     {exp.status === "PLANNED" && (
-                      <form
-                        action={updateExperimentStatus.bind(
-                          null,
-                          exp.id,
-                          "RUNNING"
-                        )}
-                      >
+                      <form action={updateExperimentStatus.bind(null, exp.id, "RUNNING")}>
                         <button
                           type="submit"
                           className="text-xs px-2 py-1 bg-blue-500/10 text-blue-400 rounded hover:bg-blue-500/20 transition-colors"
@@ -208,13 +180,7 @@ export default async function ExperimentosPage({
                     )}
                     {exp.status === "RUNNING" && (
                       <>
-                        <form
-                          action={updateExperimentStatus.bind(
-                            null,
-                            exp.id,
-                            "COMPLETED"
-                          )}
-                        >
+                        <form action={updateExperimentStatus.bind(null, exp.id, "COMPLETED")}>
                           <button
                             type="submit"
                             className="text-xs px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded hover:bg-emerald-500/20 transition-colors"
@@ -222,13 +188,7 @@ export default async function ExperimentosPage({
                             Concluir
                           </button>
                         </form>
-                        <form
-                          action={updateExperimentStatus.bind(
-                            null,
-                            exp.id,
-                            "KILLED"
-                          )}
-                        >
+                        <form action={updateExperimentStatus.bind(null, exp.id, "KILLED")}>
                           <button
                             type="submit"
                             className="text-xs px-2 py-1 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 transition-colors"
@@ -248,28 +208,22 @@ export default async function ExperimentosPage({
                       <div className="space-y-1">
                         {exp.actualResult && (
                           <p className="text-xs text-gray-400">
-                            <span className="text-gray-500">Resultado:</span>{" "}
-                            {exp.actualResult}
+                            <span className="text-gray-500">Resultado:</span> {exp.actualResult}
                           </p>
                         )}
                         {exp.learning && (
                           <p className="text-xs text-gray-400">
-                            <span className="text-gray-500">Aprendizado:</span>{" "}
-                            {exp.learning}
+                            <span className="text-gray-500">Aprendizado:</span> {exp.learning}
                           </p>
                         )}
                         {exp.decision && (
                           <p className="text-xs text-gray-400">
-                            <span className="text-gray-500">Decisao:</span>{" "}
-                            {exp.decision}
+                            <span className="text-gray-500">Decisao:</span> {exp.decision}
                           </p>
                         )}
                       </div>
                     ) : (
-                      <form
-                        action={saveExperimentResult.bind(null, exp.id)}
-                        className="space-y-2"
-                      >
+                      <form action={saveExperimentResult.bind(null, exp.id)} className="space-y-2">
                         <input
                           name="actualResult"
                           placeholder="Resultado real"

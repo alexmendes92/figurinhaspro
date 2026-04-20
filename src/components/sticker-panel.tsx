@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import { useCart, type CartSticker } from "@/lib/cart-context";
-import { getStickersForPage, getSectionNameForPage } from "@/lib/page-sticker-map";
+import { useEffect, useRef, useState } from "react";
 import type { Sticker } from "@/lib/albums";
-import { getDefaultPrice, getStickerTypeShortLabel, getStickerTypeConfig } from "@/lib/sticker-types";
+import { type CartSticker, useCart } from "@/lib/cart-context";
 import { imgUrl } from "@/lib/images";
+import { getSectionNameForPage, getStickersForPage } from "@/lib/page-sticker-map";
+import {
+  getDefaultPrice,
+  getStickerTypeConfig,
+  getStickerTypeShortLabel,
+} from "@/lib/sticker-types";
 
 function getPrice(sticker: Sticker): number {
   return getDefaultPrice(sticker.type);
@@ -80,9 +84,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
   // Verifica quais já estão no carrinho
   const inCart = new Set(
-    items
-      .filter((i) => i.albumYear === String(albumYear))
-      .map((i) => i.sticker.code)
+    items.filter((i) => i.albumYear === String(albumYear)).map((i) => i.sticker.code)
   );
 
   const handleAdd = (sticker: Sticker, event: React.MouseEvent) => {
@@ -95,7 +97,10 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
     // Animação de partícula
     const id = ++particleIdRef.current;
-    setFlyParticles((prev) => [...prev, { id, x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }]);
+    setFlyParticles((prev) => [
+      ...prev,
+      { id, x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 },
+    ]);
 
     // Feedback visual
     setAddedCodes((prev) => new Set(prev).add(sticker.code));
@@ -124,10 +129,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
       {/* Painel lateral */}
       <div className="fixed inset-0 z-[100]">
         {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-          onClick={onClose}
-        />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
         {/* Drawer */}
         <div
@@ -140,8 +142,18 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
           <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/50">
             <div>
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <svg
+                  className="w-4 h-4 text-amber-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
                 </svg>
                 Figurinhas
               </h3>
@@ -159,7 +171,13 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                 onClick={onClose}
                 className="w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all"
               >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -169,9 +187,8 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
           {/* Filtro rápido por tipo */}
           <div className="px-4 py-2 flex items-center gap-1.5 border-b border-zinc-800/30">
             {["all", "regular", "foil", "shiny"].map((type) => {
-              const count = type === "all"
-                ? stickers.length
-                : stickers.filter((s) => s.type === type).length;
+              const count =
+                type === "all" ? stickers.length : stickers.filter((s) => s.type === type).length;
               if (count === 0 && type !== "all") return null;
               const conf = type !== "all" ? getStickerTypeConfig(type) : null;
               return (
@@ -187,7 +204,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                           : "bg-zinc-800/50 text-zinc-400"
                   }`}
                 >
-                  {type === "all" ? "Todas" : conf!.shortLabel} ({count})
+                  {type === "all" ? "Todas" : conf?.shortLabel} ({count})
                 </span>
               );
             })}
@@ -198,12 +215,24 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
             {stickers.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center px-6">
                 <div className="w-14 h-14 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-3">
-                  <svg className="w-7 h-7 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v13.5A1.5 1.5 0 003.75 21z" />
+                  <svg
+                    className="w-7 h-7 text-zinc-700"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v13.5A1.5 1.5 0 003.75 21z"
+                    />
                   </svg>
                 </div>
                 <p className="text-zinc-500 text-xs">Nenhuma figurinha mapeada para esta página</p>
-                <p className="text-zinc-700 text-[10px] mt-1">Navegue para uma página de seleção/time</p>
+                <p className="text-zinc-700 text-[10px] mt-1">
+                  Navegue para uma página de seleção/time
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-3 gap-2">
@@ -235,7 +264,9 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
                         {/* Badge de tipo especial */}
                         {sticker.type !== "regular" && (
-                          <span className={`absolute top-1 right-1 px-1 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}>
+                          <span
+                            className={`absolute top-1 right-1 px-1 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}
+                          >
                             {getStickerTypeShortLabel(sticker.type)}
                           </span>
                         )}
@@ -243,8 +274,18 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                         {/* Overlay de "adicionado" */}
                         {justAdded && (
                           <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
-                            <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            <svg
+                              className="w-8 h-8 text-green-400"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M4.5 12.75l6 6 9-13.5"
+                              />
                             </svg>
                           </div>
                         )}
@@ -253,8 +294,18 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                         {isInCart && !justAdded && (
                           <div className="absolute top-1 left-1">
                             <span className="flex items-center gap-0.5 px-1 py-0.5 rounded bg-amber-500/90 text-[7px] font-bold text-black">
-                              <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                              <svg
+                                className="w-2.5 h-2.5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2.5}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                                />
                               </svg>
                             </span>
                           </div>
@@ -263,8 +314,18 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                         {/* Overlay hover com "+" */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
                           <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-                            <svg className="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            <svg
+                              className="w-4 h-4 text-black"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 4.5v15m7.5-7.5h-15"
+                              />
                             </svg>
                           </div>
                         </div>
@@ -279,11 +340,15 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                           <span className="text-[8px] text-zinc-600 font-[family-name:var(--font-geist-mono)]">
                             {sticker.code}
                           </span>
-                          <span className={`text-[9px] font-bold font-[family-name:var(--font-geist-mono)] ${
-                            sticker.type === "foil" ? "text-amber-400" :
-                            sticker.type === "shiny" ? "text-purple-400" :
-                            "text-zinc-400"
-                          }`}>
+                          <span
+                            className={`text-[9px] font-bold font-[family-name:var(--font-geist-mono)] ${
+                              sticker.type === "foil"
+                                ? "text-amber-400"
+                                : sticker.type === "shiny"
+                                  ? "text-purple-400"
+                                  : "text-zinc-400"
+                            }`}
+                          >
                             R${getPrice(sticker).toFixed(2).replace(".", ",")}
                           </span>
                         </div>
@@ -297,9 +362,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
           {/* Footer — resumo rápido */}
           <div className="border-t border-zinc-800/50 px-4 py-2 flex items-center justify-between">
-            <span className="text-[10px] text-zinc-600">
-              Clique para adicionar ao carrinho
-            </span>
+            <span className="text-[10px] text-zinc-600">Clique para adicionar ao carrinho</span>
             <span className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
               {stickers.filter((s) => inCart.has(s.code)).length}/{stickers.length} selecionadas
             </span>

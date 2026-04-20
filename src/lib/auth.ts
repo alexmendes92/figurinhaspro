@@ -20,10 +20,7 @@ const SESSION_OPTIONS = {
 
 export async function getSession() {
   const cookieStore = await cookies();
-  const session = await getIronSession<SessionData>(
-    cookieStore,
-    SESSION_OPTIONS
-  );
+  const session = await getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
 
   if (!session.sellerId) return null;
 
@@ -35,19 +32,13 @@ export async function getSession() {
 
 export async function createSession(sellerId: string) {
   const cookieStore = await cookies();
-  const session = await getIronSession<SessionData>(
-    cookieStore,
-    SESSION_OPTIONS
-  );
+  const session = await getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
   session.sellerId = sellerId;
   await session.save();
 }
 
 export async function destroySession() {
   const cookieStore = await cookies();
-  const session = await getIronSession<SessionData>(
-    cookieStore,
-    SESSION_OPTIONS
-  );
+  const session = await getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
   session.destroy();
 }

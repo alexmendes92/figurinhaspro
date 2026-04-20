@@ -63,14 +63,19 @@ export default function LojaEditor({
     setEditing(false);
   }
 
-  const inputClass = "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]";
+  const inputClass =
+    "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]";
   const emptyClass = "text-sm font-medium text-zinc-600";
 
   const infoItems = [
     {
       label: "Nome da loja",
       value: editing ? (
-        <input value={shopName} onChange={(e) => setShopName(e.target.value)} className={inputClass} />
+        <input
+          value={shopName}
+          onChange={(e) => setShopName(e.target.value)}
+          className={inputClass}
+        />
       ) : (
         <span className="text-sm font-medium">{shopName}</span>
       ),
@@ -78,33 +83,61 @@ export default function LojaEditor({
     {
       label: "WhatsApp",
       value: editing ? (
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(11) 99999-9999" className={inputClass} />
+        <input
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="(11) 99999-9999"
+          className={inputClass}
+        />
       ) : (
-        <span className={phone ? "text-sm font-medium" : emptyClass}>{phone || "Nao configurado"}</span>
+        <span className={phone ? "text-sm font-medium" : emptyClass}>
+          {phone || "Nao configurado"}
+        </span>
       ),
     },
     {
       label: "Descricao",
       value: editing ? (
-        <input value={shopDescription} onChange={(e) => setShopDescription(e.target.value.slice(0, 200))} placeholder="Sobre sua loja (max 200)" className={inputClass} />
+        <input
+          value={shopDescription}
+          onChange={(e) => setShopDescription(e.target.value.slice(0, 200))}
+          placeholder="Sobre sua loja (max 200)"
+          className={inputClass}
+        />
       ) : (
-        <span className={shopDescription ? "text-sm font-medium" : emptyClass}>{shopDescription || "Nao configurado"}</span>
+        <span className={shopDescription ? "text-sm font-medium" : emptyClass}>
+          {shopDescription || "Nao configurado"}
+        </span>
       ),
     },
     {
       label: "Horario",
       value: editing ? (
-        <input value={businessHours} onChange={(e) => setBusinessHours(e.target.value)} placeholder="Seg-Sex 9h-18h" className={inputClass} />
+        <input
+          value={businessHours}
+          onChange={(e) => setBusinessHours(e.target.value)}
+          placeholder="Seg-Sex 9h-18h"
+          className={inputClass}
+        />
       ) : (
-        <span className={businessHours ? "text-sm font-medium" : emptyClass}>{businessHours || "Nao configurado"}</span>
+        <span className={businessHours ? "text-sm font-medium" : emptyClass}>
+          {businessHours || "Nao configurado"}
+        </span>
       ),
     },
     {
       label: "Pagamento",
       value: editing ? (
-        <input value={paymentMethods} onChange={(e) => setPaymentMethods(e.target.value)} placeholder="PIX, Cartao" className={inputClass} />
+        <input
+          value={paymentMethods}
+          onChange={(e) => setPaymentMethods(e.target.value)}
+          placeholder="PIX, Cartao"
+          className={inputClass}
+        />
       ) : (
-        <span className={paymentMethods ? "text-sm font-medium" : emptyClass}>{paymentMethods || "Nao configurado"}</span>
+        <span className={paymentMethods ? "text-sm font-medium" : emptyClass}>
+          {paymentMethods || "Nao configurado"}
+        </span>
       ),
     },
     {
@@ -124,7 +157,13 @@ export default function LojaEditor({
         <div className="flex items-center gap-2">
           {saved && (
             <span className="text-[10px] text-[var(--success)] flex items-center gap-1">
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               Salvo

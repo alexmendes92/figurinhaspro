@@ -1,8 +1,8 @@
 "use server";
 
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
 
 const BASE = "/painel/comercial";
 
@@ -15,7 +15,7 @@ export async function createLead(formData: FormData) {
   const source = (formData.get("source") as string) || "DIRETO";
   const sourceDetail = (formData.get("sourceDetail") as string) || null;
   const potentialValue = formData.get("potentialValue")
-    ? parseFloat(formData.get("potentialValue") as string)
+    ? Number.parseFloat(formData.get("potentialValue") as string)
     : null;
   const nextStep = (formData.get("nextStep") as string) || null;
   const priority = (formData.get("priority") as string) || "MEDIUM";
@@ -86,9 +86,7 @@ export async function createTask(formData: FormData) {
   const title = formData.get("title") as string;
   const description = (formData.get("description") as string) || null;
   const priority = (formData.get("priority") as string) || "MEDIUM";
-  const deadline = formData.get("deadline")
-    ? new Date(formData.get("deadline") as string)
-    : null;
+  const deadline = formData.get("deadline") ? new Date(formData.get("deadline") as string) : null;
   const leadId = (formData.get("leadId") as string) || null;
   const initiativeId = (formData.get("initiativeId") as string) || null;
   const experimentId = (formData.get("experimentId") as string) || null;
@@ -140,7 +138,7 @@ export async function updateTaskStatus(id: string, status: string) {
 export async function createOffer(formData: FormData) {
   const name = formData.get("name") as string;
   const description = (formData.get("description") as string) || null;
-  const price = parseFloat(formData.get("price") as string);
+  const price = Number.parseFloat(formData.get("price") as string);
   const priceType = (formData.get("priceType") as string) || "ONE_TIME";
   const includes = (formData.get("includes") as string) || null;
   const validUntil = formData.get("validUntil")
@@ -173,9 +171,7 @@ export async function createExperiment(formData: FormData) {
   const channel = (formData.get("channel") as string) || null;
   const priority = (formData.get("priority") as string) || "MEDIUM";
   const effort = (formData.get("effort") as string) || null;
-  const cost = formData.get("cost")
-    ? parseFloat(formData.get("cost") as string)
-    : null;
+  const cost = formData.get("cost") ? Number.parseFloat(formData.get("cost") as string) : null;
   const expectedResult = (formData.get("expectedResult") as string) || null;
 
   await db.bizExperiment.create({
@@ -189,8 +185,7 @@ export async function createExperiment(formData: FormData) {
 export async function updateExperimentStatus(id: string, status: string) {
   const data: Record<string, unknown> = { status };
   if (status === "RUNNING") data.startedAt = new Date();
-  if (status === "COMPLETED" || status === "KILLED")
-    data.completedAt = new Date();
+  if (status === "COMPLETED" || status === "KILLED") data.completedAt = new Date();
 
   await db.bizExperiment.update({ where: { id }, data });
   revalidatePath(`${BASE}/experimentos`);
@@ -236,7 +231,7 @@ export async function updateInitiativePhase(id: string, phase: string) {
 
 export async function addKpiSnapshot(formData: FormData) {
   const kpiId = formData.get("kpiId") as string;
-  const value = parseFloat(formData.get("value") as string);
+  const value = Number.parseFloat(formData.get("value") as string);
   const note = (formData.get("note") as string) || null;
 
   await db.bizKpiSnapshot.create({

@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { createLead } from "../actions";
-import Link from "next/link";
 
 const STAGES = [
   { value: "", label: "Todos" },
@@ -86,23 +86,9 @@ export default async function LeadsPage({
         >
           <h3 className="text-sm font-medium text-white">Novo Lead</h3>
           <div className="grid sm:grid-cols-2 gap-3">
-            <input
-              name="name"
-              placeholder="Nome *"
-              required
-              className={inputClass}
-            />
-            <input
-              name="phone"
-              placeholder="Telefone"
-              className={inputClass}
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              className={inputClass}
-            />
+            <input name="name" placeholder="Nome *" required className={inputClass} />
+            <input name="phone" placeholder="Telefone" className={inputClass} />
+            <input name="email" type="email" placeholder="Email" className={inputClass} />
             <select name="source" className={inputClass}>
               <option value="DIRETO">Direto</option>
               <option value="INDICACAO">Indicacao</option>
@@ -125,11 +111,7 @@ export default async function LeadsPage({
               <option value="LOW">Baixa</option>
             </select>
           </div>
-          <input
-            name="nextStep"
-            placeholder="Proximo passo"
-            className={inputClass}
-          />
+          <input name="nextStep" placeholder="Proximo passo" className={inputClass} />
           <div className="flex gap-2">
             <button
               type="submit"
@@ -172,9 +154,7 @@ export default async function LeadsPage({
                     <span
                       className={`w-2 h-2 rounded-full flex-shrink-0 ${STAGE_COLOR[lead.stage] || "bg-gray-500"}`}
                     />
-                    <span className="text-sm font-medium text-white truncate">
-                      {lead.name}
-                    </span>
+                    <span className="text-sm font-medium text-white truncate">{lead.name}</span>
                     <span
                       className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${PRIORITY_BADGE[lead.priority] || "bg-gray-500/10 text-gray-400"}`}
                     >
@@ -183,15 +163,9 @@ export default async function LeadsPage({
                   </div>
                   <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-500">
                     <span>{lead.source}</span>
-                    {lead.potentialValue && (
-                      <span>R$ {lead.potentialValue.toFixed(0)}</span>
-                    )}
-                    {lead._count.activities > 0 && (
-                      <span>{lead._count.activities} atividades</span>
-                    )}
-                    {lead._count.tasks > 0 && (
-                      <span>{lead._count.tasks} tarefas</span>
-                    )}
+                    {lead.potentialValue && <span>R$ {lead.potentialValue.toFixed(0)}</span>}
+                    {lead._count.activities > 0 && <span>{lead._count.activities} atividades</span>}
+                    {lead._count.tasks > 0 && <span>{lead._count.tasks} tarefas</span>}
                   </div>
                   {lead.nextStep && (
                     <p className="text-xs text-gray-400 mt-1.5 line-clamp-1">

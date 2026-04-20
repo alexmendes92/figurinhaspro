@@ -28,9 +28,7 @@ export function Spark({
   });
 
   const line = `M${points.join(" L")}`;
-  const area = fill
-    ? `${line} L${(width - 1).toFixed(1)},${height - 1} L1,${height - 1} Z`
-    : null;
+  const area = fill ? `${line} L${(width - 1).toFixed(1)},${height - 1} L1,${height - 1} Z` : null;
 
   return (
     <svg

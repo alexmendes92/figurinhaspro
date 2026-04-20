@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from "react";
+import { createContext, type ReactNode, useCallback, useContext, useRef, useState } from "react";
 
 type ToastVariant = "default" | "success" | "error";
 
@@ -33,9 +33,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     const duration = variant === "error" ? 4000 : 2500;
 
     const exitTimer = setTimeout(() => {
-      setMessages((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, exiting: true } : m))
-      );
+      setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, exiting: true } : m)));
       const removeTimer = setTimeout(() => {
         setMessages((prev) => prev.filter((m) => m.id !== id));
         timers.current.delete(id);

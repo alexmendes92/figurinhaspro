@@ -1,6 +1,6 @@
-import { db } from "@/lib/db";
-import { SeedButton } from "@/components/painel/comercial/seed-button";
 import Link from "next/link";
+import { SeedButton } from "@/components/painel/comercial/seed-button";
+import { db } from "@/lib/db";
 
 const STAGE_CONFIG: Record<string, { label: string; color: string }> = {
   PROSPECT: { label: "Prospects", color: "bg-gray-500" },
@@ -22,15 +22,16 @@ function Card({
 }) {
   const content = (
     <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-      <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">
-        {title}
-      </h3>
+      <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">{title}</h3>
       {children}
     </div>
   );
   if (href)
     return (
-      <Link href={href} className="block hover:ring-1 hover:ring-amber-500/30 rounded-xl transition-all">
+      <Link
+        href={href}
+        className="block hover:ring-1 hover:ring-amber-500/30 rounded-xl transition-all"
+      >
         {content}
       </Link>
     );
@@ -90,7 +91,14 @@ export default async function ComercialDashboard() {
   ]);
 
   const mrr = proSellers * 39 + unlimitedSellers * 79;
-  const pipeline = { PROSPECT: prospectCount, CONTACT: contactCount, DEMO: demoCount, NEGOTIATION: negotiationCount, WON: wonCount, LOST: lostCount };
+  const pipeline = {
+    PROSPECT: prospectCount,
+    CONTACT: contactCount,
+    DEMO: demoCount,
+    NEGOTIATION: negotiationCount,
+    WON: wonCount,
+    LOST: lostCount,
+  };
   const totalPipeline = Object.values(pipeline).reduce((a, b) => a + b, 0) || 1;
 
   const PRIORITY_COLOR: Record<string, string> = {
@@ -105,9 +113,7 @@ export default async function ComercialDashboard() {
       {kpiCount === 0 && (
         <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-400">
-              Cockpit vazio
-            </p>
+            <p className="text-sm font-medium text-amber-400">Cockpit vazio</p>
             <p className="text-xs text-gray-500 mt-1">
               Popule com os dados da analise estrategica para comecar.
             </p>
@@ -124,10 +130,7 @@ export default async function ComercialDashboard() {
           { label: "PRO", value: proSellers },
           { label: "Pedidos/mes", value: ordersThisMonth },
         ].map((m) => (
-          <div
-            key={m.label}
-            className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4"
-          >
+          <div key={m.label} className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
             <p className="text-xs text-gray-500">{m.label}</p>
             <p className="text-2xl font-bold text-white mt-1">{m.value}</p>
           </div>
@@ -181,9 +184,7 @@ export default async function ComercialDashboard() {
                   >
                     {t.priority === "HIGH" ? "!!!" : t.priority === "MEDIUM" ? "!!" : "!"}
                   </span>
-                  <span className="text-sm text-gray-300 line-clamp-1">
-                    {t.title}
-                  </span>
+                  <span className="text-sm text-gray-300 line-clamp-1">{t.title}</span>
                 </li>
               ))}
             </ul>
@@ -202,13 +203,9 @@ export default async function ComercialDashboard() {
                     <span
                       className={`w-2 h-2 rounded-full flex-shrink-0 ${STAGE_CONFIG[l.stage]?.color || "bg-gray-500"}`}
                     />
-                    <span className="text-sm text-gray-300 truncate">
-                      {l.name}
-                    </span>
+                    <span className="text-sm text-gray-300 truncate">{l.name}</span>
                   </div>
-                  <span className="text-xs text-gray-600 flex-shrink-0 ml-2">
-                    {l.source}
-                  </span>
+                  <span className="text-xs text-gray-600 flex-shrink-0 ml-2">{l.source}</span>
                 </li>
               ))}
             </ul>

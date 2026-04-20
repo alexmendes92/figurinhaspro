@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { createOffer, toggleOfferStatus } from "../actions";
-import Link from "next/link";
 
 const PRICE_TYPE_LABEL: Record<string, string> = {
   ONE_TIME: "Unico",
@@ -33,8 +33,7 @@ export default async function OfertasPage({
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-4">
           <span className="text-xs text-gray-500">
-            {offers.length} ofertas | {totalSales} vendas | R${" "}
-            {totalRevenue.toFixed(0)} receita
+            {offers.length} ofertas | {totalSales} vendas | R$ {totalRevenue.toFixed(0)} receita
           </span>
         </div>
         <Link
@@ -53,12 +52,7 @@ export default async function OfertasPage({
         >
           <h3 className="text-sm font-medium text-white">Nova Oferta</h3>
           <div className="grid sm:grid-cols-2 gap-3">
-            <input
-              name="name"
-              placeholder="Nome da oferta *"
-              required
-              className={inputClass}
-            />
+            <input name="name" placeholder="Nome da oferta *" required className={inputClass} />
             <div className="grid grid-cols-2 gap-3">
               <input
                 name="price"
@@ -76,12 +70,7 @@ export default async function OfertasPage({
               </select>
             </div>
           </div>
-          <textarea
-            name="description"
-            placeholder="Descricao"
-            rows={2}
-            className={inputClass}
-          />
+          <textarea name="description" placeholder="Descricao" rows={2} className={inputClass} />
           <textarea
             name="includes"
             placeholder="O que inclui (1 item por linha)"
@@ -117,16 +106,12 @@ export default async function OfertasPage({
             <div
               key={offer.id}
               className={`bg-white/[0.03] border rounded-xl p-4 ${
-                offer.status === "ACTIVE"
-                  ? "border-amber-500/20"
-                  : "border-white/[0.06] opacity-60"
+                offer.status === "ACTIVE" ? "border-amber-500/20" : "border-white/[0.06] opacity-60"
               }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h4 className="text-sm font-medium text-white">
-                    {offer.name}
-                  </h4>
+                  <h4 className="text-sm font-medium text-white">{offer.name}</h4>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-lg font-bold text-amber-400">
                       R$ {offer.price.toFixed(0)}
@@ -150,9 +135,7 @@ export default async function OfertasPage({
                 </form>
               </div>
               {offer.description && (
-                <p className="text-xs text-gray-500 mt-2 line-clamp-2">
-                  {offer.description}
-                </p>
+                <p className="text-xs text-gray-500 mt-2 line-clamp-2">{offer.description}</p>
               )}
               {offer.includes && (
                 <div className="mt-2 space-y-0.5">
@@ -167,9 +150,7 @@ export default async function OfertasPage({
                 <span>{offer.salesCount} vendas</span>
                 <span>R$ {offer.revenue.toFixed(0)}</span>
                 {offer.validUntil && (
-                  <span>
-                    Ate {offer.validUntil.toLocaleDateString("pt-BR")}
-                  </span>
+                  <span>Ate {offer.validUntil.toLocaleDateString("pt-BR")}</span>
                 )}
               </div>
             </div>

@@ -1,5 +1,5 @@
-import { mockSellers, getKpis } from "./mock-data";
 import SellersTable from "@/components/painel/admin/sellers-table";
+import { getKpis, mockSellers } from "./mock-data";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -53,7 +53,9 @@ export default function RevendedoresPage() {
             className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4"
           >
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl ${card.bgColor} flex items-center justify-center shrink-0`}>
+              <div
+                className={`w-10 h-10 rounded-xl ${card.bgColor} flex items-center justify-center shrink-0`}
+              >
                 <svg
                   className={`w-5 h-5 ${card.color}`}
                   fill="none"
@@ -68,9 +70,7 @@ export default function RevendedoresPage() {
                 <p className="text-[11px] text-gray-500 uppercase tracking-wider font-medium truncate">
                   {card.label}
                 </p>
-                <p className={`text-lg font-bold ${card.color} mt-0.5`}>
-                  {card.value}
-                </p>
+                <p className={`text-lg font-bold ${card.color} mt-0.5`}>{card.value}</p>
               </div>
             </div>
           </div>

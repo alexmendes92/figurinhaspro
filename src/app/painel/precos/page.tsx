@@ -1,11 +1,11 @@
-import { getSession } from "@/lib/auth";
-import { albums } from "@/lib/albums";
-import { albumCovers } from "@/lib/album-covers";
-import { db } from "@/lib/db";
-import { customAlbumToAlbum } from "@/lib/custom-albums";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import PrecosGlobalEditor from "@/components/painel/precos-global-editor";
+import { albumCovers } from "@/lib/album-covers";
+import { albums } from "@/lib/albums";
+import { getSession } from "@/lib/auth";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 import { imgUrl } from "@/lib/images";
 
 export default async function PrecosPage() {
@@ -20,7 +20,10 @@ export default async function PrecosPage() {
   });
 
   const countMap = new Map<string, number>(
-    inventoryCounts.map((c: { albumSlug: string; _count: { stickerCode: number } }) => [c.albumSlug, c._count.stickerCode])
+    inventoryCounts.map((c: { albumSlug: string; _count: { stickerCode: number } }) => [
+      c.albumSlug,
+      c._count.stickerCode,
+    ])
   );
 
   // Conta regras de preço configuradas por álbum
@@ -48,7 +51,8 @@ export default async function PrecosPage() {
 
   const rulesCountMap = new Map<string, number>();
   for (const r of albumRules) {
-    if (r.albumSlug) rulesCountMap.set(r.albumSlug, (rulesCountMap.get(r.albumSlug) || 0) + r._count.id);
+    if (r.albumSlug)
+      rulesCountMap.set(r.albumSlug, (rulesCountMap.get(r.albumSlug) || 0) + r._count.id);
   }
   for (const r of sectionRules) {
     rulesCountMap.set(r.albumSlug, (rulesCountMap.get(r.albumSlug) || 0) + r._count.id);
@@ -67,7 +71,7 @@ export default async function PrecosPage() {
 
   // Ordena: estáticos por ano desc, customizados no final
   const sortedAlbums = [
-    ...[...albums].sort((a, b) => parseInt(b.year) - parseInt(a.year)),
+    ...[...albums].sort((a, b) => Number.parseInt(b.year, 10) - Number.parseInt(a.year, 10)),
     ...customAlbumsList,
   ];
 
@@ -123,8 +127,18 @@ export default async function PrecosPage() {
                   ) : isCustom ? (
                     <div className="text-center">
                       <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-2">
-                        <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        <svg
+                          className="w-6 h-6 text-amber-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                          />
                         </svg>
                       </div>
                       <p className="text-[10px] text-amber-400/70 font-medium">Personalizado</p>

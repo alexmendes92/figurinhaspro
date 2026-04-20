@@ -1,7 +1,7 @@
-import { db } from "@/lib/db";
-import { notFound } from "next/navigation";
-import { updateLead, addActivity, updateLeadStage } from "../../actions";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { db } from "@/lib/db";
+import { addActivity, updateLead, updateLeadStage } from "../../actions";
 
 const STAGES = ["PROSPECT", "CONTACT", "DEMO", "NEGOTIATION", "WON", "LOST"];
 
@@ -79,9 +79,7 @@ export default async function LeadDetailPage({
             {lead.phone && <span>{lead.phone}</span>}
             {lead.email && <span>{lead.email}</span>}
             {lead.potentialValue && (
-              <span className="text-amber-400">
-                R$ {lead.potentialValue.toFixed(0)}
-              </span>
+              <span className="text-amber-400">R$ {lead.potentialValue.toFixed(0)}</span>
             )}
             <span>{lead.source}</span>
           </div>
@@ -90,17 +88,10 @@ export default async function LeadDetailPage({
 
       {/* Stage pipeline */}
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-        <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">
-          Estagio
-        </h3>
+        <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Estagio</h3>
         <div className="flex flex-wrap gap-2">
           {STAGES.map((stage) => (
-            <StageButton
-              key={stage}
-              leadId={id}
-              stage={stage}
-              currentStage={lead.stage}
-            />
+            <StageButton key={stage} leadId={id} stage={stage} currentStage={lead.stage} />
           ))}
         </div>
       </div>
@@ -114,11 +105,7 @@ export default async function LeadDetailPage({
           <form action={updateLeadBound} className="space-y-3">
             <div>
               <label className="text-xs text-gray-500">Proximo passo</label>
-              <input
-                name="nextStep"
-                defaultValue={lead.nextStep || ""}
-                className={inputClass}
-              />
+              <input name="nextStep" defaultValue={lead.nextStep || ""} className={inputClass} />
             </div>
             <div>
               <label className="text-xs text-gray-500">Objecoes</label>
@@ -188,11 +175,7 @@ export default async function LeadDetailPage({
               required
               className={inputClass}
             />
-            <input
-              name="result"
-              placeholder="Resultado / proximo passo"
-              className={inputClass}
-            />
+            <input name="result" placeholder="Resultado / proximo passo" className={inputClass} />
             <button
               type="submit"
               className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
@@ -213,28 +196,17 @@ export default async function LeadDetailPage({
         ) : (
           <div className="space-y-3">
             {lead.activities.map((a) => (
-              <div
-                key={a.id}
-                className="flex gap-3 border-l-2 border-white/[0.06] pl-3"
-              >
+              <div key={a.id} className="flex gap-3 border-l-2 border-white/[0.06] pl-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-amber-400">
-                      {a.type}
-                    </span>
-                    {a.channel && (
-                      <span className="text-xs text-gray-600">{a.channel}</span>
-                    )}
+                    <span className="text-xs font-medium text-amber-400">{a.type}</span>
+                    {a.channel && <span className="text-xs text-gray-600">{a.channel}</span>}
                     <span className="text-xs text-gray-600">
                       {a.createdAt.toLocaleDateString("pt-BR")}
                     </span>
                   </div>
                   <p className="text-sm text-gray-300 mt-0.5">{a.summary}</p>
-                  {a.result && (
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      &rarr; {a.result}
-                    </p>
-                  )}
+                  {a.result && <p className="text-xs text-gray-500 mt-0.5">&rarr; {a.result}</p>}
                 </div>
               </div>
             ))}

@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { albums } from "@/lib/albums";
 import { getSession } from "@/lib/auth";
 import { generateAlbumSlug, parseStickersInput } from "@/lib/custom-albums";
-import { albums } from "@/lib/albums";
-import { z } from "zod";
+import { db } from "@/lib/db";
 
 const createSchema = z.object({
   title: z.string().min(2).max(100),
@@ -32,7 +32,10 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Dados inválidos", details: parsed.error.flatten() }, { status: 400 });
+    return NextResponse.json(
+      { error: "Dados inválidos", details: parsed.error.flatten() },
+      { status: 400 }
+    );
   }
 
   const { title, year, stickersText } = parsed.data;
@@ -40,7 +43,10 @@ export async function POST(req: NextRequest) {
 
   // Verifica conflito com álbuns estáticos
   if (albums.some((a) => a.slug === slug)) {
-    return NextResponse.json({ error: "Já existe um álbum com esse nome no sistema" }, { status: 409 });
+    return NextResponse.json(
+      { error: "Já existe um álbum com esse nome no sistema" },
+      { status: 409 }
+    );
   }
 
   // Verifica conflito com álbuns customizados do mesmo seller

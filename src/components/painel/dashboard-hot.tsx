@@ -13,7 +13,13 @@ export function DashboardHot({ items }: { items: HotItem[] }) {
     return (
       <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5 min-h-[280px] flex flex-col items-center justify-center text-center">
         <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className="w-5 h-5 text-gray-500">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.75}
+            className="w-5 h-5 text-gray-500"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 2L4 14h7l-1 8 9-12h-7z" />
           </svg>
         </div>
@@ -27,7 +33,9 @@ export function DashboardHot({ items }: { items: HotItem[] }) {
     <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">Tendências 48h</p>
+          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+            Tendências 48h
+          </p>
           <p className="text-base font-bold text-white mt-0.5">Em alta agora</p>
         </div>
       </div>

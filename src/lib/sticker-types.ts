@@ -9,14 +9,14 @@ export type StickerType = (typeof STICKER_TYPES)[number];
 
 export interface StickerTypeConfig {
   type: StickerType;
-  label: string;       // "Normal", "Especial (Foil)", "Brilhante (Shiny)"
-  shortLabel: string;  // "Normal", "Especial", "Brilhante"
+  label: string; // "Normal", "Especial (Foil)", "Brilhante (Shiny)"
+  shortLabel: string; // "Normal", "Especial", "Brilhante"
   desc: string;
-  color: string;       // text color class
-  bg: string;          // bg + border classes
-  badgeClass: string;  // badge compact style
+  color: string; // text color class
+  bg: string; // bg + border classes
+  badgeClass: string; // badge compact style
   defaultPrice: number;
-  icon: string;        // SVG path
+  icon: string; // SVG path
 }
 
 export const STICKER_TYPE_CONFIG: StickerTypeConfig[] = [

@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { getSession } from "@/lib/auth";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 const tierSchema = z.object({
   albumSlug: z.string().min(1),

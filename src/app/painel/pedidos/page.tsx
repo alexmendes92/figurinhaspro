@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useToast } from "@/lib/toast-context";
+import { useEffect, useState } from "react";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
+import { useToast } from "@/lib/toast-context";
 
 interface OrderItem {
   id: string;
@@ -27,16 +27,24 @@ interface Order {
 
 const statusFlow = ["QUOTE", "CONFIRMED", "PAID", "SHIPPED", "DELIVERED"];
 
-const statusConfig: Record<string, { label: string; badge: string; next?: string; nextLabel?: string }> = {
+const statusConfig: Record<
+  string,
+  { label: string; badge: string; next?: string; nextLabel?: string }
+> = {
   QUOTE: { label: "Orçamento", badge: "badge-zinc", next: "CONFIRMED", nextLabel: "Confirmar" },
   CONFIRMED: { label: "Confirmado", badge: "badge-blue", next: "PAID", nextLabel: "Marcar pago" },
   PAID: { label: "Pago", badge: "badge-green", next: "SHIPPED", nextLabel: "Marcar enviado" },
-  SHIPPED: { label: "Enviado", badge: "badge-amber", next: "DELIVERED", nextLabel: "Marcar entregue" },
+  SHIPPED: {
+    label: "Enviado",
+    badge: "badge-amber",
+    next: "DELIVERED",
+    nextLabel: "Marcar entregue",
+  },
   DELIVERED: { label: "Entregue", badge: "badge-green" },
   CANCELLED: { label: "Cancelado", badge: "badge-red" },
 };
 
-const channelLabels: Record<string, string> = {
+const _channelLabels: Record<string, string> = {
   SYSTEM: "Sistema",
   WHATSAPP: "WhatsApp",
   MANUAL: "Manual",
@@ -50,14 +58,23 @@ export default function PedidosPage() {
   const [filter, setFilter] = useState<string>("all");
   const [updating, setUpdating] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [cancelConfirm, setCancelConfirm] = useState<{ orderId: string; customerName: string } | null>(null);
+  const [cancelConfirm, setCancelConfirm] = useState<{
+    orderId: string;
+    customerName: string;
+  } | null>(null);
 
   useEffect(() => {
     fetch("/api/orders")
       .then((r) => r.json())
-      .then((data) => { setOrders(data); setLoading(false); })
-      .catch(() => { toast.error("Erro ao carregar pedidos"); setLoading(false); });
-  }, []);
+      .then((data) => {
+        setOrders(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Erro ao carregar pedidos");
+        setLoading(false);
+      });
+  }, [toast.error]);
 
   async function updateStatus(orderId: string, newStatus: string) {
     setUpdating(orderId);
@@ -81,13 +98,17 @@ export default function PedidosPage() {
     setUpdating(null);
   }
 
-  const filtered = (filter === "all" ? orders : orders.filter((o) => o.status === filter))
-    .filter((o) => !search.trim() || o.customerName.toLowerCase().includes(search.toLowerCase()));
+  const filtered = (filter === "all" ? orders : orders.filter((o) => o.status === filter)).filter(
+    (o) => !search.trim() || o.customerName.toLowerCase().includes(search.toLowerCase())
+  );
 
-  const counts = orders.reduce((acc, o) => {
-    acc[o.status] = (acc[o.status] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const counts = orders.reduce(
+    (acc, o) => {
+      acc[o.status] = (acc[o.status] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   return (
     <div className="p-6 lg:p-8 max-w-5xl slide-up">
@@ -142,14 +163,27 @@ export default function PedidosPage() {
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer" />
+            <div
+              key={i}
+              className="h-20 rounded-2xl bg-[var(--card)] border border-[var(--border)] shimmer"
+            />
           ))}
         </div>
       ) : filtered.length === 0 ? (
         <div className="p-16 rounded-2xl border border-[var(--border)] bg-[var(--card)] text-center">
           <div className="w-14 h-14 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859" />
+            <svg
+              className="w-6 h-6 text-zinc-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859"
+              />
             </svg>
           </div>
           <p className="text-sm text-[var(--muted)]">
@@ -193,13 +227,17 @@ export default function PedidosPage() {
                         <span className="text-zinc-700 hidden sm:inline">·</span>
                         <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)] hidden sm:inline">
                           {new Date(order.createdAt).toLocaleDateString("pt-BR", {
-                            day: "2-digit", month: "2-digit", year: "numeric",
-                            hour: "2-digit", minute: "2-digit",
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
                           })}
                         </span>
                         <span className="text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)] sm:hidden">
                           {new Date(order.createdAt).toLocaleDateString("pt-BR", {
-                            day: "2-digit", month: "2-digit",
+                            day: "2-digit",
+                            month: "2-digit",
                           })}
                         </span>
                       </div>
@@ -213,7 +251,10 @@ export default function PedidosPage() {
                     </span>
                     <svg
                       className={`w-4 h-4 text-zinc-600 transition-transform hidden sm:block ${isExpanded ? "rotate-180" : ""}`}
-                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -256,7 +297,9 @@ export default function PedidosPage() {
                         const done = i <= idx;
                         return (
                           <div key={s} className="flex items-center gap-1 flex-1">
-                            <div className={`w-full h-1 rounded-full ${done ? "bg-[var(--accent)]" : "bg-zinc-800"}`} />
+                            <div
+                              className={`w-full h-1 rounded-full ${done ? "bg-[var(--accent)]" : "bg-zinc-800"}`}
+                            />
                           </div>
                         );
                       })}
@@ -301,7 +344,12 @@ export default function PedidosPage() {
                         )}
                         {order.status !== "CANCELLED" && order.status !== "DELIVERED" && (
                           <button
-                            onClick={() => setCancelConfirm({ orderId: order.id, customerName: order.customerName })}
+                            onClick={() =>
+                              setCancelConfirm({
+                                orderId: order.id,
+                                customerName: order.customerName,
+                              })
+                            }
                             disabled={isUpdating}
                             className="btn-ghost !py-2.5 !px-4 !text-xs !text-red-400 !border-red-500/15 hover:!bg-red-500/5"
                           >

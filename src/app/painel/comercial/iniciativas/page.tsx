@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { createInitiative, updateInitiativePhase } from "../actions";
-import Link from "next/link";
 
 const PHASE_CONFIG: Record<string, { label: string; color: string }> = {
   BACKLOG: { label: "Backlog", color: "bg-gray-500" },
@@ -57,10 +57,13 @@ export default async function IniciativasPage({
       {/* Header */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex gap-1 overflow-x-auto scrollbar-none">
-          {[{ value: "", label: "Todas" }, ...phases.map((p) => ({
-            value: p,
-            label: PHASE_CONFIG[p]?.label || p,
-          }))].map((s) => {
+          {[
+            { value: "", label: "Todas" },
+            ...phases.map((p) => ({
+              value: p,
+              label: PHASE_CONFIG[p]?.label || p,
+            })),
+          ].map((s) => {
             const active = phaseFilter === s.value;
             const href = s.value
               ? `/painel/comercial/iniciativas?phase=${s.value}`
@@ -124,23 +127,10 @@ export default async function IniciativasPage({
             </select>
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
-            <input
-              name="owner"
-              placeholder="Responsavel"
-              className={inputClass}
-            />
-            <input
-              name="nextStep"
-              placeholder="Proximo passo"
-              className={inputClass}
-            />
+            <input name="owner" placeholder="Responsavel" className={inputClass} />
+            <input name="nextStep" placeholder="Proximo passo" className={inputClass} />
           </div>
-          <textarea
-            name="notes"
-            placeholder="Notas"
-            rows={2}
-            className={inputClass}
-          />
+          <textarea name="notes" placeholder="Notas" rows={2} className={inputClass} />
           <div className="flex gap-2">
             <button
               type="submit"
@@ -167,9 +157,7 @@ export default async function IniciativasPage({
             return (
               <div key={phase}>
                 <div className="flex items-center gap-2 mb-3">
-                  <span
-                    className={`w-2 h-2 rounded-full ${cfg.color}`}
-                  />
+                  <span className={`w-2 h-2 rounded-full ${cfg.color}`} />
                   <span className="text-xs font-medium text-gray-400">
                     {cfg.label} ({items.length})
                   </span>
@@ -187,14 +175,10 @@ export default async function IniciativasPage({
         <div className="space-y-2">
           {initiatives.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-sm">
-                Nenhuma iniciativa encontrada
-              </p>
+              <p className="text-gray-500 text-sm">Nenhuma iniciativa encontrada</p>
             </div>
           ) : (
-            initiatives.map((init) => (
-              <InitiativeCard key={init.id} initiative={init} />
-            ))
+            initiatives.map((init) => <InitiativeCard key={init.id} initiative={init} />)
           )}
         </div>
       )}
@@ -229,16 +213,10 @@ function InitiativeCard({
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span
-              className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${catCfg}`}
-            >
+            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${catCfg}`}>
               {CATEGORY_LABEL[init.category] || init.category}
             </span>
-            {init.impact && (
-              <span className="text-[10px] text-gray-600">
-                Imp: {init.impact}
-              </span>
-            )}
+            {init.impact && <span className="text-[10px] text-gray-600">Imp: {init.impact}</span>}
           </div>
           <p className="text-sm text-white mt-1">{init.title}</p>
         </div>
@@ -273,11 +251,7 @@ function InitiativeCard({
         {init._count.tasks > 0 && <span>{init._count.tasks} tarefas</span>}
       </div>
 
-      {init.nextStep && (
-        <p className="text-xs text-gray-500 mt-1.5">
-          Proximo: {init.nextStep}
-        </p>
-      )}
+      {init.nextStep && <p className="text-xs text-gray-500 mt-1.5">Proximo: {init.nextStep}</p>}
 
       {init.milestones.length > 0 && (
         <div className="mt-2 pt-2 border-t border-white/[0.04] space-y-1">
@@ -285,7 +259,11 @@ function InitiativeCard({
             <div key={m.id} className="flex items-center gap-1.5">
               <span
                 className={`w-1.5 h-1.5 rounded-full ${
-                  m.status === "DONE" ? "bg-emerald-500" : m.status === "IN_PROGRESS" ? "bg-amber-500" : "bg-gray-600"
+                  m.status === "DONE"
+                    ? "bg-emerald-500"
+                    : m.status === "IN_PROGRESS"
+                      ? "bg-amber-500"
+                      : "bg-gray-600"
                 }`}
               />
               <span

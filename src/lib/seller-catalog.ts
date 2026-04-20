@@ -1,15 +1,15 @@
 /**
  * Helper server-side para montar o catálogo de álbuns de um seller.
  * Centraliza a lógica que antes era duplicada em loja, estoque e preços.
- * 
+ *
  * Nesta primeira entrega, apenas a loja pública e a rota de estatísticas usam.
  * As rotas de estoque e preços continuam com lógica inline (tech debt futuro).
  */
 
-import { db } from "@/lib/db";
-import { albums } from "@/lib/albums";
 import type { Album } from "@/lib/albums";
+import { albums } from "@/lib/albums";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
+import { db } from "@/lib/db";
 
 export interface AlbumSummary {
   slug: string;
@@ -25,7 +25,7 @@ export interface AlbumSummary {
 /**
  * Carrega catálogo completo do seller (estáticos + customizados),
  * com contagem de estoque por álbum.
- * 
+ *
  * Ordenação: estáticos por ano desc, customizados no final.
  * Retorna apenas álbuns que possuem estoque.
  */
@@ -69,7 +69,7 @@ export async function getSellerCatalog(sellerId: string): Promise<AlbumSummary[]
     .sort((a, b) => {
       // Estáticos por ano desc, customizados no final
       if (a.isCustom !== b.isCustom) return a.isCustom ? 1 : -1;
-      return parseInt(b.year || "0") - parseInt(a.year || "0");
+      return Number.parseInt(b.year || "0", 10) - Number.parseInt(a.year || "0", 10);
     });
 
   return summaries;

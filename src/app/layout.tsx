@@ -1,10 +1,10 @@
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/lib/cart-context";
 import { ToastProvider } from "@/lib/toast-context";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const UMAMI_WEBSITE_ID =
@@ -53,8 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "FigurinhasPro — Plataforma para revendedores de figurinhas",
-    description:
-      "Gerencie estoque, preços e pedidos. Copa 2026 chegando — prepare-se agora.",
+    description: "Gerencie estoque, preços e pedidos. Copa 2026 chegando — prepare-se agora.",
   },
   robots: { index: true, follow: true },
 };

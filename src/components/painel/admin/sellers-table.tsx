@@ -109,34 +109,37 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
                       className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors group"
                     >
                       <td className="px-4 py-3">
-                        <Link
-                          href={`/painel/admin/revendedores/${seller.id}`}
-                          className="block"
-                        >
+                        <Link href={`/painel/admin/revendedores/${seller.id}`} className="block">
                           <p className="text-sm text-white font-medium group-hover:text-amber-400 transition-colors">
                             {seller.name}
                           </p>
-                          <p className="text-xs text-gray-500 mt-0.5">
-                            {seller.email}
-                          </p>
+                          <p className="text-xs text-gray-500 mt-0.5">{seller.email}</p>
                           {/* Mobile-only badges */}
                           <div className="flex items-center gap-2 mt-1.5 sm:hidden">
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${status.class}`}>
+                            <span
+                              className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${status.class}`}
+                            >
                               {status.label}
                             </span>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${plan.class}`}>
+                            <span
+                              className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${plan.class}`}
+                            >
                               {plan.label}
                             </span>
                           </div>
                         </Link>
                       </td>
                       <td className="px-4 py-3 hidden sm:table-cell">
-                        <span className={`text-[11px] px-2 py-1 rounded-lg font-medium ${status.class}`}>
+                        <span
+                          className={`text-[11px] px-2 py-1 rounded-lg font-medium ${status.class}`}
+                        >
                           {status.label}
                         </span>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">
-                        <span className={`text-[11px] px-2 py-1 rounded-lg font-medium ${plan.class}`}>
+                        <span
+                          className={`text-[11px] px-2 py-1 rounded-lg font-medium ${plan.class}`}
+                        >
                           {plan.label}
                         </span>
                       </td>

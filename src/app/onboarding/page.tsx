@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ALBUM_OPTIONS = [
   { year: 2022, host: "Qatar", slug: "panini_fifa_world_cup_2022", emoji: "🏆" },
@@ -94,7 +94,9 @@ export default function OnboardingPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#0b0e14]">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 animate-pulse flex items-center justify-center">
-            <span className="text-white font-black text-sm font-[family-name:var(--font-geist-mono)]">F</span>
+            <span className="text-white font-black text-sm font-[family-name:var(--font-geist-mono)]">
+              F
+            </span>
           </div>
           <p className="text-xs text-gray-500">Carregando...</p>
         </div>
@@ -111,15 +113,21 @@ export default function OnboardingPage() {
       <aside className="hidden lg:flex w-80 shrink-0 px-7 py-8 border-r border-white/[0.06] bg-[#0f1219] flex-col">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-            <span className="text-black font-black text-sm font-[family-name:var(--font-geist-mono)]">F</span>
+            <span className="text-black font-black text-sm font-[family-name:var(--font-geist-mono)]">
+              F
+            </span>
           </div>
           <div>
-            <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider leading-tight">FigurinhasPro</p>
+            <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-wider leading-tight">
+              FigurinhasPro
+            </p>
             <p className="text-[10px] text-gray-500 leading-tight">Setup em 3 minutos</p>
           </div>
         </div>
 
-        <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider mt-10 mb-3">Progresso</p>
+        <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider mt-10 mb-3">
+          Progresso
+        </p>
         <nav className="flex flex-col gap-1">
           {STEPS.map((s, i) => {
             const done = i < step;
@@ -134,8 +142,8 @@ export default function OnboardingPage() {
                   active
                     ? "bg-white/[0.04] border border-white/[0.08] shadow-[inset_2px_0_0_0_rgb(251_191_36)]"
                     : done
-                    ? "border border-transparent hover:bg-white/[0.02] cursor-pointer"
-                    : "border border-transparent opacity-60 cursor-not-allowed"
+                      ? "border border-transparent hover:bg-white/[0.02] cursor-pointer"
+                      : "border border-transparent opacity-60 cursor-not-allowed"
                 }`}
               >
                 <div
@@ -143,12 +151,18 @@ export default function OnboardingPage() {
                     done
                       ? "bg-amber-500 text-black shadow-lg shadow-amber-500/20"
                       : active
-                      ? "bg-amber-500/10 border border-amber-500 text-amber-400"
-                      : "bg-white/[0.03] border border-white/[0.08] text-gray-500"
+                        ? "bg-amber-500/10 border border-amber-500 text-amber-400"
+                        : "bg-white/[0.03] border border-white/[0.08] text-gray-500"
                   }`}
                 >
                   {done ? (
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
@@ -156,7 +170,9 @@ export default function OnboardingPage() {
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className={`text-[13px] font-medium truncate ${active ? "text-white" : done ? "text-gray-300" : "text-gray-500"}`}>
+                  <p
+                    className={`text-[13px] font-medium truncate ${active ? "text-white" : done ? "text-gray-300" : "text-gray-500"}`}
+                  >
                     {s.label}
                   </p>
                   <p className="text-[10px] text-gray-600 truncate">{s.hint}</p>
@@ -168,7 +184,8 @@ export default function OnboardingPage() {
 
         <div className="mt-auto pt-6 border-t border-white/[0.06]">
           <p className="text-[11px] text-gray-500 leading-relaxed">
-            <span className="text-amber-400/70 font-semibold">Dica:</span> tudo é editável depois no painel. Você pode voltar e ajustar quando quiser.
+            <span className="text-amber-400/70 font-semibold">Dica:</span> tudo é editável depois no
+            painel. Você pode voltar e ajustar quando quiser.
           </p>
         </div>
       </aside>
@@ -178,7 +195,9 @@ export default function OnboardingPage() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center">
-              <span className="text-black font-black text-xs font-[family-name:var(--font-geist-mono)]">F</span>
+              <span className="text-black font-black text-xs font-[family-name:var(--font-geist-mono)]">
+                F
+              </span>
             </div>
             <p className="text-[13px] font-bold text-white">FigurinhasPro</p>
           </div>
@@ -202,7 +221,9 @@ export default function OnboardingPage() {
             {/* Step 0: Welcome */}
             {step === 0 && (
               <div>
-                <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-[0.2em]">Bem-vindo</p>
+                <p className="text-[11px] text-amber-400/70 font-semibold uppercase tracking-[0.2em]">
+                  Bem-vindo
+                </p>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mt-4 leading-[1.05]">
                   Oi, {firstName}.
                   <br />
@@ -219,7 +240,10 @@ export default function OnboardingPage() {
                     { n: "2", title: "Álbum", desc: "Copa do Mundo que você vende" },
                     { n: "3", title: "Preços", desc: "Valores por tipo de figurinha" },
                   ].map((item) => (
-                    <div key={item.n} className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div
+                      key={item.n}
+                      className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]"
+                    >
                       <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center mb-3">
                         <span className="text-amber-400 text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
                           {item.n}
@@ -347,14 +371,22 @@ export default function OnboardingPage() {
                           </div>
                           <div
                             className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-all ${
-                              selected
-                                ? "bg-amber-500 border-amber-500"
-                                : "border-white/[0.12]"
+                              selected ? "bg-amber-500 border-amber-500" : "border-white/[0.12]"
                             }`}
                           >
                             {selected && (
-                              <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              <svg
+                                className="w-3 h-3 text-black"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={3}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M5 13l4 4L19 7"
+                                />
                               </svg>
                             )}
                           </div>
@@ -415,9 +447,24 @@ export default function OnboardingPage() {
 
                 <div className="mt-8 space-y-3">
                   {[
-                    { key: "regular" as const, label: "Normal", desc: "Figurinhas comuns", emoji: "📄" },
-                    { key: "foil" as const, label: "Especial (Foil)", desc: "Brilhantes e holográficas", emoji: "✨" },
-                    { key: "shiny" as const, label: "Brilhante (Shiny)", desc: "Raras, borderless, extra", emoji: "💎" },
+                    {
+                      key: "regular" as const,
+                      label: "Normal",
+                      desc: "Figurinhas comuns",
+                      emoji: "📄",
+                    },
+                    {
+                      key: "foil" as const,
+                      label: "Especial (Foil)",
+                      desc: "Brilhantes e holográficas",
+                      emoji: "✨",
+                    },
+                    {
+                      key: "shiny" as const,
+                      label: "Brilhante (Shiny)",
+                      desc: "Raras, borderless, extra",
+                      emoji: "💎",
+                    },
                   ].map((tip) => (
                     <div
                       key={tip.key}
@@ -437,9 +484,7 @@ export default function OnboardingPage() {
                           step="0.50"
                           min="0.01"
                           value={prices[tip.key]}
-                          onChange={(e) =>
-                            setPrices((p) => ({ ...p, [tip.key]: e.target.value }))
-                          }
+                          onChange={(e) => setPrices((p) => ({ ...p, [tip.key]: e.target.value }))}
                           className="w-24 text-right font-[family-name:var(--font-geist-mono)] text-amber-400 font-bold text-sm py-1.5 px-2 rounded-lg bg-white/[0.04] border border-white/[0.08] focus:border-amber-500/40 focus:outline-none focus:ring-2 focus:ring-amber-500/10 transition-all"
                         />
                       </div>
@@ -473,7 +518,7 @@ export default function OnboardingPage() {
                     setSaving(true);
                     try {
                       for (const [type, val] of Object.entries(prices)) {
-                        const price = parseFloat(val);
+                        const price = Number.parseFloat(val);
                         if (price > 0) {
                           await fetch("/api/prices", {
                             method: "POST",
@@ -522,8 +567,7 @@ export default function OnboardingPage() {
                       className="w-12 h-12 rounded"
                       style={{
                         backgroundColor: "#111",
-                        backgroundImage:
-                          "repeating-conic-gradient(#111 0 25%, #fff 0 50%)",
+                        backgroundImage: "repeating-conic-gradient(#111 0 25%, #fff 0 50%)",
                         backgroundSize: "6px 6px",
                       }}
                     />
@@ -543,15 +587,31 @@ export default function OnboardingPage() {
                   >
                     {linkCopied ? (
                       <>
-                        <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <svg
+                          className="w-3 h-3 text-emerald-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={3}
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                         Copiado
                       </>
                     ) : (
                       <>
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-1.822a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364L4.94 8.586" />
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.75}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-1.822a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364L4.94 8.586"
+                          />
                         </svg>
                         Copiar link
                       </>
@@ -594,7 +654,14 @@ function PrimaryButton({
     >
       {loading && (
         <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={3} strokeOpacity={0.2} />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth={3}
+            strokeOpacity={0.2}
+          />
           <path
             d="M22 12a10 10 0 01-10 10"
             stroke="currentColor"
@@ -608,13 +675,7 @@ function PrimaryButton({
   );
 }
 
-function GhostButton({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
+function GhostButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
   return (
     <button
       type="button"
@@ -698,7 +759,13 @@ function ReadField({
 
 function ArrowIcon() {
   return (
-    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2.5}
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
     </svg>
   );

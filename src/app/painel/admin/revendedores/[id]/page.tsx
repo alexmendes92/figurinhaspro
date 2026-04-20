@@ -1,15 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { MockAlbum, MockClient, MockTransaction } from "../mock-data";
 import {
-  getSellerById,
   getResellerAlbums,
-  getResellerTransactions,
   getResellerClients,
-} from "../mock-data";
-import type {
-  MockAlbum,
-  MockTransaction,
-  MockClient,
+  getResellerTransactions,
+  getSellerById,
 } from "../mock-data";
 
 const STATUS_BADGE: Record<string, { label: string; class: string }> = {
@@ -50,7 +46,7 @@ function formatCurrency(value: number) {
 }
 
 function formatDate(date: string) {
-  return new Date(date + "T12:00:00").toLocaleDateString("pt-BR");
+  return new Date(`${date}T12:00:00`).toLocaleDateString("pt-BR");
 }
 
 type Tab = "albums" | "transacoes" | "clientes";
@@ -89,7 +85,13 @@ export default async function SellerDetailPage({
         href="/painel/admin/revendedores"
         className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-amber-400 transition-colors"
       >
-        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg
+          className="w-3.5 h-3.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
         Voltar para lista
@@ -100,7 +102,12 @@ export default async function SellerDetailPage({
         <div className="flex flex-col sm:flex-row sm:items-start gap-4">
           {/* Avatar */}
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-amber-500/20 shrink-0">
-            {seller.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()}
+            {seller.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .slice(0, 2)
+              .toUpperCase()}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -216,7 +223,9 @@ function AlbumsTab({ albums }: { albums: MockAlbum[] }) {
           >
             <div className="flex items-start justify-between gap-2">
               <p className="text-sm font-medium text-white">{album.name}</p>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium shrink-0 ${st.class}`}>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded font-medium shrink-0 ${st.class}`}
+              >
                 {st.label}
               </span>
             </div>
@@ -264,31 +273,26 @@ function TransacoesTab({ transactions }: { transactions: MockTransaction[] }) {
               const txStatus = TX_STATUS[tx.status] || TX_STATUS.PAID;
               const isNegative = tx.value < 0;
               return (
-                <tr
-                  key={tx.id}
-                  className="border-b border-white/[0.04] last:border-0"
-                >
-                  <td className="px-4 py-3 text-xs text-gray-400">
-                    {formatDate(tx.date)}
-                  </td>
+                <tr key={tx.id} className="border-b border-white/[0.04] last:border-0">
+                  <td className="px-4 py-3 text-xs text-gray-400">{formatDate(tx.date)}</td>
                   <td className="px-4 py-3">
                     <p className="text-sm text-gray-300">{tx.description}</p>
-                    <span className={`text-[10px] sm:hidden ${type.class}`}>
-                      {type.label}
-                    </span>
+                    <span className={`text-[10px] sm:hidden ${type.class}`}>{type.label}</span>
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
-                    <span className={`text-xs font-medium ${type.class}`}>
-                      {type.label}
-                    </span>
+                    <span className={`text-xs font-medium ${type.class}`}>{type.label}</span>
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
-                    <span className={`text-[11px] px-2 py-0.5 rounded-lg font-medium ${txStatus.class}`}>
+                    <span
+                      className={`text-[11px] px-2 py-0.5 rounded-lg font-medium ${txStatus.class}`}
+                    >
                       {txStatus.label}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className={`text-sm font-medium ${isNegative ? "text-red-400" : "text-emerald-400"}`}>
+                    <span
+                      className={`text-sm font-medium ${isNegative ? "text-red-400" : "text-emerald-400"}`}
+                    >
                       {isNegative ? "- " : "+ "}
                       {formatCurrency(Math.abs(tx.value))}
                     </span>
@@ -328,10 +332,7 @@ function ClientesTab({ clients }: { clients: MockClient[] }) {
           </thead>
           <tbody>
             {clients.map((client) => (
-              <tr
-                key={client.id}
-                className="border-b border-white/[0.04] last:border-0"
-              >
+              <tr key={client.id} className="border-b border-white/[0.04] last:border-0">
                 <td className="px-4 py-3">
                   <p className="text-sm text-white font-medium">{client.name}</p>
                   <p className="text-xs text-gray-500 mt-0.5">{client.email}</p>
@@ -345,9 +346,7 @@ function ClientesTab({ clients }: { clients: MockClient[] }) {
                   </span>
                 </td>
                 <td className="px-4 py-3 hidden md:table-cell">
-                  <span className="text-xs text-gray-500">
-                    {formatDate(client.lastOrderAt)}
-                  </span>
+                  <span className="text-xs text-gray-500">{formatDate(client.lastOrderAt)}</span>
                 </td>
               </tr>
             ))}

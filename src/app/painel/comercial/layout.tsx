@@ -1,13 +1,9 @@
-import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
 import { ComercialTabs } from "@/components/painel/comercial/comercial-tabs";
+import { isAdmin } from "@/lib/admin";
+import { getSession } from "@/lib/auth";
 
-export default async function ComercialLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ComercialLayout({ children }: { children: React.ReactNode }) {
   const seller = await getSession();
   if (!seller || !isAdmin(seller.email)) {
     redirect("/painel");

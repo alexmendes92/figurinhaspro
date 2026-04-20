@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthLogo } from "@/components/auth/auth-logo";
-import { AuthInput } from "@/components/auth/auth-input";
+import { useState } from "react";
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthError } from "@/components/auth/auth-error";
 import { AuthFooterLink } from "@/components/auth/auth-footer-link";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthLogo } from "@/components/auth/auth-logo";
 import { PasswordStrength } from "@/components/auth/auth-password-strength";
 
 export default function RegistroPage() {

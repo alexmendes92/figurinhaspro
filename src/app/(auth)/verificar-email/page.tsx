@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { AuthLogo } from "@/components/auth/auth-logo";
+import { useEffect, useState } from "react";
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthFooterLink } from "@/components/auth/auth-footer-link";
+import { AuthLogo } from "@/components/auth/auth-logo";
 
 export default function VerificarEmailPage() {
   const [resending, setResending] = useState(false);
@@ -34,8 +34,18 @@ export default function VerificarEmailPage() {
 
         {/* Email icon */}
         <div className="w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-6">
-          <svg className="w-9 h-9 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          <svg
+            className="w-9 h-9 text-amber-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+            />
           </svg>
         </div>
 
@@ -49,12 +59,24 @@ export default function VerificarEmailPage() {
         {/* Dicas */}
         <div className="space-y-3 mb-8">
           {[
-            { icon: "M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859", text: "Verifique a caixa de spam" },
-            { icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z", text: "O link expira em 24 horas" },
+            {
+              icon: "M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859",
+              text: "Verifique a caixa de spam",
+            },
+            {
+              icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z",
+              text: "O link expira em 24 horas",
+            },
           ].map((tip) => (
             <div key={tip.text} className="flex items-center gap-3 text-left">
               <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
-                <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <svg
+                  className="w-4 h-4 text-gray-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d={tip.icon} />
                 </svg>
               </div>
@@ -72,8 +94,7 @@ export default function VerificarEmailPage() {
         >
           {resent && countdown > 0
             ? `Reenviado! Aguarde ${countdown}s`
-            : "Reenviar email de confirmação"
-          }
+            : "Reenviar email de confirmação"}
         </AuthButton>
 
         <AuthFooterLink text="" linkText="Voltar ao login" href="/login" />

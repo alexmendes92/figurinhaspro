@@ -24,12 +24,8 @@ export default function Error({
             />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-white mb-2">
-          Algo deu errado
-        </h1>
-        <p className="text-zinc-400 text-sm mb-8">
-          Ocorreu um erro inesperado. Tente novamente.
-        </p>
+        <h1 className="text-2xl font-bold text-white mb-2">Algo deu errado</h1>
+        <p className="text-zinc-400 text-sm mb-8">Ocorreu um erro inesperado. Tente novamente.</p>
         <button
           onClick={reset}
           className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-bold transition-all shadow-lg shadow-emerald-500/20"

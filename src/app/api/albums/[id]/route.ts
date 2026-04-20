@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 // DELETE — remove álbum customizado (e todo estoque associado)
-export async function DELETE(
-  _req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const seller = await getSession();
   if (!seller) return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
 

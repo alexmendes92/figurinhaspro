@@ -1,8 +1,8 @@
-import { getSession } from "@/lib/auth";
-import { db } from "@/lib/db";
 import Link from "next/link";
 import LojaEditor from "@/components/painel/loja-editor";
-import { getStickerTypeShortLabel, getDefaultPrice } from "@/lib/sticker-types";
+import { getSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
 
 export default async function MinhaLojaPage() {
   const seller = await getSession();
@@ -37,8 +37,18 @@ export default async function MinhaLojaPage() {
             target="_blank"
             className="btn-primary !py-1.5 !px-3 !text-xs flex items-center gap-1.5"
           >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+              />
             </svg>
             Abrir vitrine
           </Link>
@@ -55,7 +65,10 @@ export default async function MinhaLojaPage() {
           { label: "Pedidos", value: orderCount, color: "text-green-400" },
           { label: "Álbuns", value: "13", color: "text-[var(--accent)]" },
         ].map((s) => (
-          <div key={s.label} className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] text-center">
+          <div
+            key={s.label}
+            className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] text-center"
+          >
             <p className={`text-xl font-bold font-[family-name:var(--font-geist-mono)] ${s.color}`}>
               {typeof s.value === "number" ? s.value.toLocaleString("pt-BR") : s.value}
             </p>
@@ -79,7 +92,10 @@ export default async function MinhaLojaPage() {
       <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] overflow-hidden">
         <div className="px-5 py-3 border-b border-[var(--border)] flex items-center justify-between">
           <p className="text-xs font-semibold text-[var(--muted)]">Preços na vitrine</p>
-          <Link href="/painel/precos" className="text-[10px] text-[var(--accent)] hover:underline font-medium">
+          <Link
+            href="/painel/precos"
+            className="text-[10px] text-[var(--accent)] hover:underline font-medium"
+          >
             Editar
           </Link>
         </div>

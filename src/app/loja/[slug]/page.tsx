@@ -1,10 +1,10 @@
-import { notFound, redirect } from "next/navigation";
-import { db } from "@/lib/db";
-import { albumCovers } from "@/lib/album-covers";
-import { getSellerCatalog, getDefaultAlbumSlug } from "@/lib/seller-catalog";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { albumCovers } from "@/lib/album-covers";
+import { db } from "@/lib/db";
 import { imgUrl } from "@/lib/images";
+import { getDefaultAlbumSlug, getSellerCatalog } from "@/lib/seller-catalog";
 
 export default async function LojaPage({
   params,
@@ -74,16 +74,36 @@ export default async function LojaPage({
               )}
               {seller.businessHours && (
                 <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   {seller.businessHours}
                 </span>
               )}
               {seller.paymentMethods && (
                 <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+                    />
                   </svg>
                   {seller.paymentMethods}
                 </span>
@@ -97,12 +117,24 @@ export default async function LojaPage({
         {catalog.length === 0 ? (
           <div className="text-center py-24">
             <div className="w-16 h-16 rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-7 h-7 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+              <svg
+                className="w-7 h-7 text-zinc-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+                />
               </svg>
             </div>
             <p className="text-zinc-400 font-medium">Nenhuma figurinha disponível</p>
-            <p className="text-xs text-zinc-600 mt-1">Esta loja ainda não adicionou figurinhas ao estoque.</p>
+            <p className="text-xs text-zinc-600 mt-1">
+              Esta loja ainda não adicionou figurinhas ao estoque.
+            </p>
           </div>
         ) : (
           <>
@@ -141,8 +173,18 @@ export default async function LojaPage({
                         <div className="flex items-center justify-center h-full">
                           <div className="text-center">
                             <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-2">
-                              <svg className="w-7 h-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                              <svg
+                                className="w-7 h-7 text-amber-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={1.5}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                                />
                               </svg>
                             </div>
                             {album.year && <p className="text-xs text-zinc-500">{album.year}</p>}
@@ -159,11 +201,15 @@ export default async function LojaPage({
                     <div className="p-3 border-t border-zinc-800/50">
                       <div className="flex items-center gap-2 mb-2">
                         {flagSrc && (
-                          <Image src={imgUrl(flagSrc)} alt="" width={16} height={16} className="rounded-full" />
+                          <Image
+                            src={imgUrl(flagSrc)}
+                            alt=""
+                            width={16}
+                            height={16}
+                            className="rounded-full"
+                          />
                         )}
-                        <p className="text-sm font-bold text-white truncate">
-                          {album.title}
-                        </p>
+                        <p className="text-sm font-bold text-white truncate">{album.title}</p>
                       </div>
                       <p className="text-xs text-amber-400 font-[family-name:var(--font-geist-mono)] font-semibold">
                         {album.inStockTypes} figurinhas disponíveis

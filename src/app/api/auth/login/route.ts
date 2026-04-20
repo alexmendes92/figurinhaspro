@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { createSession } from "@/lib/auth";
-import { z } from "zod";
 import bcrypt from "bcryptjs";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createSession } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -19,10 +19,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!seller) {
-      return NextResponse.json(
-        { error: "Email ou senha incorretos" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Email ou senha incorretos" }, { status: 401 });
     }
 
     // Compara senha com hash bcrypt
@@ -43,10 +40,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!passwordValid) {
-      return NextResponse.json(
-        { error: "Email ou senha incorretos" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Email ou senha incorretos" }, { status: 401 });
     }
 
     await createSession(seller.id);
@@ -58,15 +52,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: "Dados inválidos" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
     console.error("Login error:", error);
-    return NextResponse.json(
-      { error: "Erro interno", detail: String(error) },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro interno", detail: String(error) }, { status: 500 });
   }
 }

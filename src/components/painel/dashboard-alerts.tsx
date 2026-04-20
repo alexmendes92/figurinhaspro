@@ -13,31 +13,71 @@ export interface DashboardAlert {
 
 const ICON: Record<AlertKind, React.ReactNode> = {
   expiring: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
       <path d="M12 2s4 4 4 8a4 4 0 1 1-8 0c0-1.5.5-2.5 1-3.5C7 9 4 11 4 15a8 8 0 0 0 16 0c0-5-4-8-8-13z" />
     </svg>
   ),
   "low-stock": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
       <path d="M12 2 2 7l10 5 10-5-10-5z" />
       <path d="M2 17l10 5 10-5" />
       <path d="M2 12l10 5 10-5" />
     </svg>
   ),
   "no-prices": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
       <path d="M20.59 13.41 13 21a2 2 0 0 1-2.83 0l-7-7A2 2 0 0 1 2.59 12L3 4l8-.41a2 2 0 0 1 1.41.59l8.17 8.17a2 2 0 0 1 0 2.83z" />
       <circle cx="7.5" cy="7.5" r="1.5" />
     </svg>
   ),
   "no-phone": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
       <path d="M20 12a8 8 0 1 1-3-6.24L20 4l-1 3.3A8 8 0 0 1 20 12z" />
       <path d="M8 10c1 3 3 5 6 6l1.5-1.5a1 1 0 0 1 1-.25l2 .5a1 1 0 0 1 .75 1V17a2 2 0 0 1-2 2C11 19 5 13 5 8a2 2 0 0 1 2-2h1.2a1 1 0 0 1 1 .75l.5 2a1 1 0 0 1-.25 1L8 10z" />
     </svg>
   ),
   empty: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
       <path d="M3 3v18h18" />
       <path d="M7 14l4-4 4 4 5-6" />
     </svg>
@@ -55,7 +95,13 @@ export function DashboardAlerts({ alerts }: { alerts: DashboardAlert[] }) {
     return (
       <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5 min-h-[280px] flex flex-col items-center justify-center text-center">
         <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-emerald-400">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            className="w-5 h-5 text-emerald-400"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12l4.5 4.5L19 7" />
           </svg>
         </div>
@@ -69,7 +115,9 @@ export function DashboardAlerts({ alerts }: { alerts: DashboardAlert[] }) {
     <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">Antecipamos</p>
+          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+            Antecipamos
+          </p>
           <p className="text-base font-bold text-white mt-0.5">Precisa da sua atenção</p>
         </div>
       </div>
@@ -81,7 +129,9 @@ export function DashboardAlerts({ alerts }: { alerts: DashboardAlert[] }) {
               key={`${a.kind}-${i}`}
               className={`flex items-center gap-3 p-3 rounded-xl border ${tone.wrap}`}
             >
-              <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tone.icon}`}>
+              <div
+                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tone.icon}`}
+              >
                 {ICON[a.kind]}
               </div>
               <div className="flex-1 min-w-0">

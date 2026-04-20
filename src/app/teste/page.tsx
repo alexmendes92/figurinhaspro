@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import Link from "next/link";
+import { useCallback, useState } from "react";
 
 type StepStatus = "idle" | "running" | "pass" | "fail" | "skip";
 
@@ -34,15 +34,60 @@ const INITIAL_STEPS: Step[] = [
   { id: "register", label: "1. Registro", description: "Criar conta de vendedor", status: "idle" },
   { id: "logout-1", label: "2. Logout", description: "Deslogar da conta criada", status: "idle" },
   { id: "login", label: "3. Login", description: "Autenticar com a conta criada", status: "idle" },
-  { id: "dashboard", label: "4. Dashboard", description: "Verificar painel carrega com dados", status: "idle" },
-  { id: "prices", label: "5. Precos", description: "Verificar regras de preco padrao criadas", status: "idle" },
-  { id: "update-price", label: "6. Atualizar Preco", description: "Alterar preco de figurinha regular", status: "idle" },
-  { id: "inventory", label: "7. Estoque", description: "Adicionar figurinha ao estoque", status: "idle" },
-  { id: "store-public", label: "8. Loja Publica", description: "Verificar vitrine publica do vendedor", status: "idle" },
-  { id: "create-order", label: "9. Criar Pedido", description: "Simular pedido via API da loja", status: "idle" },
-  { id: "check-order", label: "10. Verificar Pedido", description: "Checar pedido aparece nos pedidos do vendedor", status: "idle" },
-  { id: "update-order", label: "11. Atualizar Status", description: "Confirmar pedido (QUOTE → CONFIRMED)", status: "idle" },
-  { id: "seller-update", label: "12. Editar Loja", description: "Atualizar nome da loja e telefone", status: "idle" },
+  {
+    id: "dashboard",
+    label: "4. Dashboard",
+    description: "Verificar painel carrega com dados",
+    status: "idle",
+  },
+  {
+    id: "prices",
+    label: "5. Precos",
+    description: "Verificar regras de preco padrao criadas",
+    status: "idle",
+  },
+  {
+    id: "update-price",
+    label: "6. Atualizar Preco",
+    description: "Alterar preco de figurinha regular",
+    status: "idle",
+  },
+  {
+    id: "inventory",
+    label: "7. Estoque",
+    description: "Adicionar figurinha ao estoque",
+    status: "idle",
+  },
+  {
+    id: "store-public",
+    label: "8. Loja Publica",
+    description: "Verificar vitrine publica do vendedor",
+    status: "idle",
+  },
+  {
+    id: "create-order",
+    label: "9. Criar Pedido",
+    description: "Simular pedido via API da loja",
+    status: "idle",
+  },
+  {
+    id: "check-order",
+    label: "10. Verificar Pedido",
+    description: "Checar pedido aparece nos pedidos do vendedor",
+    status: "idle",
+  },
+  {
+    id: "update-order",
+    label: "11. Atualizar Status",
+    description: "Confirmar pedido (QUOTE → CONFIRMED)",
+    status: "idle",
+  },
+  {
+    id: "seller-update",
+    label: "12. Editar Loja",
+    description: "Atualizar nome da loja e telefone",
+    status: "idle",
+  },
 ];
 
 async function timed<T>(fn: () => Promise<T>): Promise<{ data: T; ms: number }> {
@@ -146,10 +191,16 @@ export default function TestPage() {
     // 4. Dashboard (verifica sessao funciona)
     updateStep("dashboard", { status: "running" });
     try {
-      const { data: res, ms } = await timed(() => fetch("/api/inventory?album=panini_fifa_world_cup_2022"));
+      const { data: res, ms } = await timed(() =>
+        fetch("/api/inventory?album=panini_fifa_world_cup_2022")
+      );
       if (!res.ok) throw new Error(`HTTP ${res.status} — sessao invalida?`);
       const body = await res.json();
-      updateStep("dashboard", { status: "pass", result: `${body.length} itens no estoque`, duration: ms });
+      updateStep("dashboard", {
+        status: "pass",
+        result: `${body.length} itens no estoque`,
+        duration: ms,
+      });
       addLog(`Dashboard OK — estoque acessivel (${ms}ms)`);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -188,7 +239,11 @@ export default function TestPage() {
       );
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
-      updateStep("update-price", { status: "pass", result: `Regular: R$${body.price}`, duration: ms });
+      updateStep("update-price", {
+        status: "pass",
+        result: `Regular: R$${body.price}`,
+        duration: ms,
+      });
       addLog(`Preco atualizado — regular: R$${body.price} (${ms}ms)`);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -230,7 +285,9 @@ export default function TestPage() {
       const hasShopName = html.includes(config.shopName);
       updateStep("store-public", {
         status: hasShopName ? "pass" : "fail",
-        result: hasShopName ? `Loja renderiza com "${config.shopName}"` : "Nome da loja nao encontrado no HTML",
+        result: hasShopName
+          ? `Loja renderiza com "${config.shopName}"`
+          : "Nome da loja nao encontrado no HTML",
         duration: ms,
       });
       addLog(`Loja publica ${hasShopName ? "OK" : "FALHOU"} (${ms}ms)`);
@@ -289,7 +346,9 @@ export default function TestPage() {
       const found = orders.find((o: { id: string }) => o.id === currentOrderId);
       updateStep("check-order", {
         status: found ? "pass" : "fail",
-        result: found ? `Status: ${found.status} — ${found.items.length} itens` : "Pedido nao encontrado",
+        result: found
+          ? `Status: ${found.status} — ${found.items.length} itens`
+          : "Pedido nao encontrado",
         duration: ms,
       });
       addLog(`Verificacao pedido ${found ? "OK" : "FALHOU"} (${ms}ms)`);
@@ -335,7 +394,10 @@ export default function TestPage() {
         fetch("/api/seller", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ shopName: config.shopName + " Editada", phone: "(11) 91111-2222" }),
+          body: JSON.stringify({
+            shopName: `${config.shopName} Editada`,
+            phone: "(11) 91111-2222",
+          }),
         })
       );
       const body = await res.json();
@@ -357,7 +419,9 @@ export default function TestPage() {
       const passed = prev.filter((s) => s.status === "pass").length;
       const failed = prev.filter((s) => s.status === "fail").length;
       const skipped = prev.filter((s) => s.status === "skip").length;
-      addLog(`\nRESUMO: ${passed} passed, ${failed} failed, ${skipped} skipped de ${prev.length} steps`);
+      addLog(
+        `\nRESUMO: ${passed} passed, ${failed} failed, ${skipped} skipped de ${prev.length} steps`
+      );
       return prev;
     });
 
@@ -391,7 +455,13 @@ export default function TestPage() {
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/painel" className="text-zinc-500 hover:text-white transition-colors">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
@@ -414,7 +484,8 @@ export default function TestPage() {
         {/* Descricao */}
         <div className="mb-6">
           <p className="text-zinc-400 text-sm">
-            Executa o fluxo completo: Registro &rarr; Login &rarr; Dashboard &rarr; Precos &rarr; Estoque &rarr; Loja Publica &rarr; Pedido &rarr; Status
+            Executa o fluxo completo: Registro &rarr; Login &rarr; Dashboard &rarr; Precos &rarr;
+            Estoque &rarr; Loja Publica &rarr; Pedido &rarr; Status
           </p>
         </div>
 
@@ -425,7 +496,13 @@ export default function TestPage() {
             className="w-full px-4 py-3 flex items-center justify-between text-sm font-medium text-zinc-300 hover:bg-zinc-800/50 transition-colors"
           >
             <span>Configuracao do teste</span>
-            <svg className={`w-4 h-4 text-zinc-500 transition-transform ${showConfig ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg
+              className={`w-4 h-4 text-zinc-500 transition-transform ${showConfig ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
@@ -434,7 +511,9 @@ export default function TestPage() {
               <div className="grid grid-cols-2 gap-3 pt-3">
                 {(Object.keys(config) as (keyof FlowConfig)[]).map((key) => (
                   <div key={key}>
-                    <label className="block text-[10px] text-zinc-500 uppercase tracking-wider mb-1">{key}</label>
+                    <label className="block text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
+                      {key}
+                    </label>
                     <input
                       value={config[key]}
                       onChange={(e) => setConfig({ ...config, [key]: e.target.value })}
@@ -457,8 +536,19 @@ export default function TestPage() {
           {running ? (
             <span className="flex items-center justify-center gap-2">
               <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
               </svg>
               Executando...
             </span>
@@ -470,11 +560,15 @@ export default function TestPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Steps */}
           <div>
-            <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">Steps</h2>
+            <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+              Steps
+            </h2>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 divide-y divide-zinc-800/50">
               {steps.map((step) => (
                 <div key={step.id} className="px-4 py-3 flex items-start gap-3">
-                  <span className={`font-[family-name:var(--font-geist-mono)] text-sm font-bold mt-0.5 ${statusIcon[step.status]}`}>
+                  <span
+                    className={`font-[family-name:var(--font-geist-mono)] text-sm font-bold mt-0.5 ${statusIcon[step.status]}`}
+                  >
                     {statusEmoji[step.status]}
                   </span>
                   <div className="flex-1 min-w-0">
@@ -488,9 +582,15 @@ export default function TestPage() {
                     </div>
                     <p className="text-[11px] text-zinc-500">{step.description}</p>
                     {step.result && (
-                      <p className={`text-[11px] font-[family-name:var(--font-geist-mono)] mt-1 ${
-                        step.status === "pass" ? "text-emerald-400/70" : step.status === "fail" ? "text-red-400/70" : "text-zinc-500"
-                      }`}>
+                      <p
+                        className={`text-[11px] font-[family-name:var(--font-geist-mono)] mt-1 ${
+                          step.status === "pass"
+                            ? "text-emerald-400/70"
+                            : step.status === "fail"
+                              ? "text-red-400/70"
+                              : "text-zinc-500"
+                        }`}
+                      >
                         {step.result}
                       </p>
                     )}
@@ -502,10 +602,14 @@ export default function TestPage() {
 
           {/* Log */}
           <div>
-            <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">Log</h2>
+            <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+              Log
+            </h2>
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 h-[560px] overflow-y-auto">
               {log.length === 0 ? (
-                <p className="text-zinc-600 text-xs text-center mt-8">Clique em &quot;Executar&quot; para iniciar</p>
+                <p className="text-zinc-600 text-xs text-center mt-8">
+                  Clique em &quot;Executar&quot; para iniciar
+                </p>
               ) : (
                 <pre className="text-[11px] text-zinc-400 font-[family-name:var(--font-geist-mono)] whitespace-pre-wrap leading-relaxed">
                   {log.join("\n")}
@@ -518,9 +622,15 @@ export default function TestPage() {
         {/* Links uteis */}
         {shopSlug && (
           <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-            <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">Links do teste</h3>
+            <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+              Links do teste
+            </h3>
             <div className="flex flex-wrap gap-3">
-              <Link href={`/loja/${shopSlug}`} target="_blank" className="text-xs text-amber-400 hover:text-amber-300 font-medium transition-colors">
+              <Link
+                href={`/loja/${shopSlug}`}
+                target="_blank"
+                className="text-xs text-amber-400 hover:text-amber-300 font-medium transition-colors"
+              >
                 Loja publica &rarr;
               </Link>
               {orderId && (
@@ -528,10 +638,16 @@ export default function TestPage() {
                   Pedido: {orderId.slice(0, 12)}...
                 </span>
               )}
-              <Link href="/painel" className="text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors">
+              <Link
+                href="/painel"
+                className="text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors"
+              >
                 Dashboard &rarr;
               </Link>
-              <Link href="/painel/pedidos" className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors">
+              <Link
+                href="/painel/pedidos"
+                className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors"
+              >
                 Pedidos &rarr;
               </Link>
             </div>

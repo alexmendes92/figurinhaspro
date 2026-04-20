@@ -1,12 +1,8 @@
-import { getSession } from "@/lib/auth";
-import { isAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
+import { isAdmin } from "@/lib/admin";
+import { getSession } from "@/lib/auth";
 
-export default async function RevendedoresLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RevendedoresLayout({ children }: { children: React.ReactNode }) {
   const seller = await getSession();
   if (!seller || !isAdmin(seller.email)) {
     redirect("/painel");

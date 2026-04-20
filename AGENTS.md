@@ -160,7 +160,7 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 | Pagamentos | Stripe SDK — checkout, webhook, customer portal (`api/stripe/*`) |
 | Planos | FREE / PRO / UNLIMITED com gates em `src/lib/plan-limits.ts` |
 | Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts, mobile-first responsive |
-| Imagens | Sharp para processamento, `images.unoptimized: true` |
+| Imagens | Cloudflare R2 em `https://figurinhasproimg.arenacards.com.br` + `imgUrl()` para assets catalogados; Sharp mantido para processamento |
 | Monitoring | Sentry (`@sentry/nextjs` 10.47) — client/server/edge + instrumentation.ts |
 | Analytics | Vercel Analytics (`@vercel/analytics`) + Speed Insights (`@vercel/speed-insights`) |
 | Env validation | Zod schema em `src/lib/env.ts` — strict em prod, fallbacks em dev |

@@ -75,6 +75,7 @@ stripe logs tail
 | `src/lib/plan-limits.ts` | Limites por plano + guards (`checkStickerLimit`, `hasFeature`) |
 | `src/lib/sticker-types.ts` | Config centralizada de tipos (Regular/Especial/Brilhante) |
 | `src/lib/stripe.ts` | Cliente Stripe |
+| `src/lib/images.ts` | Resolve URLs de imagens locais/R2 via `NEXT_PUBLIC_IMAGES_BASE_URL` |
 | `src/lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
 | `src/lib/price-resolver.ts` | Resolucao centralizada de precos (3 eixos) + mapa sticker→secao |
 | `src/lib/cart-context.tsx` | Contexto do carrinho (client) |
@@ -86,6 +87,9 @@ stripe logs tail
 | `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent + 9 modelos Biz*. Generator `prisma-client` novo |
 | `src/app/painel/comercial/actions.ts` | Server Actions centralizadas do cockpit comercial (15 actions) |
 | `src/app/api/comercial/seed/route.ts` | Seed idempotente — popula dados iniciais do cockpit |
+| `scripts/audit-r2-parity.mjs` | Auditoria de paridade entre `public/` e o bucket `figurinhapro-images` |
+| `scripts/upload-missing.mjs` | Upload idempotente de faltantes para o R2 |
+| `docs/r2-migration.md` | Registro da migracao de imagens para Cloudflare R2 |
 
 ## Cockpit Comercial (`/painel/comercial`)
 

@@ -221,22 +221,22 @@ function StickerCard({
           </div>
         )}
       </button>
-      <div className="px-1.5 py-1.5 bg-zinc-900/90">
-        <div className="flex items-center justify-between mb-0.5">
-          <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-400 truncate">
+      <div className="px-2 py-2 bg-zinc-900/90 space-y-1.5">
+        <div className="flex items-center justify-between gap-1">
+          <span className="font-[family-name:var(--font-geist-mono)] text-xs font-semibold text-zinc-200 truncate">
             {sticker.code}
           </span>
           {hasIt && (
-            <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-green-400 font-bold">
+            <span className="font-[family-name:var(--font-geist-mono)] text-xs text-green-400 font-bold shrink-0">
               {qty}
             </span>
           )}
         </div>
-        <p className="text-[9px] text-zinc-600 truncate mb-1">{sticker.name}</p>
+        <p className="text-[10px] text-zinc-500 truncate leading-tight">{sticker.name}</p>
         {hasIt && (
           <button
             onClick={() => setPriceModalSticker(sticker)}
-            className={`w-full mb-1 px-1.5 py-1 rounded text-[9px] font-[family-name:var(--font-geist-mono)] font-semibold transition-all flex items-center justify-center gap-1 ${
+            className={`w-full px-1.5 py-1.5 rounded text-[10px] font-[family-name:var(--font-geist-mono)] font-semibold transition-all flex items-center justify-center gap-1 ${
               stock[sticker.code]?.customPrice
                 ? "bg-amber-500/15 border border-amber-500/30 text-amber-400 hover:bg-amber-500/25"
                 : "bg-zinc-800/50 border border-zinc-700/50 text-zinc-500 hover:text-zinc-300 hover:border-zinc-600"
@@ -265,7 +265,7 @@ function StickerCard({
           <div className="flex items-center justify-center gap-1">
             <button
               onClick={() => updateQuantity(sticker.code, qty - 1)}
-              className="w-9 h-8 sm:w-8 sm:h-7 rounded bg-zinc-800 border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="w-10 h-10 sm:w-9 sm:h-9 rounded bg-zinc-800 border border-zinc-700 text-base sm:text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
             >
               −
             </button>
@@ -274,7 +274,7 @@ function StickerCard({
             </span>
             <button
               onClick={() => updateQuantity(sticker.code, qty + 1)}
-              className="w-9 h-8 sm:w-8 sm:h-7 rounded bg-zinc-800 border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="w-10 h-10 sm:w-9 sm:h-9 rounded bg-zinc-800 border border-zinc-700 text-base sm:text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
             >
               +
             </button>
@@ -378,9 +378,9 @@ export default function InventoryManager({
     (s) => (stock[s.code]?.quantity || 0) > 0
   ).length;
 
-  // Total geral em estoque
-  const totalInStock = Object.values(stock).filter((s) => s.quantity > 0).length;
-  const totalUnits = Object.values(stock).reduce((sum, s) => sum + s.quantity, 0);
+  // Total geral em estoque (só conta stickers que existem no album atual)
+  const totalInStock = allStickers.filter((s) => (stock[s.code]?.quantity || 0) > 0).length;
+  const totalUnits = allStickers.reduce((sum, s) => sum + (stock[s.code]?.quantity || 0), 0);
 
   // Atualiza quantidade e salva no servidor
   const updateQuantity = useCallback(
@@ -542,7 +542,7 @@ export default function InventoryManager({
               {album.flag} Copa {album.year}
             </p>
             <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
-              {totalInStock}/{album.totalStickers} tipos · {totalUnits} unidades
+              {totalInStock}/{allStickers.length} tipos · {totalUnits} unidades
             </p>
           </div>
 
@@ -562,7 +562,7 @@ export default function InventoryManager({
             <span className="lg:flex lg:items-center lg:justify-between lg:gap-2">
               <span className="truncate">Todas</span>
               <span className="hidden lg:inline font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-600">
-                {totalInStock}/{album.totalStickers}
+                {totalInStock}/{allStickers.length}
               </span>
             </span>
           </button>
@@ -645,6 +645,14 @@ export default function InventoryManager({
           <div className="space-y-3 mb-4">
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
+                {!isSearching && section && (
+                  <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)] mb-1 truncate">
+                    <span className="text-sm leading-none shrink-0">{album.flag}</span>
+                    <span className="truncate">Copa {album.year}</span>
+                    <span className="text-zinc-700 shrink-0">/</span>
+                    <span className="text-amber-400 truncate">{section.name}</span>
+                  </div>
+                )}
                 <h3 className="text-base sm:text-lg font-semibold truncate">
                   {isSearching
                     ? `Resultados para "${search.trim()}"`
@@ -657,7 +665,7 @@ export default function InventoryManager({
                     <>{filteredStickers.length} encontradas</>
                   ) : (
                     <>
-                      {sectionInStock}/{section ? section.stickers.length : album.totalStickers} em
+                      {sectionInStock}/{section ? section.stickers.length : allStickers.length} em
                       estoque
                       {filter !== "all" && (
                         <span className="ml-2 text-zinc-400">
@@ -699,7 +707,7 @@ export default function InventoryManager({
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`flex-1 px-3 py-2.5 sm:py-2 text-xs font-medium transition-colors text-center active:bg-white/5 ${
+                  className={`flex-1 px-3 py-2 sm:py-1.5 text-xs font-medium transition-colors text-center active:bg-white/5 ${
                     filter === f
                       ? "bg-amber-500/10 text-amber-400"
                       : "text-zinc-500 hover:text-zinc-300"
@@ -742,7 +750,7 @@ export default function InventoryManager({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2">
               {(() => {
                 // Quando "all" está ativo e sem busca, renderizar com headers por seção
                 if (activeSection === "all" && !isSearching) {

@@ -1,8 +1,22 @@
+import { Bebas_Neue, Manrope } from "next/font/google";
 import { redirect } from "next/navigation";
 import PainelShell from "@/components/painel/painel-shell";
 import { isAdmin } from "@/lib/admin";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+
+const bebas = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
 
 export default async function PainelLayout({ children }: { children: React.ReactNode }) {
   const seller = await getSession();
@@ -20,18 +34,20 @@ export default async function PainelLayout({ children }: { children: React.React
   });
 
   return (
-    <PainelShell
-      seller={{
-        id: seller.id,
-        name: seller.name,
-        shopName: seller.shopName,
-        shopSlug: seller.shopSlug,
-        plan: seller.plan,
-      }}
-      pendingOrders={pendingOrders}
-      isAdmin={isAdmin(seller.email)}
-    >
-      {children}
-    </PainelShell>
+    <div className={`${bebas.variable} ${manrope.variable}`}>
+      <PainelShell
+        seller={{
+          id: seller.id,
+          name: seller.name,
+          shopName: seller.shopName,
+          shopSlug: seller.shopSlug,
+          plan: seller.plan,
+        }}
+        pendingOrders={pendingOrders}
+        isAdmin={isAdmin(seller.email)}
+      >
+        {children}
+      </PainelShell>
+    </div>
   );
 }

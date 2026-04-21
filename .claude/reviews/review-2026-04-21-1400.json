@@ -1,0 +1,292 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-04-21T14:00:00Z",
+  "scope": {
+    "route": "/loja/[slug]/[albumSlug]",
+    "files": [
+      "src/app/loja/[slug]/[albumSlug]/page.tsx",
+      "src/components/loja/store-album-view.tsx",
+      "src/components/loja/store-album-view.module.css",
+      "src/components/loja/store-hero.tsx",
+      "src/components/loja/store-sidebar.tsx",
+      "src/components/loja/store-promo-row.tsx",
+      "src/components/loja/store-footer.tsx"
+    ],
+    "axes": ["system", "a11y", "consistency", "ai-slop"],
+    "axes_skipped": ["intent"],
+    "axes_skipped_reason": "Nenhum *.intent.md sidecar encontrado para os 7 arquivos-alvo."
+  },
+  "summary": { "critical": 12, "warning": 8, "note": 4, "total": 24 },
+  "findings": [
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "surfaces-off-token-ladder",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 2,
+      "snippet": "--bg: #05070b; --bg-2: #0a0d13; --bg-3: #121621; --bg-4: #1b2030; --bg-5: #242a3a;",
+      "message": "Ladder de 5 surfaces em HEX que NAO corresponde ao declarado em DESIGN_SYSTEM.md §2.1. DS declara canvas #0b0e14 + surfaces #0d1017/#0f1219/#111318/#1a1f2e. Nenhum desses valores aparece no modulo. Todas as 6 UIs da loja renderizam em paleta paralela.",
+      "suggestion": "Trocar tokens por DS-declared OU estender DS §2.1 formalmente (design-system-apply em mode extend)."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "accent-color-space-drift",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 14,
+      "snippet": "--accent: oklch(0.82 0.15 85); --lime: oklch(0.86 0.19 130); --red: oklch(0.72 0.2 25); --blue: oklch(0.78 0.14 240);",
+      "message": "Paleta de acento + feedback toda em OKLCH, nao em HEX do DS §2.2-2.3. --accent oklch(0.82 0.15 85) aproxima amber-400 mas nao e #fbbf24. --lime substitui success #34d399 (emerald). --red substitui error #f87171 (rose). --blue substitui info #60a5fa.",
+      "suggestion": "Usar HEX DS-declarado OU declarar explicitamente OKLCH equivalents em DESIGN_SYSTEM.md §2 com mapeamento 1:1."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "undeclared-font-family",
+      "file": "src/app/loja/[slug]/[albumSlug]/page.tsx",
+      "line": 11,
+      "snippet": "const bebas = Bebas_Neue({ weight: \"400\", subsets: [\"latin\"], variable: \"--font-bebas\", display: \"swap\" });",
+      "message": "Bebas Neue importado e aplicado como ancora do hero (heroTitle). DESIGN_SYSTEM.md §3 declara apenas --font-sans (Geist Sans) e --font-mono (Geist Mono). Terceira fonte introduzida sem atualizar DS.",
+      "suggestion": "Remover Bebas Neue e usar Geist Sans font-black (conforme DS §9 hero H1) OU adicionar --font-display como token oficial em DS §3."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "shadow-component-system",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 288,
+      "snippet": ".btn { ... } .btnPrimary { background: var(--accent); color: #0a0d12; } .btnGhost { ... } .cartBtn { ... } .checkoutBtn { ... } .actionPill { ... }",
+      "message": "Sistema paralelo de 40+ classes (.btn, .btnPrimary, .btnGhost, .cartBtn, .checkoutBtn, .actionPill, .card, .modal, .drawer, .cardAdd, .cardQty) reimplementa a biblioteca declarada em DS §9 (.btn-primary, .btn-ghost, .badge*). Shadow-components por toda a rota.",
+      "suggestion": "Consolidar: usar .btn-primary/.btn-ghost do globals.css para CTAs e declarar o que for genuinamente novo (drawer, card de sticker, actionPill) como extensao oficial do DS."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "motion-namespace-duplication",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 1055,
+      "snippet": "@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } } ... @keyframes fadeIn { ... }",
+      "message": "Modulo redefine @keyframes slideInRight (linha 1055) e @keyframes fadeIn (linha 1282). DESIGN_SYSTEM.md §7 ja declara slide-in-right e fade-in em globals.css. Namespace de motion duplicado — se algum dia os tokens globais mudarem, essa rota dessincroniza silenciosamente.",
+      "suggestion": "Importar classes .slide-in-right e .fade-in do globals.css. Remover os @keyframes locais."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "nested-interactive-elements",
+      "file": "src/components/loja/store-album-view.tsx",
+      "line": 356,
+      "snippet": "<button className={cardClass} onClick={() => !inCart && addToCart(sticker)}> ... <div className={styles.cardQty}><button onClick={...}>−</button><button onClick={...}>+</button></div> ... </button>",
+      "message": "Outer <button> (card inteiro) envolve inner <button>s (controles de quantidade +/-) quando inCart=true. HTML5 proibe interactive content dentro de <button>. Viola WCAG 4.1.1 Parsing. Comportamento de keyboard/screen reader indefinido; clique no inner button pode disparar o outer de forma imprevisivel (stopPropagation na div cobre mouse, nao teclado).",
+      "suggestion": "Separar: card vira <div role=\"group\"> com um <button> de adicionar (aparece quando nao esta no carrinho); controles +/- ficam ao lado, nao aninhados. OU usar <a href> + handler para o card-as-affordance e manter +/- como botoes independentes."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "modal-no-escape-close",
+      "file": "src/components/loja/store-album-view.tsx",
+      "line": 611,
+      "snippet": "{showImportModal && (<div className={styles.modal} onClick={() => setShowImportModal(false)} role=\"dialog\" aria-modal=\"true\">...)}",
+      "message": "4 dialogos (linhas 611 import, 684 cart drawer, 796 checkout, 909 success) sem handler de Escape. Usuario de teclado nao consegue fechar modal sem achar o botao X. Viola WCAG 2.1.1 Keyboard. Mesmo finding que o review anterior do inventory-manager — padrao sistemico no projeto.",
+      "suggestion": "Adicionar useEffect global (hook useEscape) que fecha o modal ativo. Preferencialmente um <Dialog> wrapper compartilhado que resolva Escape + focus trap + role juntos."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "modal-no-focus-trap",
+      "file": "src/components/loja/store-album-view.tsx",
+      "line": 611,
+      "snippet": "<div className={styles.modal} role=\"dialog\" aria-modal=\"true\"> ... </div>  (sem focus trap nem autoFocus)",
+      "message": "Nenhum dos 4 dialogos configura focus trap ou foco inicial. Usuario de teclado sai do dialogo ao tabular, foco pousa no conteudo por baixo (scroll travado). Viola WCAG 2.4.3 Focus Order + 2.1.2 No Keyboard Trap (neste caso, o problema e o oposto: o foco escapa em vez de ficar preso).",
+      "suggestion": "Envolver modais em componente <Dialog> com focus-trap (ex: focus-trap-react ou implementacao manual com primeiro/ultimo tabbable). autoFocus no primeiro input interativo."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "dialog-missing-role-and-label",
+      "file": "src/components/loja/store-album-view.tsx",
+      "line": 684,
+      "snippet": "<div className={styles.modal} style={{ backdropFilter: \"blur(4px)\" }} onClick={() => setShowCart(false)} /> <aside className={styles.drawer}> ...",
+      "message": "Cart drawer (linhas 684-792) e a unica das 4 superficies sem role=\"dialog\", aria-modal=\"true\", nem aria-label. Screen readers nao identificam como modal; anunciam apenas \"complementar\" (semantica de <aside>). O overlay companheiro tambem nao tem role nem tabIndex. Viola WCAG 4.1.2 Name, Role, Value.",
+      "suggestion": "Adicionar role=\"dialog\" aria-modal=\"true\" aria-label=\"Orcamento\" ao <aside>. Overlay fica apenas visual (pointer-events via CSS)."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "contrast-fail-fg-ghost",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 13,
+      "snippet": "--fg-ghost: #464b58;  /* usado em .cardImgPh, .footH, .footNote, .ciRemove */",
+      "message": "Token --fg-ghost (#464b58) calcula 2.23-2.31:1 sobre surfaces --bg (#05070b) e --bg-2 (#0a0d13). WCAG AA exige 4.5:1 para texto normal e 3:1 para UI/graficos. Aplicado em .cardImgPh (9.5px), .footH (10.5px headings da secao do rodape), .footNote (10.5px). Falha total.",
+      "suggestion": "Subir --fg-ghost para pelo menos #7a8192 (cerca de 4.6:1). OU usar --fg-mute como piso (ja e borderline — ver warning contrast-marginal-small-text)."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "contrast-fail-fg-mute-small-text",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 12,
+      "snippet": "--fg-mute: #6b7180;  /* usado em .shopTag 10.5px, .heroStatL 10.5px, .ctrlLead p 12.5px, .cardMeta 11px, .sectionHd .meta 11px, .sideItemQt 10.5px, .cardStock 9.5px, .ciSub 11px, .checkoutMini 11px */",
+      "message": "Token --fg-mute (#6b7180) calcula 3.98-4.13:1 sobre surfaces escuras. WCAG AA exige 4.5:1 para texto normal (<18pt = <24px). 9+ usos em texto 9.5-12.5px em todo o layout — todos falham marginalmente. Hero stats, sticker meta, cart subtexto, ticker do rodape: todos afetados.",
+      "suggestion": "Subir --fg-mute para pelo menos #7d838f (4.5:1) ou #9099a8 (5.5:1). Alternativa: manter token e usar apenas em large text (>=18pt), migrar pequenos para --fg-dim."
+    },
+    {
+      "axis": "consistency",
+      "severity": "critical",
+      "rule": "hero-pattern-divergence",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 213,
+      "snippet": ".heroTitle { font-family: var(--font-bebas), sans-serif; font-size: clamp(56px, 8vw, 82px); letter-spacing: -0.005em; line-height: 0.95; }",
+      "message": "DESIGN_SYSTEM.md §9 e DESIGN.md §3 declaram hero H1 canonico: 'text-7xl xl:text-[84px] font-black leading-[0.95] tracking-tight' com palavra-chave em text-amber-400, em Geist Sans. Modulo usa Bebas Neue + clamp(56px, 8vw, 82px) + letter-spacing negativo — fonte diferente, escala diferente, rastreio diferente. Dois heros na mesma app vao divergir visualmente.",
+      "suggestion": "Reconciliar: OU o modulo adota o pattern declarado (Geist black text-7xl), OU o DS §9 aceita Bebas como variante para vitrine e documenta o trade-off."
+    },
+    {
+      "axis": "consistency",
+      "severity": "critical",
+      "rule": "missing-eyebrow-pattern",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 691,
+      "snippet": ".sectionHd { display: flex; align-items: baseline; gap: 10px; margin: 28px 0 14px; padding: 0 2px; flex-wrap: wrap; }  /* sem eyebrow */",
+      "message": "DESIGN_SYSTEM.md §9 declara que TODA headline de secao tem eyebrow acima: 'text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em]'. Nenhuma secao da loja (sectionHd, sideH, controlBar) usa eyebrow. Hero usa .chip em vez de eyebrow. Pattern canonico ausente em toda a rota.",
+      "suggestion": "Adicionar eyebrow 'EM ESTOQUE' / 'FILTROS' / nome da secao UPPERCASE acima de cada h2/h3. Compartilhar classe .eyebrow entre globals e modulo."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "off-scale-spacing-radius-font",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 745,
+      "snippet": "border-radius: 11px; ... border-radius: 14px (modal); padding: 12px 40px (nav); font-size: 10.5px/11.5px/12.5px/13.5px/9.5px (dezenas de usos)",
+      "message": "Radius ladder arbitraria (4, 5, 6, 7, 8, 9, 10, 11, 14 px) fora do DS §5 que diz Tailwind default (6/8/12). Font-size com fracoes de meio pixel (10.5, 11.5, 12.5, 13.5) off-Tailwind-scale. DS §4 declara spacing Tailwind default mas modulo usa 10/14/16/18/22/28/32/40 px livres. Nao rompe DS porque este declara apenas 'Tailwind default' sem enforcement — mas cria escala paralela.",
+      "suggestion": "Alinhar com Tailwind: radius apenas 4/6/8/12/16, font apenas 10/12/14/16/18/20, spacing em multiplos de 4. OU tokenizar a escala custom em DS §4/§5."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "root-font-size-override",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 25,
+      "snippet": ".root { ... font-size: 14px; ... }",
+      "message": ".root comprime o font-size base de 16px (Tailwind default) para 14px em toda a rota. Efeito cascata: qualquer classe Tailwind em filhos (text-sm = 0.875rem) herda contexto menor. Nao declarado em DESIGN_SYSTEM.md §3.",
+      "suggestion": "Remover .root font-size override OU declarar em DS §3 que a rota /loja roda em escala comprimida e documentar os motivos (densidade de listagem)."
+    },
+    {
+      "axis": "a11y",
+      "severity": "warning",
+      "rule": "semantic-heading-as-div",
+      "file": "src/components/loja/store-sidebar.tsx",
+      "line": 125,
+      "snippet": "<div className={styles.sideH}>Albuns</div> ... <div className={styles.sideH}>Secoes</div> ... <div className={styles.sideH}>Tipo</div> ... <div className={styles.sideH}>Preco</div>",
+      "message": "4 headings visuais ('Albuns', 'Secoes', 'Tipo', 'Preco') renderizados como <div>. Screen readers navegam por heading (H) — esses 4 nao aparecem na lista. Viola WCAG 1.3.1 Info and Relationships em escopo moderado.",
+      "suggestion": "Trocar <div className={styles.sideH}> por <h4 className={styles.sideH}> (ou <h3> se o contexto semantico da pagina comportar)."
+    },
+    {
+      "axis": "a11y",
+      "severity": "warning",
+      "rule": "clickable-cursor-on-non-interactive",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 979,
+      "snippet": ".promo { ... cursor: pointer; transition: all 0.15s; } .promo:hover { border-color: var(--line-2); }",
+      "message": "Classe .promo aplica cursor: pointer + hover state. Em store-promo-row.tsx: card 1 (linha 21) e <button> (legitimo), cards 2 e 3 (linhas 38, 55) sao <div> informativos sem onClick. Usuarios recebem sinal visual de que podem clicar mas nao podem. Confusao UX, falha WCAG 3.2 (predictable).",
+      "suggestion": "Separar .promo (nao interativo) de .promoButton (interativo) — ou remover cursor+hover dos dois cards informativos."
+    },
+    {
+      "axis": "a11y",
+      "severity": "warning",
+      "rule": "hover-only-touch-unreachable",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 382,
+      "snippet": ".hero:hover .s1 { transform: rotate(-14deg) translateY(-4px); } .hero:hover .s2 { ... } .hero:hover .s3 { ... }",
+      "message": "Animacao de parallax dos stickers do hero so dispara com :hover. Device touch-only nao alcanca. Nao e WCAG blocker porque e decorativo — mas contradiz 'mobile-first' declarado em CLAUDE.md. Em mobile, @media 1100px esconde .heroRight inteiro, entao ok na pratica — mas em tablet (1100-1280) o hero fica estatico sem motion.",
+      "suggestion": "Usar @media (hover: hover) wrap OU animacao IntersectionObserver-driven que dispara na entrada em viewport, nao em hover."
+    },
+    {
+      "axis": "consistency",
+      "severity": "warning",
+      "rule": "cta-hierarchy-inversion-pill",
+      "file": "src/components/loja/store-album-view.tsx",
+      "line": 506,
+      "snippet": "<button className={styles.actionPill} onClick={...}>+ Adicionar todas ({availableStickers.length})</button>  (visualmente: pill 11.5px, mesmo tamanho de tag)",
+      "message": "'Adicionar todas' pode adicionar 100+ figurinhas com um clique — acao de alto impacto. Renderizado como .actionPill (11.5px, padding 6px 12px) — visualmente identico a tag/filtro. Hierarquia visual invertida: botao high-stakes parece low-stakes. Viola DS §7 do-dont 'cards enterprise frios'.",
+      "suggestion": "Promover CTAs de bulk para btn-primary real (14px+, padding 10px 20px+) OU adicionar confirmacao modal antes de adicionar X itens em massa."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "gradient-mesh-hero-undeclared",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 41,
+      "snippet": ".hero { background: radial-gradient(1200px 500px at 20% 0%, oklch(0.28 0.08 85 / 0.28), transparent 60%), radial-gradient(900px 500px at 85% 20%, oklch(0.27 0.07 240 / 0.22), transparent 60%), var(--bg); }",
+      "message": "Dois radial-gradients amber+azul sobrepostos no hero. Pattern classico de 'AI hero com gradient mesh'. DS §6 diz explicitamente: 'Dramatizacao vem de gradients amber + motion, nao de shadow' — mas amber aqui e misturado com blue ambient sem justificativa documentada.",
+      "suggestion": "OU manter so o gradient amber (remover o azul), OU declarar o 'ambient dual-hue mesh' como token oficial em DS §6 (ex: --hero-mesh)."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "shadow-crutch-drama",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 335,
+      "snippet": ".heroStk { box-shadow: 0 30px 60px rgba(0,0,0,0.6), ... } .card:hover { box-shadow: 0 16px 32px rgba(0,0,0,0.4); transform: translateY(-3px); } .drawer { box-shadow: -20px 0 60px rgba(0,0,0,0.5); } .mobileBarBtn { box-shadow: 0 8px 20px oklch(0.82 0.15 85 / 0.3); }",
+      "message": "DESIGN.md §6 diz: 'Dramatizacao vem de gradients amber + motion, NAO de shadow.' Modulo usa box-shadows dramaticos (60px blur, 0.5-0.6 alpha) em 5+ lugares: hero stickers, card hover, drawer, botao mobile, checkout button. Contradiz premissa declarada.",
+      "suggestion": "Reduzir shadows para o minimo de separacao (border + pequena sombra 4-8px). Transferir drama para motion (ex: sticker-glow DS-declarado) + gradients amber."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "generic-hover-transform",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 763,
+      "snippet": ".card:hover { transform: translateY(-3px); } .btnPrimary:hover { transform: translateY(-1px); } .cardAdd:hover { transform: scale(1.05); }",
+      "message": "Padrao AI-reflex: translateY(-1/-3)px + scale(1.05) em hover de cards/buttons. DS §7 motion canonico nao inclui hover-lift como token. Cada componente reinventa uma variacao generica.",
+      "suggestion": "Declarar .hover-lift como utility em globals.css com timing consistente OU remover e deixar border-color hover como unico feedback (ja presente)."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "emoji-as-brand-icon",
+      "file": "src/components/loja/store-promo-row.tsx",
+      "line": 22,
+      "snippet": "<div className={styles.promoIco}>📋</div> ... <div className={styles.promoIco}>🎯</div> ... <div className={styles.promoIco}>💳</div>  /* e <div className={styles.emptyCartBig}>🛍</div> */",
+      "message": "Emojis (📋 🎯 💳 🛍) usados como icones de brand em cards promocionais + empty state, enquanto o restante do layout usa SVGs inline. Mix inconsistente. Emojis herdam cor do sistema (nao customizavel), tem rendering diferente por OS, e sao pattern AI-reflex.",
+      "suggestion": "Substituir por SVGs Heroicons/Lucide do mesmo conjunto dos demais icones. Emoji carrinho no empty state pode virar icone outlined com --fg-mute."
+    },
+    {
+      "axis": "a11y",
+      "severity": "note",
+      "rule": "ul-styled-as-anchor",
+      "file": "src/components/loja/store-footer.tsx",
+      "line": 20,
+      "snippet": "<ul className={styles.footL}>",
+      "message": ".footL em CSS foi desenhada para <a> (display: block; padding: 3px 0; :hover change color) mas e aplicada a <ul>. Visualmente o resultado e aceitavel porque <li> filhos herdam; semanticamente a classe nao faz sentido no <ul>. Note — nao e bug.",
+      "suggestion": "Renomear .footLinkList para ul e .footLink para <a>, OU manter e documentar que .footL funciona nos dois."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "note",
+      "rule": "decorative-grid-overlay",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 46,
+      "snippet": ".hero::before { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; }",
+      "message": "Grid decorativo em .hero::before (60x60px, opacidade 0.02). Nao e bloqueante; contribui para o visual 'data-driven editorial'. Note AI-slop: AI costuma adicionar graph-paper patterns em heros sem rationale. Opacidade muito baixa (0.02) sugere que o autor duvidou do proprio efeito.",
+      "suggestion": "Remover se nao tiver leitura visual OU declarar como token em DS §6 ('--hero-grid-overlay')."
+    },
+    {
+      "axis": "consistency",
+      "severity": "note",
+      "rule": "sidebar-eyebrow-divergence",
+      "file": "src/components/loja/store-album-view.module.css",
+      "line": 404,
+      "snippet": ".sideH { font-size: 10.5px; font-family: mono; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-mute); }",
+      "message": "Sidebar headings (.sideH) visualmente aproximam um 'eyebrow' do DS mas com parametros diferentes: 10.5px em vez de 11px, tracking 0.1em em vez de 0.18em, cor --fg-mute em vez de amber-400. Duas variantes de eyebrow competindo no mesmo tema.",
+      "suggestion": "Alinhar: ou migrar .sideH para eyebrow canonico do DS (amber-400 / 11px / 0.18em), ou declarar 'eyebrow secundario / mute' como token auxiliar em DS §3."
+    },
+    {
+      "axis": "system",
+      "severity": "note",
+      "rule": "ds-meta-drift-persists",
+      "file": ".claude/DESIGN_SYSTEM.md",
+      "line": 20,
+      "snippet": "DESIGN_SYSTEM.md §2.1 declara #0d1017/#0f1219/#111318/#1a1f2e VS design-tokens.json declara #121621/#1a1f2e/#242b3d. Modulo usa ainda um terceiro set.",
+      "message": "Drift entre os dois artefatos do DS persiste desde o review anterior (token-artifact-drift). Agora o modulo loja introduz um TERCEIRO set de surfaces — tres ladders paralelos no mesmo repo. design-tokens.json esta mais proximo do modulo loja (ambos usam #121621 e #1a1f2e) do que do DESIGN_SYSTEM.md.",
+      "suggestion": "Rodar design-system-extract para reconciliar. Decisao precisa: qual ladder e canonico? DS MD (documentado a mao) ou os valores vivos no codigo? Depois, atualizar o outro artefato + modulo."
+    }
+  ]
+}

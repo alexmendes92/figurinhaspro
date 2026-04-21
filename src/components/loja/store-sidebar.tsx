@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { Album } from "@/lib/albums";
-import { STICKER_TYPES, getStickerTypeConfig } from "@/lib/sticker-types";
+import { getStickerTypeConfig, STICKER_TYPES } from "@/lib/sticker-types";
 import styles from "./store-album-view.module.css";
 
 interface AlbumPill {
@@ -55,8 +55,7 @@ export default function StoreSidebar({
 }: StoreSidebarProps) {
   const [rangeLo, rangeHi] = priceRange;
 
-  const formatPrice = (v: number) =>
-    `R$ ${v.toFixed(2).replace(".", ",")}`;
+  const formatPrice = (v: number) => `R$ ${v.toFixed(2).replace(".", ",")}`;
 
   function handleLoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const next = Number(e.target.value);
@@ -122,16 +121,12 @@ export default function StoreSidebar({
       {/* Álbuns */}
       {availableAlbums && availableAlbums.length > 1 && (
         <>
-          <div className={styles.sideH}>Álbuns</div>
+          <h4 className={styles.sideH}>Álbuns</h4>
           {availableAlbums.map((a) => {
             const isActive = a.slug === album.slug;
             const classes = isActive ? `${styles.sideItem} ${styles.sideItemOn}` : styles.sideItem;
             return (
-              <Link
-                key={a.slug}
-                href={`/loja/${sellerSlug}/${a.slug}`}
-                className={classes}
-              >
+              <Link key={a.slug} href={`/loja/${sellerSlug}/${a.slug}`} className={classes}>
                 <span className={styles.sideItemFlag}>{a.flag}</span>
                 <span className={styles.sideItemNm}>{a.title}</span>
                 <span className={styles.sideItemQt}>{a.inStockTypes}</span>
@@ -143,7 +138,7 @@ export default function StoreSidebar({
       )}
 
       {/* Seções */}
-      <div className={styles.sideH}>Seções</div>
+      <h4 className={styles.sideH}>Seções</h4>
       <button
         type="button"
         className={
@@ -162,9 +157,7 @@ export default function StoreSidebar({
           <button
             key={sec.name}
             type="button"
-            className={
-              isActive ? `${styles.sideItem} ${styles.sideItemOn}` : styles.sideItem
-            }
+            className={isActive ? `${styles.sideItem} ${styles.sideItemOn}` : styles.sideItem}
             onClick={() => onSectionChange(i)}
           >
             <span className={styles.sideItemNm}>{sec.name}</span>
@@ -176,7 +169,7 @@ export default function StoreSidebar({
       <div className={styles.sideDivider} />
 
       {/* Tipo de figurinha */}
-      <div className={styles.sideH}>Tipo</div>
+      <h4 className={styles.sideH}>Tipo</h4>
       {STICKER_TYPES.map((type) => {
         const cfg = getStickerTypeConfig(type);
         const on = activeTypes.has(type);
@@ -197,7 +190,7 @@ export default function StoreSidebar({
       <div className={styles.sideDivider} />
 
       {/* Price range */}
-      <div className={styles.sideH}>Preço</div>
+      <h4 className={styles.sideH}>Preço</h4>
       <div className={styles.priceRange}>
         <div className={styles.priceRangeLabels}>
           <span>{formatPrice(rangeLo)}</span>

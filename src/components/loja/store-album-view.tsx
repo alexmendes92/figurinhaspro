@@ -7,12 +7,13 @@ import type { Album, Sticker } from "@/lib/albums";
 import { imgUrl } from "@/lib/images";
 import type { SectionRule } from "@/lib/price-resolver";
 import { resolveQuantityDiscount, resolveUnitPrice } from "@/lib/price-resolver";
-import { STICKER_TYPES, getStickerTypeConfig } from "@/lib/sticker-types";
+import { getStickerTypeConfig, STICKER_TYPES } from "@/lib/sticker-types";
+import { useDialog } from "@/lib/use-dialog";
+import styles from "./store-album-view.module.css";
+import StoreFooter from "./store-footer";
 import StoreHero from "./store-hero";
 import StorePromoRow from "./store-promo-row";
 import StoreSidebar from "./store-sidebar";
-import StoreFooter from "./store-footer";
-import styles from "./store-album-view.module.css";
 
 interface CartItem {
   sticker: Sticker;
@@ -98,6 +99,13 @@ export default function StoreAlbumView({
   const filterByMissing = missingCodes.size > 0;
   const gridRef = useRef<HTMLDivElement | null>(null);
 
+  const importDialogRef = useDialog<HTMLDivElement>(showImportModal, () =>
+    setShowImportModal(false)
+  );
+  const cartDrawerRef = useDialog<HTMLElement>(showCart, () => setShowCart(false));
+  const checkoutDialogRef = useDialog<HTMLDivElement>(showCheckout, () => setShowCheckout(false));
+  const successDialogRef = useDialog<HTMLDivElement>(showSuccess, () => setShowSuccess(false));
+
   const sectionRulesRef = useMemo(() => {
     const map = new Map<string, SectionRule>();
     for (const [name, rule] of Object.entries(sectionRulesMap)) {
@@ -155,8 +163,8 @@ export default function StoreAlbumView({
   // Faixa global de preços (para slider)
   const priceBounds = useMemo(() => {
     if (allAvailableStickers.length === 0) return { min: 0, max: 10 };
-    let min = Infinity;
-    let max = -Infinity;
+    let min = Number.POSITIVE_INFINITY;
+    let max = Number.NEGATIVE_INFINITY;
     for (const s of allAvailableStickers) {
       const p = getPrice(s);
       if (p < min) min = p;
@@ -353,11 +361,22 @@ export default function StoreAlbumView({
     const cardClass = inCart ? `${styles.card} ${styles.cardInCart}` : styles.card;
 
     return (
-      <button
+      <div
         key={sticker.code}
-        type="button"
         className={cardClass}
-        onClick={() => !inCart && addToCart(sticker)}
+        role={inCart ? undefined : "button"}
+        tabIndex={inCart ? undefined : 0}
+        onClick={inCart ? undefined : () => addToCart(sticker)}
+        onKeyDown={
+          inCart
+            ? undefined
+            : (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  addToCart(sticker);
+                }
+              }
+        }
       >
         <div className={styles.cardImg}>
           <Image
@@ -380,7 +399,14 @@ export default function StoreAlbumView({
           )}
           {inCart && (
             <div className={styles.cardInCartBadge} aria-label="No carrinho">
-              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <svg
+                width="12"
+                height="12"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={3}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -395,17 +421,11 @@ export default function StoreAlbumView({
               <small> un.</small>
             </div>
             {inCart ? (
-              <div
-                className={styles.cardQty}
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className={styles.cardQty}>
                 <button
                   type="button"
                   aria-label="Remover"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    updateCartQty(sticker.code, -1);
-                  }}
+                  onClick={() => updateCartQty(sticker.code, -1)}
                 >
                   −
                 </button>
@@ -413,10 +433,7 @@ export default function StoreAlbumView({
                 <button
                   type="button"
                   aria-label="Adicionar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    updateCartQty(sticker.code, +1);
-                  }}
+                  onClick={() => updateCartQty(sticker.code, +1)}
                   disabled={qty >= maxQty}
                 >
                   +
@@ -424,19 +441,25 @@ export default function StoreAlbumView({
               </div>
             ) : (
               <span className={styles.cardAdd} aria-hidden>
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
               </span>
             )}
           </div>
         </div>
-      </button>
+      </div>
     );
   }
 
-  const renderAllSections =
-    activeSection === "all" && !isSearching && !filterByMissing;
+  const renderAllSections = activeSection === "all" && !isSearching && !filterByMissing;
 
   return (
     <div className={styles.root}>
@@ -533,19 +556,11 @@ export default function StoreAlbumView({
               </div>
               <div className={styles.filterBannerActions}>
                 {missingMatches.length > 0 && (
-                  <button
-                    type="button"
-                    className={styles.actionPill}
-                    onClick={addAllMissingToCart}
-                  >
+                  <button type="button" className={styles.actionPill} onClick={addAllMissingToCart}>
                     Adicionar todas ao carrinho
                   </button>
                 )}
-                <button
-                  type="button"
-                  className={styles.actionPill}
-                  onClick={clearMissingFilter}
-                >
+                <button type="button" className={styles.actionPill} onClick={clearMissingFilter}>
                   Limpar filtro
                 </button>
               </div>
@@ -571,9 +586,7 @@ export default function StoreAlbumView({
                 </svg>
               </div>
               <h4>
-                {isSearching
-                  ? "Nenhuma figurinha encontrada"
-                  : "Nada corresponde aos filtros"}
+                {isSearching ? "Nenhuma figurinha encontrada" : "Nada corresponde aos filtros"}
               </h4>
               <p>
                 {isSearching
@@ -613,12 +626,28 @@ export default function StoreAlbumView({
           onClick={() => setShowImportModal(false)}
           role="dialog"
           aria-modal="true"
+          aria-label="Importar lista que falta"
         >
-          <div className={styles.modalBox} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles.modalBox}
+            onClick={(e) => e.stopPropagation()}
+            ref={importDialogRef}
+          >
             <div className={styles.modalHead}>
               <div className={styles.modalHeadIcon}>
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 3h6m-6 3h3M9 8h.01M9 5h6a2 2 0 012 2v11a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                <svg
+                  width="18"
+                  height="18"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12h6m-6 3h6m-6 3h3M9 8h.01M9 5h6a2 2 0 012 2v11a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2z"
+                  />
                 </svg>
               </div>
               <div>
@@ -633,7 +662,9 @@ export default function StoreAlbumView({
                   id="importText"
                   value={importText}
                   onChange={(e) => setImportText(e.target.value)}
-                  placeholder={"Ex: 1, 2, 3, FWC1, BRA5, ARG10\n\nSeparados por vírgula, espaço ou um por linha"}
+                  placeholder={
+                    "Ex: 1, 2, 3, FWC1, BRA5, ARG10\n\nSeparados por vírgula, espaço ou um por linha"
+                  }
                   rows={6}
                 />
               </div>
@@ -684,8 +715,15 @@ export default function StoreAlbumView({
             className={styles.modal}
             style={{ backdropFilter: "blur(4px)" }}
             onClick={() => setShowCart(false)}
+            aria-hidden="true"
           />
-          <aside className={styles.drawer}>
+          <aside
+            className={styles.drawer}
+            ref={cartDrawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Orçamento"
+          >
             <div className={styles.drawerHead}>
               <div>
                 <h3>Orçamento</h3>
@@ -697,7 +735,14 @@ export default function StoreAlbumView({
                 onClick={() => setShowCart(false)}
                 aria-label="Fechar"
               >
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -728,11 +773,19 @@ export default function StoreAlbumView({
                       </div>
                     </div>
                     <div className={styles.ciCtrl}>
-                      <button type="button" onClick={() => updateCartQty(item.sticker.code, -1)} aria-label="Diminuir">
+                      <button
+                        type="button"
+                        onClick={() => updateCartQty(item.sticker.code, -1)}
+                        aria-label="Diminuir"
+                      >
                         −
                       </button>
                       <span className={styles.n}>{item.quantity}</span>
-                      <button type="button" onClick={() => updateCartQty(item.sticker.code, +1)} aria-label="Aumentar">
+                      <button
+                        type="button"
+                        onClick={() => updateCartQty(item.sticker.code, +1)}
+                        aria-label="Aumentar"
+                      >
                         +
                       </button>
                     </div>
@@ -743,8 +796,19 @@ export default function StoreAlbumView({
                       onClick={() => removeFromCart(item.sticker.code)}
                       aria-label="Remover"
                     >
-                      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      <svg
+                        width="14"
+                        height="14"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -799,11 +863,23 @@ export default function StoreAlbumView({
           onClick={() => setShowCheckout(false)}
           role="dialog"
           aria-modal="true"
+          aria-label="Finalizar orçamento"
         >
-          <div className={styles.modalBox} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles.modalBox}
+            onClick={(e) => e.stopPropagation()}
+            ref={checkoutDialogRef}
+          >
             <div className={styles.modalHead}>
               <div className={styles.modalHeadIcon}>
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  width="18"
+                  height="18"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
@@ -861,9 +937,7 @@ export default function StoreAlbumView({
                         {item.sticker.code} {item.sticker.name}
                         {item.quantity > 1 && ` ×${item.quantity}`}
                       </span>
-                      <span className={styles.mono}>
-                        {money(item.price * item.quantity)}
-                      </span>
+                      <span className={styles.mono}>{money(item.price * item.quantity)}</span>
                     </div>
                   ))}
                   {discountPercent > 0 && (
@@ -906,10 +980,17 @@ export default function StoreAlbumView({
 
       {/* Modal sucesso */}
       {showSuccess && (
-        <div className={styles.modal} role="dialog" aria-modal="true">
-          <div className={`${styles.modalBox} ${styles.successBox}`}>
+        <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Pedido enviado">
+          <div className={`${styles.modalBox} ${styles.successBox}`} ref={successDialogRef}>
             <div className={styles.successIcon}>
-              <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                width="28"
+                height="28"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -942,11 +1023,7 @@ export default function StoreAlbumView({
       {/* Barra mobile fixa */}
       {cart.length > 0 && !showCart && !showCheckout && !showSuccess && (
         <div className={styles.mobileBar}>
-          <button
-            type="button"
-            className={styles.mobileBarBtn}
-            onClick={() => setShowCart(true)}
-          >
+          <button type="button" className={styles.mobileBarBtn} onClick={() => setShowCart(true)}>
             Ver orçamento ({cartItemCount}) — {money(cartTotal)}
           </button>
         </div>

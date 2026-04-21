@@ -9,8 +9,8 @@
   --line-2: #2c3342;
   --fg: #f2f3f5;
   --fg-dim: #a7adba;
-  --fg-mute: #6b7180;
-  --fg-ghost: #464b58;
+  --fg-mute: #7d838f;
+  --fg-ghost: #7a8192;
   --accent: oklch(0.82 0.15 85);
   --accent-bg: oklch(0.28 0.08 85);
   --accent-soft: oklch(0.82 0.15 85 / 0.14);
@@ -40,8 +40,7 @@
   border-bottom: 1px solid var(--line);
   background:
     radial-gradient(1200px 500px at 20% 0%, oklch(0.28 0.08 85 / 0.28), transparent 60%),
-    radial-gradient(900px 500px at 85% 20%, oklch(0.27 0.07 240 / 0.22), transparent 60%),
-    var(--bg);
+    radial-gradient(900px 500px at 85% 20%, oklch(0.27 0.07 240 / 0.22), transparent 60%), var(--bg);
 }
 .hero::before {
   content: "";
@@ -370,18 +369,54 @@
 .heroStkShine {
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 60%
+  );
   pointer-events: none;
   z-index: 1;
 }
-.s1 { top: 20px; left: 10px; transform: rotate(-12deg); z-index: 1; }
-.s2 { top: 0; left: 140px; transform: rotate(-3deg); z-index: 3; }
-.s3 { top: 40px; left: 260px; transform: rotate(8deg); z-index: 2; }
-.s4 { top: 200px; left: 60px; transform: rotate(5deg); z-index: 2; }
-.s5 { top: 220px; left: 200px; transform: rotate(-5deg); z-index: 1; }
-.hero:hover .s1 { transform: rotate(-14deg) translateY(-4px); }
-.hero:hover .s2 { transform: rotate(-3deg) translateY(-8px); }
-.hero:hover .s3 { transform: rotate(10deg) translateY(-6px); }
+.s1 {
+  top: 20px;
+  left: 10px;
+  transform: rotate(-12deg);
+  z-index: 1;
+}
+.s2 {
+  top: 0;
+  left: 140px;
+  transform: rotate(-3deg);
+  z-index: 3;
+}
+.s3 {
+  top: 40px;
+  left: 260px;
+  transform: rotate(8deg);
+  z-index: 2;
+}
+.s4 {
+  top: 200px;
+  left: 60px;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+.s5 {
+  top: 220px;
+  left: 200px;
+  transform: rotate(-5deg);
+  z-index: 1;
+}
+.hero:hover .s1 {
+  transform: rotate(-14deg) translateY(-4px);
+}
+.hero:hover .s2 {
+  transform: rotate(-3deg) translateY(-8px);
+}
+.hero:hover .s3 {
+  transform: rotate(10deg) translateY(-6px);
+}
 
 /* ====== LAYOUT ====== */
 .shell {
@@ -404,10 +439,12 @@
 .sideH {
   font-size: 10.5px;
   font-family: var(--font-geist-mono), monospace;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--fg-mute);
   padding: 8px 12px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1050,11 +1087,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
-  animation: slideInRight 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  animation: slide-in-right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .drawerHead {
   display: flex;
@@ -1277,11 +1310,7 @@
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   padding: 16px;
-  animation: fadeIn 0.18s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  animation: fade-in 0.18s ease;
 }
 .modalBox {
   width: 520px;

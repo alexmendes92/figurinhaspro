@@ -56,16 +56,18 @@ function PriceModal({
               className="object-cover"
               sizes="40px"
             />
+            {sticker.type !== "regular" && (
+              <div
+                className={`absolute top-0.5 left-0.5 px-1 py-[1px] rounded text-[7px] font-bold ${typeConf.badgeClass}`}
+              >
+                {typeConf.shortLabel}
+              </div>
+            )}
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-white truncate">{sticker.name}</p>
-            <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)] flex items-center gap-1.5">
+            <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
               {sticker.code}
-              {sticker.type !== "regular" && (
-                <span className={`px-1 py-0.5 rounded text-[8px] font-bold ${typeConf.badgeClass}`}>
-                  {typeConf.shortLabel}
-                </span>
-              )}
             </p>
           </div>
           <button
@@ -181,27 +183,53 @@ function StickerCard({
 }) {
   const qty = stock[sticker.code]?.quantity || 0;
   const hasIt = qty > 0;
+  const customPrice = stock[sticker.code]?.customPrice ?? null;
+  const hasCustomPrice = customPrice !== null;
   const justSaved = lastSaved === sticker.code;
+  const typeConf = getStickerTypeConfig(sticker.type);
 
   return (
     <div
-      className={`relative rounded-lg overflow-hidden border transition-all ${
-        hasIt ? "border-green-500/40 ring-1 ring-green-500/10" : "border-zinc-800 opacity-50"
+      data-sticker-code={sticker.code}
+      data-missing={!hasIt ? "true" : "false"}
+      className={`group relative rounded-lg overflow-hidden border transition-all ${
+        hasIt
+          ? "border-green-500/40 ring-1 ring-green-500/10 bg-zinc-900/90"
+          : "border-dashed border-zinc-700/60 bg-zinc-900/30"
       } ${justSaved ? "sticker-added" : ""}`}
     >
-      <button
-        onClick={() => toggleSticker(sticker.code)}
-        className="w-full relative aspect-[2/3] bg-zinc-800"
-      >
+      {/* Área da imagem (toggle) */}
+      <div className="relative aspect-[2/3] bg-zinc-800">
         <Image
           src={imgUrl(sticker.image)}
           alt={`${sticker.code} - ${sticker.name}`}
           fill
-          className="object-cover"
-          sizes="(max-width: 640px) 33vw, 11vw"
+          className={`object-cover transition ${hasIt ? "" : "grayscale-[40%] opacity-80"}`}
+          sizes="(max-width: 640px) 33vw, 16vw"
         />
+
+        {/* Botão invisível que cobre a imagem — toggle de "tenho" */}
+        <button
+          onClick={() => toggleSticker(sticker.code)}
+          className="absolute inset-0 z-0"
+          aria-label={
+            hasIt ? `Remover ${sticker.name} do estoque` : `Adicionar ${sticker.name} ao estoque`
+          }
+        />
+
+        {/* Badge de tipo (canto superior esquerdo) */}
+        {sticker.type !== "regular" && (
+          <div
+            className={`pointer-events-none absolute top-1 left-1 z-10 px-1.5 py-0.5 rounded text-[8px] font-bold shadow-sm ${typeConf.badgeClass}`}
+            title={typeConf.shortLabel}
+          >
+            {typeConf.shortLabel}
+          </div>
+        )}
+
+        {/* Check (canto superior direito) */}
         {hasIt && (
-          <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
+          <div className="pointer-events-none absolute top-1 right-1 z-10 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
             <svg
               className="w-3 h-3 text-white"
               fill="none"
@@ -213,68 +241,72 @@ function StickerCard({
             </svg>
           </div>
         )}
-        {sticker.type !== "regular" && (
-          <div
-            className={`absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold ${getStickerTypeConfig(sticker.type).badgeClass}`}
-          >
-            {getStickerTypeConfig(sticker.type).shortLabel}
+
+        {/* Badge de quantidade (canto inferior esquerdo) — unificado */}
+        {hasIt && (
+          <div className="pointer-events-none absolute bottom-1 left-1 z-10 min-w-[1.5rem] h-6 px-1.5 rounded-md bg-green-500 text-black text-[11px] font-bold font-[family-name:var(--font-geist-mono)] flex items-center justify-center shadow-md">
+            {qty}
           </div>
         )}
-      </button>
-      <div className="px-2 py-2 bg-zinc-900/90 space-y-1.5">
-        <div className="flex items-center justify-between gap-1">
+
+        {/* Ícone $ — preço customizado (canto inferior direito, dentro da imagem) */}
+        {hasIt && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setPriceModalSticker(sticker);
+            }}
+            title={
+              hasCustomPrice
+                ? `Preço: R$${customPrice.toFixed(2).replace(".", ",")}`
+                : "Definir preço customizado"
+            }
+            aria-label={hasCustomPrice ? "Editar preço customizado" : "Definir preço customizado"}
+            className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
+              hasCustomPrice
+                ? "bg-amber-500 text-black hover:bg-amber-400"
+                : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-0 group-hover:opacity-100 focus:opacity-100"
+            }`}
+          >
+            <span className="text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
+              $
+            </span>
+          </button>
+        )}
+      </div>
+
+      {/* Rodapé: código + nome + controles */}
+      <div className="px-2 py-1.5 space-y-1">
+        <div className="flex items-baseline justify-between gap-1">
           <span className="font-[family-name:var(--font-geist-mono)] text-xs font-semibold text-zinc-200 truncate">
             {sticker.code}
           </span>
-          {hasIt && (
-            <span className="font-[family-name:var(--font-geist-mono)] text-xs text-green-400 font-bold shrink-0">
-              {qty}
+          {hasCustomPrice && (
+            <span className="font-[family-name:var(--font-geist-mono)] text-[9px] font-bold text-amber-400 shrink-0">
+              R${customPrice.toFixed(2).replace(".", ",")}
             </span>
           )}
         </div>
-        <p className="text-[10px] text-zinc-500 truncate leading-tight">{sticker.name}</p>
+        <p
+          className={`text-[10px] truncate leading-tight ${
+            hasIt ? "text-zinc-400" : "text-zinc-500"
+          }`}
+        >
+          {sticker.name}
+        </p>
         {hasIt && (
-          <button
-            onClick={() => setPriceModalSticker(sticker)}
-            className={`w-full px-1.5 py-1.5 rounded text-[10px] font-[family-name:var(--font-geist-mono)] font-semibold transition-all flex items-center justify-center gap-1 ${
-              stock[sticker.code]?.customPrice
-                ? "bg-amber-500/15 border border-amber-500/30 text-amber-400 hover:bg-amber-500/25"
-                : "bg-zinc-800/50 border border-zinc-700/50 text-zinc-500 hover:text-zinc-300 hover:border-zinc-600"
-            }`}
-            title={stock[sticker.code]?.customPrice ? "Preço customizado" : "Definir preço"}
-          >
-            <svg
-              className="w-2.5 h-2.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            {stock[sticker.code]?.customPrice
-              ? `R$${stock[sticker.code].customPrice?.toFixed(2).replace(".", ",")}`
-              : "Preço"}
-          </button>
-        )}
-        {hasIt && (
-          <div className="flex items-center justify-center gap-1">
+          <div className="flex items-center gap-1 pt-0.5">
             <button
               onClick={() => updateQuantity(sticker.code, qty - 1)}
-              className="w-10 h-10 sm:w-9 sm:h-9 rounded bg-zinc-800 border border-zinc-700 text-base sm:text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              aria-label="Diminuir quantidade"
             >
               −
             </button>
-            <span className="text-[11px] font-[family-name:var(--font-geist-mono)] text-white w-5 text-center font-bold">
-              {qty}
-            </span>
             <button
               onClick={() => updateQuantity(sticker.code, qty + 1)}
-              className="w-10 h-10 sm:w-9 sm:h-9 rounded bg-zinc-800 border border-zinc-700 text-base sm:text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              aria-label="Aumentar quantidade"
             >
               +
             </button>
@@ -288,6 +320,7 @@ function StickerCard({
 /* ─── Bloco de seção com header + stickers (usado na view "Todas") ─── */
 function SectionBlock({
   sectionName,
+  sectionIndex,
   sectionCount,
   stickers,
   stock,
@@ -297,6 +330,7 @@ function SectionBlock({
   setPriceModalSticker,
 }: {
   sectionName: string;
+  sectionIndex: number;
   sectionCount: string;
   stickers: Sticker[];
   stock: StockMap;
@@ -307,13 +341,19 @@ function SectionBlock({
 }) {
   return (
     <>
-      <div className="col-span-full">
-        <div className="flex items-center gap-2 py-2 mt-2 first:mt-0">
-          <span className="text-xs font-semibold text-zinc-400">{sectionName}</span>
-          <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-600">
+      <div
+        data-section-index={sectionIndex}
+        data-section-name={sectionName}
+        className="col-span-full sticky top-0 z-20 -mx-4 lg:-mx-6 px-4 lg:px-6 bg-zinc-950/92 backdrop-blur-md"
+      >
+        <div className="flex items-center gap-2 py-2">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-300">
+            {sectionName}
+          </span>
+          <span className="text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-500">
             {sectionCount}
           </span>
-          <div className="flex-1 h-px bg-zinc-800" />
+          <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 via-zinc-800/40 to-transparent" />
         </div>
       </div>
       {stickers.map((sticker) => (
@@ -348,6 +388,10 @@ export default function InventoryManager({
   const [lastSaved, setLastSaved] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [priceModalSticker, setPriceModalSticker] = useState<Sticker | null>(null);
+  const [visibleSectionIndex, setVisibleSectionIndex] = useState<number>(0);
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // PRO+ check para preço customizado
   const canUseCustomPrices = sellerPlan === "PRO" || sellerPlan === "UNLIMITED";
@@ -373,10 +417,12 @@ export default function InventoryManager({
     return true;
   });
 
-  // Conta em estoque para a seção ativa (ou total quando "all")
-  const sectionInStock = (section ? section.stickers : allStickers).filter(
+  // Contagens do conjunto base (seção atual ou álbum todo)
+  const baseCount = section ? section.stickers.length : allStickers.length;
+  const baseInStock = (section ? section.stickers : allStickers).filter(
     (s) => (stock[s.code]?.quantity || 0) > 0
   ).length;
+  const baseMissing = baseCount - baseInStock;
 
   // Total geral em estoque (só conta stickers que existem no album atual)
   const totalInStock = allStickers.filter((s) => (stock[s.code]?.quantity || 0) > 0).length;
@@ -516,6 +562,106 @@ export default function InventoryManager({
     });
   }
 
+  // Scroll suave até uma seção (view "all")
+  const scrollToSection = useCallback((index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const el = container.querySelector<HTMLElement>(`[data-section-index="${index}"]`);
+    if (!el) return;
+    const top = el.offsetTop - 8;
+    container.scrollTo({ top, behavior: "smooth" });
+  }, []);
+
+  // Scroll até o próximo sticker faltante visível
+  const scrollToNextMissing = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const missing = container.querySelectorAll<HTMLElement>('[data-missing="true"]');
+    if (missing.length === 0) return;
+
+    const containerTop = container.scrollTop;
+    const next = Array.from(missing).find((el) => el.offsetTop > containerTop + 40);
+    const target = next ?? missing[0];
+    const top = target.offsetTop - 80;
+    container.scrollTo({ top, behavior: "smooth" });
+  }, []);
+
+  // Handler do sidebar: em "all" scrolla; em view isolada muda isolamento
+  function handleSidebarSectionClick(index: number) {
+    if (isSearching) setSearch("");
+    if (activeSection === "all") {
+      scrollToSection(index);
+    } else {
+      setActiveSection(index);
+      setFilter("all");
+    }
+  }
+
+  // Scroll-spy em view "all" — atualiza `visibleSectionIndex`
+  useEffect(() => {
+    if (activeSection !== "all" || isSearching) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const headers = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-section-index]")
+    );
+    if (headers.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibles = entries
+          .filter((e) => e.isIntersecting)
+          .map((e) => ({
+            idx: Number.parseInt(e.target.getAttribute("data-section-index") || "-1", 10),
+            top: e.boundingClientRect.top,
+          }))
+          .filter((v) => v.idx >= 0)
+          .sort((a, b) => a.top - b.top);
+        if (visibles.length > 0) setVisibleSectionIndex(visibles[0].idx);
+      },
+      { root: container, rootMargin: "-8px 0px -70% 0px", threshold: 0 }
+    );
+
+    headers.forEach((h) => observer.observe(h));
+    return () => observer.disconnect();
+  }, [activeSection, isSearching, filter, album.sections]);
+
+  // Atalhos de teclado: /, 1, 2, 3, Escape
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      const isEditable =
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target?.isContentEditable === true;
+
+      // Escape no search → desfoca
+      if (e.key === "Escape" && isEditable && target === searchInputRef.current) {
+        (target as HTMLInputElement).blur();
+        return;
+      }
+
+      if (isEditable) return;
+
+      // "/" foca search
+      if (e.key === "/") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+        return;
+      }
+
+      if (e.key === "1") setFilter("all");
+      if (e.key === "2") setFilter("in-stock");
+      if (e.key === "3") setFilter("missing");
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-full">
       {/* Sidebar de seções */}
@@ -552,6 +698,8 @@ export default function InventoryManager({
               setActiveSection("all");
               setFilter("all");
               setSearch("");
+              const container = scrollContainerRef.current;
+              if (container) container.scrollTo({ top: 0, behavior: "smooth" });
             }}
             className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
               activeSection === "all" && !isSearching
@@ -569,19 +717,20 @@ export default function InventoryManager({
 
           {album.sections.map((sec, i) => {
             const secStock = sec.stickers.filter((s) => (stock[s.code]?.quantity || 0) > 0).length;
+            const isIsolated = i === activeSection && !isSearching;
+            const isVisibleInAll =
+              activeSection === "all" && !isSearching && i === visibleSectionIndex;
 
             return (
               <button
                 key={sec.name}
-                onClick={() => {
-                  setActiveSection(i);
-                  setFilter("all");
-                  setSearch("");
-                }}
-                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
-                  i === activeSection && !isSearching
-                    ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border border-transparent"
+                onClick={() => handleSidebarSectionClick(i)}
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap border ${
+                  isIsolated
+                    ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                    : isVisibleInAll
+                      ? "bg-zinc-800/60 text-amber-300 border-amber-500/15"
+                      : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border-transparent"
                 }`}
               >
                 <span className="lg:flex lg:items-center lg:justify-between lg:gap-2">
@@ -597,7 +746,7 @@ export default function InventoryManager({
       </aside>
 
       {/* Grid de figurinhas */}
-      <div className="flex-1 overflow-y-auto">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
         <div className="p-4 lg:p-6">
           {/* Barra de busca */}
           <div className="mb-4">
@@ -616,16 +765,18 @@ export default function InventoryManager({
                 />
               </svg>
               <input
+                ref={searchInputRef}
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar figurinha por número ou nome..."
-                className="w-full pl-9 pr-8 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
+                className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
               />
-              {search && (
+              {search ? (
                 <button
                   onClick={() => setSearch("")}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
+                  aria-label="Limpar busca"
                 >
                   <svg
                     className="w-4 h-4"
@@ -637,6 +788,10 @@ export default function InventoryManager({
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
+              ) : (
+                <kbd className="hidden sm:block absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded border border-zinc-800 bg-zinc-950 text-[10px] font-[family-name:var(--font-geist-mono)] text-zinc-500">
+                  /
+                </kbd>
               )}
             </div>
           </div>
@@ -665,8 +820,7 @@ export default function InventoryManager({
                     <>{filteredStickers.length} encontradas</>
                   ) : (
                     <>
-                      {sectionInStock}/{section ? section.stickers.length : allStickers.length} em
-                      estoque
+                      {baseInStock}/{baseCount} em estoque
                       {filter !== "all" && (
                         <span className="ml-2 text-zinc-400">
                           · {filteredStickers.length} exibidas
@@ -688,7 +842,7 @@ export default function InventoryManager({
                   >
                     Marcar todas
                   </button>
-                  {sectionInStock > 0 && (
+                  {baseInStock > 0 && (
                     <button
                       onClick={clearSection}
                       title="Zerar esta seção"
@@ -701,22 +855,76 @@ export default function InventoryManager({
               )}
             </div>
 
-            {/* Filtros - full width no mobile */}
-            <div className="flex rounded-lg border border-zinc-800 overflow-hidden">
-              {(["all", "in-stock", "missing"] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`flex-1 px-3 py-2 sm:py-1.5 text-xs font-medium transition-colors text-center active:bg-white/5 ${
-                    filter === f
-                      ? "bg-amber-500/10 text-amber-400"
-                      : "text-zinc-500 hover:text-zinc-300"
-                  }`}
-                >
-                  {f === "all" ? "Todas" : f === "in-stock" ? "Tenho" : "Faltam"}
-                </button>
-              ))}
-            </div>
+            {/* Filtros com contagem + chip jump-to-missing */}
+            {!isSearching && (
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-1 rounded-lg border border-zinc-800 overflow-hidden min-w-0">
+                  {(
+                    [
+                      { key: "all", label: "Todas", count: baseCount, accent: "amber" },
+                      { key: "in-stock", label: "Tenho", count: baseInStock, accent: "green" },
+                      { key: "missing", label: "Faltam", count: baseMissing, accent: "red" },
+                    ] as const
+                  ).map(({ key, label, count, accent }) => {
+                    const active = filter === key;
+                    const activeClass =
+                      accent === "amber"
+                        ? "bg-amber-500/10 text-amber-400"
+                        : accent === "green"
+                          ? "bg-green-500/10 text-green-400"
+                          : "bg-red-500/10 text-red-400";
+                    const countClass = active
+                      ? "text-current/80"
+                      : "text-zinc-600 font-[family-name:var(--font-geist-mono)]";
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => setFilter(key)}
+                        className={`flex-1 min-w-0 px-3 py-2 sm:py-1.5 text-xs font-medium transition-colors flex items-center justify-center gap-1.5 active:bg-white/5 ${
+                          active ? activeClass : "text-zinc-500 hover:text-zinc-300"
+                        }`}
+                      >
+                        <span>{label}</span>
+                        <span className={`text-[10px] ${countClass}`}>{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Chip jump-to-missing */}
+                {filter !== "missing" && baseMissing > 0 && activeSection === "all" && (
+                  <button
+                    onClick={scrollToNextMissing}
+                    title="Ir para a próxima figurinha faltante"
+                    className="shrink-0 px-2.5 py-1.5 rounded-lg border border-red-500/20 bg-red-500/5 text-[11px] font-medium text-red-300 hover:bg-red-500/10 hover:border-red-500/40 transition-all flex items-center gap-1.5"
+                  >
+                    <span>{baseMissing} faltando</span>
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Dica de atalhos (apenas lg+) */}
+            <p className="hidden lg:block text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)]">
+              atalhos · <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">/</kbd>{" "}
+              buscar ·{" "}
+              <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">1</kbd>/
+              <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">2</kbd>/
+              <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">3</kbd> filtros
+            </p>
           </div>
 
           {/* Grid */}
@@ -750,11 +958,11 @@ export default function InventoryManager({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-2">
               {(() => {
                 // Quando "all" está ativo e sem busca, renderizar com headers por seção
                 if (activeSection === "all" && !isSearching) {
-                  return album.sections.map((sec) => {
+                  return album.sections.map((sec, i) => {
                     const secStickers = sec.stickers.filter((s) => {
                       if (filter === "in-stock") return (stock[s.code]?.quantity || 0) > 0;
                       if (filter === "missing")
@@ -769,6 +977,7 @@ export default function InventoryManager({
                       <SectionBlock
                         key={sec.name}
                         sectionName={sec.name}
+                        sectionIndex={i}
                         sectionCount={`${secInStock}/${sec.stickers.length}`}
                         stickers={secStickers}
                         stock={stock}

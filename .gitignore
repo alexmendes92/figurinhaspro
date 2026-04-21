@@ -42,6 +42,10 @@ next-env.d.ts
 
 /lib/generated/prisma
 /generated/prisma
+/src/generated/prisma
+
+# playwright MCP scratch (console logs, snapshots)
+/.playwright-mcp/
 
 # database
 *.db

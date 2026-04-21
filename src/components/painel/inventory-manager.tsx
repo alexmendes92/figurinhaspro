@@ -7,6 +7,7 @@ import type { Album, Sticker } from "@/lib/albums";
 import { imgUrl } from "@/lib/images";
 import { getDefaultPrice, getStickerTypeConfig } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
+import { useDialog } from "@/lib/use-dialog";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -27,6 +28,7 @@ function PriceModal({
   onClose: () => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useDialog<HTMLDivElement>(true, onClose);
   const defaultPrice = getDefaultPrice(sticker.type);
   const typeConf = getStickerTypeConfig(sticker.type);
 
@@ -40,11 +42,20 @@ function PriceModal({
   }
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Preço customizado de ${sticker.name}`}
+    >
       <div
-        className="relative w-full max-w-xs mx-4 bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl"
-        style={{ animation: "scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        ref={dialogRef}
+        className="relative w-full max-w-xs mx-4 bg-[#1a1f2e] border border-white/[0.14] rounded-2xl overflow-hidden shadow-2xl fade-in"
       >
         {/* Header com imagem */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-800/50">
@@ -71,7 +82,10 @@ function PriceModal({
             </p>
           </div>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Fechar"
+            title="Fechar (Esc)"
             className="ml-auto w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all shrink-0"
           >
             <svg
@@ -80,6 +94,7 @@ function PriceModal({
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
+              aria-hidden="true"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -122,6 +137,7 @@ function PriceModal({
               {/* Botões */}
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={handleSave}
                   className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors"
                 >
@@ -129,8 +145,9 @@ function PriceModal({
                 </button>
                 {currentCustomPrice !== null && (
                   <button
+                    type="button"
                     onClick={onClear}
-                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all"
+                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-rose-400 hover:border-rose-500/40 transition-all"
                   >
                     Limpar
                   </button>
@@ -154,13 +171,6 @@ function PriceModal({
           )}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scaleIn {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
     </div>
   );
 }
@@ -210,6 +220,7 @@ function StickerCard({
 
         {/* Botão invisível que cobre a imagem — toggle de "tenho" */}
         <button
+          type="button"
           onClick={() => toggleSticker(sticker.code)}
           className="absolute inset-0 z-0"
           aria-label={
@@ -252,6 +263,7 @@ function StickerCard({
         {/* Ícone $ — preço customizado (canto inferior direito, dentro da imagem) */}
         {hasIt && (
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               setPriceModalSticker(sticker);
@@ -265,7 +277,7 @@ function StickerCard({
             className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
               hasCustomPrice
                 ? "bg-amber-500 text-black hover:bg-amber-400"
-                : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-70 group-hover:opacity-100 focus:opacity-100"
             }`}
           >
             <span className="text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
@@ -297,6 +309,7 @@ function StickerCard({
         {hasIt && (
           <div className="flex items-center gap-1 pt-0.5">
             <button
+              type="button"
               onClick={() => updateQuantity(sticker.code, qty - 1)}
               className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
               aria-label="Diminuir quantidade"
@@ -304,6 +317,7 @@ function StickerCard({
               −
             </button>
             <button
+              type="button"
               onClick={() => updateQuantity(sticker.code, qty + 1)}
               className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
               aria-label="Aumentar quantidade"
@@ -598,9 +612,7 @@ export default function InventoryManager({
   useEffect(() => {
     if (activeSection !== "all" || isSearching) return;
 
-    const headers = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-section-index]")
-    );
+    const headers = Array.from(document.querySelectorAll<HTMLElement>("[data-section-index]"));
     if (headers.length === 0) return;
 
     const observer = new IntersectionObserver(
@@ -689,6 +701,7 @@ export default function InventoryManager({
 
           {/* Botão "Todas" */}
           <button
+            type="button"
             onClick={() => {
               setActiveSection("all");
               setFilter("all");
@@ -718,6 +731,7 @@ export default function InventoryManager({
             return (
               <button
                 key={sec.name}
+                type="button"
                 onClick={() => handleSidebarSectionClick(i)}
                 className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap border ${
                   isIsolated
@@ -764,10 +778,12 @@ export default function InventoryManager({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar figurinha por número ou nome..."
+                aria-label="Buscar figurinha"
                 className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
               />
               {search ? (
                 <button
+                  type="button"
                   onClick={() => setSearch("")}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
                   aria-label="Limpar busca"
@@ -830,6 +846,7 @@ export default function InventoryManager({
               {!isSearching && (
                 <div className="flex gap-1.5 shrink-0">
                   <button
+                    type="button"
                     onClick={markAllSection}
                     title="Marcar todas como tenho 1"
                     className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all active:bg-green-500/10"
@@ -838,6 +855,7 @@ export default function InventoryManager({
                   </button>
                   {baseInStock > 0 && (
                     <button
+                      type="button"
                       onClick={clearSection}
                       title="Zerar esta seção"
                       className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all active:bg-red-500/10"
@@ -873,6 +891,7 @@ export default function InventoryManager({
                     return (
                       <button
                         key={key}
+                        type="button"
                         onClick={() => setFilter(key)}
                         className={`flex-1 min-w-0 px-3 py-2 sm:py-1.5 text-xs font-medium transition-colors flex items-center justify-center gap-1.5 active:bg-white/5 ${
                           active ? activeClass : "text-zinc-500 hover:text-zinc-300"
@@ -888,6 +907,7 @@ export default function InventoryManager({
                 {/* Chip jump-to-missing */}
                 {filter !== "missing" && baseMissing > 0 && activeSection === "all" && (
                   <button
+                    type="button"
                     onClick={scrollToNextMissing}
                     title="Ir para a próxima figurinha faltante"
                     className="shrink-0 px-2.5 py-1.5 rounded-lg border border-red-500/20 bg-red-500/5 text-[11px] font-medium text-red-300 hover:bg-red-500/10 hover:border-red-500/40 transition-all flex items-center gap-1.5"
@@ -914,8 +934,7 @@ export default function InventoryManager({
             {/* Dica de atalhos (apenas lg+) */}
             <p className="hidden lg:block text-[10px] text-zinc-600 font-[family-name:var(--font-geist-mono)]">
               atalhos · <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">/</kbd>{" "}
-              buscar ·{" "}
-              <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">1</kbd>/
+              buscar · <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">1</kbd>/
               <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">2</kbd>/
               <kbd className="px-1 rounded bg-zinc-900 border border-zinc-800">3</kbd> filtros
             </p>

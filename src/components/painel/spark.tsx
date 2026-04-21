@@ -13,8 +13,18 @@ export function Spark({
   color = "#fbbf24",
   fill = false,
 }: SparkProps) {
-  if (!values.length) {
-    return <div style={{ width, height }} aria-hidden />;
+  if (!values.length || values.every((v) => v === 0)) {
+    return (
+      <div
+        style={{ width, height }}
+        className="flex items-center justify-center gap-[3px]"
+        aria-hidden
+      >
+        <span className="w-[3px] h-[3px] rounded-full bg-white/15" />
+        <span className="w-[3px] h-[3px] rounded-full bg-white/15" />
+        <span className="w-[3px] h-[3px] rounded-full bg-white/15" />
+      </div>
+    );
   }
 
   const max = Math.max(...values);

@@ -313,7 +313,7 @@ export default async function DashboardPage() {
         <div className="flex flex-wrap gap-2 shrink-0">
           <Link
             href="/painel/estoque"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-white/[0.12] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
           >
             <svg
               viewBox="0 0 24 24"
@@ -334,7 +334,7 @@ export default async function DashboardPage() {
           </Link>
           <Link
             href="/painel/estoque"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-white/[0.12] hover:bg-white/[0.06] text-xs font-semibold text-white transition-all"
           >
             <svg
               viewBox="0 0 24 24"
@@ -476,7 +476,7 @@ export default async function DashboardPage() {
             <p className="text-sm font-bold text-white mt-0.5">Compartilhe com seus compradores</p>
           </div>
           <div className="flex items-center gap-2 min-w-0 sm:min-w-[380px]">
-            <div className="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.04] font-[family-name:var(--font-geist-mono)] text-xs text-amber-400 truncate">
+            <div className="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06] font-[family-name:var(--font-geist-mono)] text-xs text-amber-400 truncate">
               {storeUrl}
             </div>
             <CopyLinkButton path={storeUrl} />
@@ -507,7 +507,7 @@ export default async function DashboardPage() {
           <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-12 text-center">
             <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-gray-600"
+                className="w-6 h-6 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -521,7 +521,7 @@ export default async function DashboardPage() {
               </svg>
             </div>
             <p className="text-sm text-gray-400">Nenhum pedido ainda</p>
-            <p className="text-[11px] text-gray-600 mt-1">
+            <p className="text-[11px] text-gray-400 mt-1">
               Compartilhe sua vitrine para receber pedidos
             </p>
           </div>
@@ -562,7 +562,7 @@ export default async function DashboardPage() {
         )}
       </div>
 
-      <p className="text-[10px] text-gray-600 mt-8 text-center font-[family-name:var(--font-geist-mono)]">
+      <p className="text-[10px] text-gray-400 mt-8 text-center font-[family-name:var(--font-geist-mono)]">
         {orderCount} pedidos no total · catálogo com {totalCatalog.toLocaleString("pt-BR")}{" "}
         figurinhas
       </p>

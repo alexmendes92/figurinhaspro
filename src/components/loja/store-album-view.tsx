@@ -528,7 +528,7 @@ export default function StoreAlbumView({
               {availableStickers.length > 0 && (
                 <button
                   type="button"
-                  className={styles.actionPill}
+                  className={styles.actionPillBulk}
                   onClick={() => {
                     const existingCodes = new Set(cart.map((c) => c.sticker.code));
                     const toAdd = availableStickers.filter((s) => !existingCodes.has(s.code));
@@ -556,7 +556,11 @@ export default function StoreAlbumView({
               </div>
               <div className={styles.filterBannerActions}>
                 {missingMatches.length > 0 && (
-                  <button type="button" className={styles.actionPill} onClick={addAllMissingToCart}>
+                  <button
+                    type="button"
+                    className={styles.actionPillBulk}
+                    onClick={addAllMissingToCart}
+                  >
                     Adicionar todas ao carrinho
                   </button>
                 )}
@@ -750,7 +754,22 @@ export default function StoreAlbumView({
             <div className={styles.drawerBody}>
               {cart.length === 0 ? (
                 <div className={styles.emptyCart}>
-                  <div className={styles.emptyCartBig}>🛒</div>
+                  <div className={styles.emptyCartBig} aria-hidden="true">
+                    <svg
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                      <path d="M3 6h18" />
+                      <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                  </div>
                   <h4>Carrinho vazio</h4>
                   <p>Clique nas figurinhas para adicioná-las.</p>
                 </div>

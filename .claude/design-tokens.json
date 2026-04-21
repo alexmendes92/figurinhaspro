@@ -1,25 +1,38 @@
 {
-  "schema_version": "1.0",
-  "extracted_at": "2026-04-19",
+  "schema_version": "1.1",
+  "extracted_at": "2026-04-21",
   "detection_confidence": "high",
   "stack": {
     "framework": "Next.js 16 (App Router)",
     "styling": "tailwindcss@4",
-    "component_library": "ad-hoc (badge, button-primary)",
+    "component_library": "ad-hoc (badge, btn-primary, btn-ghost)",
     "fonts": ["Geist Sans (next/font)", "Geist Mono (next/font)"],
     "orm": "Prisma 7 + Neon",
     "deploy": "Vercel",
-    "component_dir": "components"
+    "component_dir": "src/components"
   },
   "tokens": {
     "color": {
       "background": "#0b0e14",
       "foreground": "#e8eaed",
-      "surface": { "1": "#121621", "2": "#1a1f2e", "3": "#242b3d" },
-      "accent": { "primary": "#fbbf24", "hover": "#f59e0b" },
+      "surface": {
+        "section-alt": "#0d1017",
+        "card": "#0f1219",
+        "card-legacy": "#111318",
+        "elevated": "#1a1f2e"
+      },
+      "accent": {
+        "primary": "#fbbf24",
+        "hover": "#f59e0b",
+        "gradient-end": "#d97706",
+        "depth-1": "#92400e",
+        "depth-2": "#78350f"
+      },
       "feedback": {
-        "success": "#34d399", "warning": "#fbbf24",
-        "error": "#f87171", "info": "#60a5fa"
+        "success": "#34d399",
+        "warning": "#fbbf24",
+        "error": "#f87171",
+        "info": "#60a5fa"
       },
       "border": {
         "subtle": "rgba(255,255,255,0.08)",
@@ -30,31 +43,113 @@
       "family": {
         "sans": "var(--font-geist-sans)",
         "mono": "var(--font-geist-mono)"
-      }
+      },
+      "scale": "tailwind-default-plus-custom-84px-hero",
+      "weights": { "regular": 400, "medium": 500, "bold": 700, "black": 900 }
     },
     "spacing": "tailwind-default",
     "radius": "tailwind-default",
     "shadow": "tailwind-default",
     "breakpoints": { "sm": 640, "md": 768, "lg": 1024, "xl": 1280, "2xl": 1536 },
     "motion": {
-      "keyframes": ["sticker-glow", "cart-bounce", "toast-in"]
+      "keyframes": [
+        "slide-up",
+        "fade-in",
+        "sticker-glow",
+        "slide-in-right",
+        "cart-bounce",
+        "toast-in",
+        "toast-out",
+        "shimmer",
+        "ticker",
+        "float-slow",
+        "pulse-dot"
+      ],
+      "easings": {
+        "editorial-in": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "loop": "ease-in-out"
+      },
+      "respects_prefers_reduced_motion": true
     },
     "theme": "dark-only"
   },
   "components": [
-    { "name": "badge", "type": "utility-class" },
-    { "name": "button-primary", "type": "utility-class" },
-    { "name": "button-secondary", "type": "utility-class" }
+    { "name": "badge", "type": "utility-class", "variants": ["zinc", "blue", "green", "amber", "red"] },
+    { "name": "btn-primary", "type": "utility-class" },
+    { "name": "btn-ghost", "type": "utility-class" },
+    { "name": "ticker-track", "type": "utility-class" },
+    { "name": "float-slow", "type": "utility-class" },
+    { "name": "sticker-added", "type": "utility-class" },
+    { "name": "cart-badge-bounce", "type": "utility-class" },
+    { "name": "toast-enter", "type": "utility-class" },
+    { "name": "toast-exit", "type": "utility-class" },
+    { "name": "slide-in", "type": "utility-class" },
+    { "name": "fade-in", "type": "utility-class" },
+    { "name": "shimmer", "type": "utility-class" },
+    { "name": "pulse-dot", "type": "utility-class" }
   ],
   "patterns": [
-    "Grid de stickers com sticker-glow",
-    "Cart drawer com cart-bounce",
-    "Toast notifications com toast-in",
-    "Product listing dashboard"
+    "Hero editorial (core): H1 text-7xl/84px Geist black + palavra-chave amber + collage lateral",
+    "Eyebrow: text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em]",
+    "Ticker full-width 42s linear com conteudo duplicado aria-hidden",
+    "Pain → Fix grid 3-col",
+    "Product showcase: mockup 24 stickers 5/7/8 cols",
+    "Pricing 3-card com ring amber + ribbon 'Mais escolhido'",
+    "FAQ accordion <details> com + girando 45°",
+    "Final CTA ambient radial-gradient amber",
+    "Cart drawer (core) com slide-in-right + cart-bounce",
+    "Toast notifications com toast-in/out",
+    "Grid stickers com sticker-glow"
   ],
+  "variants": {
+    "vitrine": {
+      "scope": ["/loja/**"],
+      "module": "src/components/loja/store-album-view.module.css",
+      "rationale": "Vitrine publica consumer-facing com densidade + drama editorial. Inspirado em NBA Top Shot e Panini sports magazines.",
+      "tokens": {
+        "color": {
+          "bg": "#05070b",
+          "bg-2": "#0a0d13",
+          "bg-3": "#121621",
+          "bg-4": "#1b2030",
+          "bg-5": "#242a3a",
+          "fg": "#f2f3f5",
+          "fg-dim": "#a7adba",
+          "fg-mute": "#7d838f",
+          "fg-ghost": "#7a8192",
+          "line": "#232836",
+          "line-2": "#2c3342",
+          "accent": "oklch(0.82 0.15 85)",
+          "accent-bg": "oklch(0.28 0.08 85)",
+          "accent-soft": "oklch(0.82 0.15 85 / 0.14)",
+          "lime": "oklch(0.86 0.19 130)",
+          "red": "oklch(0.72 0.2 25)",
+          "blue": "oklch(0.78 0.14 240)",
+          "grad": "linear-gradient(135deg, oklch(0.82 0.15 85), oklch(0.7 0.2 40))"
+        },
+        "typography": {
+          "display": "Bebas Neue (variable: --font-bebas)",
+          "body": "Geist Sans",
+          "mono": "Geist Mono",
+          "base_font_size": "14px"
+        },
+        "radius": { "min": 4, "max": 14, "pill_round": 99 },
+        "shadow_policy": "shadow-as-drama (core usa shadow minimo; vitrine usa como hierarquia)",
+        "motion_policy": "usa keyframes do core (slide-in-right, fade-in) — nao redefine"
+      },
+      "components_paralelos": [
+        { "name": "drawer", "reason": "cart gaveta" },
+        { "name": "card", "reason": "sticker card com image/code/stock/type-badge" },
+        { "name": "modal/modalBox", "reason": "dialog wrapper generico" },
+        { "name": "actionPill/actionPillBulk", "reason": "buttons compactos para filtros" },
+        { "name": "chip/cartBtn/navIcon", "reason": "nav elements vitrine" }
+      ]
+    }
+  },
   "gaps": [
-    "Surface ladder de apenas 3 níveis",
-    "Sem shadcn — classes utilitárias manuais",
-    "Sem light mode"
+    "Surface ladder do core de 3 niveis (menos granular que P1/P2)",
+    "Classes utilitarias definidas manualmente — sem shadcn",
+    "Sem light mode",
+    "Variante vitrine duplica drawer/card que poderiam migrar para core se surgir demanda em outra rota"
   ]
 }

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1440"/>
+<title>FigurinhasPro — o sistema que antecipa sua venda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css"/>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="assets/data.js"></script>
+<script type="text/babel" src="assets/sticker.jsx"></script>
+<script type="text/babel" src="assets/shell.jsx"></script>
+<script type="text/babel" src="assets/landing.jsx"></script>
+<script type="text/babel" src="assets/painel.jsx"></script>
+<script type="text/babel" src="assets/ios-frame.jsx"></script>
+<script type="text/babel" src="assets/pedidos.jsx"></script>
+
+<script type="text/babel">
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "personality": "cockpit",
+  "density": "regular",
+  "layout": "teams"
+}/*EDITMODE-END*/;
+
+const { useState: uS_X, useEffect: uE_X, useMemo: uM_X, useCallback: uC_X, useRef: uR_X } = React;
+
+function App() {
+  const saved = (() => { try { return JSON.parse(localStorage.getItem('fp_state')||'{}'); } catch(e){ return {}; } })();
+  const [route, setRoute] = uS_X(saved.route || 'landing');
+  const [album, setAlbum] = uS_X(saved.album || 'copa26');
+  const [personality, setPersonality] = uS_X(saved.personality || TWEAKS.personality);
+  const [density, setDensity] = uS_X(saved.density || TWEAKS.density);
+  const [layout, setLayout] = uS_X(saved.layout || TWEAKS.layout);
+  const [toasts, setToasts] = uS_X([]);
+  const [tweaksOpen, setTweaksOpen] = uS_X(false);
+
+  uE_X(() => {
+    document.documentElement.dataset.personality = personality;
+    localStorage.setItem('fp_state', JSON.stringify({ route, album, personality, density, layout }));
+  }, [route, album, personality, density, layout]);
+
+  uE_X(() => {
+    const handler = (e) => {
+      if (!e.data) return;
+      if (e.data.type === '__activate_edit_mode') setTweaksOpen(true);
+      if (e.data.type === '__deactivate_edit_mode') setTweaksOpen(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const pushToast = (text) => {
+    const id = Date.now() + Math.random();
+    setToasts(t => [...t, { id, text }]);
+    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 2400);
+  };
+
+  const setTweak = (k, v) => {
+    if (k === 'personality') setPersonality(v);
+    if (k === 'density') setDensity(v);
+    if (k === 'layout') setLayout(v);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
+  };
+
+  // Global keyboard: Q toggles quick mode; ⌘/Ctrl+K focus search
+  uE_X(() => {
+    const onKey = (e) => {
+      if (e.key === '?' && !/input|textarea/i.test(e.target.tagName)) { setTweaksOpen(o => !o); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const goApp = () => setRoute('onboarding');
+
+  if (route === 'landing') return <><Landing goApp={() => setRoute('onboarding')} /><TweaksPanel open={tweaksOpen} setOpen={setTweaksOpen} personality={personality} density={density} layout={layout} setTweak={setTweak}/></>;
+  if (route === 'onboarding') return <><Onboarding goApp={() => setRoute('dashboard')} /><TweaksPanel open={tweaksOpen} setOpen={setTweaksOpen} personality={personality} density={density} layout={layout} setTweak={setTweak}/></>;
+  if (route === 'loja-publica') return <><LojaPreview /><button className="btn" style={{ position:'fixed', top: 16, right: 16, zIndex: 100 }} onClick={()=>setRoute('dashboard')}>← Voltar ao painel</button></>;
+
+  // Painel shell
+  const badges = { pedidos: '14', alertas: '4' };
+  const titles = {
+    dashboard: ['Início'], estoque: ['Estoque'], album: ['Estoque', 'Copa 2026'],
+    precos: ['Preços'], pedidos: ['Pedidos'], financeiro: ['Financeiro'],
+    alertas: ['Alertas'], scanner: ['Scanner'], whats: ['Importar WhatsApp'], loja: ['Vitrine']
+  };
+
+  return (
+    <div style={{ display:'flex', minHeight:'100vh' }}>
+      <Sidebar route={route === 'album' ? 'estoque' : route} setRoute={setRoute} badges={badges}/>
+      <main style={{ flex: 1, minWidth: 0, background: 'var(--bg)' }}>
+        <Topbar
+          title={titles[route]?.at(-1) || '—'}
+          crumbs={titles[route]?.slice(0, -1) || []}
+          search={route !== 'dashboard'}
+          actions={
+            <>
+              <button className="btn sm" onClick={() => setRoute('loja-publica')}>Abrir vitrine ↗</button>
+              <button className="btn ghost sm" onClick={() => setTweaksOpen(o => !o)}><Icon name="gear" size={14}/></button>
+            </>
+          }
+        />
+        {route === 'dashboard' && <Dashboard setRoute={setRoute}/>}
+        {route === 'estoque' && <EstoqueHome setRoute={setRoute} setAlbum={setAlbum}/>}
+        {route === 'album' && <AlbumEstoque albumId={album} setRoute={setRoute} layout={layout} density={density} pushToast={pushToast}/>}
+        {route === 'precos' && <Precos pushToast={pushToast}/>}
+        {route === 'pedidos' && <Pedidos pushToast={pushToast}/>}
+        {route === 'financeiro' && <Financeiro/>}
+        {route === 'alertas' && <Alertas/>}
+        {route === 'scanner' && <ScannerFull pushToast={pushToast}/>}
+        {route === 'whats' && <WhatsImport pushToast={pushToast}/>}
+        {route === 'loja' && <LojaAdmin pushToast={pushToast}/>}
+      </main>
+      <TweaksPanel open={tweaksOpen} setOpen={setTweaksOpen} personality={personality} density={density} layout={layout} setTweak={setTweak} setRoute={setRoute}/>
+      {toasts.map(t => <Toast key={t.id} text={t.text} onClose={() => setToasts(list => list.filter(x => x.id !== t.id))} />)}
+    </div>
+  );
+}
+
+function TweaksPanel({ open, setOpen, personality, density, layout, setTweak, setRoute }) {
+  if (!open) return null;
+  return (
+    <div className="tweaks open">
+      <div className="between" style={{ marginBottom: 8 }}>
+        <h4 style={{ margin: 0 }}>Tweaks</h4>
+        <button className="btn ghost sm" onClick={() => setOpen(false)}><Icon name="x" size={12}/></button>
+      </div>
+
+      <label>Personalidade</label>
+      <div className="seg">
+        <button className={personality==='cockpit'?'active':''} onClick={()=>setTweak('personality','cockpit')}>Cockpit · dark</button>
+        <button className={personality==='stadium'?'active':''} onClick={()=>setTweak('personality','stadium')}>Estádio · papel</button>
+      </div>
+
+      <label>Densidade da grade</label>
+      <div className="seg tri">
+        <button className={density==='compact'?'active':''} onClick={()=>setTweak('density','compact')}>Compacta</button>
+        <button className={density==='regular'?'active':''} onClick={()=>setTweak('density','regular')}>Regular</button>
+        <button className={density==='large'?'active':''} onClick={()=>setTweak('density','large')}>Grande</button>
+      </div>
+
+      <label>Layout do estoque</label>
+      <div className="seg tri">
+        <button className={layout==='grid'?'active':''} onClick={()=>setTweak('layout','grid')}>Grade</button>
+        <button className={layout==='split'?'active':''} onClick={()=>setTweak('layout','split')}>Com inspetor</button>
+        <button className={layout==='teams'?'active':''} onClick={()=>setTweak('layout','teams')}>Por time</button>
+      </div>
+
+      {setRoute && (
+        <>
+          <div className="hr"/>
+          <label style={{ marginTop: 0 }}>Atalhos de navegação</label>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap: 4, marginTop: 6 }}>
+            <button className="btn sm" onClick={()=>setRoute('landing')}>Landing</button>
+            <button className="btn sm" onClick={()=>setRoute('onboarding')}>Onboarding</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+</body>
+</html>

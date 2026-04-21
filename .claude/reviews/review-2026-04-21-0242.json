@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-04-21T02:42:00Z",
+  "scope": {
+    "route": "/painel/estoque/[albumSlug]",
+    "url_reviewed": "https://album-digital-ashen.vercel.app/painel/estoque/panini_fifa_world_cup_2022",
+    "files": [
+      "src/app/painel/estoque/[albumSlug]/page.tsx",
+      "src/components/painel/inventory-manager.tsx"
+    ],
+    "axes": ["system", "a11y", "consistency", "ai-slop"],
+    "axes_skipped": ["intent"],
+    "axes_skipped_reason": "no *.intent.md sidecars for either target file"
+  },
+  "summary": {
+    "critical": 8,
+    "warning": 11,
+    "note": 4,
+    "total": 23
+  },
+  "findings": [
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "surfaces-off-token",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 46,
+      "snippet": "className=\"relative w-full max-w-xs mx-4 bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl\"",
+      "message": "Modal usa bg-zinc-950 (#09090b) como surface. DESIGN_SYSTEM.md §2.1 declara #0d1017/#0f1219/#111318/#1a1f2e como surfaces canonicas — zinc-950 nao esta no ladder.",
+      "suggestion": "Trocar por uma das surfaces declaradas; panel elevado sobre canvas escuro = #1a1f2e (surface elevated), com border rgba(255,255,255,0.08)."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "surfaces-off-token",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 197,
+      "snippet": "? \"border-green-500/40 ring-1 ring-green-500/10 bg-zinc-900/90\"\n: \"border-dashed border-zinc-700/60 bg-zinc-900/30\"",
+      "message": "StickerCard usa bg-zinc-900 (#18181b) com variacoes de opacidade como surface de card. DESIGN_SYSTEM.md declara card/panel surface = #0f1219 — zinc-900 nao bate (off-palette de ~5%).",
+      "suggestion": "Substituir por bg-[#0f1219] (card) ou bg-[#1a1f2e] (elevated) conforme o estado; manter opacidade via alpha-channel de border-subtle."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "feedback-color-off-token",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 232,
+      "snippet": "<div className=\"pointer-events-none absolute top-1 right-1 z-10 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm\">",
+      "message": "Success color usa green-500 (#22c55e) ao inves do token emerald declarado em DESIGN_SYSTEM.md §2.3 (success = #34d399). Mesmo padrao se repete em botoes/contadores (linhas 247, 841, 874).",
+      "suggestion": "Alinhar com emerald (#34d399) para success. Definir classe utilitaria ou usar bg-emerald-400 consistentemente; mesma regra para hover states verdes."
+    },
+    {
+      "axis": "system",
+      "severity": "critical",
+      "rule": "feedback-color-off-token",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 849,
+      "snippet": "className=\"... text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all active:bg-red-500/10\"",
+      "message": "Error/destructive color usa red-500/red-400. DESIGN_SYSTEM.md §2.3 declara error = #f87171 (rose). red-400 tem valor proximo (#f87171) mas red-500 (#ef4444) e divergente; usar 'red' como token nao documentado.",
+      "suggestion": "Padronizar com rose-400 (#fb7185) ou o valor exato #f87171 via arbitrary class. Acontece tambem em linhas 866, 874, 875, 899."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "off-scale-opacity",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 347,
+      "snippet": "className=\"col-span-full sticky top-0 z-20 -mx-4 lg:-mx-6 px-4 lg:px-6 bg-zinc-950/92 backdrop-blur-md\"",
+      "message": "bg-zinc-950/92 usa opacidade 92% — nao e valor da escala Tailwind padrao (80/90/95 sao os vizinhos). Fora de escala alem de estar em surface nao-declarada.",
+      "suggestion": "Usar 90 ou 95 (escala padrao) OU substituir por surface declarada com backdrop-blur; avaliar necessidade real do 92."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "arbitrary-z-index",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 43,
+      "snippet": "<div className=\"fixed inset-0 z-[200] flex items-center justify-center\">",
+      "message": "z-[200] e arbitrary value. DESIGN_SYSTEM.md nao declara z-index scale; Tailwind default vai ate z-50. Modal deveria usar token de elevation ou escala Tailwind.",
+      "suggestion": "Se a app nao tem z-scale documentada, este e um gap do DS — z-50 do Tailwind geralmente cobre modais. Se precisa sair da escala, adicionar ao DESIGN_SYSTEM.md como token de elevation."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "fabricated-motion-token",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 158,
+      "snippet": "<style jsx>{`\n  @keyframes scaleIn {\n    from { transform: scale(0.95); opacity: 0; }\n    to { transform: scale(1); opacity: 1; }\n  }\n`}</style>",
+      "message": "scaleIn e um @keyframes ad-hoc em <style jsx> dentro do componente. DESIGN_SYSTEM.md §7 declara motion tokens canonicos em globals.css (slide-up, fade-in, sticker-glow, etc). Duplica namespace de motion fora do sistema.",
+      "suggestion": "Mover scaleIn para globals.css ao lado dos outros @keyframes, ou reutilizar fade-in + slide-up existentes. Entrada de modal e primitive — deveria ser token."
+    },
+    {
+      "axis": "system",
+      "severity": "warning",
+      "rule": "arbitrary-font-size",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 61,
+      "snippet": "className={`absolute top-0.5 left-0.5 px-1 py-[1px] rounded text-[7px] font-bold ${typeConf.badgeClass}`}",
+      "message": "text-[7px] abaixo da escala Tailwind (text-xs = 12px). Repete em varios lugares (text-[8px], text-[9px], text-[10px], text-[11px]). Sinaliza que o typographic scale do DS nao cobre micro-labels.",
+      "suggestion": "Se 7-11px sao usados sistematicamente, adicionar ao DESIGN_SYSTEM.md §3 como escala micro (ex: text-micro, text-caption). Se nao, reduzir para 12px minimo por conforto de leitura."
+    },
+    {
+      "axis": "system",
+      "severity": "note",
+      "rule": "arbitrary-min-width",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 247,
+      "snippet": "className=\"pointer-events-none absolute bottom-1 left-1 z-10 min-w-[1.5rem] h-6 px-1.5 rounded-md bg-green-500 text-black text-[11px] font-bold font-[family-name:var(--font-geist-mono)] flex items-center justify-center shadow-md\"",
+      "message": "min-w-[1.5rem] (24px) — um-off value para badge de contador. Pode ser legitimamente 1-off mas se repete em badges similares, merece tokenizacao.",
+      "suggestion": "Checar se ha outros badges com min-w similar; se sim, adicionar --size-badge-min ao DS."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "modal-no-escape-close",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 42,
+      "snippet": "<div className=\"fixed inset-0 z-[200] flex items-center justify-center\">\n  <div className=\"absolute inset-0 bg-black/60 backdrop-blur-sm\" onClick={onClose} />",
+      "message": "PriceModal nao fecha com tecla Escape. Nenhum onKeyDown global, nenhum useEffect registrando keydown para Escape. Requisito WCAG 2.1.2 (No Keyboard Trap) — usuario de teclado pode ficar preso.",
+      "suggestion": "Adicionar useEffect com window.addEventListener('keydown', (e) => e.key === 'Escape' && onClose()) dentro do PriceModal. Remover handler no unmount."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "div-with-click-handler",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 44,
+      "snippet": "<div className=\"absolute inset-0 bg-black/60 backdrop-blur-sm\" onClick={onClose} />",
+      "message": "Overlay do modal e um <div> com onClick mas sem role, tabIndex, nem keyboard handler. Usuarios de teclado e screen reader nao tem como dismiss via overlay. Acoplado ao Escape ausente (finding acima), o modal fica inoperavel por teclado exceto pelo botao X interno.",
+      "suggestion": "Overlay nao precisa ser clicavel para a11y — o Escape resolve. Se quiser manter click-to-dismiss, aceitar que e redundante com o botao X e garantir que Escape funciona."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "touch-unreachable-affordance",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 265,
+      "snippet": "className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${\n  hasCustomPrice\n    ? \"bg-amber-500 text-black hover:bg-amber-400\"\n    : \"bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-0 group-hover:opacity-100 focus:opacity-100\"\n}`}",
+      "message": "Botao '$' (definir preco customizado) fica invisivel (opacity-0) ate hover quando nao ha preco custom. Dispositivos touch nao tem hover estavel — affordance essencialmente inacessivel em mobile/tablet. Considerando que /painel e mobile-first declarado em CLAUDE.md, isso e bloqueante.",
+      "suggestion": "Tornar o botao sempre visivel (opacity-100) com aparencia sutil, OU adicionar detection via matchMedia('(hover: hover)') para mostrar always em touch devices."
+    },
+    {
+      "axis": "a11y",
+      "severity": "critical",
+      "rule": "missing-accessible-name",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 73,
+      "snippet": "<button\n  onClick={onClose}\n  className=\"ml-auto w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all shrink-0\"\n>\n  <svg className=\"w-3.5 h-3.5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" strokeWidth={2}>\n    <path strokeLinecap=\"round\" strokeLinejoin=\"round\" d=\"M6 18L18 6M6 6l12 12\" />",
+      "message": "Botao de fechar modal (icone X) nao tem aria-label, title nem texto visivel. Screen readers anunciam apenas 'botao' sem contexto. WCAG 4.1.2 (Name, Role, Value).",
+      "suggestion": "Adicionar aria-label=\"Fechar\" no botao; bonus: title=\"Fechar (Esc)\" quando Escape estiver implementado."
+    },
+    {
+      "axis": "a11y",
+      "severity": "warning",
+      "rule": "missing-form-label",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 767,
+      "snippet": "<input\n  ref={searchInputRef}\n  type=\"text\"\n  value={search}\n  onChange={(e) => setSearch(e.target.value)}\n  placeholder=\"Buscar figurinha por número ou nome...\"\n  className=\"w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors\"\n/>",
+      "message": "Input de busca so tem placeholder — sem aria-label, sem <label>. Placeholder desaparece quando se digita e nao substitui label acessivel. WCAG 1.3.1 (Info and Relationships), 3.3.2 (Labels or Instructions).",
+      "suggestion": "Adicionar aria-label=\"Buscar figurinha\" ou <label className=\"sr-only\" htmlFor=\"search\">Buscar figurinha</label> + id=\"search\"."
+    },
+    {
+      "axis": "a11y",
+      "severity": "warning",
+      "rule": "button-without-type",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 124,
+      "snippet": "<button\n  onClick={handleSave}\n  className=\"flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors\"\n>\n  Salvar preço",
+      "message": "Varios <button> sem type=\"button\" explicito em contextos sem <form>. Se algum dia envelopado em form, submit default dispara comportamento inesperado. Padrao recomendado para buttons nao-submit.",
+      "suggestion": "Adicionar type=\"button\" em todos os botoes que nao sao submit. Aplica tambem em linhas 74, 131, 213, 254, 300, 306, 696, 725, 776, 838, 846, 896."
+    },
+    {
+      "axis": "consistency",
+      "severity": "warning",
+      "rule": "bypass-utility-class",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 126,
+      "snippet": "className=\"flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors\"",
+      "message": "DESIGN_SYSTEM.md §9 declara .btn-primary como utility class canonica (gradient amber, texto preto). Aqui ha reimplementacao manual inline do CTA — inconsistente com landing pages e hero. Mesmo caso no botao 'Marcar todas' nao usa .btn-ghost.",
+      "suggestion": "Trocar por className=\"flex-1 btn-primary\" ou criar variante 'btn-primary-solid' se gradient nao fizer sentido no modal."
+    },
+    {
+      "axis": "consistency",
+      "severity": "warning",
+      "rule": "divergent-surface-ladder",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 668,
+      "snippet": "<aside className=\"lg:w-52 border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-950/50 overflow-x-auto lg:overflow-y-auto\">",
+      "message": "Sidebar usa bg-zinc-950/50 — outra surface ad-hoc fora do ladder declarado. Comparado com /painel (rota irma) que usa bg-[#0f1219] consistentemente, ha divergencia de patterns entre telas do mesmo app.",
+      "suggestion": "Alinhar com surface ladder: aside deveria usar #0d1017 (section alt) ou #0f1219 (card). Garantir mesma linguagem visual entre /painel (dashboard) e /painel/estoque/[albumSlug]."
+    },
+    {
+      "axis": "consistency",
+      "severity": "warning",
+      "rule": "token-artifact-drift",
+      "file": ".claude/design-tokens.json",
+      "line": 0,
+      "snippet": "N/A — conflito entre DESIGN_SYSTEM.md e design-tokens.json",
+      "message": "DESIGN_SYSTEM.md declara surfaces #0d1017/#0f1219/#111318/#1a1f2e; design-tokens.json declara #121621/#1a1f2e/#242b3d. Os dois artifatos de verdade discordam — qualquer ferramenta que leia tokens.json vai gerar resultado diferente de quem leu o MD. Alem disso, ambos sao parte do source-of-truth do review, introduzindo ambiguidade no proprio eixo Axis 1.",
+      "suggestion": "Reconciliar: um dos dois esta stale. Provavel que MD seja a fonte mais recente (atualizado 2026-04-19); rodar design-system-extract para regerar tokens.json a partir de globals.css + MD. Escopo desta review nao corrige — so reporta."
+    },
+    {
+      "axis": "consistency",
+      "severity": "note",
+      "rule": "hardcoded-ring-opacity",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 197,
+      "snippet": "ring-1 ring-green-500/10",
+      "message": "Padrao de ring + border para estado 'has-it' se repete e poderia ser utilidade .card-active ou similar, mas nao e violacao dura.",
+      "suggestion": "Considerar extrair para .sticker-has no globals.css se o pattern for reutilizado em /loja/[slug]."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "shadow-crutch",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 46,
+      "snippet": "rounded-2xl overflow-hidden shadow-2xl",
+      "message": "Modal usa shadow-2xl + rounded-2xl — combinacao padrao 'AI genera modal'. DESIGN_SYSTEM.md §6 diz 'Tailwind default + keyframes custom', mas nao declara elevation tokens nomeados. Dois reflexos AI combinados no mesmo surface.",
+      "suggestion": "Se modal e primitive recorrente, declarar --shadow-modal e --radius-modal (ou usar --radius-lg / --radius-xl declarados se existissem). Nao e bug, mas sinaliza falta de sistema."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "warning",
+      "rule": "backdrop-blur-uncurated",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 44,
+      "snippet": "<div className=\"absolute inset-0 bg-black/60 backdrop-blur-sm\" onClick={onClose} />",
+      "message": "backdrop-blur-sm no overlay + backdrop-blur-md no sticky header da secao (linha 347) — dois blur tiers diferentes sem declaracao em DESIGN_SYSTEM.md sobre quando cada um se aplica. Padrao AI-slop 'backdrop-blur em tudo'.",
+      "suggestion": "Declarar quando usar blur (modal overlay vs sticky header) e padronizar tier (md para overlay pesado, sm para sticky leve) em DESIGN_SYSTEM.md. Ou eliminar um dos dois se nao for essencial."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "note",
+      "rule": "radius-reflex",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 46,
+      "snippet": "rounded-2xl overflow-hidden shadow-2xl",
+      "message": "rounded-2xl no modal, rounded-xl no gate PRO (linha 142), rounded-lg em buttons/input/cards — ladder de radius inconsistente. Cards de figurinha (linha 195) usam rounded-lg, mas modal jumps para rounded-2xl. DS §5 diz 'Tailwind default' mas nao declara o ladder de contexto (card vs modal vs button).",
+      "suggestion": "Nao e critico — radius ladder nao e slop puro quando ha razao funcional. Mas documentar 'card=lg, modal=xl, button=md' em §5 evita drift."
+    },
+    {
+      "axis": "ai-slop",
+      "severity": "note",
+      "rule": "generic-amber-gradient",
+      "file": "src/components/painel/inventory-manager.tsx",
+      "line": 126,
+      "snippet": "bg-amber-500 hover:bg-amber-400",
+      "message": "Solid amber-500 com hover amber-400, sem gradient. Comparado com .btn-primary (gradient amber-500→amber-600 declarado em §9), e o inverso de AI-slop (quer-gradient-em-tudo) — neste caso, e inconsistencia com o proprio CTA do sistema.",
+      "suggestion": "Alinhar com .btn-primary (vide finding consistency/bypass-utility-class acima)."
+    }
+  ]
+}

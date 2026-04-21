@@ -41,6 +41,8 @@ async function main() {
     { stickerType: "regular", price: 3 },
     { stickerType: "foil", price: 10 },
     { stickerType: "shiny", price: 50 },
+    // alguns albums (ex: 2018) usam "metal" como type - cobrir pra nao cair no default
+    { stickerType: "metal", price: 8 },
   ];
 
   for (const r of priceRulesPlan) {

@@ -390,7 +390,6 @@ export default function InventoryManager({
   const [priceModalSticker, setPriceModalSticker] = useState<Sticker | null>(null);
   const [visibleSectionIndex, setVisibleSectionIndex] = useState<number>(0);
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // PRO+ check para preço customizado
@@ -562,28 +561,26 @@ export default function InventoryManager({
     });
   }
 
-  // Scroll suave até uma seção (view "all")
+  // Scroll suave até uma seção (view "all") — scroll no window (o container flex não é bounded)
   const scrollToSection = useCallback((index: number) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const el = container.querySelector<HTMLElement>(`[data-section-index="${index}"]`);
+    const el = document.querySelector<HTMLElement>(`[data-section-index="${index}"]`);
     if (!el) return;
-    const top = el.offsetTop - 8;
-    container.scrollTo({ top, behavior: "smooth" });
+    const top = el.getBoundingClientRect().top + window.scrollY - 8;
+    window.scrollTo({ top, behavior: "smooth" });
   }, []);
 
-  // Scroll até o próximo sticker faltante visível
+  // Scroll até o próximo sticker faltante visível — scroll no window
   const scrollToNextMissing = useCallback(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const missing = container.querySelectorAll<HTMLElement>('[data-missing="true"]');
+    const missing = document.querySelectorAll<HTMLElement>('[data-missing="true"]');
     if (missing.length === 0) return;
 
-    const containerTop = container.scrollTop;
-    const next = Array.from(missing).find((el) => el.offsetTop > containerTop + 40);
+    const currentTop = window.scrollY;
+    const next = Array.from(missing).find(
+      (el) => el.getBoundingClientRect().top + window.scrollY > currentTop + 40
+    );
     const target = next ?? missing[0];
-    const top = target.offsetTop - 80;
-    container.scrollTo({ top, behavior: "smooth" });
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
   }, []);
 
   // Handler do sidebar: em "all" scrolla; em view isolada muda isolamento
@@ -597,14 +594,12 @@ export default function InventoryManager({
     }
   }
 
-  // Scroll-spy em view "all" — atualiza `visibleSectionIndex`
+  // Scroll-spy em view "all" — atualiza `visibleSectionIndex` (usa viewport como root)
   useEffect(() => {
     if (activeSection !== "all" || isSearching) return;
-    const container = scrollContainerRef.current;
-    if (!container) return;
 
     const headers = Array.from(
-      container.querySelectorAll<HTMLElement>("[data-section-index]")
+      document.querySelectorAll<HTMLElement>("[data-section-index]")
     );
     if (headers.length === 0) return;
 
@@ -620,7 +615,7 @@ export default function InventoryManager({
           .sort((a, b) => a.top - b.top);
         if (visibles.length > 0) setVisibleSectionIndex(visibles[0].idx);
       },
-      { root: container, rootMargin: "-8px 0px -70% 0px", threshold: 0 }
+      { rootMargin: "-8px 0px -70% 0px", threshold: 0 }
     );
 
     headers.forEach((h) => observer.observe(h));
@@ -698,8 +693,7 @@ export default function InventoryManager({
               setActiveSection("all");
               setFilter("all");
               setSearch("");
-              const container = scrollContainerRef.current;
-              if (container) container.scrollTo({ top: 0, behavior: "smooth" });
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
             className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
               activeSection === "all" && !isSearching
@@ -746,7 +740,7 @@ export default function InventoryManager({
       </aside>
 
       {/* Grid de figurinhas */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         <div className="p-4 lg:p-6">
           {/* Barra de busca */}
           <div className="mb-4">

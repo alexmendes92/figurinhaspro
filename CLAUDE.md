@@ -110,3 +110,44 @@ Modulo admin-only (visivel apenas para `ADMIN_EMAIL`). Cockpit de operacao comer
 
 ## Sincronizacao global
 Alteracao estrutural (porta, stack, deploy, servico compartilhado) → atualizar CLAUDE.md da raiz Arena Cards + propagar downstream. Ver `../.claude/rules/sync-global.md` na raiz Arena Cards.
+
+## Testing + Spec Evolution (ADR 0005) — Fase 5c Rollout
+
+**Padrão obrigatório (copy-sync de P3 piloto):**
+
+```
+RED (teste) → GREEN (código) → REFACTOR → UPDATE SPEC → COMMIT
+```
+
+### Setup Vitest
+
+- `environment: "node"` (Prisma + Stripe, não browser)
+- `setupFiles: ["./src/__tests__/setup.ts"]` (Prisma + Stripe mocks globais) ✅ Criado
+- `npm run test` bloqueia commit (hook pré-commit) — TBD
+
+### Mocks Globais (src/__tests__/setup.ts)
+
+- **Prisma**: 18 modelos (Seller, Order, PriceRule, BizLead, etc.)
+- **Stripe**: checkout.sessions, customers, products, prices
+- **beforeEach()**: limpa todos os mocks (isola testes)
+
+### Layer Padrão (herdado de P3)
+
+| Layer | Padrão | Arquivo | Status |
+|-------|--------|---------|--------|
+| **Utils** | Puro funcional, 100% coverage | `lib/*.test.ts` | 🟡 Próximo |
+| **Services** | Integration + Prisma mock, 80%+ | `lib/services/*.test.ts` | 🟡 Próximo |
+| **API routes** | Zod validation + handler, 90%+ | `app/api/*/route.test.ts` | 🟡 Fila |
+| **Plan limits** | Guard functions, 80%+ | `lib/plan-limits.test.ts` | 🟡 Fila |
+| **Components** | React Testing Library, 80%+ | `components/*.test.tsx` | 🟡 Fila |
+
+### Review Gate (PR)
+
+- [ ] Build + testes passam (CI)
+- [ ] **Spec foi atualizado?** (CLAUDE.md/ADR/comentário inline)
+
+### Referência
+
+- **ADR 0005**: `docs/workspace/adr/0005-tdd-spec-evolution.md`
+- **Guia testing**: `docs/workspace/08-testing-strategy.md`
+- **Piloto P3**: commit `bb86878` — 37 testes (26+5+6), ciclo completo

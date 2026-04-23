@@ -15,7 +15,7 @@ Estrutura canonica: `src/app/`, `src/lib/`, `src/components/`, `src/generated/pr
 - **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `src/lib/db.ts`)
 - **Auth**: iron-session (cookies criptografados) + bcryptjs (hash de senhas)
 - **Pagamentos**: Stripe SDK (checkout, webhook, portal) — endpoints em `src/app/api/stripe/*`
-- **Planos**: FREE / PRO / UNLIMITED — gates em `src/lib/plan-limits.ts` (temporariamente liberados)
+- **Planos**: FREE / PRO / UNLIMITED — gates em `src/lib/plan-limits.ts` (enforce real por plano — `PLAN_LIMITS`: FREE=100 stickers/1 album/10 orders-mes; PRO=1000/13/100; UNLIMITED=∞/13/∞)
 - **Monitoring**: Sentry (`@sentry/nextjs`) + Vercel Analytics + Speed Insights
 - **Env validation**: Zod schema em `src/lib/env.ts` (valida rigorosamente em producao)
 - **Admin**: `src/lib/admin.ts` — guard via `ADMIN_EMAIL` env var (cockpit comercial)

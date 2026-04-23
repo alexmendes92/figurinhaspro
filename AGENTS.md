@@ -68,7 +68,7 @@ Consultar `node_modules/next/dist/docs/` para detalhes.
 
 ---
 
-## Prisma 7.5 — Breaking Changes
+## Prisma 7 — Breaking Changes
 
 ### prisma.config.ts (centralizado)
 Toda config agora fica em `prisma.config.ts` (ja configurado neste projeto):
@@ -161,7 +161,7 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 | Planos | FREE / PRO / UNLIMITED com gates em `src/lib/plan-limits.ts` |
 | Estilo | Tailwind CSS 4 (CSS-first), dark mode, Geist fonts, mobile-first responsive |
 | Imagens | Sharp para processamento, `images.unoptimized: true` |
-| Monitoring | Sentry (`@sentry/nextjs` 10.47) — client/server/edge + instrumentation.ts |
+| Monitoring | Sentry (`@sentry/nextjs` 10.49) — client/server/edge + instrumentation.ts |
 | Analytics | Vercel Analytics (`@vercel/analytics`) + Speed Insights (`@vercel/speed-insights`) |
 | Env validation | Zod schema em `src/lib/env.ts` — strict em prod, fallbacks em dev |
 | Admin | `src/lib/admin.ts` — guard `isAdmin(email)` via `ADMIN_EMAIL` env var |
@@ -224,6 +224,50 @@ Padroes server↔client:
 | `BizTask` | Tarefas operacionais — vinculavel a lead, iniciativa ou experimento |
 | `BizKpi` | Definicao de KPIs — nome, categoria, unidade, target |
 | `BizKpiSnapshot` | Snapshots historicos de valores de KPIs — valor, delta, data |
+
+### Bot WhatsApp — Endpoints HMAC
+
+Endpoints sob `/api/bot/*` consumidos pelo fluxo Dify/n8n (WhatsApp). Separados do resto da API porque usam auth propria (HMAC compartilhado) e tem contrato estavel com tooling externo.
+
+**Libs**: `src/lib/bot-hmac.ts` (assinatura) + `src/lib/bot-search.ts` (resolve inventario + precos via `price-resolver`).
+
+**Contrato HMAC** (so POST — GETs sao leitura publica):
+- Header: `x-bot-signature: ts=<unix-seconds>,v1=<hmac-sha256-hex>`
+- Manifest assinado: `${ts}.${rawBody}` (body cru, byte-a-byte)
+- Secret: `BOT_HMAC_SECRET` (min 32 chars, documentado em `.env.example`)
+- Janela anti-replay: ±300s
+- Dev sem secret → SKIP com warn em stderr (facilita `curl` local). Prod sem secret → 503 `hmac_missing-secret`.
+
+**Endpoints**:
+
+| Rota | Metodo | HMAC? | Descricao |
+|------|--------|-------|-----------|
+| `/api/bot/stickers` | GET | nao | Busca publica: `?seller=<shopSlug>&q=<termo>&album=<slug>&limit=<n>` (1-20, default 5). Combina `Inventory` + `albums.ts` + `price-resolver`. |
+| `/api/bot/quote` | POST | **sim** | Cria `Order` status=QUOTE, channel=WHATSAPP. Nao processa pagamento — Seller fecha no chat. Respeita `checkOrderLimit` do plano. |
+| `/api/bot/quote/[ref]` | GET | nao | Consulta status do pedido pelo `id`. So expoe orders com `channel=WHATSAPP` (enumeration safe). |
+
+**Body do POST /api/bot/quote** (validado por Zod):
+```ts
+{
+  sellerSlug: string,
+  customerName: string,              // max 120
+  customerPhone: string,              // 5..32
+  items: [{
+    albumSlug: string,
+    stickerCode: string,
+    stickerName: string,
+    quantity: number,                 // int > 0
+    unitPrice: number,                // > 0
+  }]                                  // min 1
+}
+```
+
+**Gotchas**:
+- GET `/api/bot/stickers` exige `?seller=` — sem ele retorna 400 `missing_seller`.
+- POST usa `await req.text()` ANTES do `JSON.parse` porque o HMAC assina o body cru. **Nao** refatorar pra `await req.json()` direto — quebra a assinatura.
+- `/quote/[ref]` filtra por `channel: "WHATSAPP"`; pedidos de outros canais retornam 404.
+- Script de seed de demo: `scripts/seed-bot-demo.ts` (executar com `tsx`).
+- Copy fiel do P1v2 (mesmo contrato HMAC) — manter sincronizado se mudar qualquer um dos lados.
 
 ### Alias de Imports
 ```json

@@ -58,6 +58,8 @@ npm run build      # Build producao (prisma generate && next build)
 npm run lint       # Biome check
 npm run lint:fix   # Biome check --write
 npm run format     # Biome format --write
+npm test           # Vitest (single run) — setup em src/__tests__/setup.ts
+npm run test:watch # Vitest (watch mode)
 vercel deploy --prod  # Deploy producao (obrigatorio apos push)
 
 # Stripe CLI (testar webhooks localmente)

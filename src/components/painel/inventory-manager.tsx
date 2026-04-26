@@ -678,7 +678,7 @@ export default function InventoryManager({
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row h-full">
+    <div className="flex flex-col lg:flex-row lg:items-start">
       {/* Sidebar de seções */}
       <aside className="sticky top-0 z-20 bg-zinc-950/95 backdrop-blur-md lg:self-start lg:h-[calc(100vh-56px)] lg:w-52 border-b lg:border-b-0 lg:border-r border-zinc-800 overflow-x-auto lg:overflow-y-auto">
         <div className="flex lg:flex-col p-2 gap-1">

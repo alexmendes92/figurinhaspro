@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { Album, Sticker } from "@/lib/albums";
+import { flagFor } from "@/lib/country-flags";
 import { imgUrl } from "@/lib/images";
 import { getDefaultPrice, getStickerTypeConfig } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
@@ -361,6 +362,11 @@ function SectionBlock({
         className="col-span-full sticky top-0 z-20 -mx-4 lg:-mx-6 px-4 lg:px-6 bg-zinc-950/92 backdrop-blur-md"
       >
         <div className="flex items-center gap-2 py-2">
+          {flagFor(sectionName) && (
+            <span className="text-base leading-none shrink-0" aria-hidden="true">
+              {flagFor(sectionName)}
+            </span>
+          )}
           <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-300">
             {sectionName}
           </span>
@@ -691,9 +697,7 @@ export default function InventoryManager({
               </svg>
               Voltar
             </Link>
-            <p className="text-sm font-semibold mt-2">
-              {album.flag} Copa {album.year}
-            </p>
+            <p className="text-sm font-semibold mt-2">Copa {album.year}</p>
             <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
               {totalInStock}/{allStickers.length} tipos · {totalUnits} unidades
             </p>
@@ -742,7 +746,14 @@ export default function InventoryManager({
                 }`}
               >
                 <span className="lg:flex lg:items-center lg:justify-between lg:gap-2">
-                  <span className="truncate">{sec.name}</span>
+                  <span className="truncate">
+                    {flagFor(sec.name) && (
+                      <span className="mr-1.5" aria-hidden="true">
+                        {flagFor(sec.name)}
+                      </span>
+                    )}
+                    {sec.name}
+                  </span>
                   <span className="hidden lg:inline font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-600">
                     {secStock}/{sec.stickers.length}
                   </span>

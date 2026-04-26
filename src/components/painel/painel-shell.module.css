@@ -32,7 +32,7 @@
   --c-shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
   --c-shadow-lg: 0 24px 60px -16px rgba(0, 0, 0, 0.6);
 
-  --c-font-ui: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --c-font-ui: var(--font-manrope), "Twemoji Country Flags", ui-sans-serif, system-ui, sans-serif;
   --c-font-display: var(--font-bebas), "Oswald", Impact, ui-sans-serif, sans-serif;
 
   display: flex;

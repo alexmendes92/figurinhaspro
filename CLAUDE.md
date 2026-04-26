@@ -23,14 +23,14 @@ Estrutura canonica: `src/app/`, `src/lib/`, `src/components/`, `src/generated/pr
 ## REGRAS XP (enforced por hooks)
 
 - **Planejamento obrigatorio**: features novas passam por `/plan` antes de codar
-- **Build antes de commitar**: hook pre-commit roda `npm run build` automaticamente
+- **Gate completo antes de commitar**: hook pre-commit roda `npm run test` + `npx tsc --noEmit` + `npm run build` automaticamente. Bloqueia commit se qualquer um falhar.
 - **Commit atomico**: 1 commit = 1 unidade funcional que builda
 - **Ciclo**: `/plan` → `/develop` → `/review`
 
 ## HOOKS AUTOMATIZADOS
 
 Configurados em `.claude/settings.json`:
-- **Pre-commit**: roda `npm run build` antes de cada `git commit`
+- **Pre-commit gate** (na ordem): `npm run test` → `npx tsc --noEmit` → `npm run build`. Qualquer falha bloqueia o commit. Confiar no hook substitui a tentação de pular `npm run test` "porque o build passou".
 - **Seguranca**: bloqueia `git add` de `.env`, `dev.db`, credentials
 - **Destrutivos**: bloqueia `rm -rf`, `drop table`, `git push --force`
 

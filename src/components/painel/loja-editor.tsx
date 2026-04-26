@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "@/lib/toast-context";
 
@@ -23,6 +24,8 @@ export default function LojaEditor({
   plan,
 }: LojaEditorProps) {
   const toast = useToast();
+  const searchParams = useSearchParams();
+  const initialEditing = searchParams.get("edit") === "1";
   const [shopName, setShopName] = useState(initialName);
   const [phone, setPhone] = useState(initialPhone || "");
   const [shopDescription, setShopDescription] = useState(initialDesc || "");
@@ -30,7 +33,7 @@ export default function LojaEditor({
   const [paymentMethods, setPaymentMethods] = useState(initialPayment || "");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(initialEditing);
 
   async function handleSave() {
     setSaving(true);
@@ -67,7 +70,7 @@ export default function LojaEditor({
     "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]";
   const emptyClass = "text-sm font-medium text-zinc-600";
 
-  const infoItems = [
+  const infoItems: Array<{ label: string; id?: string; value: React.ReactNode }> = [
     {
       label: "Nome da loja",
       value: editing ? (
@@ -97,6 +100,7 @@ export default function LojaEditor({
     },
     {
       label: "Descricao",
+      id: "shopDescription",
       value: editing ? (
         <input
           value={shopDescription}
@@ -112,6 +116,7 @@ export default function LojaEditor({
     },
     {
       label: "Horario",
+      id: "businessHours",
       value: editing ? (
         <input
           value={businessHours}
@@ -127,6 +132,7 @@ export default function LojaEditor({
     },
     {
       label: "Pagamento",
+      id: "paymentMethods",
       value: editing ? (
         <input
           value={paymentMethods}
@@ -198,7 +204,8 @@ export default function LojaEditor({
       {infoItems.map((item, i) => (
         <div
           key={item.label}
-          className={`px-5 py-3 flex items-center justify-between ${
+          id={item.id}
+          className={`px-5 py-3 flex items-center justify-between scroll-mt-20 ${
             i > 0 ? "border-t border-[var(--border)]" : ""
           }`}
         >

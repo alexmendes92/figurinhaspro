@@ -36,7 +36,7 @@
   --c-font-display: var(--font-bebas), "Oswald", Impact, ui-sans-serif, sans-serif;
 
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   background: var(--c-bg);
   color: var(--c-fg);
   font-family: var(--c-font-ui);

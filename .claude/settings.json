@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$PROJECT_DIR\" && npm run build 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: build falhando — corrija antes de commitar' >&2; exit 2; fi; fi; exit 0"
+            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$PROJECT_DIR\" && npm run test 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: testes vermelhos — corrija antes de commitar' >&2; exit 2; fi; npx tsc --noEmit 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: tsc com erros — corrija antes de commitar' >&2; exit 2; fi; npm run build 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: build falhando — corrija antes de commitar' >&2; exit 2; fi; fi; exit 0"
           },
           {
             "type": "command",

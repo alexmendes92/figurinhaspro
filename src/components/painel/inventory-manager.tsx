@@ -365,7 +365,7 @@ function SectionBlock({
       <div
         data-section-index={sectionIndex}
         data-section-name={sectionName}
-        className="col-span-full sticky top-0 z-20 -mx-4 lg:-mx-6 px-4 lg:px-6 bg-zinc-950/92 backdrop-blur-md"
+        className="col-span-full sticky top-0 z-10 scroll-mt-14 lg:scroll-mt-2 -mx-4 lg:-mx-6 px-4 lg:px-6 bg-zinc-950/92 backdrop-blur-md"
       >
         <div className="flex items-center gap-2 py-2">
           {flagFor(sectionName) && (
@@ -587,26 +587,22 @@ export default function InventoryManager({
     });
   }
 
-  // Scroll suave até uma seção (view "all") — scroll no window (o container flex não é bounded)
+  // Scroll suave até uma seção (view "all") — usa scrollIntoView para auto-detectar
+  // o scroll container correto (.content do painel-shell tem overflow-y: auto).
   const scrollToSection = useCallback((index: number) => {
     const el = document.querySelector<HTMLElement>(`[data-section-index="${index}"]`);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 8;
-    window.scrollTo({ top, behavior: "smooth" });
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  // Scroll até o próximo sticker faltante visível — scroll no window
+  // Scroll até o próximo sticker faltante visível
   const scrollToNextMissing = useCallback(() => {
     const missing = document.querySelectorAll<HTMLElement>('[data-missing="true"]');
     if (missing.length === 0) return;
 
-    const currentTop = window.scrollY;
-    const next = Array.from(missing).find(
-      (el) => el.getBoundingClientRect().top + window.scrollY > currentTop + 40
-    );
+    const next = Array.from(missing).find((el) => el.getBoundingClientRect().top > 40);
     const target = next ?? missing[0];
-    const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: "smooth" });
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
   // Handler do sidebar: em "all" scrolla; em view isolada muda isolamento
@@ -684,7 +680,7 @@ export default function InventoryManager({
   return (
     <div className="flex-1 flex flex-col lg:flex-row h-full">
       {/* Sidebar de seções */}
-      <aside className="lg:w-52 border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-950/50 overflow-x-auto lg:overflow-y-auto">
+      <aside className="sticky top-0 z-20 bg-zinc-950/95 backdrop-blur-md lg:self-start lg:h-[calc(100vh-56px)] lg:w-52 border-b lg:border-b-0 lg:border-r border-zinc-800 overflow-x-auto lg:overflow-y-auto">
         <div className="flex lg:flex-col p-2 gap-1">
           {/* Header */}
           <div className="hidden lg:block px-3 py-2">

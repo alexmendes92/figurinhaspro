@@ -210,12 +210,12 @@ function StickerCard({
       } ${justSaved ? "sticker-added" : ""}`}
     >
       {/* Área da imagem (toggle) */}
-      <div className="relative aspect-[2/3] bg-zinc-800">
+      <div className="relative aspect-[2/3] bg-zinc-800 p-1.5">
         <Image
           src={imgUrl(sticker.image)}
           alt={`${sticker.code} - ${sticker.name}`}
           fill
-          className={`object-cover transition ${hasIt ? "" : "grayscale-[40%] opacity-80"}`}
+          className={`object-contain p-1 transition ${hasIt ? "" : "grayscale-[40%] opacity-80"}`}
           sizes="(max-width: 640px) 33vw, 16vw"
         />
 
@@ -254,13 +254,6 @@ function StickerCard({
           </div>
         )}
 
-        {/* Badge de quantidade (canto inferior esquerdo) — unificado */}
-        {hasIt && (
-          <div className="pointer-events-none absolute bottom-1 left-1 z-10 min-w-[1.5rem] h-6 px-1.5 rounded-md bg-green-500 text-black text-[11px] font-bold font-[family-name:var(--font-geist-mono)] flex items-center justify-center shadow-md">
-            {qty}
-          </div>
-        )}
-
         {/* Ícone $ — preço customizado (canto inferior direito, dentro da imagem) */}
         {hasIt && (
           <button
@@ -288,15 +281,22 @@ function StickerCard({
         )}
       </div>
 
-      {/* Rodapé: código + nome + controles */}
+      {/* Rodapé: código + preço + nome + stepper */}
       <div className="px-2 py-1.5 space-y-1">
         <div className="flex items-baseline justify-between gap-1">
           <span className="font-[family-name:var(--font-geist-mono)] text-xs font-semibold text-zinc-200 truncate">
             {sticker.code}
           </span>
-          {hasCustomPrice && (
-            <span className="font-[family-name:var(--font-geist-mono)] text-[9px] font-bold text-amber-400 shrink-0">
-              R${customPrice.toFixed(2).replace(".", ",")}
+          {hasIt && (
+            <span
+              className={`font-[family-name:var(--font-geist-mono)] text-[10px] font-bold shrink-0 ${
+                hasCustomPrice ? "text-amber-400" : "text-zinc-400"
+              }`}
+            >
+              R$
+              {(hasCustomPrice ? customPrice : getDefaultPrice(sticker.type))
+                .toFixed(2)
+                .replace(".", ",")}
             </span>
           )}
         </div>
@@ -312,15 +312,21 @@ function StickerCard({
             <button
               type="button"
               onClick={() => updateQuantity(sticker.code, qty - 1)}
-              className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="flex-1 h-7 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
               aria-label="Diminuir quantidade"
             >
               −
             </button>
+            <span
+              className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400"
+              aria-label={`Quantidade ${qty}`}
+            >
+              {qty}
+            </span>
             <button
               type="button"
               onClick={() => updateQuantity(sticker.code, qty + 1)}
-              className="flex-1 h-8 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
+              className="flex-1 h-7 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
               aria-label="Aumentar quantidade"
             >
               +
@@ -766,9 +772,9 @@ export default function InventoryManager({
 
       {/* Grid de figurinhas */}
       <div className="flex-1">
-        <div className="p-4 lg:p-6">
+        <div className="p-3 lg:p-4">
           {/* Barra de busca */}
-          <div className="mb-4">
+          <div className="mb-3">
             <div className="relative">
               <svg
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"
@@ -818,7 +824,7 @@ export default function InventoryManager({
           </div>
 
           {/* Toolbar */}
-          <div className="space-y-3 mb-4">
+          <div className="space-y-2 mb-3">
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
                 {!isSearching && section && (

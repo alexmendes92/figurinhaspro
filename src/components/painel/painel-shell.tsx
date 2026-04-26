@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { formatCrumbSegment } from "@/lib/format-breadcrumb";
 import styles from "./painel-shell.module.css";
 
 interface SellerInfo {
@@ -382,7 +383,7 @@ export default function PainelShell({
                     className={isLast ? styles.crumbCurrent : ""}
                     aria-current={isLast ? "page" : undefined}
                   >
-                    {seg.charAt(0).toUpperCase() + seg.slice(1)}
+                    {formatCrumbSegment(seg)}
                   </span>
                 </span>
               );

@@ -332,7 +332,13 @@ export default function PainelShell({
             <div className={styles.userAvatar}>{initials}</div>
             <div className={styles.userInfo}>
               <div className={styles.userName}>{seller.name}</div>
-              <div className={styles.userMeta}>{planLabel}</div>
+              {seller.plan === "FREE" ? (
+                <Link href="/painel/planos" className={styles.userMeta}>
+                  {planLabel} • ver planos
+                </Link>
+              ) : (
+                <div className={styles.userMeta}>{planLabel}</div>
+              )}
             </div>
             <button
               type="button"

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LojaEditor from "@/components/painel/loja-editor";
+import OnboardingChecklist from "@/components/painel/onboarding-checklist";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
@@ -24,6 +25,12 @@ export default async function MinhaLojaPage() {
         <h1 className="text-2xl font-bold tracking-tight">Minha Loja</h1>
         <p className="text-sm text-[var(--muted)] mt-1">Configurações da sua vitrine pública</p>
       </div>
+
+      <OnboardingChecklist
+        shopDescription={seller.shopDescription}
+        businessHours={seller.businessHours}
+        paymentMethods={seller.paymentMethods}
+      />
 
       {/* Link da loja */}
       <div className="p-5 rounded-2xl border border-[var(--accent-border)] bg-[var(--accent-dim)] mb-6">

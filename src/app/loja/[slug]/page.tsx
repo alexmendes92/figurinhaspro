@@ -206,7 +206,7 @@ export default async function LojaPage({
                             alt=""
                             width={16}
                             height={16}
-                            className="rounded-full"
+                            className="rounded-full w-4 h-4 object-cover shrink-0"
                           />
                         )}
                         <p className="text-sm font-bold text-white truncate">{album.title}</p>

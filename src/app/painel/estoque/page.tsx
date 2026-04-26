@@ -160,7 +160,7 @@ export default async function EstoquePage() {
                       alt={coverData?.host || ""}
                       width={18}
                       height={18}
-                      className="rounded-full"
+                      className="rounded-full w-[18px] h-[18px] object-cover shrink-0"
                     />
                   )}
                   <div className="min-w-0">

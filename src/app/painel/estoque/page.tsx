@@ -175,39 +175,55 @@ export default async function EstoquePage() {
                   </div>
                 </div>
 
-                {/* Barra de progresso */}
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-500">
-                    {inStock}/{album.totalStickers}
-                  </span>
-                  <span
-                    className={`font-[family-name:var(--font-geist-mono)] text-[10px] font-bold ${
-                      pct === 0
-                        ? "text-zinc-600"
-                        : pct >= 80
-                          ? "text-green-400"
-                          : pct >= 30
-                            ? "text-amber-400"
-                            : "text-zinc-400"
-                    }`}
-                  >
-                    {pct}%
-                  </span>
-                </div>
-                <div className="w-full h-1.5 rounded-full bg-zinc-800 overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-700 ${
-                      pct === 0
-                        ? "bg-zinc-700"
-                        : pct >= 80
-                          ? "bg-green-500"
-                          : pct >= 30
-                            ? "bg-amber-500"
-                            : "bg-zinc-500"
-                    }`}
-                    style={{ width: `${Math.max(pct, 2)}%` }}
-                  />
-                </div>
+                {/* Barra de progresso ou CTA quando estoque vazio */}
+                {inStock === 0 ? (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-zinc-500">Sem estoque ainda</span>
+                    <span className="text-[10px] font-bold text-amber-400 flex items-center gap-1">
+                      Adicionar
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-500">
+                        {inStock}/{album.totalStickers}
+                      </span>
+                      <span
+                        className={`font-[family-name:var(--font-geist-mono)] text-[10px] font-bold ${
+                          pct >= 80
+                            ? "text-green-400"
+                            : pct >= 30
+                              ? "text-amber-400"
+                              : "text-zinc-400"
+                        }`}
+                      >
+                        {pct}%
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${
+                          pct >= 80
+                            ? "bg-green-500"
+                            : pct >= 30
+                              ? "bg-amber-500"
+                              : "bg-zinc-500"
+                        }`}
+                        style={{ width: `${Math.max(pct, 2)}%` }}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             </Link>
           );

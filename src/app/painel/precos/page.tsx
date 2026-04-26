@@ -171,7 +171,7 @@ export default async function PrecosPage() {
                         alt={coverData?.host || ""}
                         width={16}
                         height={16}
-                        className="rounded-full"
+                        className="rounded-full w-4 h-4 object-cover shrink-0"
                       />
                     )}
                     <div className="min-w-0">

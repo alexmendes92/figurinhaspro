@@ -36,8 +36,6 @@ interface AlbumPriceData {
   quantityTiers: QuantityTierData[];
 }
 
-type Tab = "types" | "sections" | "quantity";
-
 // ── Componente Principal ──
 
 export default function PrecosAlbumEditor({
@@ -56,7 +54,6 @@ export default function PrecosAlbumEditor({
   const toast = useToast();
   const [data, setData] = useState<AlbumPriceData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<Tab>("types");
   const [saving, setSaving] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<{ label: string; action: () => void } | null>(
@@ -245,12 +242,6 @@ export default function PrecosAlbumEditor({
   const albumMap = new Map(data.albumRules.map((r) => [r.stickerType, r.price]));
   const sectionMap = new Map(data.sectionRules.map((r) => [r.sectionName, r]));
 
-  const tabs: { id: Tab; label: string; count: number }[] = [
-    { id: "types", label: "Por Tipo", count: data.albumRules.length },
-    { id: "sections", label: "Por Seção", count: data.sectionRules.length },
-    { id: "quantity", label: "Quantidade", count: data.quantityTiers.length },
-  ];
-
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-2xl slide-up">
       {/* Header */}
@@ -263,34 +254,16 @@ export default function PrecosAlbumEditor({
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 p-1 rounded-xl bg-zinc-900 border border-zinc-800 mb-6">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
-              activeTab === tab.id
-                ? "bg-zinc-800 text-white shadow-sm"
-                : "text-zinc-500 hover:text-zinc-300"
-            }`}
-          >
-            {tab.label}
-            {tab.count > 0 && (
-              <span
-                className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
-                  activeTab === tab.id ? "bg-amber-500 text-black" : "bg-zinc-700 text-zinc-400"
-                }`}
-              >
-                {tab.count}
-              </span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Tab: Preços por Tipo */}
-      {activeTab === "types" && (
+      {/* 1. Preços base deste álbum */}
+      <section className="mb-8">
+        <div className="mb-4">
+          <h2 className="text-base font-bold tracking-tight">
+            <span className="text-zinc-500 font-mono mr-2">1.</span>Preços base
+          </h2>
+          <p className="text-xs text-[var(--muted)] mt-0.5">
+            Sobrescrevem os preços padrão globais para este álbum.
+          </p>
+        </div>
         <div className="space-y-3">
           {STICKER_TYPE_CONFIG.map((tc) => {
             const albumPrice = albumMap.get(tc.type);
@@ -327,8 +300,8 @@ export default function PrecosAlbumEditor({
                       <p className="text-sm font-semibold">{tc.shortLabel}</p>
                       <p className="text-[10px] text-[var(--muted)]">
                         {hasOverride
-                          ? "Preço customizado para este álbum"
-                          : `Herdando ${globalPrice ? "global" : "padrão"}: R$${(globalPrice ?? tc.defaultPrice).toFixed(2).replace(".", ",")}`}
+                          ? "Preço personalizado neste álbum"
+                          : `Herdando padrão: R$${(globalPrice ?? tc.defaultPrice).toFixed(2).replace(".", ",")}`}
                       </p>
                     </div>
                   </div>
@@ -357,7 +330,7 @@ export default function PrecosAlbumEditor({
                           })
                         }
                         className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
-                        title="Remover e herdar global"
+                        title="Remover e voltar ao padrão"
                       >
                         <svg
                           className="w-3.5 h-3.5"
@@ -398,19 +371,19 @@ export default function PrecosAlbumEditor({
               </div>
             );
           })}
-
-          {/* Info hierarquia */}
-          <div className="p-3 rounded-xl border border-[var(--border)] bg-[var(--card)] mt-4">
-            <p className="text-[10px] text-zinc-600 leading-relaxed">
-              💡 Defina um preço para sobrescrever o global neste álbum. Clique no ✕ para voltar ao
-              preço herdado.
-            </p>
-          </div>
         </div>
-      )}
+      </section>
 
-      {/* Tab: Regras por Seção */}
-      {activeTab === "sections" && (
+      {/* 2. Ajustes por seção/país */}
+      <section className="mb-8">
+        <div className="mb-4">
+          <h2 className="text-base font-bold tracking-tight">
+            <span className="text-zinc-500 font-mono mr-2">2.</span>Ajustes por seção/país
+          </h2>
+          <p className="text-xs text-[var(--muted)] mt-0.5">
+            Sobrescrevem o preço base acima para seções específicas.
+          </p>
+        </div>
         <SectionRulesTab
           sectionNames={sectionNames}
           sectionMap={sectionMap}
@@ -424,10 +397,18 @@ export default function PrecosAlbumEditor({
             })
           }
         />
-      )}
+      </section>
 
-      {/* Tab: Descontos por Quantidade */}
-      {activeTab === "quantity" && (
+      {/* 3. Descontos por volume */}
+      <section className="mb-8">
+        <div className="mb-4">
+          <h2 className="text-base font-bold tracking-tight">
+            <span className="text-zinc-500 font-mono mr-2">3.</span>Descontos por volume
+          </h2>
+          <p className="text-xs text-[var(--muted)] mt-0.5">
+            Aplicado no total do carrinho do cliente.
+          </p>
+        </div>
         <QuantityTiersTab
           tiers={data.quantityTiers}
           saving={saving}
@@ -441,7 +422,7 @@ export default function PrecosAlbumEditor({
             })
           }
         />
-      )}
+      </section>
 
       <ConfirmDialog
         open={!!confirmDelete}
@@ -497,10 +478,6 @@ function SectionRulesTab({
 
   return (
     <div className="space-y-2">
-      <p className="text-xs text-[var(--muted)] mb-3">
-        Defina preços ou ajustes para seções específicas (países, categorias).
-      </p>
-
       {sectionNames.map((name) => {
         const rule = sectionMap.get(name);
         const isEditing = editingSection === name;
@@ -619,9 +596,9 @@ function SectionRulesTab({
       {/* Info */}
       <div className="p-3 rounded-xl border border-[var(--border)] bg-[var(--card)] mt-4">
         <p className="text-[10px] text-zinc-600 leading-relaxed">
-          💡 <strong>Fixo</strong>: substitui o preço base. <strong>Ajuste</strong>: soma/subtrai do
-          preço por tipo. Ex: "Brasil = +R$1,00" faz figurinhas brasileiras custarem R$1 a mais que
-          o normal.
+          <strong>Fixo</strong> = preço final substitui o preço base.{" "}
+          <strong>Ajuste</strong> = soma/subtrai sobre o preço base. Ex: "Brasil = +R$1,00" faz
+          figurinhas brasileiras custarem R$1 a mais.
         </p>
       </div>
     </div>
@@ -661,11 +638,6 @@ function QuantityTiersTab({
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-[var(--muted)] mb-3">
-        Desconto progressivo: quanto mais figurinhas deste álbum o comprador pedir, maior o
-        desconto.
-      </p>
-
       {tiers.length === 0 && !adding ? (
         <div className="p-5 rounded-2xl border border-dashed border-[var(--border)] text-center">
           <p className="text-xs text-[var(--muted)] mb-2">Nenhuma faixa de desconto configurada.</p>
@@ -814,8 +786,8 @@ function QuantityTiersTab({
       {/* Info */}
       <div className="p-3 rounded-xl border border-[var(--border)] bg-[var(--card)] mt-2">
         <p className="text-[10px] text-zinc-600 leading-relaxed">
-          💡 Exemplo: 1-10 = 0%, 11-50 = 10%, 51+ = 20%. Se o comprador pedir 15 figurinhas deste
-          álbum, ganha 10% de desconto no preço unitário.
+          Ex: 1-10 = 0%, 11-50 = 10%, 51+ = 20%. Se o cliente pedir 15 figurinhas deste álbum,
+          ganha 10% de desconto no preço unitário.
         </p>
       </div>
     </div>

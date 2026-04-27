@@ -30,6 +30,11 @@ export default async function PrecosAlbumPage({
   // Extrai nomes das seções do álbum (server-only, não envia albums.ts inteiro ao client)
   const sectionNames = album.sections.map((s) => s.name);
 
+  // Conta figurinhas em estoque pra exibir no header
+  const inventoryCount = await db.inventory.count({
+    where: { sellerId: seller.id, albumSlug, quantity: { gt: 0 } },
+  });
+
   return (
     <div className="slide-up">
       {/* Breadcrumb */}
@@ -57,6 +62,8 @@ export default async function PrecosAlbumPage({
         albumYear={album.year}
         albumFlag={album.flag}
         sectionNames={sectionNames}
+        inventoryCount={inventoryCount}
+        sectionCount={album.sections.length}
       />
     </div>
   );

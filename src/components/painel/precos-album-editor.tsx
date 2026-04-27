@@ -44,12 +44,16 @@ export default function PrecosAlbumEditor({
   albumYear,
   albumFlag,
   sectionNames,
+  inventoryCount,
+  sectionCount,
 }: {
   albumSlug: string;
   albumTitle: string;
   albumYear: string;
   albumFlag: string;
   sectionNames: string[];
+  inventoryCount: number;
+  sectionCount: number;
 }) {
   const toast = useToast();
   const [data, setData] = useState<AlbumPriceData | null>(null);
@@ -247,10 +251,16 @@ export default function PrecosAlbumEditor({
       {/* Header */}
       <div className="mb-6">
         <p className="text-lg sm:text-xl font-bold tracking-tight">
-          {albumFlag} Copa {albumYear}
+          {albumFlag} {albumTitle}
         </p>
         <p className="text-xs text-[var(--muted)] mt-0.5">
-          Configure preços específicos para este álbum.
+          {inventoryCount} {inventoryCount === 1 ? "figurinha" : "figurinhas"} em estoque
+          {sectionCount > 0 && (
+            <>
+              {" · "}
+              {sectionCount} {sectionCount === 1 ? "seção" : "seções"}
+            </>
+          )}
         </p>
       </div>
 

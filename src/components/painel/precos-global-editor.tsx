@@ -58,7 +58,9 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
   return (
     <div>
       <div className="mb-4">
-        <h2 className="text-lg font-bold tracking-tight">Preços padrão</h2>
+        <h2 className="text-lg font-bold tracking-tight">
+          <span className="text-zinc-500 font-mono mr-2">1.</span>Preços padrão
+        </h2>
         <p className="text-xs text-[var(--muted)] mt-0.5">
           Aplicados a todos os álbuns que não possuem preço específico.
         </p>

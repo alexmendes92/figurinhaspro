@@ -81,7 +81,22 @@ export default async function PrecosPage() {
       <div className="mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Preços</h1>
         <p className="text-xs sm:text-sm text-[var(--muted)] mt-1">
-          Configure preços globais e personalize por álbum, seção e quantidade.
+          Configure quanto você cobra pelas figurinhas.
+        </p>
+      </div>
+
+      {/* Como funciona — cascata de preços */}
+      <div className="mb-6 sm:mb-8 p-4 sm:p-5 rounded-2xl border border-zinc-800 bg-zinc-900/40">
+        <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <span className="font-semibold text-amber-400">Como funciona:</span> os preços seguem uma
+          cascata — <span className="font-medium text-zinc-100">Padrão</span>{" "}
+          <span className="text-zinc-500">→</span>{" "}
+          <span className="font-medium text-zinc-100">Álbum</span>{" "}
+          <span className="text-zinc-500">→</span>{" "}
+          <span className="font-medium text-zinc-100">Seção/país</span>{" "}
+          <span className="text-zinc-500">→</span>{" "}
+          <span className="font-medium text-zinc-100">Volume</span>. Cada nível mais específico
+          sobrescreve o anterior. Comece pelos padrões abaixo.
         </p>
       </div>
 
@@ -91,9 +106,11 @@ export default async function PrecosPage() {
       {/* Grid de Álbuns */}
       <div className="mt-8">
         <div className="mb-4">
-          <h2 className="text-lg font-bold tracking-tight">Preços por álbum</h2>
+          <h2 className="text-lg font-bold tracking-tight">
+            <span className="text-zinc-500 font-mono mr-2">2.</span>Preços por álbum
+          </h2>
           <p className="text-xs text-[var(--muted)] mt-0.5">
-            Clique em um álbum para configurar preços por tipo, seção e descontos por quantidade.
+            Personalize quando um álbum precisa de preços diferentes do padrão.
           </p>
         </div>
 

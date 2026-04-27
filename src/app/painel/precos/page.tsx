@@ -7,6 +7,7 @@ import { getSession } from "@/lib/auth";
 import { customAlbumToAlbum } from "@/lib/custom-albums";
 import { db } from "@/lib/db";
 import { imgUrl } from "@/lib/images";
+import { summarizeAlbumOverrides } from "@/lib/price-summary";
 
 export default async function PrecosPage() {
   const seller = await getSession();
@@ -119,6 +120,7 @@ export default async function PrecosPage() {
             const isCustom = customSlugs.has(album.slug);
             const inStock = countMap.get(album.slug) || 0;
             const rulesCount = rulesCountMap.get(album.slug) || 0;
+            const summary = summarizeAlbumOverrides(rulesCount);
             const coverData = albumCovers[album.slug];
             const coverSrc = coverData?.cover;
             const flagSrc = coverData ? `/flags/${coverData.hostFlag}.svg` : null;
@@ -169,13 +171,17 @@ export default async function PrecosPage() {
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                  {/* Badges */}
+                  {/* Badge — estado de personalização */}
                   <div className="absolute top-2 right-2 flex flex-col gap-1">
-                    {rulesCount > 0 && (
-                      <div className="px-1.5 py-0.5 rounded-full bg-amber-500/90 text-[9px] font-bold text-black">
-                        {rulesCount} {rulesCount === 1 ? "regra" : "regras"}
-                      </div>
-                    )}
+                    <div
+                      className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
+                        summary.isUsingDefaults
+                          ? "bg-zinc-800/85 text-zinc-300 border border-zinc-700/70"
+                          : "bg-amber-500/90 text-black"
+                      }`}
+                    >
+                      {summary.label}
+                    </div>
                   </div>
                 </div>
 

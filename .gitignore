@@ -65,3 +65,7 @@ next-env.d.ts
 .env*.local
 
 .vercel
+
+# Claude Code worktrees (temporary, machine-local)
+.claude/worktrees/
+.claude/settings.json.bak

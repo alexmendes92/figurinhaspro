@@ -1,0 +1,12 @@
+2026-04-28 00:27:08,318 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\Projetos\ArenaCards\P8-FigurinhasPro\token_pool_config.json
+2026-04-28 00:27:08,318 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\perplexity-mcp\perplexity\token_pool_config.json
+2026-04-28 00:27:08,318 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\perplexity-mcp\token_pool_config.json
+2026-04-28 00:27:08,319 - perplexity.server.client_pool - INFO - Found config file at: C:\Users\conta\perplexity-mcp\token_pool_config.json
+2026-04-28 00:27:08,610 - perplexity.server.client_pool - INFO - [my-account] session_valid updated: None -> True
+2026-04-28 00:27:08,610 - perplexity.server.client_pool - DEBUG - Pool state loaded from C:\Users\conta\perplexity-mcp\pool_state.json (age=16181s, writer=monitor)
+2026-04-28 12:06:39,629 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\Projetos\ArenaCards\P8-FigurinhasPro\token_pool_config.json
+2026-04-28 12:06:39,629 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\perplexity-mcp\perplexity\token_pool_config.json
+2026-04-28 12:06:39,630 - perplexity.server.client_pool - INFO - Checking for config at: C:\Users\conta\perplexity-mcp\token_pool_config.json
+2026-04-28 12:06:39,630 - perplexity.server.client_pool - INFO - Found config file at: C:\Users\conta\perplexity-mcp\token_pool_config.json
+2026-04-28 12:06:39,881 - perplexity.server.client_pool - INFO - [my-account] session_valid updated: None -> True
+2026-04-28 12:06:39,882 - perplexity.server.client_pool - DEBUG - Pool state loaded from C:\Users\conta\perplexity-mcp\pool_state.json (age=8181s, writer=monitor)

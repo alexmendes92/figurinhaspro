@@ -1,23 +1,48 @@
 {
+  "statusLine": {
+    "type": "command",
+    "command": "echo \"ACE | $(git branch --show-current 2>/dev/null || echo no-git)\""
+  },
   "permissions": {
     "allow": [
-      "Bash(npm run *)",
-      "Bash(npx *)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
+      "Read",
+      "Write",
+      "Edit",
       "Bash(git status)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git stash *)",
-      "Bash(git push)",
-      "Bash(git push *)",
-      "Bash(git fetch *)",
-      "Bash(node *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
       "Bash(ls *)",
-      "Bash(mkdir *)"
+      "Bash(cat *)",
+      "Bash(rg *)",
+      "Bash(fd *)",
+      "Bash(pwd)",
+      "Bash(echo *)",
+      "Bash(jq *)",
+      "Bash(bash scripts/*)",
+      "Bash(bash tests/*)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(rm *)"
     ],
     "deny": [
-      "Bash(rm -rf *)"
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Bash(rm -rf*)",
+      "Bash(sudo*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)"
     ]
   },
   "hooks": {
@@ -27,15 +52,16 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'git commit'; then cd \"$PROJECT_DIR\" && npm run test 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: testes vermelhos — corrija antes de commitar' >&2; exit 2; fi; npx tsc --noEmit 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: tsc com erros — corrija antes de commitar' >&2; exit 2; fi; npm run build 2>&1 | tail -10; if [ ${PIPESTATUS[0]} -ne 0 ]; then echo 'BLOQUEADO: build falhando — corrija antes de commitar' >&2; exit 2; fi; fi; exit 0"
-          },
+            "command": "bash -c '[ -f .claude/hooks/precommit-router.sh ] && bash .claude/hooks/precommit-router.sh || true'"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'git add' && echo \"$TOOL_INPUT\" | grep -qiE '\\.env|dev\\.db|\\.pem|secret|credentials'; then echo 'BLOQUEADO: arquivo sensivel detectado no staging' >&2; exit 2; fi; exit 0"
-          },
-          {
-            "type": "command",
-            "command": "if echo \"$TOOL_INPUT\" | grep -qiE 'rm -rf|drop table|truncate|DROP DATABASE|git push.*--force|git push.*-f'; then echo 'BLOQUEADO: comando destrutivo detectado' >&2; exit 2; fi; exit 0"
+            "command": "bash -c '[ -f .claude/hooks/validate-thoughts.sh ] && bash .claude/hooks/validate-thoughts.sh || true'"
           }
         ]
       }

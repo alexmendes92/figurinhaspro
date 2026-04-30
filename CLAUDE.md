@@ -77,6 +77,7 @@ stripe logs tail
 | `src/lib/stripe.ts` | Cliente Stripe |
 | `src/lib/custom-albums.ts` | Conversao CustomAlbum→Album, parser de stickers, gerador de slug |
 | `src/lib/price-resolver.ts` | Resolucao centralizada de precos (3 eixos) + mapa sticker→secao |
+| `src/lib/price-summary.ts` | Resumo de overrides por album (chip "padrao" vs "N personalizacoes") |
 | `src/lib/cart-context.tsx` | Contexto do carrinho (client) |
 | `src/lib/admin.ts` | Guard admin via `ADMIN_EMAIL` env var (trim + case-insensitive) |
 | `src/lib/env.ts` | Validacao de env vars com Zod (fallbacks em dev, strict em prod) |

@@ -187,9 +187,9 @@ Individual (customPrice) > Regra de secao > Regra por tipo do album > Regra glob
 
 | Eixo | Descricao | Modelo Prisma | API | Editor |
 |------|-----------|---------------|-----|--------|
-| Por tipo | Preco base por tipo de figurinha (global ou por album) | `PriceRule` | `api/prices` + `api/prices/[albumSlug]` | `precos-global-editor` + `precos-album-editor` (aba "Por Tipo") |
-| Por secao | Ajuste por secao/pais dentro de um album (FLAT ou OFFSET) | `SectionPriceRule` | `api/prices/sections` | `precos-album-editor` (aba "Por Secao") |
-| Quantidade | Desconto percentual progressivo por volume no carrinho | `QuantityTier` | `api/prices/tiers` | `precos-album-editor` (aba "Quantidade") |
+| Por tipo | Preco base por tipo de figurinha (global ou por album) | `PriceRule` | `api/prices` + `api/prices/[albumSlug]` | `precos-global-editor` + `precos-album-editor` (secao "Precos base") |
+| Por secao | Ajuste por secao/pais dentro de um album (FLAT ou OFFSET) | `SectionPriceRule` | `api/prices/sections` | `precos-album-editor` (secao "Ajustes por secao/pais") |
+| Quantidade | Desconto percentual progressivo por volume no carrinho | `QuantityTier` | `api/prices/tiers` | `precos-album-editor` (secao "Descontos por volume") |
 
 Funcoes-chave:
 - `resolveUnitPrice(ctx)` — resolve preco unitario seguindo a hierarquia
@@ -202,6 +202,15 @@ Padroes server↔client:
 - `stickerSectionMap` e pre-computado server-side via `buildStickerSectionMap()`
 - `sectionRulesMap` enviado como Record, convertido para Map no client via useMemo
 - Desconto de quantidade e aplicado no total do carrinho, nao por item
+
+UX do painel `/painel/precos` (post-2026-04-26):
+- Raiz: bloco "Como funciona" no topo explica a cascata Padrao→Album→Secao→Volume.
+  Secoes numeradas "1. Precos padrao" + "2. Precos por album".
+- Card de album: chip cinza "Usando precos padrao" (0 regras) ou ambar
+  "N personalizacoes" (>=1). Logica em `summarizeAlbumOverrides()` de
+  `src/lib/price-summary.ts` (testado).
+- Pagina de album: 3 secoes verticais empilhadas (substitui as antigas tabs)
+  com hierarquia visivel — cada secao subtitula que sobrescreve a anterior.
 
 ### Schema Prisma (modelos)
 

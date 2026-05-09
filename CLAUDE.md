@@ -4,21 +4,14 @@
 
 Repo: `github.com/alexmendes92/figurinhaspro` (privado) | Branch: `master`
 
-## Stack
-Next.js 16.2.4 + React 19.2 + Prisma 7.7 (generator `prisma-client` novo) + Neon Postgres + Tailwind 4 + Zod 4.3 + React Compiler + iron-session + bcryptjs + Stripe + Sentry + Vercel Analytics + Biome (lint/format)
-
-Estrutura canonica: `src/app/`, `src/lib/`, `src/components/`, `src/generated/prisma/` (migrado em 2026-04-20, Fase 2).
+## Stack e arquitetura
+Versoes, breaking changes (Next 16, Prisma 7, Tailwind 4, Zod 4, React 19) e detalhe de camadas (DB Neon, iron-session, Stripe, Sentry, Admin) → ver `AGENTS.md` (importado no topo deste arquivo). Estrutura canonica: `src/app/`, `src/lib/`, `src/components/`, `src/generated/prisma/`.
 
 ## Producao
 - **Vercel project:** `album-digital`
 - **URL**: https://album-digital-ashen.vercel.app
-- **DB**: Neon Postgres (PrismaNeon WebSocket Pool + Lazy Proxy em `src/lib/db.ts`)
-- **Auth**: iron-session (cookies criptografados) + bcryptjs (hash de senhas)
-- **Pagamentos**: Stripe SDK (checkout, webhook, portal) — endpoints em `src/app/api/stripe/*`
-- **Planos**: FREE / PRO / UNLIMITED — gates em `src/lib/plan-limits.ts` (temporariamente liberados)
-- **Monitoring**: Sentry (`@sentry/nextjs`) + Vercel Analytics + Speed Insights
-- **Env validation**: Zod schema em `src/lib/env.ts` (valida rigorosamente em producao)
-- **Admin**: `src/lib/admin.ts` — guard via `ADMIN_EMAIL` env var (cockpit comercial)
+- **Env vars criticas em prod**: `DATABASE_URL` (Neon), `SESSION_PASSWORD` (iron-session), `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `ADMIN_EMAIL`. Schema validado em `src/lib/env.ts` (strict em prod, fallbacks em dev).
+- **Planos**: FREE / PRO / UNLIMITED — gates em `src/lib/plan-limits.ts` (temporariamente liberados — TODO restaurar).
 
 ## REGRAS XP (enforced por hooks)
 
@@ -83,71 +76,25 @@ stripe logs tail
 | `src/lib/seller-catalog.ts` | Catalogo do vendedor |
 | `src/generated/prisma/` | Prisma Client gerado (gitignored) |
 | `prisma.config.ts` | Config centralizada do Prisma 7 |
-| `prisma/schema.prisma` | Schema: Seller, Inventory, Order, PriceRule, SectionPriceRule, QuantityTier, CustomAlbum, SubscriptionEvent + 9 modelos Biz*. Generator `prisma-client` novo |
+| `prisma/schema.prisma` | Schema do banco — 18 modelos (catalogo, pedidos, precos, cockpit comercial). Lista detalhada em `AGENTS.md` "Schema Prisma (modelos)". Generator `prisma-client` novo. |
 | `src/app/painel/comercial/actions.ts` | Server Actions centralizadas do cockpit comercial (15 actions) |
 | `src/app/api/comercial/seed/route.ts` | Seed idempotente — popula dados iniciais do cockpit |
+| `docs/INDEX.md` | Indice das docs vivas do projeto (PLANO_SAAS_V2, DOCUMENTACAO_NEGOCIO_MONETIZACAO, UX_AUDIT_REPORT, etc) — consultar antes de afirmar "nao ha doc". |
 
 ## Cockpit Comercial (`/painel/comercial`)
 
-Modulo admin-only (visivel apenas para `ADMIN_EMAIL`). Cockpit de operacao comercial com 7 sub-modulos:
-
-| Rota | Modulo | Descricao |
-|------|--------|-----------|
-| `/painel/comercial` | Dashboard | Metricas de produto, pipeline, tarefas urgentes, resumo geral |
-| `/painel/comercial/leads` | CRM | Pipeline de leads (PROSPECT→WON/LOST), filtro por estagio |
-| `/painel/comercial/leads/[id]` | Lead Detail | Detalhe do lead, atividades, historico, stage buttons |
-| `/painel/comercial/ofertas` | Ofertas | Grid de ofertas ativas/pausadas, receita, vendas |
-| `/painel/comercial/experimentos` | Experimentos | Hipoteses de growth, status flow, resultados |
-| `/painel/comercial/iniciativas` | Iniciativas | Kanban 4 colunas (BACKLOG→DONE), milestones |
-| `/painel/comercial/tarefas` | Tarefas | Checklist com filtro, vinculo a lead/iniciativa/experimento |
-| `/painel/comercial/kpis` | KPIs | Metricas com historico, delta, target, mini-graficos |
-
-**Padrao de formularios**: `?new=1` no searchParam mostra form de criacao (Server Component, sem estado client).
-
-**Componentes**: `src/components/painel/comercial/comercial-tabs.tsx` (navegacao), `seed-button.tsx` (popular dados).
-
-**Env var obrigatoria em producao**: `ADMIN_EMAIL` (configurada no Vercel).
+Modulo admin-only (gate via `ADMIN_EMAIL` env var em producao). Rotas, sub-modulos e componentes detalhados em `AGENTS.md` "Cockpit Comercial — rotas".
 
 ## Sincronizacao global
 Alteracao estrutural (porta, stack, deploy, servico compartilhado) → atualizar CLAUDE.md da raiz Arena Cards + propagar downstream. Ver `../.claude/rules/sync-global.md` na raiz Arena Cards.
 
-## Testing + Spec Evolution (ADR 0005) — Fase 5c Rollout
+## Testing + Spec Evolution (ADR 0005)
 
-**Padrão obrigatório (copy-sync de P3 piloto):**
+Padrao obrigatorio: `RED (teste) → GREEN (codigo) → REFACTOR → UPDATE SPEC → COMMIT`.
 
-```
-RED (teste) → GREEN (código) → REFACTOR → UPDATE SPEC → COMMIT
-```
+- Vitest `environment: "node"` (Prisma + Stripe — nao browser).
+- `setupFiles: ["./src/__tests__/setup.ts"]` — mocks globais de Prisma (18 modelos) + Stripe.
+- Hook pre-commit roda `npm run test` antes de `tsc --noEmit` + `next build`. Falha bloqueia commit.
+- Review gate de PR: build/testes verdes **e** spec atualizado (CLAUDE.md, ADR, ou comentario `// @spec:`).
 
-### Setup Vitest
-
-- `environment: "node"` (Prisma + Stripe, não browser)
-- `setupFiles: ["./src/__tests__/setup.ts"]` (Prisma + Stripe mocks globais) ✅ Criado
-- `npm run test` bloqueia commit (hook pré-commit) — TBD
-
-### Mocks Globais (src/__tests__/setup.ts)
-
-- **Prisma**: 18 modelos (Seller, Order, PriceRule, BizLead, etc.)
-- **Stripe**: checkout.sessions, customers, products, prices
-- **beforeEach()**: limpa todos os mocks (isola testes)
-
-### Layer Padrão (herdado de P3)
-
-| Layer | Padrão | Arquivo | Status |
-|-------|--------|---------|--------|
-| **Utils** | Puro funcional, 100% coverage | `lib/*.test.ts` | 🟡 Próximo |
-| **Services** | Integration + Prisma mock, 80%+ | `lib/services/*.test.ts` | 🟡 Próximo |
-| **API routes** | Zod validation + handler, 90%+ | `app/api/*/route.test.ts` | 🟡 Fila |
-| **Plan limits** | Guard functions, 80%+ | `lib/plan-limits.test.ts` | 🟡 Fila |
-| **Components** | React Testing Library, 80%+ | `components/*.test.tsx` | 🟡 Fila |
-
-### Review Gate (PR)
-
-- [ ] Build + testes passam (CI)
-- [ ] **Spec foi atualizado?** (CLAUDE.md/ADR/comentário inline)
-
-### Referência
-
-- **ADR 0005**: `docs/workspace/adr/0005-tdd-spec-evolution.md`
-- **Guia testing**: `docs/workspace/08-testing-strategy.md`
-- **Piloto P3**: commit `bb86878` — 37 testes (26+5+6), ciclo completo
+Status volatil do rollout (cobertura por layer, piloto P3, etc.) → [`docs/testing-rollout.md`](docs/testing-rollout.md). Guia mestre do workspace: [`docs/workspace/08-testing-strategy.md`](docs/workspace/08-testing-strategy.md). ADR: [`docs/workspace/adr/0005-tdd-spec-evolution.md`](docs/workspace/adr/0005-tdd-spec-evolution.md).

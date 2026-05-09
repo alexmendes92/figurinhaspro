@@ -6,9 +6,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # FigurinhasPro — Guia para Agentes IA
 
-> Atualizado em 2026-04-18. Versoes verificadas:
-> Next.js 16.2.4 | React 19.2.5 | Prisma 7.7 | Tailwind CSS 4 | Zod 4.3.6
-> iron-session 8 | bcryptjs 3 | Stripe SDK 22.0.2 | Sharp 0.34 | Sentry 10.49
+> Stack principal: Next.js 16 + React 19 + Prisma 7 + Tailwind 4 + Zod 4 + iron-session + bcryptjs + Stripe SDK + Sharp + Sentry.
+> Versoes exatas: ver `package.json` (fonte unica). Este arquivo cobre breaking changes e padroes — quando o projeto bumpar major, atualizar a secao correspondente, nao a data no topo.
 
 ---
 
@@ -176,7 +175,7 @@ Zod 4 (`zod@4.3.6`) e uma reescrita do zero. Mudancas principais:
 - **Mobile-first**: Viewport com `viewportFit: "cover"`, safe-area-bottom, bottom nav no painel, touch targets minimo 44px.
 - **Albuns customizados**: Vendedor cria albuns proprios via `/painel/estoque/novo`. `src/lib/custom-albums.ts` converte `CustomAlbum` (DB) para interface `Album` (usada em todo o sistema). Slugs customizados usam prefixo `custom_` para evitar conflito com albums estaticos. Parser suporta ranges (`1-670`), prefixos (`BRA1-BRA20`) e listas mistas. API CRUD em `/api/albums`.
 - **Importacao de lista faltante**: Na loja publica (`/loja/[slug]/[albumSlug]`), clientes podem colar sua lista de figurinhas que faltam e filtrar apenas as disponiveis no estoque do vendedor.
-- **Cockpit comercial**: Modulo admin-only em `/painel/comercial` com 7 sub-modulos (Dashboard, CRM Leads, Ofertas, Experimentos, Iniciativas, Tarefas, KPIs). Acesso controlado por `ADMIN_EMAIL` env var. Server Actions centralizadas em `src/app/painel/comercial/actions.ts`. Seed idempotente em `api/comercial/seed`. Padrao `?new=1` para formularios de criacao em Server Components.
+- **Cockpit comercial**: Modulo admin-only em `/painel/comercial` (acesso via `ADMIN_EMAIL`). Server Actions centralizadas em `src/app/painel/comercial/actions.ts`. Seed idempotente em `api/comercial/seed`. Padrao `?new=1` em searchParam para formularios de criacao em Server Components. Sub-modulos detalhados na secao "Cockpit Comercial — rotas".
 
 ### Sistema de Precos (3 eixos)
 
@@ -202,6 +201,21 @@ Padroes server↔client:
 - `stickerSectionMap` e pre-computado server-side via `buildStickerSectionMap()`
 - `sectionRulesMap` enviado como Record, convertido para Map no client via useMemo
 - Desconto de quantidade e aplicado no total do carrinho, nao por item
+
+### Cockpit Comercial — rotas
+
+Cockpit de operacao comercial em `/painel/comercial`, admin-only. Componentes principais: `src/components/painel/comercial/comercial-tabs.tsx` (navegacao), `seed-button.tsx` (popular dados).
+
+| Rota | Modulo | Descricao |
+|------|--------|-----------|
+| `/painel/comercial` | Dashboard | Metricas de produto, pipeline, tarefas urgentes, resumo geral |
+| `/painel/comercial/leads` | CRM | Pipeline de leads (PROSPECT→WON/LOST), filtro por estagio |
+| `/painel/comercial/leads/[id]` | Lead Detail | Detalhe do lead, atividades, historico, stage buttons |
+| `/painel/comercial/ofertas` | Ofertas | Grid de ofertas ativas/pausadas, receita, vendas |
+| `/painel/comercial/experimentos` | Experimentos | Hipoteses de growth, status flow, resultados |
+| `/painel/comercial/iniciativas` | Iniciativas | Kanban 4 colunas (BACKLOG→DONE), milestones |
+| `/painel/comercial/tarefas` | Tarefas | Checklist com filtro, vinculo a lead/iniciativa/experimento |
+| `/painel/comercial/kpis` | KPIs | Metricas com historico, delta, target, mini-graficos |
 
 ### Schema Prisma (modelos)
 

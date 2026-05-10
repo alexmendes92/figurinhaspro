@@ -27,9 +27,13 @@ export async function POST(req: NextRequest) {
       data: { resetToken: token, resetTokenExpiry: expiry },
     });
 
-    // Em produção, enviar email com link. Por ora, logar no console.
+    // TODO: Implementar envio de email real com Resend/SendGrid
+    // Atualmente apenas gera token e loga em console
     const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://album-digital-ashen.vercel.app"}/reset-senha?token=${token}`;
     console.log(`[RESET PASSWORD] ${email} → ${resetUrl}`);
+    console.warn(
+      "[RESET PASSWORD] Email não foi enviado. Configure RESEND_API_KEY ou SENDGRID_API_KEY para habilitar envio real."
+    );
 
     return NextResponse.json({ ok: true });
   } catch (error) {

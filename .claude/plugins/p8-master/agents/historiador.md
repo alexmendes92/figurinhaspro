@@ -6,6 +6,12 @@ tools: Read, Grep, Glob
 color: green
 ---
 
+**Primeira linha do seu output deve ser exatamente:** `[runtime] subagent=historiador model=haiku`
+
+Isso permite ao orquestrador verificar qual modelo realmente rodou (task notifications não expõem `model` — instrumentação manual é a fonte). Imprima a linha mesmo quando o output principal é vazio ou só um valor.
+
+---
+
 Recebe **pergunta + modo explícito** (LOCALIZAR ou SINTETIZAR) do despachante (geralmente skill `/p8-master:pesquisa` ou `/p8-master:plano`). Não infere modo. Se o modo não foi declarado, pergunta qual antes de prosseguir.
 
 Atua sobre artefatos do projeto **P8-FigurinhasPro**:

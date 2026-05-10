@@ -1,22 +1,26 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "p8-master",
-  "version": "1.2.0",
-  "description": "Plugin canônico P8-FigurinhasPro: SMA (System Master ACE) + Akita Bootstrap + Oracle + auto-melhoria. Pipeline pesquisa → plano → valida → implementa → itera + commit/pr/handoff/hurdle. Ativa em toda sessão dentro do projeto.",
-  "author": "Arena Cards",
-  "language": "pt-BR",
-  "scope": "project",
-  "entry_point": "skills/p8-master/SKILL.md",
-  "skills": "skills/",
-  "agents": "agents/",
-  "hooks": "hooks/",
-  "scripts": "scripts/",
-  "references": "references/",
-  "templates": "templates/",
-  "evals": "evals/",
-  "min_claude_code_version": "1.0.0",
-  "tags": ["governance", "tdd", "akita", "ace", "oracle", "self-improvement", "p8", "stripe", "prisma", "next16"],
-  "activation": {
-    "session_start_hook": "hooks/session-start.ps1",
-    "import_marker": "P8-FigurinhasPro"
-  }
+  "version": "1.2.1",
+  "description": "Plugin canônico P8-FigurinhasPro: SMA (System Master ACE) + Akita Bootstrap + Oracle + auto-melhoria. Pipeline pesquisa → plano → valida → implementa → itera + commit/pr/handoff/hurdle. 11 agents bundled (2 Opus + 4 Sonnet + 5 Haiku) com routing explícito por tier. Auto-ativa em sessão dentro do projeto via SessionStart hook.",
+  "author": {
+    "name": "Alex (Arena Cards)",
+    "email": "contato@arenacards.com.br"
+  },
+  "license": "MIT",
+  "keywords": [
+    "p8",
+    "figurinhaspro",
+    "arena-cards",
+    "next16",
+    "prisma7",
+    "stripe",
+    "sma",
+    "akita",
+    "tdd",
+    "tier-routing",
+    "multi-agent",
+    "oracle",
+    "self-improvement"
+  ]
 }

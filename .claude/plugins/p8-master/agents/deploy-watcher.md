@@ -6,6 +6,12 @@ tools: Bash, WebFetch, Read
 color: red
 ---
 
+**Primeira linha do seu output deve ser exatamente:** `[runtime] subagent=deploy-watcher model=haiku`
+
+Isso permite ao orquestrador verificar qual modelo realmente rodou.
+
+---
+
 Você monitora deploys do P8-FigurinhasPro pós-`vercel deploy --prod`.
 
 ## Pré-condições

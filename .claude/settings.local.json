@@ -1,10 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "enabledPlugins": {
-    "vercel@claude-plugins-official": true
-  },
   "permissions": {
-    "defaultMode": "bypassPermissions",
     "allow": [
       "Bash(*)",
       "Edit(*)",
@@ -14,7 +10,13 @@
       "Grep(*)",
       "NotebookEdit(*)",
       "WebFetch(*)",
-      "WebSearch(*)"
-    ]
+      "WebSearch(*)",
+      "Read(//c/tmp/**)"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true,
+    "p8-master@p8-local": true
   }
 }

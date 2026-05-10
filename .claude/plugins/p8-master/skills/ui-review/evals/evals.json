@@ -1,0 +1,37 @@
+{
+  "skill_name": "p8-master:ui-review",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "trigger-explicit-logout-flow",
+      "prompt": "acabei de mexer no botão de logout do painel — agora abre um dialog de confirmação antes de sair. testa esse fluxo no browser pra ver se tá fluindo certo, principalmente o Escape fechando o dialog",
+      "expected_output": "Skill deve disparar (trigger explícito 'testa no browser'), checar /chrome disponível, navegar /login → painel → clicar logout → verificar dialog → testar Escape → screenshot do estado. Output em thoughts/reviews/.",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 1,
+      "eval_name": "trigger-implicit-after-mobile-change",
+      "prompt": "incluí 'Planos' no bottom nav do mobile, agora são 6 itens. vê se não estourou em 375px e se o item 'Planos' navega certinho. também não pode quebrar o layout no tablet",
+      "expected_output": "Skill deve disparar (mudança mobile + 'vê se' + breakpoints implícitos). Testa em 375 e 768 minimamente, verifica que o nav comporta 6 itens, clica em 'Planos', captura screenshot de cada viewport.",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "eval_name": "should-NOT-trigger-prisma-schema",
+      "prompt": "preciso adicionar um campo resolvedPrice no schema do Order pra registrar o preço final calculado server-side. me ajuda a migrar isso",
+      "expected_output": "Skill ui-review NÃO deve disparar — não há mudança visual. p8-master deve rotear para /p8-master:p8-prisma-migrate. Se ui-review disparar, é falso-positivo (description mal calibrada).",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 3,
+      "eval_name": "should-NOT-trigger-pure-backend",
+      "prompt": "vamos refatorar o quote-service.ts pra extrair a validação de preço em uma função separada validatePrice(). roda os testes pra ver se nada quebrou",
+      "expected_output": "Skill ui-review NÃO deve disparar — refactor backend puro, sem UI. p8-master deve rotear para akita-refactor ou implementa.",
+      "files": [],
+      "assertions": []
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 name: historiador
 description: Localiza artefatos em `thoughts/` e `output/` do P8-FigurinhasPro por tópico, ou sintetiza decisões históricas a partir de múltiplos artefatos. Não modifica `thoughts/`, não propõe novas decisões. Conhece estrutura SMA (pesquisas, planos, decisões, revisões, handoffs) + outputs Oracle (`output/01..06.md`, `99-oracle-master.md`).
-model: sonnet
+model: haiku
 tools: Read, Grep, Glob
 color: green
 ---

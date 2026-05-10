@@ -239,6 +239,29 @@ Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [1.2.0] — 2026-05-10
+
+### Adicionado
+
+- Roteamento explícito por modelo nos 11 agents bundled:
+  - **Opus 4.7** + `effort: high` (2): `arquiteto-estrategico`, `critico-adversarial` — síntese big-picture e paralaxe cognitiva onde erro se propaga
+  - **Sonnet 4.6** (4): `analista-gerador`, `pesquisador`, `p8-domain-expert`, `revisor` — julgamento local
+  - **Haiku 4.5** (5): `explorador`, `historiador`, `extrator`, `qa-estrutural`, `deploy-watcher` — trabalho braçal determinístico
+- `references/agent-model-routing.md` — estratégia + 3 exemplos de pipeline (pesquisa, implementa, oracle-analise) + override per-invocation
+- Seção "Modelos por agent" em `skills/p8-master/SKILL.md` substitui "Modelo recomendado" antigo
+
+### Modificado
+
+- `explorador`, `historiador`, `deploy-watcher`: `sonnet` → `haiku` (trabalho braçal)
+- `arquiteto-estrategico`, `critico-adversarial`: adicionado `effort: high` (mantém Opus, controla custo)
+- Pesquisa via /stay-current confirmou aliases canônicos em `docs.claude.com/sub-agents` e `/model-config` (2026-05-10): `opus`→Opus 4.7, `sonnet`→Sonnet 4.6, `haiku`→Haiku 4.5
+
+### Plano arquivado
+
+- `thoughts/planos/2026-05-10-roteamento-opus-sonnet-haiku.md` — discussão completa, métricas de sucesso, riscos
+
+---
+
 ## [1.1.0] — 2026-05-10
 
 ### Adicionado — skill `p8-master:p8-auth`

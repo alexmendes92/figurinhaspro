@@ -1,7 +1,7 @@
 ---
 name: deploy-watcher
 description: Monitora deployments Vercel do P8-FigurinhasPro pós `vercel deploy --prod`. Captura URL de deployment, status (queued → building → ready), runtime logs primeiros 2 minutos, e detecta erros 5xx via smoke. Reporta ao orquestrador (geralmente `/p8-master:p8-deploy`) com status estruturado. Sugere rollback se necessário.
-model: sonnet
+model: haiku
 tools: Bash, WebFetch, Read
 color: red
 ---

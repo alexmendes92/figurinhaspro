@@ -1,7 +1,7 @@
 ---
 name: explorador
 description: Explora o codebase P8-FigurinhasPro. Localiza onde código vive, analisa como funciona em isolamento, ou caça padrões/convenções já estabelecidos. Não propõe mudanças. Conhece estrutura `src/app/`, `src/lib/`, `src/components/`, `prisma/`, `src/generated/prisma/`.
-model: sonnet
+model: haiku
 tools: Read, Grep, Glob
 color: blue
 ---

@@ -69,11 +69,19 @@ Se a intenção for ambígua, pergunto entre 2-3 candidatos antes de despachar.
 4. **Gates humanos** quando necessário: aprovação de plano, deploy prod, edit em SKILL.md/CLAUDE.md.
 5. **Stop hook** registra a sessão em `state/sessions/` para `lessons-audit` consumir depois.
 
-## Modelo recomendado
+## Modelos por agent (delegação multi-tier)
 
-- **Main session: Opus** — roteamento + decisão estratégica é cognitivo, justifica Opus.
-- **Sub-skills delegadas** podem cair pra Sonnet via frontmatter próprio quando o trabalho é mecânico (implementa, commit, valida).
-- **Tarefas triviais** (1 arquivo, <30 linhas): user pode rodar `/model sonnet` antes — sem perda significativa.
+Main session: **Opus 4.7** (roteamento + decisão estratégica em diálogo com user). Quando delego pra subagent via tool `Agent`, o modelo do worker é definido no frontmatter do próprio agent — não preciso passar `model:` na invocação a menos que queira override explícito.
+
+| Tier | Modelo | Agents | Quando |
+|---|---|---|---|
+| Análise profunda | **opus** + `effort: high` | `arquiteto-estrategico`, `critico-adversarial` | Síntese big-picture, paralaxe cognitiva — onde erro de raciocínio se propaga pra outros agents |
+| Julgamento local | **sonnet** | `analista-gerador`, `pesquisador`, `p8-domain-expert`, `revisor` | Redação estruturada PT-BR, interpretação de docs externas, trade-offs de segurança/complexidade, semântica P8 |
+| Trabalho braçal | **haiku** | `explorador`, `historiador`, `extrator`, `qa-estrutural`, `deploy-watcher` | Grep/Glob, scripts Python, polling Vercel, validação determinística de frontmatter |
+
+**Princípio:** Opus é caro — reservo só pra agents cuja saída ALIMENTA outros agents (a qualidade se propaga). Sonnet pra ~80% dos trabalhos com julgamento mas local. Haiku pra tudo determinístico (padrão Anthropic — `Explore` built-in já é Haiku).
+
+Detalhes + 3 exemplos de pipeline: [references/agent-model-routing.md](../../references/agent-model-routing.md).
 
 ## Ver também
 

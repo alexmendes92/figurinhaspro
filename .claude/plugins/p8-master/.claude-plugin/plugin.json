@@ -1,6 +1,6 @@
 {
   "name": "p8-master",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Plugin canônico P8-FigurinhasPro: SMA (System Master ACE) + Akita Bootstrap + Oracle + auto-melhoria. Pipeline pesquisa → plano → valida → implementa → itera + commit/pr/handoff/hurdle. Ativa em toda sessão dentro do projeto.",
   "author": "Arena Cards",
   "language": "pt-BR",

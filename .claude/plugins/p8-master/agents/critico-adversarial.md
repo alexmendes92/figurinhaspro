@@ -38,6 +38,7 @@ description: >
   </commentary>
   </example>
 model: opus
+effort: high
 color: red
 maxTurns: 15
 disallowedTools: Write, Edit, Bash

@@ -16,7 +16,7 @@ seller-usado: contato@santanamendes.com.br (Santana, Plano Starter)
 
 ## Veredicto
 
-**PRONTO COM OBSERVAÇÕES.** Página renderiza bem após restart do dev server. UX é sólida, mas há 12 melhorias visuais e arquiteturais identificadas — 4 são críticas (watermark "LastSticker.com" cobrindo nome dos jogadores, contador "8 exibidas" desalinhado com cards visíveis, inconsistência de active state na sidebar, bug Turbopack recorrente).
+**PRONTO COM OBSERVAÇÕES.** Página renderiza bem após restart do dev server. UX é sólida, mas há 12 melhorias visuais e arquiteturais identificadas — 4 são críticas (watermark "LastSticker.com" cobrindo nome dos jogadores **— natureza do issue atualizada em 2026-05-10 21:30 após descobrir origem dos covers em `albums.ts` linha 1**, contador "8 exibidas" desalinhado com cards visíveis, inconsistência de active state na sidebar, bug Turbopack recorrente).
 
 ## Histórico da sessão
 
@@ -69,7 +69,32 @@ Mesma issue afeta: QAT13 (Hatem), QAT14 (Madibo), QAT16 (Afif), QAT17 (Alaaeldin
 
 **Impacto:** vendedor mostra essa página pra clientes (vitrine pública é gerada do mesmo banco de stickers). Watermark sugere que o conteúdo é raspado de outro site. Pode ser problema **legal** (copyright Panini + LastSticker) e **comercial** (cliente vê watermark e desconfia da legitimidade).
 
-**Fix sugerido:** processar as covers via `sharp` no upload original — crop pra área sem watermark, OU substituir por covers próprias.
+---
+
+#### 📌 ATUALIZAÇÃO 2026-05-10 21:30 — origem dos covers confirmada
+
+Investigação posterior (validação de guard albums.ts em `thoughts/baselines/2026-05-10-guard-albums-test.md`) descobriu que `src/lib/albums.ts` linha 1 contém:
+
+```
+// Gerado automaticamente a partir dos JSONs do laststicker
+```
+
+**As covers vêm do agregador laststicker.com**, não direto da Panini. Isso muda a natureza do issue:
+
+- **Não é "remover watermark"** — é decisão estratégica + possivelmente jurídica sobre **a origem dos assets**.
+- Watermark é a "assinatura" do agregador de onde os JSONs foram raspados. Removê-lo via `sharp` cropping não resolve a questão de fundo (uso de dados raspados sem licença).
+
+**3 opções estratégicas (Alex decide):**
+
+| Opção | Esforço | Risco legal | Risco UX |
+|---|---|---|---|
+| **A. Manter watermark + citar fonte** ("Imagens via LastSticker.com") | Baixo (só adicionar atribuição no rodapé da loja pública) | Médio — agregador pode reclamar de uso comercial mesmo com crédito | Baixo — cliente vê que é fonte conhecida |
+| **B. Pipeline próprio de assets** — re-scrape de fonte sem watermark OU re-fotografar figurinhas físicas | Alto (precisa scraper novo OU sessão de foto + 7.122 cards) | Mesmo médio — re-scrape continua usando arte da Panini sem licença | Alto — covers ficam limpas |
+| **C. Licenciar Panini direto** — acordo comercial pra usar arte oficial | Muito alto (negociação corporativa) | Zero — uso autorizado | Máximo — covers oficiais |
+
+**Recomendação:** Opção A no curto prazo (mitigação rápida, custa só uma linha de atribuição), com Opção C como objetivo de médio prazo conforme P8 ganha sellers e justifica orçamento de licenciamento. Opção B é trabalho intermediário que não resolve a causa-raíz.
+
+**Fix imediato sugerido (se Opção A escolhida):** rodapé na vitrine pública `/loja/[slug]/[albumSlug]` com texto: *"Imagens dos álbuns: catálogo público LastSticker.com. Direitos das figurinhas: © Panini S.p.A."*. Não tenta "limpar" watermark via sharp — o watermark passa a ser **proveniência intencional** em vez de bug.
 
 **2. Contador "8 exibidas" desalinhado com cards visíveis.**
 
@@ -192,7 +217,8 @@ Elimina 3 `useState<boolean>` e impede 2 modais abrirem juntos.
 
 | # | Ação | Impacto | Esforço |
 |---|---|---|---|
-| 1 | Trocar covers com watermark "LastSticker.com" por covers limpas | Alto (legal + comercial) | Médio (precisa pipeline novo) |
+| 1a | **Adicionar atribuição "Imagens: LastSticker.com / © Panini S.p.A."** no rodapé da loja pública (Opção A do Issue #1 atualizado) | Alto (legal de baixo custo) | Trivial (~5 linhas) |
+| 1b | (Médio prazo) Avaliar negociação Panini pra licenciar covers oficiais (Opção C do Issue #1) | Alto | Muito alto |
 | 2 | Corrigir contador "X exibidas" pra ser contextual à seção visível | Alto (UX) | Baixo (~10 linhas) |
 | 3 | Mostrar stepper em TODOS os cards (qty=0 com "+ Adicionar") | Alto (UX) | Baixo |
 | 4 | `npm install next@latest` + smoke test (sair de 16.2.4 stale) | Médio (mata bug dev) | Baixo |
@@ -200,6 +226,8 @@ Elimina 3 `useState<boolean>` e impede 2 modais abrirem juntos.
 | 6 | QuantityModal/input inline pra qty > 1 | Médio (vendedor frequente) | Baixo |
 | 7 | Resolver inconsistência sidebar active (Todas + visível) | Baixo (cosmético) | Baixo |
 | 8 | Debounce `updateQuantity` | Médio (rede + DB) | Baixo |
+
+**Mudança importante vs versão original:** Item #1 era "trocar covers por limpas" (Médio esforço). Após descoberta da origem laststicker.com, virou **#1a — atribuição** (trivial, mitigação imediata) + **#1b — Panini licensing** (estratégico, médio prazo). Ver Issue Crítico #1 atualizado pra contexto.
 
 ## Sobre a sessão
 

@@ -18,9 +18,10 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 
 ## Status
 
-- **Versão:** 0.1.0 (Fase 1 — esqueleto + 5 SMA core skills)
+- **Versão:** 0.2.0 (Fase 1 + Fase 2 — SMA core + utilities + bateria de testes verde)
 - **Data:** 2026-05-10
 - **Plano:** [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md)
+- **Suite de testes:** `pwsh -File tests/run-all.ps1` — 18/18 pytest + 2/2 integration verde
 
 ### Fase 1 entregue
 
@@ -35,9 +36,17 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - [x] 5 templates (pesquisa, plano, handoff, decisao, revisao) + thoughts-readme + thoughts-glossario
 - [x] Ativação tripla: `@import` em CLAUDE.md, hook SessionStart em settings.json, descrição "pushy"
 
+### Fase 2 entregue
+
+- [x] 4 SMA utilities: `commit`, `pr`, `handoff`, `hurdle`
+- [x] 2 hooks adicionais: `precommit-router.ps1`, `pretooluse-deny-secrets.ps1`
+- [x] 2 scripts Python: `validate-frontmatter.py`, `inventory.py`
+- [x] Bateria de testes inicial: 11 + 7 pytest unit + 2 PowerShell integration suites
+- [x] 3 evals JSON iniciais (`pesquisa`, `plano`, `implementa`)
+- [x] `tests/run-all.ps1` + `tests/run-all.sh` (Windows + Unix)
+
 ### Próximas fases
 
-- **Fase 2** — SMA utilities (commit, pr, handoff, hurdle) + hooks pre-commit + bateria de testes inicial
 - **Fase 3** — Oracle wrappers + 6 agents Oracle + 4 scripts Python
 - **Fase 4** — Self-improvement (lessons-audit, skill-creator, stay-current, update-claude-docs) + estado
 - **Fase 5** — Skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album)

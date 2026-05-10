@@ -1,0 +1,64 @@
+{
+  "_comment": "Evals da skill p8-master:plano. Formato Anthropic skill-creator.",
+  "skill": "p8-master:plano",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "plano-com-pesquisa-prevista",
+      "input": "planejar adicionar email Resend após pagamento Stripe",
+      "preconditions": [
+        "thoughts/pesquisas/2026-05-10-email-resend.md existe com status: ativo"
+      ],
+      "expected_artifacts": ["thoughts/planos/*-email-resend*.md"],
+      "expected_frontmatter": {
+        "tipo": "plano",
+        "status": "rascunho",
+        "projeto": "P8-FigurinhasPro"
+      },
+      "expected_sections": [
+        "Goal",
+        "Architecture",
+        "Files affected",
+        "Phases",
+        "Risks",
+        "Out of scope",
+        "Open questions"
+      ],
+      "expected_keywords": [
+        "RED",
+        "GREEN",
+        "REFACTOR",
+        "npm run test",
+        "tsc --noEmit",
+        "npm run build"
+      ],
+      "min_score": 0.85
+    },
+    {
+      "id": "plano-aborta-sem-pesquisa",
+      "input": "planejar adicionar feature X (sem pesquisa em thoughts/)",
+      "preconditions": [
+        "thoughts/pesquisas/ vazio para tópico 'feature X'"
+      ],
+      "expected_behavior": "skill aborta, sugere /p8-master:pesquisa primeiro",
+      "expected_artifacts_NOT_created": ["thoughts/planos/*"],
+      "min_score": 1.0
+    },
+    {
+      "id": "plano-respeita-gate-prisma",
+      "input": "planejar adicionar campo stripeEventId em Order para idempotência de webhook",
+      "preconditions": [
+        "thoughts/pesquisas/2026-05-10-stripe-webhook.md existe"
+      ],
+      "expected_artifacts": ["thoughts/planos/*-idempotency*.md"],
+      "expected_keywords": [
+        "prisma migrate",
+        "prisma db push",
+        "schema.prisma",
+        "gate humano"
+      ],
+      "expected_phase_with_human_gate": "aplicar migration em prod com aprovação humana",
+      "min_score": 0.85
+    }
+  ]
+}

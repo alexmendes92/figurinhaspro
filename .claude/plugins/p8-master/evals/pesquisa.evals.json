@@ -1,0 +1,55 @@
+{
+  "_comment": "Evals da skill p8-master:pesquisa. Roda via tests/run-evals.ps1 (futuro). Formato Anthropic skill-creator.",
+  "skill": "p8-master:pesquisa",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "pesquisa-stripe-webhook",
+      "input": "como funciona o webhook do Stripe no P8?",
+      "expected_artifacts": ["thoughts/pesquisas/*-stripe-webhook*.md"],
+      "expected_frontmatter": {
+        "tipo": "pesquisa",
+        "status": "ativo",
+        "projeto": "P8-FigurinhasPro"
+      },
+      "expected_sources_cited": [
+        "src/app/api/stripe/webhook/route.ts",
+        "src/lib/stripe.ts"
+      ],
+      "min_score": 0.8
+    },
+    {
+      "id": "pesquisa-plan-limits",
+      "input": "como funcionam os gates de plano (FREE/PRO/UNLIMITED)?",
+      "expected_artifacts": ["thoughts/pesquisas/*-plan-limits*.md"],
+      "expected_frontmatter": {
+        "tipo": "pesquisa",
+        "status": "ativo",
+        "projeto": "P8-FigurinhasPro"
+      },
+      "expected_sources_cited": [
+        "src/lib/plan-limits.ts",
+        "prisma/schema.prisma"
+      ],
+      "expected_findings": [
+        "gates atualmente desabilitados (TODO restaurar)"
+      ],
+      "min_score": 0.8
+    },
+    {
+      "id": "pesquisa-custom-albums",
+      "input": "como o parser de custom albums lida com ranges e prefixos?",
+      "expected_artifacts": ["thoughts/pesquisas/*-custom-album*.md"],
+      "expected_frontmatter": {
+        "tipo": "pesquisa",
+        "status": "ativo",
+        "projeto": "P8-FigurinhasPro"
+      },
+      "expected_sources_cited": [
+        "src/lib/custom-albums.ts"
+      ],
+      "expected_keywords": ["range", "prefixo", "custom_", "slug"],
+      "min_score": 0.8
+    }
+  ]
+}

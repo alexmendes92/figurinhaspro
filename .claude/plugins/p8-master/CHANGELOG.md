@@ -149,6 +149,47 @@ Suite completa (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [0.4.0] — 2026-05-10
+
+### Adicionado (Fase 4 — Self-improvement: lessons-audit + skill-creator + stay-current + update-claude-docs)
+
+- 4 skills:
+  - `p8-master:lessons-audit` — audita últimas N sessões (default 15d), classifica padrões em 4 categorias (erros recorrentes, sequências repetidas, skills lentas, skills mal-acionadas), propõe diffs em `thoughts/auto-melhoria/` SEM aplicar. Filtra `state/rejections.jsonl` e exclui sessões com flag `selfAudit=true` (evita loop)
+  - `p8-master:skill-creator` — 4 modos: `create`, `refine`, `apply-proposal`, `optimize-description`. Sempre exige aprovação humana antes de editar SKILL.md/CLAUDE.md/AGENTS.md. Bumpa `plugin.json` semver corretamente
+  - `p8-master:stay-current` — lê `currentDate` injetado, calcula gap vs cutoff, busca atualizações em 9 fontes canônicas (Next 16, Vercel, Stripe, Prisma 7, Sentry, React 19, Tailwind 4, Zod 4, iron-session). Background-friendly via hook SessionStart
+  - `p8-master:update-claude-docs` — fetch incremental de docs Anthropic / Claude Code (release-notes, changelog, hooks, skills, plugins, MCP). Gap > 7d default, snapshot em `references/claude-docs/`
+- 3 scripts Python:
+  - `scripts/currentdate-gap.py` — gap math + threshold por domínio (default 14d)
+  - `scripts/detect-repeat-tools.py` — n-grams 3-7 cross-sessão + threshold conservador (5×3) + normalização de paths /worktrees/<hash>/
+  - `scripts/lessons-extract.py` — categoriza erros recorrentes + invocações de skills + exclusão de sessões selfAudit
+- 2 hooks PowerShell:
+  - `hooks/stop-lessons-incremental.ps1` — append da sessão atual em `state/sessions/<YYYY-MM-DD>.jsonl`
+  - `hooks/user-prompt-detect-repeat.ps1` — match prompt vs cache de padrões detectados, sugere skill ou script
+- `references/canonical-sources.md` — tabela de URLs canônicas (libs P8 + docs Claude Code + pesquisa de mercado), versões usadas em P8 lidas de `package.json`
+- `state/last-update.json` — placeholder inicial do cache stay-current
+- `state/sessions/.gitkeep` + `state/aggregates/.gitkeep` — preserva estrutura
+
+### Testes adicionados
+
+- `tests/unit/test_currentdate_gap.py` — 6 casos (sem state, abaixo/acima threshold, state corrompido, threshold custom, etc.)
+- `tests/unit/test_detect_repeat_tools.py` — 5 casos (sem transcripts, abaixo/acima threshold, janela, normalização worktree)
+- `tests/unit/test_lessons_extract.py` — 6 casos (script, help, sem transcripts, erros recorrentes, exclusão selfAudit, skill invocations)
+- `tests/fixtures/transcript-sample.jsonl` — fixture pra test e dev
+- Atualizado `test_skill_orchestrator.ps1` — agora valida 13 skills (+ 4 self-improvement), 6 hooks (+ 2 novos), 9 scripts (+ 3 novos), references + state
+
+### Validação
+
+Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
+- **37/37 testes pytest** verde (+19 novos da Fase 4)
+- 2/2 PowerShell integration suites verde
+
+### Pendências
+
+- 8 skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album) — Fase 5
+- Documentação completa em `docs/` — Fase 6
+
+---
+
 ## [Unreleased]
 
 ### Planejado

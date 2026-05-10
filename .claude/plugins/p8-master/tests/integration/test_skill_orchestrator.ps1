@@ -117,10 +117,25 @@ foreach ($skill in @("oracle-analise", "oracle-reportar")) {
     }
 }
 
+Write-Host ""
+Write-Host "=== Teste 4d: 4 self-improvement skills (Fase 4) ==="
+foreach ($skill in @("lessons-audit", "skill-creator", "stay-current", "update-claude-docs")) {
+    $path = Join-Path $PluginRoot "skills/$skill/SKILL.md"
+    if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex "p8-master:$skill") {
+        Write-Host "  PASS: $skill" -ForegroundColor Green
+    } else {
+        $failures++
+    }
+}
+
 # Teste 5: hooks core (Fase 1+2)
 Write-Host ""
 Write-Host "=== Teste 5: hooks PowerShell ==="
-foreach ($hook in @("session-start.ps1", "validate-thoughts.ps1", "precommit-router.ps1", "pretooluse-deny-secrets.ps1")) {
+foreach ($hook in @(
+    "session-start.ps1", "validate-thoughts.ps1",
+    "precommit-router.ps1", "pretooluse-deny-secrets.ps1",
+    "stop-lessons-incremental.ps1", "user-prompt-detect-repeat.ps1"
+)) {
     $path = Join-Path $PluginRoot "hooks/$hook"
     if (Test-Path $path) {
         Write-Host "  PASS: $hook existe" -ForegroundColor Green
@@ -136,13 +151,30 @@ Write-Host "=== Teste 6: scripts core ==="
 foreach ($script in @(
     "thoughts-init.ps1", "spec-metadata.ps1",
     "validate-frontmatter.py", "inventory.py",
-    "grep-evidence.py", "load-prior-reports.py"
+    "grep-evidence.py", "load-prior-reports.py",
+    "currentdate-gap.py", "detect-repeat-tools.py", "lessons-extract.py"
 )) {
     $path = Join-Path $PluginRoot "scripts/$script"
     if (Test-Path $path) {
         Write-Host "  PASS: $script existe" -ForegroundColor Green
     } else {
         Write-Host "FAIL: $script nao encontrado" -ForegroundColor Red
+        $failures++
+    }
+}
+
+Write-Host ""
+Write-Host "=== Teste 7: references + state ==="
+foreach ($ref in @(
+    "references/p8-glossario.md", "references/stack-cheatsheet.md",
+    "references/workflow-sma.md", "references/workflow-akita-bootstrap.md",
+    "references/canonical-sources.md", "state/last-update.json"
+)) {
+    $path = Join-Path $PluginRoot $ref
+    if (Test-Path $path) {
+        Write-Host "  PASS: $ref existe" -ForegroundColor Green
+    } else {
+        Write-Host "FAIL: $ref nao encontrado" -ForegroundColor Red
         $failures++
     }
 }

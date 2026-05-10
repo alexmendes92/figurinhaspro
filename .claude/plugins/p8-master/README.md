@@ -18,14 +18,14 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 
 ## Status
 
-- **Versão:** 0.3.0 (Fase 1 + 2 + 3 — SMA core + utilities + Oracle wrappers + bateria de testes verde)
+- **Versão:** 0.4.0 (Fase 1 + 2 + 3 + 4 — SMA core + utilities + Oracle wrappers + Self-improvement + bateria de testes verde)
 - **Data:** 2026-05-10
 - **Plano:** [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md)
-- **Suite de testes:** `pwsh -File tests/run-all.ps1` — 18/18 pytest + 2/2 integration verde
-- **Skills:** 13 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle wrappers + 1 placeholder pra próximas fases)
+- **Suite de testes:** `pwsh -File tests/run-all.ps1` — 37/37 pytest + 2/2 integration verde
+- **Skills:** 17 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle wrappers + 4 Self-improvement + 1 placeholder)
 - **Agents:** 9 (3 SMA + 6 Oracle)
-- **Scripts:** 6 (2 PS bootstrap + 4 Python)
-- **Hooks:** 4 PowerShell
+- **Scripts:** 9 (2 PS bootstrap + 7 Python)
+- **Hooks:** 6 PowerShell
 
 ### Fase 1 entregue
 
@@ -59,9 +59,17 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - [x] `load-prior-reports.py` força UTF-8 stdout (Windows compat)
 - [x] Smoke: `load-prior-reports.py` em P8/output/ → 8 relatórios detectados
 
+### Fase 4 entregue
+
+- [x] 4 skills: `lessons-audit`, `skill-creator`, `stay-current`, `update-claude-docs`
+- [x] 3 scripts Python: `currentdate-gap.py`, `detect-repeat-tools.py`, `lessons-extract.py`
+- [x] 2 hooks novos: `stop-lessons-incremental.ps1`, `user-prompt-detect-repeat.ps1`
+- [x] `references/canonical-sources.md` (9 fontes libs + 9 fontes Claude Code)
+- [x] `state/last-update.json` placeholder + `state/sessions/.gitkeep` + `state/aggregates/.gitkeep`
+- [x] +19 testes pytest (37/37 verde)
+
 ### Próximas fases
 
-- **Fase 4** — Self-improvement (lessons-audit, skill-creator, stay-current, update-claude-docs) + estado
 - **Fase 5** — Skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album)
 - **Fase 6** — Documentação completa, CHANGELOG, hardening, eat your own dogfood
 

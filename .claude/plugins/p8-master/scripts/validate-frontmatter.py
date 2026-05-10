@@ -27,10 +27,12 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 
-# Schema por tipo
+# Schema por tipo. `tools` em agent e opcional — Claude Code aceita agents
+# sem campo `tools` (defaulta pra all-tools) e os agents Oracle usam
+# `disallowedTools` em vez de `tools`.
 REQUIRED_FIELDS = {
     "skill": ["name", "description"],
-    "agent": ["name", "description", "model", "tools"],
+    "agent": ["name", "description", "model"],
     "pesquisa": ["data", "tipo", "topico", "autor", "projeto", "status"],
     "plano": ["data", "tipo", "topico", "autor", "projeto", "status"],
     "valida": ["data", "tipo", "topico", "autor", "projeto", "status"],

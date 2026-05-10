@@ -65,9 +65,9 @@ foreach ($skill in @("commit", "pr", "handoff", "hurdle")) {
     }
 }
 
-# Teste 4: 3 sub-agents
+# Teste 4: 9 sub-agents (3 SMA + 6 Oracle)
 Write-Host ""
-Write-Host "=== Teste 4: 3 sub-agents ==="
+Write-Host "=== Teste 4a: 3 sub-agents SMA ==="
 foreach ($agent in @("explorador", "historiador", "revisor")) {
     $path = Join-Path $PluginRoot "agents/$agent.md"
     if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex $agent) {
@@ -76,6 +76,42 @@ foreach ($agent in @("explorador", "historiador", "revisor")) {
         } else {
             $failures++
         }
+    } else {
+        $failures++
+    }
+}
+
+Write-Host ""
+Write-Host "=== Teste 4b: 6 sub-agents Oracle (modelos variados) ==="
+$oracleAgents = @{
+    "extrator" = "haiku"
+    "analista-gerador" = "sonnet"
+    "pesquisador" = "sonnet"
+    "critico-adversarial" = "opus"
+    "arquiteto-estrategico" = "opus"
+    "qa-estrutural" = "haiku"
+}
+foreach ($agent in $oracleAgents.Keys) {
+    $path = Join-Path $PluginRoot "agents/$agent.md"
+    $expectedModel = $oracleAgents[$agent]
+    if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex $agent) {
+        if (Test-FrontmatterField -FilePath $path -Field "model" -ExpectedValueRegex $expectedModel) {
+            Write-Host "  PASS: $agent (model=$expectedModel)" -ForegroundColor Green
+        } else {
+            Write-Host "FAIL: $agent — modelo esperado: $expectedModel" -ForegroundColor Red
+            $failures++
+        }
+    } else {
+        $failures++
+    }
+}
+
+Write-Host ""
+Write-Host "=== Teste 4c: 2 Oracle wrapper skills ==="
+foreach ($skill in @("oracle-analise", "oracle-reportar")) {
+    $path = Join-Path $PluginRoot "skills/$skill/SKILL.md"
+    if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex "p8-master:$skill") {
+        Write-Host "  PASS: $skill" -ForegroundColor Green
     } else {
         $failures++
     }
@@ -94,10 +130,14 @@ foreach ($hook in @("session-start.ps1", "validate-thoughts.ps1", "precommit-rou
     }
 }
 
-# Teste 6: scripts core
+# Teste 6: scripts core (Fase 1+2+3)
 Write-Host ""
 Write-Host "=== Teste 6: scripts core ==="
-foreach ($script in @("thoughts-init.ps1", "spec-metadata.ps1", "validate-frontmatter.py", "inventory.py")) {
+foreach ($script in @(
+    "thoughts-init.ps1", "spec-metadata.ps1",
+    "validate-frontmatter.py", "inventory.py",
+    "grep-evidence.py", "load-prior-reports.py"
+)) {
     $path = Join-Path $PluginRoot "scripts/$script"
     if (Test-Path $path) {
         Write-Host "  PASS: $script existe" -ForegroundColor Green

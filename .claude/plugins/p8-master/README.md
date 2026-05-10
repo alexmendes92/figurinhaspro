@@ -18,10 +18,14 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 
 ## Status
 
-- **Versão:** 0.2.0 (Fase 1 + Fase 2 — SMA core + utilities + bateria de testes verde)
+- **Versão:** 0.3.0 (Fase 1 + 2 + 3 — SMA core + utilities + Oracle wrappers + bateria de testes verde)
 - **Data:** 2026-05-10
 - **Plano:** [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md)
 - **Suite de testes:** `pwsh -File tests/run-all.ps1` — 18/18 pytest + 2/2 integration verde
+- **Skills:** 13 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle wrappers + 1 placeholder pra próximas fases)
+- **Agents:** 9 (3 SMA + 6 Oracle)
+- **Scripts:** 6 (2 PS bootstrap + 4 Python)
+- **Hooks:** 4 PowerShell
 
 ### Fase 1 entregue
 
@@ -45,9 +49,18 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - [x] 3 evals JSON iniciais (`pesquisa`, `plano`, `implementa`)
 - [x] `tests/run-all.ps1` + `tests/run-all.sh` (Windows + Unix)
 
+### Fase 3 entregue
+
+- [x] 2 Oracle wrappers: `oracle-analise`, `oracle-reportar`
+- [x] 6 sub-agents Oracle (Haiku/Sonnet/Opus apropriados)
+- [x] 2 scripts Python: `grep-evidence.py`, `load-prior-reports.py`
+- [x] `references/workflow-akita-bootstrap.md`
+- [x] `validate-frontmatter.py` aceita agents sem `tools` (Oracle usa `disallowedTools`)
+- [x] `load-prior-reports.py` força UTF-8 stdout (Windows compat)
+- [x] Smoke: `load-prior-reports.py` em P8/output/ → 8 relatórios detectados
+
 ### Próximas fases
 
-- **Fase 3** — Oracle wrappers + 6 agents Oracle + 4 scripts Python
 - **Fase 4** — Self-improvement (lessons-audit, skill-creator, stay-current, update-claude-docs) + estado
 - **Fase 5** — Skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album)
 - **Fase 6** — Documentação completa, CHANGELOG, hardening, eat your own dogfood

@@ -109,6 +109,46 @@ Suite completa (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [0.3.0] — 2026-05-10
+
+### Adicionado (Fase 3 — Oracle wrappers + 6 agents Oracle + 2 scripts Python)
+
+- 2 skills Oracle wrappers:
+  - `p8-master:oracle-analise` — orquestra pipeline 7 fases (estrategia-geral → marketing → estrutura → designer → definicao-prototipo → criacao-prototipo → oracle-master). Heavyweight (50-150k tokens). Gate humano antes da Fase 6 (criacao-prototipo) e ao consolidar
+  - `p8-master:oracle-reportar` — consolida `output/01..06.md` existentes em `output/00-README.md` + `output/99-oracle-master.md` sem re-rodar análise (5-15k tokens). Detecta contradições entre fases
+- 6 sub-agents Oracle (cópias do plugin Oracle canônico):
+  - `extrator` (Haiku) — inventário rápido via scripts
+  - `analista-gerador` (Sonnet) — redação narrativa em PT-BR
+  - `pesquisador` (Sonnet) — busca atualizada via WebSearch/WebFetch (sempre cita fontes)
+  - `critico-adversarial` (Opus) — fricção máxima, paralaxe cognitiva
+  - `arquiteto-estrategico` (Opus) — síntese cross-fase, sistema ideal, gaps
+  - `qa-estrutural` (Haiku) — valida frontmatter via script
+- 2 scripts Python adicionais (cópias do plugin Oracle):
+  - `scripts/grep-evidence.py` — wrapper sobre ripgrep (count + 3 samples por padrão)
+  - `scripts/load-prior-reports.py` — parseia frontmatter YAML dos relatórios em output/
+- `references/workflow-akita-bootstrap.md` — metodologia Akita condensada (5 fases B.1-B.5, ciclo TDD Red→Green→Refactor, ritmo micro-passos, integração com SMA + Oracle no plugin)
+
+### Atualizado
+
+- `tests/integration/test_skill_orchestrator.ps1` — agora valida 9 agents (3 SMA + 6 Oracle), 11 skills (1 orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle wrappers), 6 scripts (Fase 1+2+3)
+- `scripts/validate-frontmatter.py` — `tools` agora opcional em agent (Oracle agents usam `disallowedTools` em vez de `tools`)
+- `scripts/load-prior-reports.py` — força stdout/stderr UTF-8 para evitar `UnicodeEncodeError` no Windows (cp1252 quebra em `→` e setas comuns nos relatórios PT-BR)
+
+### Validação
+
+Suite completa (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
+- 18/18 testes pytest verde
+- 2/2 PowerShell integration suites verde (incluindo verificação dos 9 agents + 11 skills + 6 scripts)
+- Smoke: `python scripts/load-prior-reports.py output/` em P8 retornou JSON válido com 8 relatórios (7 completos)
+
+### Pendências (entram nas próximas fases)
+
+- Self-improvement (lessons-audit, skill-creator, stay-current, update-claude-docs) — Fase 4
+- 8 skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album) — Fase 5
+- Documentação completa em `docs/` — Fase 6
+
+---
+
 ## [Unreleased]
 
 ### Planejado

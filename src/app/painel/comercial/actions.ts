@@ -3,12 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import { requireCockpitAdmin } from "@/lib/cockpit-guard";
 
 const BASE = "/painel/comercial";
 
 // ===== LEADS =====
 
 export async function createLead(formData: FormData) {
+  await requireCockpitAdmin()
+
   const name = formData.get("name") as string;
   const phone = (formData.get("phone") as string) || null;
   const email = (formData.get("email") as string) || null;
@@ -38,6 +41,8 @@ export async function createLead(formData: FormData) {
 }
 
 export async function updateLeadStage(id: string, stage: string) {
+  await requireCockpitAdmin()
+
   const data: Record<string, unknown> = { stage };
   if (stage === "CONTACT" || stage === "NEGOTIATION") {
     data.lastContactAt = new Date();
@@ -47,6 +52,8 @@ export async function updateLeadStage(id: string, stage: string) {
 }
 
 export async function updateLead(id: string, formData: FormData) {
+  await requireCockpitAdmin()
+
   const nextStep = (formData.get("nextStep") as string) || null;
   const objections = (formData.get("objections") as string) || null;
   const notes = (formData.get("notes") as string) || null;
@@ -60,6 +67,8 @@ export async function updateLead(id: string, formData: FormData) {
 }
 
 export async function addActivity(formData: FormData) {
+  await requireCockpitAdmin()
+
   const leadId = (formData.get("leadId") as string) || null;
   const type = formData.get("type") as string;
   const channel = (formData.get("channel") as string) || null;
@@ -83,6 +92,8 @@ export async function addActivity(formData: FormData) {
 // ===== TASKS =====
 
 export async function createTask(formData: FormData) {
+  await requireCockpitAdmin()
+
   const title = formData.get("title") as string;
   const description = (formData.get("description") as string) || null;
   const priority = (formData.get("priority") as string) || "MEDIUM";
@@ -108,6 +119,8 @@ export async function createTask(formData: FormData) {
 }
 
 export async function toggleTask(id: string) {
+  await requireCockpitAdmin()
+
   const task = await db.bizTask.findUnique({ where: { id } });
   if (!task) return;
 
@@ -123,6 +136,8 @@ export async function toggleTask(id: string) {
 }
 
 export async function updateTaskStatus(id: string, status: string) {
+  await requireCockpitAdmin()
+
   await db.bizTask.update({
     where: { id },
     data: {
@@ -136,6 +151,8 @@ export async function updateTaskStatus(id: string, status: string) {
 // ===== OFFERS =====
 
 export async function createOffer(formData: FormData) {
+  await requireCockpitAdmin()
+
   const name = formData.get("name") as string;
   const description = (formData.get("description") as string) || null;
   const price = Number.parseFloat(formData.get("price") as string);
@@ -154,6 +171,8 @@ export async function createOffer(formData: FormData) {
 }
 
 export async function toggleOfferStatus(id: string) {
+  await requireCockpitAdmin()
+
   const offer = await db.bizOffer.findUnique({ where: { id } });
   if (!offer) return;
 
@@ -167,6 +186,8 @@ export async function toggleOfferStatus(id: string) {
 // ===== EXPERIMENTS =====
 
 export async function createExperiment(formData: FormData) {
+  await requireCockpitAdmin()
+
   const hypothesis = formData.get("hypothesis") as string;
   const channel = (formData.get("channel") as string) || null;
   const priority = (formData.get("priority") as string) || "MEDIUM";
@@ -183,6 +204,8 @@ export async function createExperiment(formData: FormData) {
 }
 
 export async function updateExperimentStatus(id: string, status: string) {
+  await requireCockpitAdmin()
+
   const data: Record<string, unknown> = { status };
   if (status === "RUNNING") data.startedAt = new Date();
   if (status === "COMPLETED" || status === "KILLED") data.completedAt = new Date();
@@ -192,6 +215,8 @@ export async function updateExperimentStatus(id: string, status: string) {
 }
 
 export async function saveExperimentResult(id: string, formData: FormData) {
+  await requireCockpitAdmin()
+
   const actualResult = (formData.get("actualResult") as string) || null;
   const learning = (formData.get("learning") as string) || null;
   const decision = (formData.get("decision") as string) || null;
@@ -206,6 +231,8 @@ export async function saveExperimentResult(id: string, formData: FormData) {
 // ===== INITIATIVES =====
 
 export async function createInitiative(formData: FormData) {
+  await requireCockpitAdmin()
+
   const title = formData.get("title") as string;
   const category = formData.get("category") as string;
   const impact = (formData.get("impact") as string) || null;
@@ -223,6 +250,8 @@ export async function createInitiative(formData: FormData) {
 }
 
 export async function updateInitiativePhase(id: string, phase: string) {
+  await requireCockpitAdmin()
+
   await db.bizInitiative.update({ where: { id }, data: { phase } });
   revalidatePath(`${BASE}/iniciativas`);
 }
@@ -230,6 +259,8 @@ export async function updateInitiativePhase(id: string, phase: string) {
 // ===== KPIs =====
 
 export async function addKpiSnapshot(formData: FormData) {
+  await requireCockpitAdmin()
+
   const kpiId = formData.get("kpiId") as string;
   const value = Number.parseFloat(formData.get("value") as string);
   const note = (formData.get("note") as string) || null;

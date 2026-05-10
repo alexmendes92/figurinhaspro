@@ -27,6 +27,7 @@ Aplico esta árvore de decisão sobre o pedido:
 | "consertar bug X" | pipeline mini: pesquisa(causa-raíz) → plano(mini) → akita-tdd RED reproduz → GREEN → commit |
 | "refatorar X" | akita-refactor (verifica rede de testes) → plano micro-passos → implementa por chunk |
 | "testar UI / validar visual / rodar no browser" | `/p8-master:ui-review <feature>` (usa `/chrome` nativo, fallback Playwright) |
+| "logue antes / sessão expirou / bootstrap auth / renove sessão" | `/p8-master:p8-auth <url-alvo>` (auto-login em preview/dev, manual em prod) |
 | "alterar schema Prisma" | `/p8-master:p8-prisma-migrate` |
 | "testar Stripe webhook" | `/p8-master:p8-stripe-sync` |
 | "deploy prod" | `/p8-master:p8-deploy` (gate humano sempre) |

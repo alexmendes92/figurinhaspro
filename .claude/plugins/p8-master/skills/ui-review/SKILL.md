@@ -25,6 +25,7 @@ Antes de rodar qualquer browser action, valido:
 1. **Dev server rodando** em `http://localhost:3009` (P8 usa porta 3009 fixa). Se não estiver, rodo `npm run dev` em background (Bash `run_in_background: true`) e aguardo "Ready in" antes de prosseguir.
 2. **`/chrome` disponível** — checo via `/mcp` se `claude-in-chrome` aparece. Se sim, uso. Se não, falo ao user: "Ative com `/chrome` ou inicie sessão nova com `claude --chrome`. Continuo com Playwright MCP se preferir."
 3. **Não estou em WSL** — `/chrome` não suporta. Se WSL, vou direto pra Playwright MCP.
+4. **Sessão autenticada** quando a rota alvo é `/painel/*` ou outra área logada. Após `navigate` inicial, se URL final contém `/login` ou `reason=session-expired`, **invoco `p8-master:p8-auth`** passando a URL alvo original. Não tento prosseguir até `p8-auth` confirmar `resultado=ok`. Para rotas públicas (`/`, `/loja/[slug]`, `/privacidade`, `/termos`, `/login` em si), pulo essa checagem — auth atrapalha.
 
 ## Sequência canônica
 
@@ -148,7 +149,7 @@ Corpo:
 - **Não declaro UI pronta sem screenshot real.** Build verde + testes verdes não substituem.
 - **Não testo em headless** quando `/chrome` está disponível — perde o valor de session compartilhada do user.
 - **Não despejo accessibility tree** no relatório (50k tokens cada). Se precisar do tree, deixo no `.cache` e referencio path.
-- **Não automatizo login com credenciais hardcoded.** Se a rota exige auth e session não está ativa, paro e peço ao user logar no Chrome dele antes (que é o ponto de usar `/chrome` — aproveita o login que já está lá).
+- **Não automatizo login com credenciais hardcoded.** Em preview/dev local com `P8_DEV_AUTO_LOGIN_TOKEN` no shell, delego a `p8-master:p8-auth` que usa endpoint dev-only (sem digitar senha). Em produção, paro e peço login manual no Chrome conectado — `/chrome` aproveita a sessão real do user.
 - **Não modifico código.** Essa skill REVISA, não corrige. Se achou bug, gera relatório com veredito ❌ e sugere `/p8-master:itera <plano>` ou nova `/p8-master:pesquisa`.
 
 ## Fallback: quando `/chrome` não está disponível

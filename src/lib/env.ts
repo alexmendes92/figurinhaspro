@@ -10,6 +10,17 @@ const envSchema = z.object({
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
   NEXT_PUBLIC_APP_URL: z.string().url().optional(),
   NEXT_PUBLIC_IMAGES_BASE_URL: z.string().url().optional(),
+  R2_ACCOUNT_ID: z.string().optional(),
+  R2_ACCESS_KEY_ID: z.string().optional(),
+  R2_SECRET_ACCESS_KEY: z.string().optional(),
+  R2_BUCKET: z.string().optional(),
+  R2_PUBLIC_BASE: z.string().optional(),
+  // Token opt-in para bypass de login em preview/dev (NUNCA habilitar em prod).
+  // Ver src/app/api/dev/auto-login/route.ts — triple-guard ativa o endpoint.
+  DEV_AUTO_LOGIN_TOKEN: z
+    .string()
+    .min(32, "DEV_AUTO_LOGIN_TOKEN deve ter >=32 chars (use openssl rand -hex 32)")
+    .optional(),
 });
 
 type Env = z.infer<typeof envSchema>;
@@ -27,6 +38,7 @@ function validateEnv(): Env {
       STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
       NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
       NEXT_PUBLIC_IMAGES_BASE_URL: process.env.NEXT_PUBLIC_IMAGES_BASE_URL,
+      DEV_AUTO_LOGIN_TOKEN: process.env.DEV_AUTO_LOGIN_TOKEN,
     };
   }
 

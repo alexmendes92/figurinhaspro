@@ -239,8 +239,70 @@ Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
-## [Unreleased]
+## [1.0.0] — 2026-05-10 🎉
 
-### Planejado
+### Adicionado (Fase 6 — Documentação completa + hardening + v1.0.0)
 
-Ver [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md) para roadmap completo.
+5 documentos finais em `docs/`:
+
+- `docs/ARCHITECTURE.md` — decisões de design (princípios, composição 4 metodologias, estrutura de pastas, ativação tripla, decisões justificadas, fluxo de sessão, dependências, versionamento, limitações conhecidas)
+- `docs/ACTIVATION.md` — mecanismo tripo de ativação (`@import` + hook SessionStart + description "pushy"), instalação passo-a-passo, coexistência com hooks existentes, desativação temporária, troubleshooting
+- `docs/SELF_IMPROVEMENT.md` — loop fechado completo: trigger → análise → 4 categorias → propostas → gate humano → aplicação → bumpversão → CHANGELOG. Anti-loops (sessões selfAudit, rejections, threshold conservador, validade 30d). Métricas. Scripts de fallback
+- `docs/DAILY_UPDATE.md` — mecânica `currentDate`: hook SessionStart → currentdate-gap.py → threshold 14d → stay-current paralelo → severidade CRÍTICO/NÃO-CRÍTICO/PATCH. Padrão pesquisador anti-cutoff. Estado em `state/last-update.json`
+- `docs/CONTRIBUTING.md` — guia para adicionar skill/agent/script/hook/reference/template novo. 9-step workflow. Templates concretos. Anti-padrões a evitar. Checklist pre-PR
+
+### Hardening
+
+- `python scripts/validate-frontmatter.py -r skills/` → 24/24 válidos
+- `python scripts/validate-frontmatter.py -r agents/` → 11/11 válidos
+- `python scripts/inventory.py --root .` → 61 markdown + 14 PowerShell + 12 Python + 9 JSON
+- `pwsh -File tests/run-all.ps1` → TUDO PASSOU (37/37 pytest + 2/2 integration)
+
+### Marco v1.0.0
+
+Plugin P8-MASTER completo conforme plano `~/.claude/plans/planeje-um-plugin-cosmic-sedgewick.md`:
+
+| Componente | Quantidade |
+|---|---|
+| Skills | 21 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle + 4 Self-improvement + 8 Domínio P8) |
+| Sub-agents | 11 (3 SMA + 6 Oracle + 2 P8) |
+| Hooks PowerShell | 6 (SessionStart, validate-thoughts, precommit-router, pretooluse-deny-secrets, stop-lessons-incremental, user-prompt-detect-repeat) |
+| Scripts | 12 (2 PS bootstrap + 7 Python + 3 PS infra P8) |
+| References | 9 (4 base + canonical-sources + 4 P8 infra) |
+| Templates | 7 |
+| Evals | 6 JSON |
+| Testes pytest | 37 |
+| Testes integration | 2 PowerShell suites |
+| Docs | 5 estáveis |
+
+### Loops fechados
+
+1. **SMA pipeline:** pesquisa → plano (gate) → valida → implementa (TDD + gate) → commit (gate verde) → deploy (gate humano) → handoff
+2. **Oracle 7 fases:** estrategia-geral → marketing → estrutura → designer → definicao-prototipo → criacao-prototipo → oracle-master
+3. **Self-improvement:** hook Stop → state/sessions/ → lessons-audit → 4 categorias → thoughts/auto-melhoria/ → gate humano → skill-creator apply → bump → CHANGELOG
+4. **Daily update:** hook SessionStart → currentdate-gap.py → 9 fontes canônicas → stay-current → diff em thoughts/atualizacoes/
+
+### Bump
+
+0.5.0 → 1.0.0 (major: marco do plugin completo, todas as 6 fases entregues conforme plano).
+
+### Pendências futuras (v1.1+)
+
+- Skill `/p8-master:revisar-melhorias` — UI explícita pra aprovar propostas em batch
+- Categorias C (skills lentas) e D (mal-acionadas) com state tracker de duração / resultado descartado
+- Cron diário automático de `stay-current` (Windows Task Scheduler)
+- `--report` JSON estruturado em todas skills (pra dashboard externo)
+- Snapshot diff em `references/claude-docs/` (Fase atual: lista URLs canônicas, não cacheia)
+
+---
+
+## Histórico de fases
+
+| Versão | Data | Fase | Commit |
+|---|---|---|---|
+| 0.1.0 | 2026-05-10 | Fase 1 — SMA core + ativação | f63a4da |
+| 0.2.0 | 2026-05-10 | Fase 2 — SMA utilities + hooks + testes | 559f920 |
+| 0.3.0 | 2026-05-10 | Fase 3 — Oracle wrappers + 6 agents + 2 scripts | e0f68fe |
+| 0.4.0 | 2026-05-10 | Fase 4 — Self-improvement loop | c70d7b5 |
+| 0.5.0 | 2026-05-10 | Fase 5 — Skills domínio P8 + agents + infra | 1e1ad8e |
+| **1.0.0** | **2026-05-10** | **Fase 6 — Docs + hardening + v1.0.0** | (este commit) |

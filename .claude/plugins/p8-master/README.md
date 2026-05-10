@@ -16,9 +16,9 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 
 ---
 
-## Status
+## Status — v1.0.0 🎉
 
-- **Versão:** 0.5.0 (Fases 1-5 — SMA + Oracle + Self-improvement + Domínio P8 + bateria de testes verde)
+- **Versão:** 1.0.0 (todas as 6 fases entregues)
 - **Data:** 2026-05-10
 - **Plano:** [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md)
 - **Suite de testes:** `pwsh -File tests/run-all.ps1` — 37/37 pytest + 2/2 integration verde
@@ -27,6 +27,7 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - **Scripts:** 12 (2 PS bootstrap + 7 Python + 3 PS infra P8)
 - **Hooks:** 6 PowerShell
 - **References:** 9 (4 base + canonical-sources + 4 P8 infra)
+- **Docs:** 5 estáveis em `docs/` (ARCHITECTURE, ACTIVATION, SELF_IMPROVEMENT, DAILY_UPDATE, CONTRIBUTING)
 
 ### Fase 1 entregue
 
@@ -78,9 +79,12 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - [x] 3 evals adicionais
 - [x] Suite verde (37 pytest + 2 integration)
 
-### Próximas fases
+### Fase 6 entregue
 
-- **Fase 6** — Documentação completa em `docs/`, CHANGELOG fechado, hardening, eat your own dogfood, bump v1.0.0
+- [x] 5 docs em `docs/`: ARCHITECTURE, ACTIVATION, SELF_IMPROVEMENT, DAILY_UPDATE, CONTRIBUTING
+- [x] Hardening: 24/24 skills + 11/11 agents válidos
+- [x] Suite verde (37/37 pytest + 2/2 integration)
+- [x] Bump v1.0.0 — plugin completo
 
 ---
 

@@ -23,9 +23,10 @@ Aplico esta árvore de decisão sobre o pedido:
 | "abrir PR" | `/p8-master:pr` |
 | "registrar handoff/contexto" | `/p8-master:handoff` |
 | "documentar hurdle/aprendizado" | `/p8-master:hurdle <descoberta>` |
-| "implementar feature X" (sem mais detalhe) | pipeline canônico: pesquisa → plano (gate) → implementa → commit → deploy |
+| "implementar feature X" (sem mais detalhe) | pipeline canônico: pesquisa → plano (gate) → implementa → ui-review (se UI) → commit → deploy |
 | "consertar bug X" | pipeline mini: pesquisa(causa-raíz) → plano(mini) → akita-tdd RED reproduz → GREEN → commit |
 | "refatorar X" | akita-refactor (verifica rede de testes) → plano micro-passos → implementa por chunk |
+| "testar UI / validar visual / rodar no browser" | `/p8-master:ui-review <feature>` (usa `/chrome` nativo, fallback Playwright) |
 | "alterar schema Prisma" | `/p8-master:p8-prisma-migrate` |
 | "testar Stripe webhook" | `/p8-master:p8-stripe-sync` |
 | "deploy prod" | `/p8-master:p8-deploy` (gate humano sempre) |
@@ -57,6 +58,7 @@ Se a intenção for ambígua, pergunto entre 2-3 candidatos antes de despachar.
 - Sentry está inativo (`instrumentation.ts` existe mas DSN opcional).
 - Stripe webhook não tem teste E2E em prod.
 - Deploy é manual via `npx vercel deploy --prod` no projeto Vercel `album-digital`.
+- **Validação visual obrigatória** em mudanças de UI — use `/p8-master:ui-review <feature>`, que prefere `/chrome` nativo (Claude in Chrome) sobre Playwright MCP. Ver `arenacards.md` "Review de UI" e [skills/ui-review/SKILL.md](../ui-review/SKILL.md).
 
 ## Fluxo padrão de uma sessão P8
 

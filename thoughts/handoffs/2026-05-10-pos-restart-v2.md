@@ -28,6 +28,25 @@ Hoje (2026-05-10) o plugin `p8-master` evoluiu de v1.0.0 → v1.2.2 em 11 commit
 1. **Indexação dos 11 agents** (commit `70c403c` corrigiu plugin.json schema). Sessão anterior só via 3 agents (`explorador`, `historiador`, `revisor`). Esperado pós-restart: ver os 11.
 2. **Runtime instrumentation** (mesmo commit). Cada agent agora printa `[runtime] subagent=X model=Y` como primeira linha do output.
 
+## ⚠️ DESCOBERTA crítica (sessão pós-restart-v2)
+
+Sessão pós-restart-v2 descobriu que o problema NÃO ERA o que o handoff supôs (fix de schema). A causa-raíz é que **o plugin nunca foi REGISTRADO no harness**:
+
+- `settings.local.json` só tem `vercel@claude-plugins-official: true` em `enabledPlugins`
+- **Não existe** marketplace local definido
+- Os 3 agents que apareciam (`explorador`, `historiador`, `revisor`) eram **duplicatas standalone** em `.claude/agents/`, NÃO do plugin
+
+**Solução implementada nesta sessão:** criado `.claude/.claude-plugin/marketplace.json` que cataloga o plugin local. Falta o user rodar 2 comandos slash:
+
+```
+/plugin marketplace add ./.claude
+/plugin install p8-master@p8-local
+```
+
+Depois `/reload-plugins` (ou restart). Aí todos os 11 agents do `p8-master` aparecerão como `p8-master:explorador`, `p8-master:p8-domain-expert`, etc.
+
+---
+
 ## Tarefa 1 — Validar fixes pós-restart (faça primeiro, ~5 min)
 
 ### Checagem rápida via Agent tool

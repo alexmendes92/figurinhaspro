@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "p8-local",
+  "owner": {
+    "name": "Alex (Arena Cards)",
+    "email": "contato@arenacards.com.br"
+  },
+  "plugins": [
+    {
+      "name": "p8-master",
+      "source": "./plugins/p8-master",
+      "description": "Plugin canônico P8-FigurinhasPro: SMA + Akita Bootstrap + Oracle + auto-melhoria. 11 agents (2 Opus + 4 Sonnet + 5 Haiku) com tier routing explícito + pipeline pesquisa → plano → valida → implementa → commit. Auto-ativa em sessão dentro do projeto."
+    }
+  ]
+}

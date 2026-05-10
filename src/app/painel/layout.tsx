@@ -22,7 +22,7 @@ export default async function PainelLayout({ children }: { children: React.React
   const seller = await getSession();
 
   if (!seller) {
-    redirect("/login");
+    redirect("/login?reason=session-expired");
   }
 
   if (seller.onboardingStep < 4) {

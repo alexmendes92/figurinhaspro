@@ -1,18 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthError } from "@/components/auth/auth-error";
 import { AuthFooterLink } from "@/components/auth/auth-footer-link";
 import { AuthInput } from "@/components/auth/auth-input";
 import { AuthLogo } from "@/components/auth/auth-logo";
+import { useToast } from "@/lib/toast-context";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const toast = useToast();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const reason = searchParams.get("reason");
+    if (reason === "session-expired") {
+      toast.show("Sessão expirada. Faça login novamente.", "error");
+    }
+  }, [searchParams, toast]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

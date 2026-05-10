@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
 import { formatCrumbSegment } from "@/lib/format-breadcrumb";
 import styles from "./painel-shell.module.css";
 
@@ -230,6 +231,7 @@ export default function PainelShell({
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const initials = seller.name
     .split(" ")
@@ -254,7 +256,11 @@ export default function PainelShell({
   const isActive = (item: NavItem) =>
     item.exact ? pathname === item.href : pathname.startsWith(item.href);
 
-  async function handleLogout() {
+  function handleLogoutClick() {
+    setShowLogoutConfirm(true);
+  }
+
+  async function confirmLogout() {
     setLoggingOut(true);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
@@ -342,7 +348,7 @@ export default function PainelShell({
             </div>
             <button
               type="button"
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
               disabled={loggingOut}
               className={styles.logoutBtn}
               aria-label="Sair"
@@ -435,6 +441,16 @@ export default function PainelShell({
           })}
         </div>
       </nav>
+
+      <ConfirmDialog
+        open={showLogoutConfirm}
+        title="Confirmar saída"
+        description="Deseja sair da sua conta?"
+        confirmLabel="Sair"
+        cancelLabel="Cancelar"
+        onConfirm={confirmLogout}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </div>
   );
 }

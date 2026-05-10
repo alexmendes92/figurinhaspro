@@ -7,6 +7,7 @@ import { z } from "zod";
 import { verifyBotSignature } from "@/lib/bot-hmac";
 import { db } from "@/lib/db";
 import { checkOrderLimit } from "@/lib/plan-limits";
+import { createQuoteWithDecrement, InventoryNotFoundError, PriceManipulationError } from "@/lib/quote-service";
 
 export const dynamic = "force-dynamic";
 
@@ -70,44 +71,49 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const totalPrice = body.items.reduce(
-    (sum, item) => sum + item.unitPrice * item.quantity,
-    0,
-  );
+  try {
+    const order = await createQuoteWithDecrement(
+      sellerRow.id,
+      body.customerName,
+      body.customerPhone,
+      null,
+      body.items,
+      "WHATSAPP"
+    );
 
-  const order = await db.order.create({
-    data: {
-      sellerId: sellerRow.id,
-      customerName: body.customerName,
-      customerPhone: body.customerPhone,
-      channel: "WHATSAPP",
-      notes: "Pedido criado pelo bot WhatsApp",
-      totalPrice,
-      items: {
-        create: body.items.map((i) => ({
-          albumSlug: i.albumSlug,
-          stickerCode: i.stickerCode,
-          stickerName: i.stickerName,
-          quantity: i.quantity,
-          unitPrice: i.unitPrice,
-        })),
-      },
-    },
-    include: { items: true },
-  });
-
-  return NextResponse.json({
-    orderId: order.id,
-    orderNumber: order.id.slice(-8).toUpperCase(),
-    status: order.status,
-    totalPrice: order.totalPrice,
-    items: order.items.map((i) => ({
-      albumSlug: i.albumSlug,
-      stickerCode: i.stickerCode,
-      stickerName: i.stickerName,
-      quantity: i.quantity,
-      unitPrice: i.unitPrice,
-    })),
-    createdAt: order.createdAt.toISOString(),
-  });
+    return NextResponse.json({
+      orderId: order.id,
+      orderNumber: order.id.slice(-8).toUpperCase(),
+      status: order.status,
+      totalPrice: order.totalPrice,
+      items: order.items.map((i) => ({
+        albumSlug: i.albumSlug,
+        stickerCode: i.stickerCode,
+        stickerName: i.stickerName,
+        quantity: i.quantity,
+        unitPrice: i.unitPrice,
+      })),
+      createdAt: order.createdAt.toISOString(),
+    });
+  } catch (error) {
+    if (error instanceof PriceManipulationError) {
+      return NextResponse.json(
+        { error: "price_manipulation", message: error.message },
+        { status: 422 }
+      );
+    }
+    if (error instanceof InventoryNotFoundError) {
+      return NextResponse.json(
+        { error: "inventory_error", message: error.message },
+        { status: 409 }
+      );
+    }
+    if (error instanceof Error && error.message === "Seller not found") {
+      return NextResponse.json(
+        { error: "seller_not_found", message: "Seller nao encontrado" },
+        { status: 404 }
+      );
+    }
+    throw error;
+  }
 }

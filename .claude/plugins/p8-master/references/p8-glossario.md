@@ -8,6 +8,14 @@
 
 - **Sticker (figurinha)** — entidade base do catálogo. Tipos: `regular`, `foil` (especial), `shiny` (brilhante). Config centralizada em [src/lib/sticker-types.ts](../../../src/lib/sticker-types.ts) — valores internos NUNCA mudam, apenas labels visíveis (`Normal`, `Especial`, `Brilhante`). Use `getStickerTypeConfig()` / `getStickerTypeShortLabel()` para labels.
 
+- **Códigos de sticker (convenção OFICIAL Panini)** — cada sticker tem `code` literal definido pela Panini, não numeração arbitrária. Padrões observados em [src/lib/albums.ts](../../../src/lib/albums.ts):
+  - `00` — Logo Panini (foil) no início do álbum
+  - `FWC1`-`FWC20` — figurinhas especiais "FIFA World Cup" (Copa 2022)
+  - `<COUNTRY_CODE><N>` — jogadores por seleção (ex: `QAT1`-`QAT20` Qatar, `ECU1`-`ECU20` Ecuador, `BRA1`-`BRA20` Brasil)
+  - Mesma estrutura nas Copas 2018, 2014, 2010, 2006 — sempre com prefixo de país oficial FIFA.
+  - **NUNCA presumir convenção numérica genérica (1, 2, ..., 670).** Os códigos são literais como vêm da Panini. Para confirmar qualquer sticker específico: `grep -n '"code": "<CODE>"' src/lib/albums.ts -A 2`.
+  - Fonte de verdade absoluta = `src/lib/albums.ts`. Knowledge cutoff do modelo (jan/2026) NÃO substitui — código sempre vence.
+
 - **Album (álbum)** — coleção de stickers. Há dois tipos:
   - **Estáticos** — definidos em código em `src/lib/albums.ts` (~1.4MB, ~7.122 cards em 13 Copas).
   - **Customizados (CustomAlbum)** — criados por vendedor via `/painel/estoque/novo`. Schema Prisma `CustomAlbum`. Slug com prefixo `custom_` para evitar conflito com estáticos. Conversão `CustomAlbum → Album` em [src/lib/custom-albums.ts](../../../src/lib/custom-albums.ts). Parser suporta ranges (`1-670`), prefixos (`BRA1-BRA20`), listas mistas.

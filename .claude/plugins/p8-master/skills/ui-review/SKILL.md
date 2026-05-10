@@ -144,11 +144,34 @@ Corpo:
 - ❌ Bloqueado — voltar pra /implementa ou /itera
 ```
 
+## Regra dura sobre fatos do domínio P8
+
+**Antes de afirmar QUALQUER fato sobre nome, código, tipo ou estrutura de figurinha/álbum/jogador, consultar a fonte canônica:** `src/lib/albums.ts` (44k+ linhas, slug + sections + stickers com code/name/type/image oficiais do Panini).
+
+Por quê isso é uma regra dura e não uma sugestão:
+- Knowledge cutoff (jan/2026) é 4 anos depois da Copa 2022 — meu conhecimento sobre códigos Panini é incompleto ou errado.
+- O P8 é o produto da empresa do user — convenções de domínio são definidas pelo PRODUTO, não pelo treinamento do modelo.
+- "Achismo de domínio" é a mesma classe de erro que `API_HALLUCINATION` (antipattern global): inventar uma assinatura/convenção sem confirmar contra código fonte. Ver `~/.claude/ANTIPATTERNS.md`.
+
+**Exemplos do que NÃO posso afirmar sem grep prévio em `src/lib/albums.ts`:**
+- "Convenção Panini canônica usa números 1-670" → **FALSO**. Códigos reais são `FWC1`, `QAT13`, `ECU5`, `00`, etc.
+- "Nome do jogador X é Y" → grep antes.
+- "Album Z tem N seções" → grep antes.
+- "Sticker tipo 'foil' é raro" → grep antes (pode ser comum em certas seções).
+
+**Comando mínimo antes de afirmar:**
+```bash
+grep -n '"code": "<CODE>"' src/lib/albums.ts -A 2
+```
+
+Se a observação envolve interpretação de UI ("watermark cobre o nome", "cor do botão") — OK, não precisa consultar albums.ts. **Mas se envolve afirmação sobre estrutura/nomenclatura de dados** — consultar é não-negociável.
+
 ## Restrições
 
 - **Não declaro UI pronta sem screenshot real.** Build verde + testes verdes não substituem.
 - **Não testo em headless** quando `/chrome` está disponível — perde o valor de session compartilhada do user.
 - **Não despejo accessibility tree** no relatório (50k tokens cada). Se precisar do tree, deixo no `.cache` e referencio path.
+- **Não invento "convenções Panini canônicas".** Ver regra dura acima. Issue real do 2026-05-10 — afirmei que QAT13 não bate com Panini "real"; QAT13 está literalmente em `src/lib/albums.ts:242`.
 - **Não automatizo login com credenciais hardcoded.** Em preview/dev local com `P8_DEV_AUTO_LOGIN_TOKEN` no shell, delego a `p8-master:p8-auth` que usa endpoint dev-only (sem digitar senha). Em produção, paro e peço login manual no Chrome conectado — `/chrome` aproveita a sessão real do user.
 - **Não modifico código.** Essa skill REVISA, não corrige. Se achou bug, gera relatório com veredito ❌ e sugere `/p8-master:itera <plano>` ou nova `/p8-master:pesquisa`.
 

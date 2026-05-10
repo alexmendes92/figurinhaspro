@@ -190,6 +190,55 @@ Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [0.5.0] — 2026-05-10
+
+### Adicionado (Fase 5 — Skills domínio P8 + agents + scripts infra)
+
+- 8 skills domínio P8 (todas em PT-BR, formato pushy):
+  - `p8-master:p8-snapshot` — extrai 6 seções (Modelo Negócio, Entidades, Stack, Custom Events, Páginas, Design) → `product-snapshot.md`
+  - `p8-master:p8-stripe-sync` — smoke E2E Stripe webhook (checkout/invoice/subscription), aborta se key live, valida signature
+  - `p8-master:p8-prisma-migrate` — wrapper migrate/push com diff antes de aplicar, bloqueia push em prod
+  - `p8-master:p8-deploy` — orquestra deploy Vercel com 7 pré-checks (gate, push sync, schema drift, env vars críticas), gate humano Akita-style
+  - `p8-master:p8-plan-limits-audit` — audita gates desabilitados em `src/lib/plan-limits.ts`, lista callers, sugere plano de restauração
+  - `p8-master:p8-rate-limit-design` — pesquisa libs (Upstash, in-memory, Vercel WAF) + gera plano de implementação
+  - `p8-master:p8-sentry-health` — audita config Sentry inativa, smoke test pra ativação
+  - `p8-master:p8-custom-album` — valida parser de stickers (ranges, prefixos), slug `custom_*`, conversão `CustomAlbum` → `Album`
+- 2 sub-agents bundled:
+  - `p8-domain-expert` (Sonnet) — conhece produto/stack/modelos/padrões P8 sem re-pesquisar
+  - `deploy-watcher` (Sonnet) — monitora deployments Vercel pós-deploy (build → ready, smoke, runtime logs 2min, sugere rollback)
+- 3 scripts PowerShell:
+  - `scripts/stripe-smoke.ps1` — wrapper `stripe trigger` + parse webhook log + cleanup
+  - `scripts/prisma-diff-guard.ps1` — `prisma migrate diff` + prompt antes de aplicar, dupla confirmação em prod, bloqueia `migrate reset`
+  - `scripts/vercel-deploy-prod.ps1` — 7 pré-checks (working tree, branch, push sync, tests, tsc, build, schema drift) + gate humano + deploy
+- 4 references:
+  - `references/stripe-flows.md` — checkout/subscription/customer-portal + webhook event types + signature validation + env vars + testes locais
+  - `references/sentry-setup.md` — passo-a-passo ativação + smoke test + tags úteis + Performance/Replay + alertas
+  - `references/neon-prisma-adapter.md` — WebSocket Pool vs HTTP, Lazy Proxy, generator novo `prisma-client`, quirks de migration, performance tips
+  - `references/windows-quirks.md` — paths absolutos, encoding cp1252 → UTF-8, PowerShell quirks, Stripe CLI Windows, hooks execution
+- 3 evals JSON:
+  - `evals/p8-stripe-sync.evals.json` — 4 casos (happy path, detecta sk_live_, signature failure, gaps conhecidos)
+  - `evals/lessons-audit.evals.json` — 4 casos (erros recorrentes, exclusão self-audit, respeita rejections, sem dados)
+  - `evals/stay-current.evals.json` — 5 casos (skip fresh, fetch stale, detecta crítico, offline gracioso, cita fontes)
+
+### Atualizado
+
+- `tests/integration/test_skill_orchestrator.ps1` agora valida 21 skills (+ 8 domínio P8), 11 agents (+ 2 P8), 12 scripts (+ 3 P8), 9 references (+ 4 P8)
+
+### Validação
+
+Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
+- 37/37 testes pytest verde
+- 2/2 PowerShell integration suites verde
+- Skill orchestrator valida 21 skills + 11 agents + 12 scripts + 9 references + state
+
+### Pendências (entram na fase final)
+
+- Documentação completa em `docs/` — Fase 6
+- Hardening + eat your own dogfood
+- Bump para v1.0.0 ao final
+
+---
+
 ## [Unreleased]
 
 ### Planejado

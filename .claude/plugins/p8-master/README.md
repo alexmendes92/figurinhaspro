@@ -18,14 +18,15 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 
 ## Status
 
-- **Versão:** 0.4.0 (Fase 1 + 2 + 3 + 4 — SMA core + utilities + Oracle wrappers + Self-improvement + bateria de testes verde)
+- **Versão:** 0.5.0 (Fases 1-5 — SMA + Oracle + Self-improvement + Domínio P8 + bateria de testes verde)
 - **Data:** 2026-05-10
 - **Plano:** [planeje-um-plugin-cosmic-sedgewick.md](C:\Users\conta\.claude\plans\planeje-um-plugin-cosmic-sedgewick.md)
 - **Suite de testes:** `pwsh -File tests/run-all.ps1` — 37/37 pytest + 2/2 integration verde
-- **Skills:** 17 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle wrappers + 4 Self-improvement + 1 placeholder)
-- **Agents:** 9 (3 SMA + 6 Oracle)
-- **Scripts:** 9 (2 PS bootstrap + 7 Python)
+- **Skills:** 21 (orquestrador + 5 SMA core + 4 SMA utilities + 2 Oracle + 4 Self-improvement + 8 Domínio P8)
+- **Agents:** 11 (3 SMA + 6 Oracle + 2 P8)
+- **Scripts:** 12 (2 PS bootstrap + 7 Python + 3 PS infra P8)
 - **Hooks:** 6 PowerShell
+- **References:** 9 (4 base + canonical-sources + 4 P8 infra)
 
 ### Fase 1 entregue
 
@@ -68,10 +69,18 @@ Plugin canônico de governança, planejamento, implementação e auto-melhoria p
 - [x] `state/last-update.json` placeholder + `state/sessions/.gitkeep` + `state/aggregates/.gitkeep`
 - [x] +19 testes pytest (37/37 verde)
 
+### Fase 5 entregue
+
+- [x] 8 skills domínio P8: `p8-snapshot`, `p8-stripe-sync`, `p8-prisma-migrate`, `p8-deploy`, `p8-plan-limits-audit`, `p8-rate-limit-design`, `p8-sentry-health`, `p8-custom-album`
+- [x] 2 sub-agents: `p8-domain-expert` (Sonnet, conhece produto), `deploy-watcher` (Sonnet, monitora Vercel)
+- [x] 3 scripts PS1: `stripe-smoke.ps1`, `prisma-diff-guard.ps1`, `vercel-deploy-prod.ps1`
+- [x] 4 references: `stripe-flows.md`, `sentry-setup.md`, `neon-prisma-adapter.md`, `windows-quirks.md`
+- [x] 3 evals adicionais
+- [x] Suite verde (37 pytest + 2 integration)
+
 ### Próximas fases
 
-- **Fase 5** — Skills domínio P8 (snapshot, stripe-sync, prisma-migrate, deploy, plan-limits-audit, rate-limit-design, sentry-health, custom-album)
-- **Fase 6** — Documentação completa, CHANGELOG, hardening, eat your own dogfood
+- **Fase 6** — Documentação completa em `docs/`, CHANGELOG fechado, hardening, eat your own dogfood, bump v1.0.0
 
 ---
 

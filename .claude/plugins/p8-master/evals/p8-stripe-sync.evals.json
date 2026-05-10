@@ -1,0 +1,51 @@
+{
+  "_comment": "Evals da skill p8-master:p8-stripe-sync. Formato Anthropic skill-creator.",
+  "skill": "p8-master:p8-stripe-sync",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "stripe-checkout-completed-happy-path",
+      "input": "rodar smoke E2E do Stripe webhook checkout.session.completed",
+      "preconditions": [
+        "Stripe CLI instalado",
+        "STRIPE_SECRET_KEY=sk_test_*** em .env.local",
+        "STRIPE_WEBHOOK_SECRET=whsec_*** em .env.local",
+        "Dev server rodando em localhost:3009"
+      ],
+      "expected_steps": [
+        "Pré-checks (Stripe CLI, key dev, server up)",
+        "stripe listen --forward-to localhost:3009/api/stripe/webhook em background",
+        "stripe trigger checkout.session.completed",
+        "stripe logs tail por 10-15s",
+        "Validação webhook 200 OK",
+        "Validação Order PAID criada"
+      ],
+      "expected_keywords": ["pré-checks", "200 OK", "Order", "PAID"],
+      "min_score": 0.9
+    },
+    {
+      "id": "stripe-detects-prod-key",
+      "input": "rodar smoke quando STRIPE_SECRET_KEY=sk_live_*** está em .env.local",
+      "expected_behavior": "Skill ABORTA com mensagem 'soh dev', exit code 3",
+      "expected_keywords": ["BLOQUEADO", "sk_live_", "soh dev"],
+      "min_score": 1.0
+    },
+    {
+      "id": "stripe-webhook-signature-failure",
+      "input": "rodar smoke quando webhook handler tem bug de signature",
+      "preconditions": [
+        "Webhook handler chama JSON.parse antes de stripe.webhooks.constructEvent (anti-padrão)"
+      ],
+      "expected_behavior": "Smoke detecta 400 (signature invalid), reporta path:linha do bug em src/app/api/stripe/webhook/route.ts",
+      "expected_keywords": ["FAIL", "400", "signature"],
+      "min_score": 0.85
+    },
+    {
+      "id": "stripe-detects-known-gaps",
+      "input": "rodar smoke verificando idempotência",
+      "expected_behavior": "Reporta gap conhecido 'sem idempotência' (Order pode duplicar em retry) em seção 'gaps detectados'",
+      "expected_keywords": ["idempotência", "duplicar", "retry"],
+      "min_score": 0.8
+    }
+  ]
+}

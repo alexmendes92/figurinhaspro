@@ -128,6 +128,31 @@ foreach ($skill in @("lessons-audit", "skill-creator", "stay-current", "update-c
     }
 }
 
+Write-Host ""
+Write-Host "=== Teste 4e: 8 skills dominio P8 (Fase 5) ==="
+foreach ($skill in @(
+    "p8-snapshot", "p8-stripe-sync", "p8-prisma-migrate", "p8-deploy",
+    "p8-plan-limits-audit", "p8-rate-limit-design", "p8-sentry-health", "p8-custom-album"
+)) {
+    $path = Join-Path $PluginRoot "skills/$skill/SKILL.md"
+    if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex "p8-master:$skill") {
+        Write-Host "  PASS: $skill" -ForegroundColor Green
+    } else {
+        $failures++
+    }
+}
+
+Write-Host ""
+Write-Host "=== Teste 4f: 2 sub-agents P8 (Fase 5) ==="
+foreach ($agent in @("p8-domain-expert", "deploy-watcher")) {
+    $path = Join-Path $PluginRoot "agents/$agent.md"
+    if (Test-FrontmatterField -FilePath $path -Field "name" -ExpectedValueRegex $agent) {
+        Write-Host "  PASS: $agent" -ForegroundColor Green
+    } else {
+        $failures++
+    }
+}
+
 # Teste 5: hooks core (Fase 1+2)
 Write-Host ""
 Write-Host "=== Teste 5: hooks PowerShell ==="
@@ -152,7 +177,8 @@ foreach ($script in @(
     "thoughts-init.ps1", "spec-metadata.ps1",
     "validate-frontmatter.py", "inventory.py",
     "grep-evidence.py", "load-prior-reports.py",
-    "currentdate-gap.py", "detect-repeat-tools.py", "lessons-extract.py"
+    "currentdate-gap.py", "detect-repeat-tools.py", "lessons-extract.py",
+    "stripe-smoke.ps1", "prisma-diff-guard.ps1", "vercel-deploy-prod.ps1"
 )) {
     $path = Join-Path $PluginRoot "scripts/$script"
     if (Test-Path $path) {
@@ -168,7 +194,10 @@ Write-Host "=== Teste 7: references + state ==="
 foreach ($ref in @(
     "references/p8-glossario.md", "references/stack-cheatsheet.md",
     "references/workflow-sma.md", "references/workflow-akita-bootstrap.md",
-    "references/canonical-sources.md", "state/last-update.json"
+    "references/canonical-sources.md", "references/stripe-flows.md",
+    "references/sentry-setup.md", "references/neon-prisma-adapter.md",
+    "references/windows-quirks.md",
+    "state/last-update.json"
 )) {
     $path = Join-Path $PluginRoot $ref
     if (Test-Path $path) {

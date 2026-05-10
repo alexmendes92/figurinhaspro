@@ -89,6 +89,10 @@ Modulo admin-only (gate via `ADMIN_EMAIL` env var em producao). Rotas, sub-modul
 ## Sincronizacao global
 Alteracao estrutural (porta, stack, deploy, servico compartilhado) → atualizar CLAUDE.md da raiz Arena Cards + propagar downstream. Ver `../.claude/rules/sync-global.md` na raiz Arena Cards.
 
+## Auth em testes de UI (skill p8-auth)
+
+Endpoint `/api/dev/auto-login` em `src/app/api/dev/auto-login/` permite que a skill `p8-master:p8-auth` bootstrape sessão iron-session em **preview/dev** sem digitar senha. Triple-guard (`VERCEL_ENV !== production` + `DEV_AUTO_LOGIN_TOKEN` >=32 chars + `?token=` bate) retorna 404 fora de preview/dev. Em produção, a skill pausa e pede login manual. Configuração: ver [`docs/dev-auto-login.md`](docs/dev-auto-login.md). Decisão arquitetural: ver [`.claude/plugins/p8-master/references/auth-strategy.md`](.claude/plugins/p8-master/references/auth-strategy.md).
+
 ## Testing + Spec Evolution (ADR 0005)
 
 Padrao obrigatorio: `RED (teste) → GREEN (codigo) → REFACTOR → UPDATE SPEC → COMMIT`.

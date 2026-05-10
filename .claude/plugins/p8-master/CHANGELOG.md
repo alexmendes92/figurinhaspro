@@ -239,6 +239,33 @@ Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [1.1.0] — 2026-05-10
+
+### Adicionado — skill `p8-master:p8-auth`
+
+Resolve trava em `/login?reason=session-expired` quando `ui-review` (ou outra skill com `/chrome`) chega em rota autenticada.
+
+- `skills/p8-auth/SKILL.md` — detecta URL atual (host pattern), classifica modo `local-dev / preview / prod`, escolhe estratégia:
+  - **local-dev e preview**: chama `GET /api/dev/auto-login?token=$P8_DEV_AUTO_LOGIN_TOKEN&next=<alvo>` (endpoint dev-only no app, triple-guard impede prod).
+  - **prod**: pausa fluxo, anuncia ao user, espera login manual no Chrome conectado. Nunca digita senha.
+- `references/auth-strategy.md` — decisão arquitetural, componentes, env vars, alternativas rejeitadas (magic link, header API key, cookie injection), rotação de token.
+- `skills/p8-master/SKILL.md` — linha nova no roteamento para triggers de auth.
+
+### Modificado
+
+- `skills/ui-review/SKILL.md` — pré-condição #4 invoca `p8-auth` quando rota é `/painel/*` e auth falhou. Restrição de "não automatizo login com credenciais hardcoded" reescrita para refletir delegação a `p8-auth` (que não digita senha — usa redirect).
+
+### Lado app (acoplado, mesmo commit no repo P8)
+
+Endpoint `/api/dev/auto-login` shipado em `src/app/api/dev/auto-login/` com:
+- `handler.ts` — `evaluateAutoLogin()` função pura, triple-guard, `sanitizeNextPath()` contra open-redirect.
+- `handler.test.ts` — 8 casos cobrindo matriz de guards.
+- `route.ts` — wrapper Next 16 GET, resolve seller, `createSession`, redirect 302, log Vercel.
+- `src/lib/env.ts` — schema Zod para `DEV_AUTO_LOGIN_TOKEN` (min 32 chars, optional).
+- `docs/dev-auto-login.md` — manual de configuração e auditoria.
+
+---
+
 ## [1.0.0] — 2026-05-10 🎉
 
 ### Adicionado (Fase 6 — Documentação completa + hardening + v1.0.0)

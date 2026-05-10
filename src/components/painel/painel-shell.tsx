@@ -214,6 +214,7 @@ const mobileNav: NavItem[] = [
   operationNav[2],
   operationNav[3],
   toolsNav[0],
+  toolsNav[1],
 ];
 
 export default function PainelShell({

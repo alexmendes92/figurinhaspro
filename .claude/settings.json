@@ -3,14 +3,6 @@
     "type": "command",
     "command": "echo \"ACE | $(git branch --show-current 2>/dev/null || echo no-git)\""
   },
-  "extraKnownMarketplaces": {
-    "p8-local": {
-      "source": {
-        "source": "directory",
-        "path": "./.claude"
-      }
-    }
-  },
   "permissions": {
     "allow": [
       "Read",

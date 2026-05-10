@@ -38,34 +38,44 @@ A diferenciação preview vs prod é puramente pelo host — não confio em quer
 
 ### Requisitos (peço ao user antes de tentar)
 
-Skill precisa **duas env vars no shell que rodou `claude`**:
+Skill precisa **env vars no shell que rodou `claude`**:
 
-- `P8_DEV_AUTO_LOGIN_TOKEN` — bate com `DEV_AUTO_LOGIN_TOKEN` configurado no app (`.env.local` ou Vercel env preview). Gerado com `openssl rand -hex 32`.
+- `P8_DEV_AUTO_LOGIN_TOKEN` (obrigatório em qualquer ambiente que não-prod) — bate com `DEV_AUTO_LOGIN_TOKEN` configurado no app (`.env.local` ou Vercel env preview). Gerado com `openssl rand -hex 32`.
 - `P8_DEV_AUTO_LOGIN_EMAIL` (opcional) — email do seller alvo. Default: primeiro Seller do banco.
+- `P8_VERCEL_BYPASS_TOKEN` (obrigatório SÓ se host é preview Vercel `*-album-digital-*.vercel.app`) — Protection Bypass for Automation gerado no Vercel Dashboard → Project Settings → Deployment Protection. Sem ele, preview retorna 401 antes de chegar no Next.js (Vercel SSO Protection bloqueia).
 
-Verifico via `process.env.P8_DEV_AUTO_LOGIN_TOKEN` (chamada Bash curtíssima: `echo $env:P8_DEV_AUTO_LOGIN_TOKEN | wc -c`, sem ecoar o valor).
+Verifico via `process.env.*` (chamada Bash curtíssima: `echo ${#P8_DEV_AUTO_LOGIN_TOKEN}` — só comprimento, sem ecoar valor).
 
-Se ausente, **caio pro Caminho B** (pede login manual) e aviso o user como configurar:
-> Auto-login indisponível — `P8_DEV_AUTO_LOGIN_TOKEN` não está no shell. Ver `docs/dev-auto-login.md`. Pedindo login manual agora.
+Se `P8_DEV_AUTO_LOGIN_TOKEN` ausente, **caio pro Caminho B** (pede login manual) e aviso o user como configurar.
+
+Se host é preview Vercel E `P8_VERCEL_BYPASS_TOKEN` ausente, **também caio pro Caminho B** com mensagem específica:
+> Preview Vercel tem SSO Protection ativo. Configure `P8_VERCEL_BYPASS_TOKEN` no shell antes de invocar p8-auth. Ver `docs/dev-auto-login.md` seção "Vercel SSO bypass".
 
 ### Execução
 
 1. Capturo URL alvo: `$ARGUMENTS` se fornecido, senão a URL pré-redirect (extraio do path do `/login?next=...` se presente, ou uso `/painel`).
-2. Monto URL:
-   ```
-   <base>/api/dev/auto-login?token=<token>&next=<urlEncoded(alvo)>
-   ```
-   Onde `<base>` é o host atual (mesmo origin onde está logando, pra evitar mismatch de cookie domain).
-3. `navigate(url=<URL completa>, tabId=<tab atual>)`.
-4. Espero 2s.
-5. Confirmo sucesso lendo URL atual — deve estar em `<alvo>` (não em `/login`).
-6. Devolvo controle pra skill chamadora.
+2. Detecto se é preview Vercel pelo host pattern (`*-album-digital-*.vercel.app` mas NÃO `album-digital-ashen.vercel.app` que é prod alias).
+3. Monto URL conforme ambiente:
+   - **localhost ou preview com bypass:**
+     ```
+     <base>/api/dev/auto-login?token=<DEV_AUTO_LOGIN_TOKEN>&next=<urlEncoded(alvo)>
+     ```
+     + acrescento `&x-vercel-protection-bypass=<VERCEL_BYPASS>&x-vercel-set-bypass-cookie=true` SE host é preview Vercel.
+   - **localhost** (sem Vercel SSO): só os params base.
+
+   O param `x-vercel-set-bypass-cookie=true` setá cookie persistente — requests subsequentes na mesma sessão browser passam direto sem precisar do bypass query.
+
+4. `navigate(url=<URL completa>, tabId=<tab atual>)`.
+5. Espero 2s.
+6. Confirmo sucesso lendo URL atual — deve estar em `<alvo>` (não em `/login` nem em página de Vercel SSO).
+7. Devolvo controle pra skill chamadora.
 
 ### Segurança operacional
 
-- **Token aparece na URL no transcript da sessão.** Aceitável porque (a) triple-guard impede uso em prod, (b) skill explicitamente avisa o user pra rotacionar token periodicamente.
-- **Não loggo o token em mensagem texto.** Só passo via parâmetro do `navigate`.
-- **Não armazeno o token em arquivo.** Lê do env var a cada execução.
+- **Tokens aparecem na URL no transcript da sessão.** Aceitável porque (a) triple-guard do endpoint `/api/dev/auto-login` impede uso em prod, (b) Vercel bypass token é per-project e rotacionável, (c) skill explicitamente avisa o user pra rotacionar periodicamente.
+- **Não loggo tokens em mensagem texto.** Só passo via parâmetro do `navigate`.
+- **Não armazeno tokens em arquivo.** Lê do env var a cada execução.
+- **Rotação recomendada**: ambos tokens (DEV_AUTO_LOGIN e VERCEL_BYPASS) a cada 30 dias ou após qualquer suspeita de leak (transcripts compartilhados, screenshots de browser bar).
 
 ## Caminho B: pausa + login manual (produção)
 

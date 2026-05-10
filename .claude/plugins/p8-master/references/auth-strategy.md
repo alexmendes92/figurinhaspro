@@ -77,8 +77,23 @@ Cobertos por 2 testes específicos. Default: `/painel`.
 |---|---|---|
 | `P8_DEV_AUTO_LOGIN_TOKEN` | nenhum | Sem ela, `p8-auth` cai para Caminho B (manual) |
 | `P8_DEV_AUTO_LOGIN_EMAIL` | primeiro Seller por createdAt | Para escolher seller específico em multi-tenant |
+| `P8_VERCEL_BYPASS_TOKEN` | nenhum | **Obrigatório se alvo é preview Vercel.** Vercel Dashboard → Settings → Deployment Protection → Protection Bypass for Automation. Sem ele, preview retorna 401 antes do handler. |
 
-Skill **lê do shell, não do chat**. Token nunca passa por mensagem do user.
+Skill **lê do shell, não do chat**. Tokens nunca passam por mensagem do user.
+
+### Caminho A na prática (preview Vercel)
+
+```
+URL construída pela skill:
+https://album-digital-<hash>-contato-9594s-projects.vercel.app
+  /api/dev/auto-login
+  ?token=<DEV_AUTO_LOGIN_TOKEN>            # passa triple-guard do endpoint
+  &next=<urlEncoded(alvo)>                 # destino pós-redirect
+  &x-vercel-protection-bypass=<VERCEL_BYPASS>  # bypassa SSO Vercel
+  &x-vercel-set-bypass-cookie=true         # cookie persistente, sticky
+```
+
+Resposta esperada: 307 redirect para `<alvo>` + dois Set-Cookie (Vercel bypass + iron-session). Requests subsequentes na sessão browser passam direto sem o bypass query.
 
 ## Rotação de token
 

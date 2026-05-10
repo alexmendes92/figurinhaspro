@@ -239,6 +239,35 @@ Suite (`pwsh -File tests/run-all.ps1`) **TUDO PASSOU**:
 
 ---
 
+## [1.2.2] — 2026-05-10
+
+### Adicionado
+
+- **Vercel SSO Protection bypass** em `p8-auth` (Pendência #3 do handoff `edcbb7b`). Skill agora detecta preview Vercel (`*-album-digital-*.vercel.app` exceto prod alias) e acrescenta `?x-vercel-protection-bypass=<token>&x-vercel-set-bypass-cookie=true` à URL de auto-login. Sem isso, preview retornava 401 antes do handler.
+- Nova env var shell: `P8_VERCEL_BYPASS_TOKEN` (obrigatória só para preview Vercel).
+- Seção "Vercel SSO bypass" em `docs/dev-auto-login.md` com: como gerar via Dashboard, o que o bypass cobre (Password/SSO/Trusted IPs/Bot) e o que NÃO cobre (DDoS ativo/rate limits durante ataques), rotação.
+- Seção "Caminho A na prática" em `references/auth-strategy.md` mostrando a URL completa construída.
+
+### Pesquisa de referência (via /stay-current 2026-05-10)
+
+- Doc canônica: `vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation`
+- Permissão necessária para criar: Project Administrator role
+
+---
+
+## [1.2.1] — 2026-05-10
+
+### Corrigido (hardening pós-baseline)
+
+- **Gap #1**: `plugin.json` tinha 8 campos inválidos no schema canônico (`scripts`, `references`, `templates`, `evals`, `scope`, `entry_point`, `min_claude_code_version`, `activation`). Causaram indexação parcial — só 3 dos 11 agents apareciam (`explorador`, `historiador`, `revisor`). Limpado para usar só campos válidos. Convenção sobre configuração: Claude descobre `agents/`, `skills/`, `hooks/` automaticamente.
+- **Gap #2**: Task notifications não expõem `model`. Adicionada instrumentação manual em todos os 11 agents: cada um agora printa `[runtime] subagent=<name> model=<model>` (+ `effort=high` para Opus) como primeira linha do output. Permite verificação direta de qual modelo realmente rodou.
+
+### Limitação conhecida
+
+- Edits em `agents/*.md` e `plugin.json` só são aplicados em **restart do Claude Code** (loaded at session start, sem hot-reload). Sessão atual em que o fix foi shipado ainda não vê as mudanças — validação cai para próxima sessão.
+
+---
+
 ## [1.2.0] — 2026-05-10
 
 ### Adicionado

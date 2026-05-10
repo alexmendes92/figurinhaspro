@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "p8-master",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Plugin canônico P8-FigurinhasPro: SMA (System Master ACE) + Akita Bootstrap + Oracle + auto-melhoria. Pipeline pesquisa → plano → valida → implementa → itera + commit/pr/handoff/hurdle. 11 agents bundled (2 Opus + 4 Sonnet + 5 Haiku) com routing explícito por tier. Auto-ativa em sessão dentro do projeto via SessionStart hook.",
   "author": {
     "name": "Alex (Arena Cards)",

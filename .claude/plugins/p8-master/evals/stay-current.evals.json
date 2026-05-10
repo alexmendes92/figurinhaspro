@@ -1,0 +1,54 @@
+{
+  "_comment": "Evals da skill p8-master:stay-current. Formato Anthropic skill-creator.",
+  "skill": "p8-master:stay-current",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "stay-current-skip-fresh",
+      "input": "rodar stay-current quando state/last-update.json tem last_checked há 1h",
+      "preconditions": [
+        "currentdate-gap.py retorna gap_days < 1"
+      ],
+      "expected_behavior": "Skill PULA silenciosa (sem fetch, sem custo)",
+      "expected_keywords": ["skip", "fresh"],
+      "min_score": 1.0
+    },
+    {
+      "id": "stay-current-fetches-stale-domains",
+      "input": "rodar stay-current quando 5 domínios têm gap > 14 dias",
+      "preconditions": [
+        "state/last-update.json tem nextjs/vercel/stripe/prisma/sentry com last_checked > 14 dias"
+      ],
+      "expected_behavior": "Skill dispara pesquisador em paralelo nos 5 domínios stale, gera diff em thoughts/atualizacoes/",
+      "expected_artifacts": ["thoughts/atualizacoes/*-libs.md"],
+      "expected_frontmatter": {
+        "tipo": "atualizacao",
+        "status": "ativo"
+      },
+      "expected_keywords": ["nextjs", "vercel", "stripe", "prisma", "sentry"],
+      "expected_sources_cited_min": 5,
+      "min_score": 0.85
+    },
+    {
+      "id": "stay-current-detects-critical",
+      "input": "rodar stay-current quando há security advisory em iron-session",
+      "expected_behavior": "Skill classifica como CRÍTICO, notifica user no início, propõe /p8-master:plano de upgrade",
+      "expected_keywords": ["crítico", "security", "advisory", "/p8-master:plano"],
+      "min_score": 0.9
+    },
+    {
+      "id": "stay-current-handles-offline",
+      "input": "rodar stay-current quando rede está down",
+      "expected_behavior": "Skill aborta gracioso, registra [OFFLINE] em state, não trava sessão",
+      "expected_keywords": ["OFFLINE", "rede", "graceful"],
+      "min_score": 1.0
+    },
+    {
+      "id": "stay-current-cites-sources",
+      "input": "rodar stay-current --nextjs",
+      "expected_behavior": "Diff cita URL nextjs.org/blog ou github.com/vercel/next.js/releases + data de acesso",
+      "expected_keywords": ["nextjs.org", "github.com/vercel/next.js"],
+      "min_score": 0.95
+    }
+  ]
+}

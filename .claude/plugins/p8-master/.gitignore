@@ -1,0 +1,34 @@
+# Plugin P8-MASTER — gitignore local
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest
+.pytest_cache/
+
+# Estado do plugin (cache local, nao compartilhado)
+state/sessions/*.jsonl
+state/aggregates/*.json
+state/last-gap-check.log
+state/rejections.jsonl
+state/timeouts.jsonl
+state/last-claude-docs-update.json
+state/detected-patterns.json
+!state/sessions/.gitkeep
+!state/aggregates/.gitkeep
+# Template seed do plugin — versionado:
+!state/last-update.json
+
+# Scripts auto-gerados (criados por skill-creator) — versionar caso a caso
+scripts/auto-generated/*.PROPOSED
+
+# Output local de testes
+tests/results/
+.coverage
+coverage.xml
+
+# Logs locais
+*.log

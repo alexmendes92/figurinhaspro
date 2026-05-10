@@ -1,0 +1,18 @@
+{
+  "_comment": "Cache de stay-current. Atualizado por scripts/currentdate-gap.py + skill stay-current. NAO commitado em prod (gitignored), mas template inicial vai pro repo.",
+  "last_checked": null,
+  "checked_at": null,
+  "domains": {
+    "nextjs": {"last_checked": null},
+    "vercel": {"last_checked": null},
+    "stripe": {"last_checked": null},
+    "prisma": {"last_checked": null},
+    "sentry": {"last_checked": null},
+    "react": {"last_checked": null},
+    "tailwind": {"last_checked": null},
+    "zod": {"last_checked": null},
+    "iron-session": {"last_checked": null}
+  },
+  "achados_criticos": 0,
+  "achados_total": 0
+}

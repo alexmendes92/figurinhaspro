@@ -15,6 +15,7 @@ import { vi } from "vitest";
  * BizInitiative, BizMilestone, BizTask, BizKpi, BizKpiSnapshot
  */
 export const prismaMock = {
+  $transaction: vi.fn(),
   seller: {
     findUnique: vi.fn(),
     findMany: vi.fn(),
@@ -128,10 +129,10 @@ export const prismaMock = {
 
 /**
  * Mock global do módulo @/lib/db
- * Qualquer import de { prisma } from "@/lib/db" recebe este mock
+ * Qualquer import de { db } from "@/lib/db" recebe este mock
  */
 vi.mock("@/lib/db", () => ({
-  prisma: prismaMock,
+  db: prismaMock,
 }));
 
 /**

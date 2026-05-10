@@ -1,4 +1,5 @@
 @AGENTS.md
+@.claude/plugins/p8-master/skills/p8-master/SKILL.md
 
 # FigurinhasPro
 

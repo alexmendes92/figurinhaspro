@@ -1,0 +1,62 @@
+{
+  "_comment": "Evals da skill p8-master:implementa. Formato Anthropic skill-creator.",
+  "skill": "p8-master:implementa",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "implementa-aborta-rascunho",
+      "input": "implementar thoughts/planos/2026-05-10-feature-x.md",
+      "preconditions": [
+        "thoughts/planos/2026-05-10-feature-x.md tem status: rascunho"
+      ],
+      "expected_behavior": "skill aborta, pede aprovação humana antes de promover para status: ativo",
+      "min_score": 1.0
+    },
+    {
+      "id": "implementa-tdd-cycle",
+      "input": "implementar thoughts/planos/2026-05-10-email-resend.md fase 1",
+      "preconditions": [
+        "thoughts/planos/2026-05-10-email-resend.md tem status: ativo",
+        "Working tree limpo (git status sem mudanças)"
+      ],
+      "expected_steps_in_order": [
+        "RED — escrever teste que falha",
+        "GREEN — implementar código mínimo",
+        "REFACTOR — extrair em micro-passos",
+        "Gate: npm run test → tsc --noEmit → npm run build",
+        "Commit com mensagem imperativa"
+      ],
+      "expected_commit_message_pattern": "^(feat|fix|refactor|test|docs|chore)\\(\\w+\\): .+",
+      "min_score": 0.9
+    },
+    {
+      "id": "implementa-aborta-gate-vermelho",
+      "input": "implementar plano com gate vermelho",
+      "preconditions": [
+        "Plano ativo, fase 1 implementada",
+        "npm run test retorna vermelho"
+      ],
+      "expected_behavior": "skill aborta, NÃO commita, sugere /p8-master:itera",
+      "expected_NOT_actions": [
+        "git commit",
+        "alterar teste para passar"
+      ],
+      "min_score": 1.0
+    },
+    {
+      "id": "implementa-deploy-gate-humano",
+      "input": "implementar plano até o final, deploy",
+      "preconditions": [
+        "Plano completo, todas as fases verdes, push origin feito"
+      ],
+      "expected_behavior": "skill PERGUNTA antes de vercel deploy --prod, NÃO faz automaticamente (Akita override)",
+      "expected_question_keywords": [
+        "deploy",
+        "prod",
+        "aprovar",
+        "[s/n]"
+      ],
+      "min_score": 1.0
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { checkOrderLimit } from "@/lib/plan-limits";
+import { createQuoteWithDecrement, InventoryNotFoundError, PriceManipulationError } from "@/lib/quote-service";
 
 // GET — lista pedidos do revendedor
 export async function GET(req: NextRequest) {
@@ -71,23 +72,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const totalPrice = data.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-
-    const order = await db.order.create({
-      data: {
-        sellerId: seller.id,
-        customerName: data.customerName,
-        customerPhone: data.customerPhone || null,
-        customerEmail: data.customerEmail || null,
-        channel: data.channel,
-        notes: data.notes || null,
-        totalPrice,
-        items: {
-          create: data.items,
-        },
-      },
-      include: { items: true },
-    });
+    const order = await createQuoteWithDecrement(
+      seller.id,
+      data.customerName,
+      data.customerPhone || null,
+      data.customerEmail || null,
+      data.items,
+      data.channel
+    );
 
     return NextResponse.json(order);
   } catch (error) {
@@ -95,6 +87,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Dados inválidos", details: error.issues },
         { status: 400 }
+      );
+    }
+    if (error instanceof PriceManipulationError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 422 }
+      );
+    }
+    if (error instanceof InventoryNotFoundError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 409 }
+      );
+    }
+    if (error instanceof Error && error.message === "Seller not found") {
+      return NextResponse.json(
+        { error: "Loja não encontrada" },
+        { status: 404 }
       );
     }
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });

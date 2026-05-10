@@ -1,0 +1,46 @@
+{
+  "_comment": "Evals da skill p8-master:lessons-audit. Formato Anthropic skill-creator.",
+  "skill": "p8-master:lessons-audit",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "audit-detects-recurring-errors",
+      "input": "rodar lessons-audit em sessões com erro 'BLOQUEADO: git push --force' aparecendo 5x em 3 sessões",
+      "preconditions": [
+        "state/sessions/*.jsonl tem 3+ sessões nas últimas 15 dias",
+        "Erro repete em ≥3 ocorrências em ≥2 sessões"
+      ],
+      "expected_artifacts": ["thoughts/auto-melhoria/*-audit.md"],
+      "expected_frontmatter": {
+        "tipo": "auto-melhoria",
+        "status": "rascunho"
+      },
+      "expected_categories": ["a_erros_recorrentes"],
+      "expected_proposal_count_min": 1,
+      "min_score": 0.85
+    },
+    {
+      "id": "audit-excludes-self-audit-sessions",
+      "input": "rodar lessons-audit quando há sessão prévia que rodou /p8-master:lessons-audit",
+      "expected_behavior": "Skill EXCLUI sessões marcadas com selfAudit=true (ou que mencionam 'lessons-audit') do dataset",
+      "expected_log_keywords": ["sessions_skipped_self_audit"],
+      "min_score": 1.0
+    },
+    {
+      "id": "audit-respects-rejections",
+      "input": "rodar lessons-audit após proposta X foi rejeitada anteriormente",
+      "preconditions": [
+        "state/rejections.jsonl contém entrada pra padrão X"
+      ],
+      "expected_behavior": "Skill NÃO re-propõe padrão X (já rejeitado)",
+      "min_score": 1.0
+    },
+    {
+      "id": "audit-no-data",
+      "input": "rodar lessons-audit em projeto sem state/sessions/",
+      "expected_behavior": "Skill retorna gracioso 'sessions_processed: 0' sem erro",
+      "expected_keywords": ["0", "sessions"],
+      "min_score": 1.0
+    }
+  ]
+}

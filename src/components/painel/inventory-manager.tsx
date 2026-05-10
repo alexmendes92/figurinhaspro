@@ -768,7 +768,7 @@ export default function InventoryManager({
 
       {/* Grid de figurinhas */}
       <div className="flex-1">
-        <div className="p-3 lg:p-4">
+        <div className="p-2 lg:p-3">
           {/* Barra de busca */}
           <div className="mb-3">
             <div className="relative">

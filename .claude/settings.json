@@ -46,6 +46,17 @@
     ]
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .claude/plugins/p8-master/hooks/session-start.ps1"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -62,6 +73,10 @@
           {
             "type": "command",
             "command": "bash -c '[ -f .claude/hooks/validate-thoughts.sh ] && bash .claude/hooks/validate-thoughts.sh || true'"
+          },
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .claude/plugins/p8-master/hooks/validate-thoughts.ps1"
           }
         ]
       }

@@ -11,6 +11,7 @@ import { getDefaultPrice, getStickerTypeConfig } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
 import { useDialog } from "@/lib/use-dialog";
 import { buildCounterText } from "./inventory-counter-text";
+import { parseQuantityInput } from "./inventory-quantity-parser";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -201,6 +202,22 @@ function StickerCard({
   const justSaved = lastSaved === sticker.code;
   const typeConf = getStickerTypeConfig(sticker.type);
 
+  const [editingQty, setEditingQty] = useState(false);
+  const [qtyDraft, setQtyDraft] = useState("");
+
+  function commitQty() {
+    const parsed = parseQuantityInput(qtyDraft, qty);
+    if (parsed.valid && parsed.shouldUpdate) {
+      updateQuantity(sticker.code, parsed.value);
+    }
+    setEditingQty(false);
+  }
+
+  function startEditingQty() {
+    setQtyDraft(String(qty));
+    setEditingQty(true);
+  }
+
   return (
     <div
       data-sticker-code={sticker.code}
@@ -319,12 +336,38 @@ function StickerCard({
             >
               −
             </button>
-            <span
-              className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400"
-              aria-label={`Quantidade ${qty}`}
-            >
-              {qty}
-            </span>
+            {editingQty ? (
+              <input
+                type="number"
+                inputMode="numeric"
+                value={qtyDraft}
+                onChange={(e) => setQtyDraft(e.target.value)}
+                onBlur={commitQty}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    commitQty();
+                  } else if (e.key === "Escape") {
+                    e.preventDefault();
+                    setEditingQty(false);
+                  }
+                }}
+                autoFocus
+                onFocus={(e) => e.target.select()}
+                className="min-w-[2rem] w-12 text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 bg-zinc-900 border border-zinc-700 rounded focus:outline-none focus:border-amber-500/40"
+                aria-label="Editar quantidade"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={startEditingQty}
+                className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 hover:text-amber-400 transition-colors cursor-text"
+                aria-label={`Quantidade ${qty} (clique para editar)`}
+                title="Clique para digitar a quantidade"
+              >
+                {qty}
+              </button>
+            )}
             <button
               type="button"
               onClick={() => updateQuantity(sticker.code, qty + 1)}

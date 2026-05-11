@@ -183,6 +183,7 @@ export default function PrecosEditor({
                           updatePrice(tc.type, val);
                         }
                       }}
+                      aria-label={`Preço global de ${tc.label}`}
                       className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     <div className="w-14 text-right">
@@ -315,6 +316,7 @@ export default function PrecosEditor({
                                 step="0.50"
                                 min="0.50"
                                 defaultValue={rule.price.toFixed(2)}
+                                aria-label={`Preço de ${getStickerTypeShortLabel(rule.stickerType)} para o álbum ${slug}`}
                                 onBlur={(e) => {
                                   const val = Number.parseFloat(e.target.value);
                                   if (!Number.isNaN(val) && val > 0 && val !== rule.price) {
@@ -404,6 +406,7 @@ export default function PrecosEditor({
                       value={newPrice}
                       onChange={(e) => setNewPrice(e.target.value)}
                       placeholder={getDefaultPrice(newStickerType).toFixed(2)}
+                      aria-label="Preço da nova regra"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") addAlbumRule();
                       }}

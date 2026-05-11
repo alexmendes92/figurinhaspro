@@ -1,8 +1,8 @@
 ---
 data: 2026-05-11
-versao: v4 (Fase 3 implementada via 10-agent fan-out: 2 Opus + 3 Sonnet + 5 Haiku + critico adversarial)
+versao: v5 (Fase 3 completa — 3.5 fechou gap dos 8 inputs em precos-* com aria-label/htmlFor)
 tipo: plano
-status: fase-3-parcial (3.1/3.2/3.3 completos; 3.4 com gap conhecido: 8 inputs em precos-* sem aria-label/htmlFor — labels visíveis adjacentes mitigam mas Lighthouse pode flaggar)
+status: fase-3-completa (3.1/3.2/3.3/3.4/3.5 deployados)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

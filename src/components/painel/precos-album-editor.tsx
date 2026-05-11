@@ -347,6 +347,7 @@ export default function PrecosAlbumEditor({
                           updateTypePrice(tc.type, val);
                         }
                       }}
+                      aria-label={`Preço de ${tc.label} para Copa ${albumYear}`}
                       className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     {hasOverride && (
@@ -544,6 +545,7 @@ function SectionRulesTab({
                         if (e.key === "Enter") handleSave(name);
                       }}
                       placeholder={editType === "FLAT" ? "5.00" : "1.00"}
+                      aria-label={`Valor do ajuste para a seção ${name}`}
                       className="!w-20 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold focus-ring"
                     />
                   </div>
@@ -722,6 +724,7 @@ function QuantityTiersTab({
                       min="0"
                       max="99"
                       defaultValue={tier.discount}
+                      aria-label={`Desconto em % a partir de ${tier.minQuantity} figurinhas`}
                       onBlur={(e) => {
                         const val = Number.parseFloat(e.target.value);
                         if (!Number.isNaN(val) && val >= 0 && val <= 99 && val !== tier.discount) {
@@ -782,8 +785,11 @@ function QuantityTiersTab({
           <p className="text-xs font-semibold text-accent-400 mb-3">Nova faixa de desconto</p>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div>
-              <label className="text-[10px] text-zinc-500 mb-1 block">A partir de (qtd)</label>
+              <label htmlFor="new-tier-qty" className="text-[10px] text-zinc-500 mb-1 block">
+                A partir de (qtd)
+              </label>
               <input
+                id="new-tier-qty"
                 type="number"
                 min="1"
                 value={newMinQty}
@@ -793,8 +799,11 @@ function QuantityTiersTab({
               />
             </div>
             <div>
-              <label className="text-[10px] text-zinc-500 mb-1 block">Desconto (%)</label>
+              <label htmlFor="new-tier-discount" className="text-[10px] text-zinc-500 mb-1 block">
+                Desconto (%)
+              </label>
               <input
+                id="new-tier-discount"
                 type="number"
                 min="0"
                 max="99"

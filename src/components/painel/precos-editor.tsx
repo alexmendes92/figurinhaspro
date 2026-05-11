@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   getDefaultPrice,
   getStickerTypeShortLabel,
@@ -332,13 +333,16 @@ export default function PrecosEditor({
                                   <span className="text-[10px] text-[var(--success)]">Salvo</span>
                                 )}
                               </div>
-                              <button
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
                                 onClick={() => deleteAlbumRule(slug, rule.stickerType)}
-                                className="w-6 h-6 rounded flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
+                                className="h-6 w-6 border-0 text-zinc-600 hover:text-red-400 [&_svg]:size-3.5"
                                 title="Remover regra"
+                                aria-label="Remover regra"
                               >
                                 <svg
-                                  className="w-3.5 h-3.5"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
@@ -350,7 +354,7 @@ export default function PrecosEditor({
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                   />
                                 </svg>
-                              </button>
+                              </Button>
                             </div>
                           </div>
                         );
@@ -406,19 +410,24 @@ export default function PrecosEditor({
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="sm"
                     onClick={addAlbumRule}
                     disabled={!newAlbumSlug || !newPrice}
-                    className="flex-1 py-2.5 sm:py-2 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-sm sm:text-xs font-semibold transition-colors active:bg-accent-400"
+                    className="flex-1"
                   >
                     Adicionar
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={() => setAddingAlbumRule(false)}
-                    className="px-4 py-2.5 sm:py-2 rounded-lg border border-zinc-700 text-sm sm:text-xs text-zinc-400 hover:text-white transition-colors active:bg-zinc-800"
                   >
                     Cancelar
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}

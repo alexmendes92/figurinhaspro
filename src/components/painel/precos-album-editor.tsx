@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import { STICKER_TYPE_CONFIG } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
@@ -349,18 +350,21 @@ export default function PrecosAlbumEditor({
                       className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
                     />
                     {hasOverride && (
-                      <button
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() =>
                           setConfirmDelete({
                             label: `regra de preço "${tc.label}"`,
                             action: () => deleteTypePrice(tc.type),
                           })
                         }
-                        className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
+                        className="h-7 w-7 border-0 text-zinc-600 hover:text-red-400 [&_svg]:size-3.5"
                         title="Remover e herdar global"
+                        aria-label="Remover regra de preço"
                       >
                         <svg
-                          className="w-3.5 h-3.5"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -372,7 +376,7 @@ export default function PrecosAlbumEditor({
                             d="M6 18L18 6M6 6l12 12"
                           />
                         </svg>
-                      </button>
+                      </Button>
                     )}
                     <div className="w-14 text-right">
                       {saving === key && (
@@ -545,18 +549,23 @@ function SectionRulesTab({
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="sm"
                     onClick={() => handleSave(name)}
-                    className="flex-1 py-1.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-semibold transition-colors"
+                    className="flex-1"
                   >
                     Salvar
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={() => setEditingSection(null)}
-                    className="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white transition-colors"
                   >
                     Cancelar
-                  </button>
+                  </Button>
                 </div>
               </div>
             ) : (
@@ -583,13 +592,16 @@ function SectionRulesTab({
                     {rule ? "Editar" : "Definir"}
                   </button>
                   {rule && (
-                    <button
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => onDelete(name)}
-                      className="w-6 h-6 rounded flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
+                      className="h-6 w-6 border-0 text-zinc-600 hover:text-red-400 [&_svg]:size-3"
                       title="Remover regra"
+                      aria-label="Remover regra"
                     >
                       <svg
-                        className="w-3 h-3"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -601,7 +613,7 @@ function SectionRulesTab({
                           d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -725,12 +737,15 @@ function QuantityTiersTab({
                       <span className="text-[10px] text-[var(--accent)] pulse-dot">...</span>
                     )}
                     {saved === key && <span className="text-[10px] text-[var(--success)]">✓</span>}
-                    <button
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => onDelete(tier.minQuantity)}
-                      className="w-6 h-6 rounded flex items-center justify-center text-zinc-600 hover:text-red-400 transition-colors"
+                      className="h-6 w-6 border-0 text-zinc-600 hover:text-red-400 [&_svg]:size-3.5"
+                      aria-label="Remover faixa"
                     >
                       <svg
-                        className="w-3.5 h-3.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -742,7 +757,7 @@ function QuantityTiersTab({
                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                         />
                       </svg>
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
@@ -794,19 +809,24 @@ function QuantityTiersTab({
             </div>
           </div>
           <div className="flex gap-2">
-            <button
+            <Button
+              type="button"
+              variant="primary"
+              size="sm"
               onClick={handleAdd}
               disabled={!newMinQty || !newDiscount}
-              className="flex-1 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-xs font-semibold transition-colors"
+              className="flex-1"
             >
               Adicionar
-            </button>
-            <button
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
               onClick={() => setAdding(false)}
-              className="px-4 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white transition-colors"
             >
               Cancelar
-            </button>
+            </Button>
           </div>
         </div>
       )}

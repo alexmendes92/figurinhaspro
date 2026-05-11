@@ -2,7 +2,7 @@
 data: 2026-05-11
 versao: v2 (pós /p8-master:valida + /p8-master:itera)
 tipo: plano
-status: fase-1-completa-aguardando-deploy
+status: fase-2-parcial (6/8 tasks commitadas — 2.1-2.6 ✅; 2.7+2.8 pendentes pra sessão nova)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

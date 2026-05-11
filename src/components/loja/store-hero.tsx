@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { Album, Sticker } from "@/lib/albums";
 import { imgUrl } from "@/lib/images";
 import styles from "./store-album-view.module.css";
@@ -95,12 +96,12 @@ export default function StoreHero({
             </div>
           </div>
           <div className={styles.heroCtas}>
-            <button onClick={onScrollToGrid} className={`${styles.btn} ${styles.btnPrimary}`}>
+            <Button type="button" variant="primary" size="lg" onClick={onScrollToGrid}>
               Ver figurinhas →
-            </button>
-            <button onClick={onOpenImport} className={`${styles.btn} ${styles.btnGhost}`}>
+            </Button>
+            <Button type="button" variant="ghost" size="lg" onClick={onOpenImport}>
               Colar minha lista
-            </button>
+            </Button>
           </div>
         </div>
 

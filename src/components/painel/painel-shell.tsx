@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import styles from "./painel-shell.module.css";
 import { MobileNav } from "./shell/mobile-nav";
 import type { NavItem } from "./shell/nav-types";
+import { Sidebar } from "./shell/sidebar";
 import { TopBar } from "./shell/topbar";
 
 interface SellerInfo {
@@ -139,51 +139,6 @@ const I = {
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
-  external: ({ className }: { className?: string }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-    </svg>
-  ),
-  menu: ({ className }: { className?: string }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  ),
-  logout: ({ className }: { className?: string }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-    </svg>
-  ),
-  spinner: ({ className }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" opacity="0.25" />
-      <path d="M4 12a8 8 0 018-8" fill="currentColor" opacity="0.75" />
-    </svg>
-  ),
 };
 
 const operationNav: NavItem[] = [
@@ -241,118 +196,30 @@ export default function PainelShell({
   const isStockDetail = pathname.startsWith("/painel/estoque/") && segments[0] !== "";
   const collapsed = isStockDetail;
 
-  const sidebarClass = [
-    styles.sidebar,
-    collapsed ? styles.sidebarNarrow : "",
-    mobileOpen ? styles.sidebarOpen : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const isActive = (item: NavItem) =>
-    item.exact ? pathname === item.href : pathname.startsWith(item.href);
-
-  function handleLogoutClick() {
-    setShowLogoutConfirm(true);
-  }
-
   async function confirmLogout() {
     setLoggingOut(true);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
   }
 
-  function renderNavItem(item: NavItem) {
-    const active = isActive(item);
-    const showBadge = item.href === "/painel/pedidos" && pendingOrders > 0;
-    return (
-      <Link
-        key={item.href}
-        href={item.href}
-        onClick={() => setMobileOpen(false)}
-        className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
-      >
-        <item.icon className={styles.navIcon} />
-        <span className={styles.navLabel}>{item.label}</span>
-        {showBadge && (
-          <span className={styles.navBadge}>{pendingOrders > 99 ? "99+" : pendingOrders}</span>
-        )}
-        {collapsed && <span className={styles.navTooltip}>{item.label}</span>}
-      </Link>
-    );
-  }
-
   return (
     <div className={styles.root}>
-      <aside className={sidebarClass} aria-label="Navegação principal">
-        <div className={styles.sidebarBrand}>
-          <Link href="/painel" className={styles.brandLogo} aria-label="Início do painel">
-            F
-          </Link>
-          {!collapsed && (
-            <div style={{ minWidth: 0 }}>
-              <div className={styles.brandText}>
-                Figurinhas<span className={styles.brandTextAccent}>Pro</span>
-              </div>
-              <div className={styles.brandSub}>{seller.shopName}</div>
-            </div>
-          )}
-        </div>
-
-        <nav className={styles.sidebarNav}>
-          <div className={styles.sectionLabel}>Operação</div>
-          {operationNav.map(renderNavItem)}
-
-          <div className={styles.sectionLabel}>Ferramentas</div>
-          {toolsNav.map(renderNavItem)}
-
-          {isAdmin && (
-            <>
-              <div className={styles.sectionLabel}>Admin</div>
-              {adminNav.map(renderNavItem)}
-            </>
-          )}
-        </nav>
-
-        <div className={styles.sidebarFooter}>
-          {!collapsed && (
-            <Link
-              href={`/loja/${seller.shopSlug}`}
-              target="_blank"
-              className={styles.vitrineLink}
-            >
-              <I.external className={styles.vitrineIcon} />
-              <span>Ver vitrine pública</span>
-            </Link>
-          )}
-          <div className={styles.userCard}>
-            <div className={styles.userAvatar}>{initials}</div>
-            <div className={styles.userInfo}>
-              <div className={styles.userName}>{seller.name}</div>
-              {seller.plan === "FREE" ? (
-                <Link href="/painel/planos" className={styles.userMeta}>
-                  {planLabel} • ver planos
-                </Link>
-              ) : (
-                <div className={styles.userMeta}>{planLabel}</div>
-              )}
-            </div>
-            <button
-              type="button"
-              onClick={handleLogoutClick}
-              disabled={loggingOut}
-              className={styles.logoutBtn}
-              aria-label="Sair"
-            >
-              {loggingOut ? (
-                <I.spinner className="" />
-              ) : (
-                <I.logout className="" />
-              )}
-            </button>
-          </div>
-        </div>
-      </aside>
+      <Sidebar
+        seller={seller}
+        pathname={pathname}
+        collapsed={collapsed}
+        mobileOpen={mobileOpen}
+        pendingOrders={pendingOrders}
+        isAdmin={isAdmin}
+        operationNav={operationNav}
+        toolsNav={toolsNav}
+        adminNav={adminNav}
+        initials={initials}
+        planLabel={planLabel}
+        loggingOut={loggingOut}
+        onCloseMobile={() => setMobileOpen(false)}
+        onLogout={() => setShowLogoutConfirm(true)}
+      />
 
       {mobileOpen && (
         <div

@@ -10,6 +10,7 @@ import { imgUrl } from "@/lib/images";
 import { getDefaultPrice, getStickerTypeConfig } from "@/lib/sticker-types";
 import { useToast } from "@/lib/toast-context";
 import { useDialog } from "@/lib/use-dialog";
+import { buildCounterText } from "./inventory-counter-text";
 
 type StockMap = Record<string, { quantity: number; customPrice: number | null }>;
 
@@ -841,21 +842,42 @@ export default function InventoryManager({
                       ? section.name
                       : "Todas as figurinhas"}
                 </h3>
-                <p className="text-[11px] sm:text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
-                  {isSearching ? (
-                    <>{filteredStickers.length} encontradas</>
-                  ) : (
-                    <>
-                      {baseInStock}/{baseCount} em estoque
-                      {filter !== "all" && (
-                        <span className="ml-2 text-zinc-400">
-                          · {filteredStickers.length} exibidas
-                        </span>
+                {(() => {
+                  const visibleSection = album.sections[visibleSectionIndex];
+                  const filteredInVisibleSection = visibleSection
+                    ? visibleSection.stickers.filter((s) => {
+                        if (filter === "in-stock") return (stock[s.code]?.quantity || 0) > 0;
+                        if (filter === "missing")
+                          return !stock[s.code] || stock[s.code].quantity === 0;
+                        return true;
+                      }).length
+                    : 0;
+                  const counter = buildCounterText({
+                    isSearching,
+                    filteredCount: filteredStickers.length,
+                    baseInStock,
+                    baseCount,
+                    filter,
+                    activeSection,
+                    visibleSectionName: visibleSection?.name ?? null,
+                    filteredInVisibleSection,
+                    saving,
+                  });
+                  return (
+                    <p className="text-[11px] sm:text-xs text-zinc-500 font-[family-name:var(--font-geist-mono)]">
+                      {counter.primary}
+                      {counter.secondary && (
+                        <span className="ml-2 text-zinc-400">· {counter.secondary}</span>
                       )}
-                    </>
-                  )}
-                  {saving && <span className="ml-2 text-amber-400">Salvando...</span>}
-                </p>
+                      {counter.contextHint && (
+                        <span className="ml-1 text-zinc-500">({counter.contextHint})</span>
+                      )}
+                      {counter.saving && (
+                        <span className="ml-2 text-amber-400">Salvando...</span>
+                      )}
+                    </p>
+                  );
+                })()}
               </div>
 
               {/* Ações em lote - compacto */}

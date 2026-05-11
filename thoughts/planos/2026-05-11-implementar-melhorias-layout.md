@@ -2,7 +2,7 @@
 data: 2026-05-11
 versao: v2 (pós /p8-master:valida + /p8-master:itera)
 tipo: plano
-status: v2-revisado-aguardando-aprovacao-final
+status: ativo-implementando-fase-1
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:
@@ -72,13 +72,9 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 
 **Objetivo**: mudanças triviais com alto impacto pra desbloquear conformidade + UX mínima.
 
-### 1.1 Remover `maximumScale: 1` do viewport
-- **Arquivo**: `src/app/layout.tsx` (export `viewport`)
-- **Mudança**: deletar `maximumScale: 1` (manter `width=device-width, initial-scale=1`)
-- **Por quê**: viola WCAG 1.4.4 (Resize Text) — bloqueia pinch-to-zoom
-- **TDD**: não (mudança de config, comportamento já existia)
-- **Validação**: testar pinch zoom no mobile real
-- **Commit**: `fix(a11y): remove viewport maximumScale=1 (WCAG 1.4.4 violation)`
+### 1.1 ~~Remover `maximumScale: 1` do viewport~~ ✅ JÁ RESOLVIDA
+- **Status**: NO-OP — issue já corrigida em commit anterior. `src/app/layout.tsx:26-31` mostra viewport SEM `maximumScale`. Auditoria UX original (2026-04-05) viu versão antiga.
+- **Verificado em**: 2026-05-11 (durante /implementa Fase 1)
 
 ### 1.2 Atribuição "Imagens: LastSticker.com / © Panini" no rodapé da loja
 - **Arquivo**: `src/components/loja/store-footer.tsx`

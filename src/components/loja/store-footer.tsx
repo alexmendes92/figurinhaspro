@@ -56,6 +56,19 @@ export default function StoreFooter({ sellerName, sellerPhone }: StoreFooterProp
         </ul>
         <div className={styles.footNote}>Vendas independentes — não afiliado oficial.</div>
       </div>
+
+      <div className={styles.footAttribution}>
+        Imagens dos álbuns: catálogo público{" "}
+        <a
+          className={styles.footLink}
+          href="https://laststicker.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LastSticker.com
+        </a>
+        . Direitos das figurinhas: © Panini S.p.A.
+      </div>
     </footer>
   );
 }

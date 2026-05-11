@@ -133,6 +133,13 @@
     border-radius: 4px;
   }
 
+  /* Tailwind 4 removeu o default cursor: pointer dos botões.
+     Restaura comportamento esperado (botão não-disabled é clicável). */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
   /* Aliases de compat reverso (CSS Modules usam var(--card), var(--accent) etc).
      Vars semânticas oficiais agora estão em @theme inline.
      Estes aliases mantêm os CSS Modules existentes funcionando sem mudança.

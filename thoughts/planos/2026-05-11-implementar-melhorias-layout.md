@@ -1,8 +1,8 @@
 ---
 data: 2026-05-11
-versao: v6 (Fase 4 completa — 7 sub-commits de refactor estrutural)
+versao: v7 (Fase 5 completa — vitrine refatorada + cacheComponents + use cache isolado por seller)
 tipo: plano
-status: fase-4-completa (Fase 4.1-4.5 deployadas; inventory-manager 1155→532 LOC, painel-shell 458→254 LOC)
+status: fase-5-completa (3 sub-commits: hero CTA único, cacheComponents enabled, 'use cache' com isolamento B1; revalidateTag(expire:0) nas Server Actions de inventory)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

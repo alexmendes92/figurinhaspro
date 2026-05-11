@@ -6,6 +6,8 @@ import { useState } from "react";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import { formatCrumbSegment } from "@/lib/format-breadcrumb";
 import styles from "./painel-shell.module.css";
+import { MobileNav } from "./shell/mobile-nav";
+import type { NavItem } from "./shell/nav-types";
 
 interface SellerInfo {
   id: string;
@@ -19,13 +21,6 @@ const PLAN_LABELS: Record<string, string> = {
   FREE: "Plano Starter",
   PRO: "Plano Pro",
   UNLIMITED: "Plano Ilimitado",
-};
-
-type NavItem = {
-  href: string;
-  label: string;
-  exact?: boolean;
-  icon: (props: { className?: string }) => React.ReactElement;
 };
 
 const I = {
@@ -418,30 +413,7 @@ export default function PainelShell({
         <main className={styles.content}>{children}</main>
       </div>
 
-      <nav className={styles.mobileNav} aria-label="Navegação rápida">
-        <div className={styles.mobileNavRow}>
-          {mobileNav.map((item) => {
-            const active = isActive(item);
-            const showBadge = item.href === "/painel/pedidos" && pendingOrders > 0;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.mobileNavItem} ${active ? styles.mobileNavActive : ""}`}
-              >
-                <item.icon className={styles.mobileNavIcon} />
-                <span className={styles.mobileNavLabel}>{item.label}</span>
-                {showBadge && (
-                  <span className={styles.mobileNavBadge}>
-                    {pendingOrders > 9 ? "9+" : pendingOrders}
-                  </span>
-                )}
-                {active && <span className={styles.mobileNavDot} />}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <MobileNav items={mobileNav} pathname={pathname} pendingOrders={pendingOrders} />
 
       <ConfirmDialog
         open={showLogoutConfirm}

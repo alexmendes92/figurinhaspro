@@ -279,10 +279,34 @@
 
 .heroCtas {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 18px;
   margin-top: 28px;
   padding-bottom: 40px;
   flex-wrap: wrap;
+}
+.heroCtaSecondary {
+  color: var(--fg-dim);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 4px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 4px 0;
+  font-family: inherit;
+}
+.heroCtaSecondary:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+.heroCtaSecondary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 .btn {
   display: inline-flex;

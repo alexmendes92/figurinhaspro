@@ -99,9 +99,14 @@ export default function StoreHero({
             <Button type="button" variant="primary" size="lg" onClick={onScrollToGrid}>
               Ver figurinhas →
             </Button>
-            <Button type="button" variant="ghost" size="lg" onClick={onOpenImport}>
-              Colar minha lista
-            </Button>
+            <button
+              type="button"
+              onClick={onOpenImport}
+              className={styles.heroCtaSecondary}
+              aria-label="Colar lista de figurinhas que faltam"
+            >
+              Já sei o que falta? Cole sua lista
+            </button>
           </div>
         </div>
 

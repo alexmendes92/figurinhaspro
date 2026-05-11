@@ -210,6 +210,8 @@ export default async function DashboardPage() {
       isComplete: isAlbumComplete({ inStock: cov.inStock, total: album.totalStickers }),
     };
   });
+  const albumsCompleteCount = myAlbums.filter((a) => a.isComplete).length;
+  const hasMyAlbums = myAlbums.length > 0;
 
   const deltaPct =
     yesterdayRevenue > 0
@@ -421,7 +423,9 @@ export default async function DashboardPage() {
       )}
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+      <div
+        className={`grid grid-cols-2 ${hasMyAlbums ? "lg:grid-cols-5" : "lg:grid-cols-4"} gap-3 mb-6`}
+      >
         <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5">
           <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
             Vendas hoje
@@ -494,6 +498,31 @@ export default async function DashboardPage() {
             <span className="text-[11px] text-gray-500">15 dias</span>
           </div>
         </div>
+
+        {hasMyAlbums && (
+          <Link
+            href="/painel/estoque"
+            className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5 hover:border-white/[0.12] transition-all"
+          >
+            <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+              Álbuns completos
+            </p>
+            <p className="text-xl sm:text-2xl font-black text-white font-[family-name:var(--font-geist-mono)] mt-2">
+              {albumsCompleteCount}
+              <span className="text-gray-500 text-lg font-bold"> de {myAlbums.length}</span>
+            </p>
+            <p className="text-[11px] mt-2 truncate">
+              {albumsCompleteCount === myAlbums.length ? (
+                <span className="text-emerald-400 font-semibold">Todos cobertos</span>
+              ) : (
+                <span className="text-gray-500">
+                  Falta{myAlbums.length - albumsCompleteCount > 1 ? "m" : ""}{" "}
+                  {myAlbums.length - albumsCompleteCount}
+                </span>
+              )}
+            </p>
+          </Link>
+        )}
       </div>
 
       {/* Meus albuns */}

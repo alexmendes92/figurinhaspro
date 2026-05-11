@@ -9,6 +9,11 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @theme {
+  /* Spacing base — Tailwind 4 deriva toda escala de spacing a partir desta unidade.
+     Default é 0.25rem (4px). Explicitado aqui pra deixar a intenção visível e
+     evitar drift acidental. p-1 = 4px, p-4 = 16px, gap-8 = 32px. */
+  --spacing: 0.25rem;
+
   /* Escala accent (laranja Panini) — 50→950 */
   --color-accent-50: #fffbeb;
   --color-accent-100: #fef3c7;

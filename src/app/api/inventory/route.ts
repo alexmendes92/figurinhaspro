@@ -1,8 +1,10 @@
+import { revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { checkAlbumLimit, checkStickerLimit } from "@/lib/plan-limits";
+import { storeCacheTag } from "@/lib/store-cache";
 
 // GET — lista estoque do revendedor (opcionalmente filtrado por álbum)
 export async function GET(req: NextRequest) {
@@ -85,6 +87,11 @@ export async function POST(req: NextRequest) {
         customPrice: data.customPrice ?? null,
       },
     });
+
+    // Invalida cache da vitrine pública pra refletir mudança de estoque/preço.
+    // { expire: 0 } força invalidação imediata (read-your-own-writes), evita
+    // stale-while-revalidate que serviria HTML antigo no próximo request.
+    revalidateTag(storeCacheTag(seller.id, data.albumSlug), { expire: 0 });
 
     return NextResponse.json(item);
   } catch (error) {

@@ -1,3 +1,4 @@
+import { cacheTag } from "next/cache";
 import { Bebas_Neue } from "next/font/google";
 import { notFound } from "next/navigation";
 import StoreAlbumView from "@/components/loja/store-album-view";
@@ -7,6 +8,7 @@ import { customAlbumToAlbum } from "@/lib/custom-albums";
 import { db } from "@/lib/db";
 import { buildStickerSectionMap } from "@/lib/price-resolver";
 import { getSellerCatalog } from "@/lib/seller-catalog";
+import { storeCacheTag } from "@/lib/store-cache";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -15,47 +17,52 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
-export default async function LojaAlbumPage({
-  params,
-}: {
-  params: Promise<{ slug: string; albumSlug: string }>;
-}) {
-  const { slug, albumSlug } = await params;
+/**
+ * Dados cacheados da vitrine pública.
+ *
+ * Recebe sellerId + albumSlug como ARGUMENTOS (não relê de params/cookies dentro
+ * do escopo cached). Tag isolada por seller — vetor B1 do plano v6 fechado:
+ * dois sellers com mesmo albumSlug retornam dados distintos sem cross-leak.
+ *
+ * Inválida via revalidateTag(storeCacheTag(sellerId, albumSlug)) nas APIs de
+ * inventory (src/app/api/inventory/{route,bulk/route}.ts).
+ */
+async function getStorePageData(sellerId: string, albumSlug: string) {
+  "use cache";
+  cacheTag(storeCacheTag(sellerId, albumSlug));
 
-  const seller = await db.seller.findUnique({
-    where: { shopSlug: slug },
-  });
-  if (!seller) notFound();
+  // Re-resolver seller dentro do cache (não usa cookies/headers — só DB)
+  const seller = await db.seller.findUnique({ where: { id: sellerId } });
+  if (!seller) return null;
 
   // Busca estático ou customizado
   let album: Album | undefined = albums.find((a) => a.slug === albumSlug);
   if (!album) {
     const custom = await db.customAlbum.findUnique({
-      where: { sellerId_slug: { sellerId: seller.id, slug: albumSlug } },
+      where: { sellerId_slug: { sellerId, slug: albumSlug } },
     });
     if (custom) album = customAlbumToAlbum(custom);
   }
-  if (!album) notFound();
+  if (!album) return null;
 
-  // Busca estoque, regras de preço, section rules, quantity tiers e catálogo em paralelo
   const [inventory, priceRules, sectionRules, quantityTiers, catalog] = await Promise.all([
     db.inventory.findMany({
-      where: { sellerId: seller.id, albumSlug, quantity: { gt: 0 } },
+      where: { sellerId, albumSlug, quantity: { gt: 0 } },
     }),
     db.priceRule.findMany({
       where: {
-        sellerId: seller.id,
+        sellerId,
         OR: [{ albumSlug: null }, { albumSlug: "" }, { albumSlug }],
       },
     }),
     db.sectionPriceRule.findMany({
-      where: { sellerId: seller.id, albumSlug },
+      where: { sellerId, albumSlug },
     }),
     db.quantityTier.findMany({
-      where: { sellerId: seller.id, albumSlug },
+      where: { sellerId, albumSlug },
       orderBy: { minQuantity: "asc" },
     }),
-    getSellerCatalog(seller.id),
+    getSellerCatalog(sellerId),
   ]);
 
   const stockMap: Record<string, { quantity: number; customPrice: number | null }> = {};
@@ -69,20 +76,14 @@ export default async function LojaAlbumPage({
   // Monta priceMap com prioridade: albumRule > globalRule
   const priceMap: Record<string, number> = {};
   for (const rule of priceRules) {
-    if (!rule.albumSlug) {
-      priceMap[rule.stickerType] = rule.price;
-    }
+    if (!rule.albumSlug) priceMap[rule.stickerType] = rule.price;
   }
   for (const rule of priceRules) {
-    if (rule.albumSlug === albumSlug) {
-      priceMap[rule.stickerType] = rule.price;
-    }
+    if (rule.albumSlug === albumSlug) priceMap[rule.stickerType] = rule.price;
   }
 
-  // Mapa seção por figurinha (pré-calculado server-side, não envia albums.ts ao client)
   const stickerSectionMap = buildStickerSectionMap(album.sections);
 
-  // Serializa section rules para o client
   const sectionRulesMap: Record<string, { adjustType: string; value: number }> = {};
   for (const rule of sectionRules) {
     sectionRulesMap[rule.sectionName] = {
@@ -91,28 +92,60 @@ export default async function LojaAlbumPage({
     };
   }
 
-  // Serializa quantity tiers para o client
   const tiersData = quantityTiers.map((t) => ({
     minQuantity: t.minQuantity,
     discount: t.discount,
   }));
 
+  return {
+    album,
+    seller: {
+      shopName: seller.shopName,
+      phone: seller.phone,
+      shopDescription: seller.shopDescription,
+      businessHours: seller.businessHours,
+      paymentMethods: seller.paymentMethods,
+    },
+    stockMap,
+    priceMap,
+    stickerSectionMap,
+    sectionRulesMap,
+    tiersData,
+    catalog,
+  };
+}
+
+export default async function LojaAlbumPage({
+  params,
+}: {
+  params: Promise<{ slug: string; albumSlug: string }>;
+}) {
+  const { slug, albumSlug } = await params;
+
+  // Resolve seller fora do escopo cached (slug → id). Necessário porque o cache
+  // chave por seller.id (não por shopSlug) pra evitar invalidação cross-seller.
+  const seller = await db.seller.findUnique({ where: { shopSlug: slug } });
+  if (!seller) notFound();
+
+  const data = await getStorePageData(seller.id, albumSlug);
+  if (!data) notFound();
+
   return (
     <div className={bebas.variable}>
       <StoreAlbumView
-        album={album}
-        stockMap={stockMap}
-        priceMap={priceMap}
+        album={data.album}
+        stockMap={data.stockMap}
+        priceMap={data.priceMap}
         sellerSlug={slug}
-        sellerName={seller.shopName}
-        sellerPhone={seller.phone}
-        sellerDescription={seller.shopDescription}
-        sellerBusinessHours={seller.businessHours}
-        sellerPaymentMethods={seller.paymentMethods}
-        availableAlbums={catalog}
-        stickerSectionMap={stickerSectionMap}
-        sectionRulesMap={sectionRulesMap}
-        quantityTiers={tiersData}
+        sellerName={data.seller.shopName}
+        sellerPhone={data.seller.phone}
+        sellerDescription={data.seller.shopDescription}
+        sellerBusinessHours={data.seller.businessHours}
+        sellerPaymentMethods={data.seller.paymentMethods}
+        availableAlbums={data.catalog}
+        stickerSectionMap={data.stickerSectionMap}
+        sectionRulesMap={data.sectionRulesMap}
+        quantityTiers={data.tiersData}
       />
     </div>
   );

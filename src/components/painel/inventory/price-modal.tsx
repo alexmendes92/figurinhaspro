@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import type { Sticker } from "@/lib/albums";
 import { imgUrl } from "@/lib/images";
@@ -28,6 +28,7 @@ export function PriceModal({
 }: PriceModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useDialog<HTMLDivElement>(true, onClose);
+  const titleId = useId();
   const defaultPrice = getDefaultPrice(sticker.type);
   const typeConf = getStickerTypeConfig(sticker.type);
 
@@ -45,7 +46,7 @@ export function PriceModal({
       className="fixed inset-0 z-[200] flex items-center justify-center"
       role="dialog"
       aria-modal="true"
-      aria-label={`Preço customizado de ${sticker.name}`}
+      aria-labelledby={titleId}
     >
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -75,7 +76,9 @@ export function PriceModal({
             )}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-white truncate">{sticker.name}</p>
+            <p id={titleId} className="text-sm font-semibold text-white truncate">
+              {sticker.name}
+            </p>
             <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
               {sticker.code}
             </p>

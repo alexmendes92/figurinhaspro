@@ -1,7 +1,9 @@
+import { revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { storeCacheTag } from "@/lib/store-cache";
 
 const bulkSchema = z.object({
   albumSlug: z.string(),
@@ -43,6 +45,9 @@ export async function POST(req: NextRequest) {
         })
       )
     );
+
+    // Invalida cache da vitrine pública (read-your-own-writes)
+    revalidateTag(storeCacheTag(seller.id, data.albumSlug), { expire: 0 });
 
     return NextResponse.json({ updated: results.length });
   } catch (error) {

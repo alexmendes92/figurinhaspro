@@ -1,0 +1,4 @@
+{
+  "_comment": "Manifest hooks do plugin p8-master. Hooks são configurados via .claude/settings.json do PROJETO P8-FigurinhasPro (que invoca os ps1 scripts neste dir). Plugin manifest fica vazio para satisfazer o parser do Claude Code sem duplicar registros.",
+  "hooks": {}
+}

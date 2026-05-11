@@ -796,13 +796,14 @@ export default function InventoryManager({
                 key={sec.name}
                 type="button"
                 onClick={() => handleSidebarSectionClick(i)}
-                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap border ${
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap border relative ${
                   isIsolated
                     ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
                     : isVisibleInAll
-                      ? "bg-zinc-800/60 text-amber-300 border-amber-500/15"
+                      ? "text-zinc-300 border-transparent lg:before:absolute lg:before:left-0 lg:before:top-1.5 lg:before:bottom-1.5 lg:before:w-0.5 lg:before:rounded-full lg:before:bg-amber-500/60 lg:pl-3.5 hover:text-zinc-200 hover:bg-zinc-800"
                       : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border-transparent"
                 }`}
+                aria-current={isIsolated ? "true" : isVisibleInAll ? "location" : undefined}
               >
                 <span className="lg:flex lg:items-center lg:justify-between lg:gap-2">
                   <span className="truncate">

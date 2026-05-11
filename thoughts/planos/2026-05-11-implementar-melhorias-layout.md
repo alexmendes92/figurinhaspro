@@ -2,7 +2,7 @@
 data: 2026-05-11
 versao: v2 (pós /p8-master:valida + /p8-master:itera)
 tipo: plano
-status: ativo-implementando-fase-1
+status: fase-1-completa-aguardando-deploy
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

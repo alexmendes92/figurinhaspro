@@ -2,10 +2,15 @@ import Link from "next/link";
 import CopyLinkButton from "@/components/painel/copy-link-button";
 import { type DashboardAlert, DashboardAlerts } from "@/components/painel/dashboard-alerts";
 import { DashboardHot, type HotItem } from "@/components/painel/dashboard-hot";
+import DashboardMyAlbums, {
+  type MyAlbumItem,
+} from "@/components/painel/dashboard-my-albums";
 import GettingStarted from "@/components/painel/getting-started";
 import { Spark } from "@/components/painel/spark";
+import { isAlbumComplete } from "@/lib/album-helpers";
 import { albums } from "@/lib/albums";
 import { getSession } from "@/lib/auth";
+import { customAlbumToAlbum } from "@/lib/custom-albums";
 import { db } from "@/lib/db";
 
 const totalCatalog = albums.reduce((s, a) => s + a.totalStickers, 0);
@@ -81,6 +86,8 @@ export default async function DashboardPage() {
     recentOrders,
     priceRuleCount,
     customAlbumCount,
+    customAlbums,
+    inventoryByAlbum,
     todayOrders,
     yesterdayOrders,
     monthRevenue,
@@ -107,6 +114,16 @@ export default async function DashboardPage() {
     }),
     db.priceRule.count({ where: { sellerId: seller.id } }),
     db.customAlbum.count({ where: { sellerId: seller.id } }),
+    db.customAlbum.findMany({
+      where: { sellerId: seller.id },
+      orderBy: { createdAt: "asc" },
+    }),
+    db.inventory.groupBy({
+      by: ["albumSlug"],
+      where: { sellerId: seller.id, quantity: { gt: 0 } },
+      _count: { stickerCode: true },
+      _sum: { quantity: true },
+    }),
     db.order.aggregate({
       where: {
         sellerId: seller.id,
@@ -170,6 +187,29 @@ export default async function DashboardPage() {
   const yesterdayRevenue = yesterdayOrders._sum.totalPrice || 0;
   const revenueMonth = monthRevenue._sum.totalPrice || 0;
   const albumCount = customAlbumCount || albums.length;
+
+  const coverageMap = new Map<string, { inStock: number; totalUnits: number }>();
+  for (const row of inventoryByAlbum) {
+    coverageMap.set(row.albumSlug, {
+      inStock: row._count.stickerCode,
+      totalUnits: row._sum.quantity ?? 0,
+    });
+  }
+
+  const myAlbums: MyAlbumItem[] = customAlbums.map((ca) => {
+    const album = customAlbumToAlbum(ca);
+    const cov = coverageMap.get(ca.slug) ?? { inStock: 0, totalUnits: 0 };
+    return {
+      slug: ca.slug,
+      title: album.title,
+      year: album.year,
+      flag: album.flag,
+      totalStickers: album.totalStickers,
+      inStock: cov.inStock,
+      totalUnits: cov.totalUnits,
+      isComplete: isAlbumComplete({ inStock: cov.inStock, total: album.totalStickers }),
+    };
+  });
 
   const deltaPct =
     yesterdayRevenue > 0
@@ -454,6 +494,11 @@ export default async function DashboardPage() {
             <span className="text-[11px] text-gray-500">15 dias</span>
           </div>
         </div>
+      </div>
+
+      {/* Meus albuns */}
+      <div className="mb-6">
+        <DashboardMyAlbums albums={myAlbums} />
       </div>
 
       {/* Alertas + Em alta */}

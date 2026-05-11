@@ -378,6 +378,16 @@ function StickerCard({
             </button>
           </div>
         )}
+        {!hasIt && (
+          <button
+            type="button"
+            onClick={() => toggleSticker(sticker.code)}
+            className="w-full mt-1 h-7 rounded bg-amber-500/10 border border-amber-500/30 text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 hover:border-amber-500/50 transition-colors active:bg-amber-500/30"
+            aria-label={`Adicionar ${sticker.name} ao estoque`}
+          >
+            + Adicionar
+          </button>
+        )}
       </div>
     </div>
   );

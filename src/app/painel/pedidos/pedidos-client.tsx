@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import EmptyOrdersKit from "@/components/painel/pedidos/empty-orders-kit";
+import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import { useToast } from "@/lib/toast-context";
 
@@ -337,16 +338,21 @@ export default function PedidosClient({ shopUrl }: PedidosClientProps) {
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex gap-2">
                         {sc.next && (
-                          <button
+                          <Button
+                            type="button"
+                            variant="primary"
+                            size="sm"
                             onClick={() => updateStatus(order.id, sc.next!)}
                             disabled={isUpdating}
-                            className="btn-primary !py-2.5 !px-4 !text-xs"
                           >
                             {isUpdating ? "..." : sc.nextLabel}
-                          </button>
+                          </Button>
                         )}
                         {order.status !== "CANCELLED" && order.status !== "DELIVERED" && (
-                          <button
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
                             onClick={() =>
                               setCancelConfirm({
                                 orderId: order.id,
@@ -354,10 +360,10 @@ export default function PedidosClient({ shopUrl }: PedidosClientProps) {
                               })
                             }
                             disabled={isUpdating}
-                            className="btn-ghost !py-2.5 !px-4 !text-xs !text-red-400 !border-red-500/15 hover:!bg-red-500/5"
+                            className="text-red-400 border-red-500/15 hover:bg-red-500/5"
                           >
                             Cancelar
-                          </button>
+                          </Button>
                         )}
                       </div>
                       <span className="font-[family-name:var(--font-geist-mono)] text-lg text-[var(--accent)] font-bold shrink-0">

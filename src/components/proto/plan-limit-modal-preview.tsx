@@ -4,6 +4,7 @@
 // Mock: ROI calculado client-side a partir de props. Sem auth, Prisma, Stripe ou telemetria.
 // CTA "Assinar PRO" não redireciona — só dispara alert + console.log para captura de feedback qualitativo.
 
+import { useId } from "react";
 import { COPY_VARIANTS, type ModalVariant } from "./copy-variants";
 
 type PlanLimitModalPreviewProps = {
@@ -26,6 +27,8 @@ export function PlanLimitModalPreview({
   variant,
 }: PlanLimitModalPreviewProps) {
   const config = COPY_VARIANTS[variant];
+  const titleId = useId();
+  const descId = useId();
   const gmv = denied * priceAvg;
   const isUrgent = config.highlightColor === "red";
 
@@ -43,8 +46,9 @@ export function PlanLimitModalPreview({
     <div
       role="dialog"
       aria-modal="true"
-      aria-labelledby="proto-modal-title"
-      className="relative mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-[#111318] p-6 shadow-[0_24px_64px_rgba(0,0,0,0.55)] sm:p-8"
+      aria-labelledby={titleId}
+      aria-describedby={descId}
+      className="relative mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-card p-6 shadow-[0_24px_64px_rgba(0,0,0,0.55)] sm:p-8"
     >
       <button
         type="button"
@@ -79,7 +83,7 @@ export function PlanLimitModalPreview({
       )}
 
       <h2
-        id="proto-modal-title"
+        id={titleId}
         className={`text-balance text-base font-semibold leading-snug sm:text-lg ${
           isUrgent ? "text-red-200" : "text-white"
         }`}
@@ -100,7 +104,7 @@ export function PlanLimitModalPreview({
         </div>
       </div>
 
-      <div className="mt-5 space-y-1">
+      <div className="mt-5 space-y-1" id={descId}>
         <p className="text-xs uppercase tracking-wide text-zinc-500">
           Estimativa de vendas perdidas
         </p>
@@ -116,7 +120,7 @@ export function PlanLimitModalPreview({
         className={`mt-6 w-full rounded-xl px-4 py-3 text-base font-semibold shadow-[0_8px_24px_rgba(245,158,11,0.25)] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500/60 active:scale-[0.99] ${
           isUrgent
             ? "bg-red-500 text-white hover:bg-red-400"
-            : "bg-accent-400 text-[#0b0e14] hover:bg-accent-300"
+            : "bg-accent-400 text-background hover:bg-accent-300"
         }`}
       >
         {config.ctaText}

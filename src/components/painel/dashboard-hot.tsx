@@ -11,7 +11,7 @@ export interface HotItem {
 export function DashboardHot({ items }: { items: HotItem[] }) {
   if (!items.length) {
     return (
-      <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5 min-h-[280px] flex flex-col items-center justify-center text-center">
+      <div className="rounded-2xl border border-white/[0.06] bg-card-elevated p-5 min-h-[280px] flex flex-col items-center justify-center text-center">
         <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-3">
           <svg
             viewBox="0 0 24 24"
@@ -30,7 +30,7 @@ export function DashboardHot({ items }: { items: HotItem[] }) {
   }
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5">
+    <div className="rounded-2xl border border-white/[0.06] bg-card-elevated p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
           <p className="text-[10px] text-accent-400/70 font-semibold uppercase tracking-wider">

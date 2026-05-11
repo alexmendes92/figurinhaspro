@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LojaEditor from "@/components/painel/loja-editor";
 import OnboardingChecklist from "@/components/painel/onboarding-checklist";
+import { Button } from "@/components/ui/button";
 import { getSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getDefaultPrice, getStickerTypeShortLabel } from "@/lib/sticker-types";
@@ -39,26 +40,24 @@ export default async function MinhaLojaPage() {
             <p className="text-xs font-semibold text-[var(--accent)]">Link da sua vitrine</p>
             <p className="text-[10px] text-accent-400/60 mt-0.5">Compartilhe com seus clientes</p>
           </div>
-          <Link
-            href={`/loja/${seller.shopSlug}`}
-            target="_blank"
-            className="btn-primary !py-1.5 !px-3 !text-xs flex items-center gap-1.5"
-          >
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-              />
-            </svg>
-            Abrir vitrine
-          </Link>
+          <Button asChild variant="primary" size="sm">
+            <Link href={`/loja/${seller.shopSlug}`} target="_blank">
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                />
+              </svg>
+              Abrir vitrine
+            </Link>
+          </Button>
         </div>
         <div className="px-4 py-3 rounded-xl bg-black/20 border border-accent-500/10 font-[family-name:var(--font-geist-mono)] text-sm text-[var(--accent)]">
           /loja/{seller.shopSlug}

@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Loader2 } from "lucide-react";
 import type * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -39,6 +40,12 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  /**
+   * Quando true, renderiza spinner Lucide e força disabled.
+   * Spinner tem role="status" + aria-label="Carregando" para screen readers.
+   * Incompatível com asChild (asChild não renderiza filho extra).
+   */
+  isLoading?: boolean;
 }
 
 export function Button({
@@ -46,14 +53,30 @@ export function Button({
   variant,
   size,
   asChild = false,
+  isLoading = false,
+  disabled,
+  children,
   ...props
 }: ButtonProps) {
   const Comp = asChild ? Slot : "button";
+  // asChild + isLoading não combina (Slot espera 1 filho); ignora isLoading nesse caso.
+  const showSpinner = isLoading && !asChild;
   return (
     <Comp
       className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled || isLoading}
+      aria-busy={isLoading || undefined}
       {...props}
-    />
+    >
+      {showSpinner ? (
+        <>
+          <Loader2 role="status" aria-label="Carregando" className="animate-spin" />
+          {children}
+        </>
+      ) : (
+        children
+      )}
+    </Comp>
   );
 }
 

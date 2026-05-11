@@ -40,6 +40,7 @@
   --color-surface-1: #111318; /* card */
   --color-surface-2: #161921; /* card-hover */
   --color-surface-3: #1f2937; /* scrollbar, divisores fortes */
+  --color-surface-card-elevated: #0f1219; /* card elevado para empty states de dashboard */
 
   /* Escala tipográfica semântica — utilities: text-display, text-h1, etc.
      Sintaxe Tailwind 4: --text-{name} define size; --text-{name}--line-height
@@ -81,6 +82,7 @@
   /* Tokens semânticos referenciam escalas */
   --color-card: var(--color-surface-1);
   --color-card-hover: var(--color-surface-2);
+  --color-card-elevated: var(--color-surface-card-elevated);
   --color-border: rgba(255, 255, 255, 0.06);
   --color-border-hover: rgba(255, 255, 255, 0.12);
   --color-muted: #9ca3af;
@@ -202,50 +204,8 @@
     border-color: rgba(239, 68, 68, 0.2);
   }
 
-  /* Buttons (legados — serão substituídos por shadcn Button em Fase 2.7) */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 600;
-    background: linear-gradient(to right, #f59e0b, #d97706);
-    color: #000;
-    transition: all 0.15s;
-    cursor: pointer;
-    border: none;
-  }
-  .btn-primary:hover {
-    background: linear-gradient(to right, #fbbf24, #f59e0b);
-  }
-  .btn-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    background: transparent;
-    color: #9ca3af;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: all 0.15s;
-    cursor: pointer;
-  }
-  .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.12);
-  }
+  /* Buttons legados removidos em 2026-05-11 (Pacote A — Fase 2.7 encerrada).
+     Usar <Button> shadcn em src/components/ui/button.tsx. */
 
   /* A11y — focus ring reusável (Fase 3).
      Aplicar em elementos interativos que precisam de foco visível consistente.

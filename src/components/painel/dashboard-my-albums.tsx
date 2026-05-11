@@ -22,7 +22,7 @@ export default function DashboardMyAlbums({ albums, showEmpty = true }: Props) {
   if (albums.length === 0) {
     if (!showEmpty) return null;
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5 min-h-[200px] flex flex-col items-center justify-center text-center">
+      <section className="rounded-2xl border border-white/[0.06] bg-card-elevated p-5 min-h-[200px] flex flex-col items-center justify-center text-center">
         <div className="w-12 h-12 rounded-2xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mb-3">
           <svg
             className="w-5 h-5 text-accent-400"

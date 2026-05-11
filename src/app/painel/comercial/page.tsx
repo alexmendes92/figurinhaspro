@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { SeedButton } from "@/components/painel/comercial/seed-button";
 import { db } from "@/lib/db";
 
@@ -39,6 +40,7 @@ function Card({
 }
 
 export default async function ComercialDashboard() {
+  await connection();
   const [
     totalSellers,
     proSellers,

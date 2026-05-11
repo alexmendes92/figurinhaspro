@@ -9,8 +9,6 @@ import { db } from "@/lib/db";
 import { checkOrderLimit } from "@/lib/plan-limits";
 import { createQuoteWithDecrement, InventoryNotFoundError, PriceManipulationError } from "@/lib/quote-service";
 
-export const dynamic = "force-dynamic";
-
 const quoteSchema = z.object({
   sellerSlug: z.string().min(1),
   customerName: z.string().min(1).max(120),

@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { db } from "@/lib/db";
 import { addKpiSnapshot } from "../actions";
 
@@ -20,6 +21,7 @@ const _inputClass =
   "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function KpisPage() {
+  await connection();
   const kpis = await db.bizKpi.findMany({
     orderBy: [{ category: "asc" }, { name: "asc" }],
     include: {

@@ -6,8 +6,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { searchBotStickers } from "@/lib/bot-search";
 import { db } from "@/lib/db";
 
-export const dynamic = "force-dynamic";
-
 export async function GET(req: NextRequest) {
   const seller = req.nextUrl.searchParams.get("seller");
   const q = req.nextUrl.searchParams.get("q") ?? undefined;

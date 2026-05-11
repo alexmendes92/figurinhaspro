@@ -1,8 +1,8 @@
 ---
 data: 2026-05-11
-versao: v5 (Fase 3 completa — 3.5 fechou gap dos 8 inputs em precos-* com aria-label/htmlFor)
+versao: v6 (Fase 4 completa — 7 sub-commits de refactor estrutural)
 tipo: plano
-status: fase-3-completa (3.1/3.2/3.3/3.4/3.5 deployados)
+status: fase-4-completa (Fase 4.1-4.5 deployadas; inventory-manager 1155→532 LOC, painel-shell 458→254 LOC)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

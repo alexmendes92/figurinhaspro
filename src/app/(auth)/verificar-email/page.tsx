@@ -33,9 +33,9 @@ export default function VerificarEmailPage() {
         </div>
 
         {/* Email icon */}
-        <div className="w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-6">
+        <div className="w-20 h-20 rounded-full bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mx-auto mb-6">
           <svg
-            className="w-9 h-9 text-amber-400"
+            className="w-9 h-9 text-accent-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

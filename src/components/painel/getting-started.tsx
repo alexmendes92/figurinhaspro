@@ -41,7 +41,7 @@ export default function GettingStarted({
   if (completed === total) return null;
 
   return (
-    <div className="rounded-2xl border border-amber-500/15 bg-gradient-to-br from-amber-500/[0.04] to-transparent p-5 sm:p-6 mb-8">
+    <div className="rounded-2xl border border-accent-500/15 bg-gradient-to-br from-accent-500/[0.04] to-transparent p-5 sm:p-6 mb-8">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-sm font-bold text-white">Configure sua loja</h3>
@@ -53,7 +53,7 @@ export default function GettingStarted({
           {Array.from({ length: total }).map((_, i) => (
             <div
               key={i}
-              className={`w-8 h-1.5 rounded-full ${i < completed ? "bg-amber-500" : "bg-white/[0.06]"}`}
+              className={`w-8 h-1.5 rounded-full ${i < completed ? "bg-accent-500" : "bg-white/[0.06]"}`}
             />
           ))}
         </div>
@@ -69,12 +69,12 @@ export default function GettingStarted({
               className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
                 done
                   ? "bg-white/[0.02] opacity-60"
-                  : "bg-white/[0.03] border border-white/[0.06] hover:border-amber-500/20 hover:bg-amber-500/[0.03]"
+                  : "bg-white/[0.03] border border-white/[0.06] hover:border-accent-500/20 hover:bg-accent-500/[0.03]"
               }`}
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                  done ? "bg-emerald-500/10" : "bg-amber-500/10"
+                  done ? "bg-emerald-500/10" : "bg-accent-500/10"
                 }`}
               >
                 {done ? (
@@ -89,7 +89,7 @@ export default function GettingStarted({
                   </svg>
                 ) : (
                   <svg
-                    className="w-4 h-4 text-amber-400"
+                    className="w-4 h-4 text-accent-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

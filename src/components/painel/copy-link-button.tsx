@@ -30,7 +30,7 @@ export default function CopyLinkButton({ path }: { path: string }) {
         </svg>
       ) : (
         <svg
-          className="w-4 h-4 text-zinc-400 group-hover:text-amber-400 transition-colors"
+          className="w-4 h-4 text-zinc-400 group-hover:text-accent-400 transition-colors"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

@@ -15,7 +15,7 @@ export default function AlbunsPage() {
       <header className="sticky top-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-zinc-800/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center">
               <span className="text-black font-bold text-xs font-[family-name:var(--font-geist-mono)]">
                 F
               </span>
@@ -33,7 +33,7 @@ export default function AlbunsPage() {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse,rgba(245,158,11,0.05)_0%,transparent_70%)]" />
         </div>
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/5 text-amber-400 text-xs font-semibold mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-500/20 bg-accent-500/5 text-accent-400 text-xs font-semibold mb-6">
           <svg
             className="w-3.5 h-3.5"
             fill="none"
@@ -51,7 +51,7 @@ export default function AlbunsPage() {
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
           Álbuns Panini{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-accent-400 to-accent-200 bg-clip-text text-transparent">
             Copa do Mundo
           </span>
         </h1>
@@ -66,7 +66,7 @@ export default function AlbunsPage() {
           {albums.map((album) => (
             <Link key={album.year} href={`/albuns/${album.year}`} className="group relative">
               {/* Card */}
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 group-hover:border-amber-500/40 group-hover:shadow-xl group-hover:shadow-amber-500/5 transition-all duration-300">
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 group-hover:border-accent-500/40 group-hover:shadow-xl group-hover:shadow-accent-500/5 transition-all duration-300">
                 <Image
                   src={imgUrl(album.cover)}
                   alt={`Panini World Cup ${album.year}`}
@@ -87,7 +87,7 @@ export default function AlbunsPage() {
                   </p>
                   <div className="flex items-center gap-1.5 mt-2">
                     <svg
-                      className="w-3 h-3 text-amber-400"
+                      className="w-3 h-3 text-accent-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -106,7 +106,7 @@ export default function AlbunsPage() {
                 </div>
 
                 {/* Hover arrow */}
-                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-amber-500/0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-amber-500 transition-all duration-300">
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-accent-500/0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-accent-500 transition-all duration-300">
                   <svg
                     className="w-4 h-4 text-black"
                     fill="none"
@@ -131,7 +131,7 @@ export default function AlbunsPage() {
       <footer className="border-t border-zinc-800/50 px-6 py-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+            <div className="w-5 h-5 rounded bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center">
               <span className="text-black text-[8px] font-bold font-[family-name:var(--font-geist-mono)]">
                 F
               </span>

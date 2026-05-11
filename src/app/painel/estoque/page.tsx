@@ -62,7 +62,7 @@ export default async function EstoquePage() {
         <div className="flex items-center gap-4">
           <Link
             href="/painel/estoque/novo"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-500 hover:bg-accent-400 text-black text-sm font-bold transition-colors"
           >
             <svg
               className="w-4 h-4"
@@ -76,7 +76,7 @@ export default async function EstoquePage() {
             <span className="hidden sm:inline">Cadastrar álbum</span>
           </Link>
           <div className="text-right hidden sm:block">
-            <p className="text-3xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+            <p className="text-3xl font-bold font-[family-name:var(--font-geist-mono)] text-accent-400">
               {totalInStock.toLocaleString("pt-BR")}
             </p>
             <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
@@ -101,7 +101,7 @@ export default async function EstoquePage() {
               key={album.slug}
               href={`/painel/estoque/${album.slug}`}
               className={`group relative rounded-2xl border bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30 ${
-                isCustom ? "border-amber-500/20" : "border-zinc-800"
+                isCustom ? "border-accent-500/20" : "border-zinc-800"
               }`}
             >
               {/* Capa do álbum */}
@@ -116,9 +116,9 @@ export default async function EstoquePage() {
                   />
                 ) : isCustom ? (
                   <div className="text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-3">
+                    <div className="w-16 h-16 rounded-2xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mx-auto mb-3">
                       <svg
-                        className="w-8 h-8 text-amber-400"
+                        className="w-8 h-8 text-accent-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -131,7 +131,7 @@ export default async function EstoquePage() {
                         />
                       </svg>
                     </div>
-                    <p className="text-xs text-amber-400/70 font-medium">Personalizado</p>
+                    <p className="text-xs text-accent-400/70 font-medium">Personalizado</p>
                   </div>
                 ) : (
                   <div className="text-center">
@@ -179,7 +179,7 @@ export default async function EstoquePage() {
                 {inStock === 0 ? (
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] text-zinc-500">Sem estoque ainda</span>
-                    <span className="text-[10px] font-bold text-amber-400 flex items-center gap-1">
+                    <span className="text-[10px] font-bold text-accent-400 flex items-center gap-1">
                       Adicionar
                       <svg
                         className="w-3 h-3"
@@ -203,7 +203,7 @@ export default async function EstoquePage() {
                           pct >= 80
                             ? "text-green-400"
                             : pct >= 30
-                              ? "text-amber-400"
+                              ? "text-accent-400"
                               : "text-zinc-400"
                         }`}
                       >
@@ -216,7 +216,7 @@ export default async function EstoquePage() {
                           pct >= 80
                             ? "bg-green-500"
                             : pct >= 30
-                              ? "bg-amber-500"
+                              ? "bg-accent-500"
                               : "bg-zinc-500"
                         }`}
                         style={{ width: `${Math.max(pct, 2)}%` }}

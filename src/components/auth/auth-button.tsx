@@ -17,7 +17,7 @@ export function AuthButton({
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black shadow-xl shadow-amber-500/20 hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed",
+      "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black shadow-xl shadow-accent-500/20 hover:shadow-accent-500/30 disabled:opacity-50 disabled:cursor-not-allowed",
     ghost:
       "border border-white/10 text-gray-300 hover:bg-white/[0.04] hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed",
   };

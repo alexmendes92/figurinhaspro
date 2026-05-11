@@ -12,7 +12,7 @@ export function AuthFooterLink({ text, linkText, href }: AuthFooterLinkProps) {
       {text}{" "}
       <Link
         href={href}
-        className="text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+        className="text-accent-400 hover:text-accent-300 font-semibold transition-colors"
       >
         {linkText}
       </Link>

@@ -90,7 +90,7 @@ export default function NovoAlbumPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Ex: Copa do Mundo 2026, Brasileirão 2025..."
-            className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder:text-zinc-600"
+            className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm focus:outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/20 transition-all placeholder:text-zinc-600"
           />
         </div>
 
@@ -104,7 +104,7 @@ export default function NovoAlbumPage() {
             value={year}
             onChange={(e) => setYear(e.target.value.replace(/\D/g, "").slice(0, 4))}
             placeholder="Ex: 2026"
-            className="w-32 px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder:text-zinc-600"
+            className="w-32 px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/20 transition-all placeholder:text-zinc-600"
           />
         </div>
 
@@ -122,11 +122,11 @@ export default function NovoAlbumPage() {
             onChange={(e) => setStickersText(e.target.value)}
             placeholder={"Ex: 1-670\n\nOu: 1, 2, 3, FWC1, FWC2, BRA1-BRA25"}
             rows={6}
-            className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all resize-none placeholder:text-zinc-600"
+            className="w-full px-3 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-sm font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-accent-500/50 focus:ring-1 focus:ring-accent-500/20 transition-all resize-none placeholder:text-zinc-600"
           />
           {parsedCount > 0 && (
             <p className="text-xs text-zinc-400 mt-1.5 font-[family-name:var(--font-geist-mono)]">
-              <span className="text-amber-400 font-bold">{parsedCount}</span> figurinhas detectadas
+              <span className="text-accent-400 font-bold">{parsedCount}</span> figurinhas detectadas
             </p>
           )}
         </div>
@@ -149,7 +149,7 @@ export default function NovoAlbumPage() {
           <button
             type="submit"
             disabled={saving || !title.trim() || parsedCount === 0}
-            className="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:hover:bg-amber-500 text-black font-bold text-sm transition-colors"
+            className="flex-1 py-2.5 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:hover:bg-accent-500 text-black font-bold text-sm transition-colors"
           >
             {saving ? "Criando..." : `Criar álbum (${parsedCount} figurinhas)`}
           </button>

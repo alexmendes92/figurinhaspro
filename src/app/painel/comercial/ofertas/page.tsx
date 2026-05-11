@@ -10,7 +10,7 @@ const PRICE_TYPE_LABEL: Record<string, string> = {
 };
 
 const inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function OfertasPage({
   searchParams: searchParamsPromise,
@@ -38,7 +38,7 @@ export default async function OfertasPage({
         </div>
         <Link
           href="/painel/comercial/ofertas?new=1"
-          className="px-3 py-1.5 bg-amber-500 text-black text-xs font-medium rounded-lg hover:bg-amber-400 transition-colors flex-shrink-0"
+          className="px-3 py-1.5 bg-accent-500 text-black text-xs font-medium rounded-lg hover:bg-accent-400 transition-colors flex-shrink-0"
         >
           + Nova Oferta
         </Link>
@@ -81,7 +81,7 @@ export default async function OfertasPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-accent-500 text-black text-sm font-medium rounded-lg hover:bg-accent-400 transition-colors"
             >
               Criar oferta
             </button>
@@ -106,14 +106,14 @@ export default async function OfertasPage({
             <div
               key={offer.id}
               className={`bg-white/[0.03] border rounded-xl p-4 ${
-                offer.status === "ACTIVE" ? "border-amber-500/20" : "border-white/[0.06] opacity-60"
+                offer.status === "ACTIVE" ? "border-accent-500/20" : "border-white/[0.06] opacity-60"
               }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h4 className="text-sm font-medium text-white">{offer.name}</h4>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-lg font-bold text-amber-400">
+                    <span className="text-lg font-bold text-accent-400">
                       R$ {offer.price.toFixed(0)}
                     </span>
                     <span className="text-xs text-gray-500">

@@ -33,7 +33,7 @@ export function DashboardHot({ items }: { items: HotItem[] }) {
     <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+          <p className="text-[10px] text-accent-400/70 font-semibold uppercase tracking-wider">
             Tendências 48h
           </p>
           <p className="text-base font-bold text-white mt-0.5">Em alta agora</p>
@@ -42,8 +42,8 @@ export function DashboardHot({ items }: { items: HotItem[] }) {
       <div className="flex flex-col gap-3">
         {items.map((item) => (
           <div key={`${item.albumSlug}-${item.stickerCode}`} className="flex items-center gap-3">
-            <div className="w-9 h-11 rounded-md bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/10 flex items-center justify-center shrink-0">
-              <span className="text-[10px] font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+            <div className="w-9 h-11 rounded-md bg-gradient-to-br from-accent-500/20 to-accent-500/5 border border-accent-500/10 flex items-center justify-center shrink-0">
+              <span className="text-[10px] font-bold font-[family-name:var(--font-geist-mono)] text-accent-400">
                 {item.stickerCode.slice(0, 3)}
               </span>
             </div>

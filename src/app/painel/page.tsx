@@ -16,7 +16,7 @@ const BR_DATE = new Intl.DateTimeFormat("pt-BR", {
 });
 
 const statusBadge: Record<string, string> = {
-  QUOTE: "bg-amber-500/[0.08] text-amber-400 border-amber-500/20",
+  QUOTE: "bg-accent-500/[0.08] text-accent-400 border-accent-500/20",
   CONFIRMED: "bg-blue-500/[0.08] text-blue-400 border-blue-500/20",
   PAID: "bg-emerald-500/[0.08] text-emerald-400 border-emerald-500/20",
   SHIPPED: "bg-purple-500/[0.08] text-purple-400 border-purple-500/20",
@@ -288,7 +288,7 @@ export default async function DashboardPage() {
               <>
                 {" "}
                 Seu dia rende{" "}
-                <span className="text-amber-400 font-[family-name:var(--font-geist-mono)]">
+                <span className="text-accent-400 font-[family-name:var(--font-geist-mono)]">
                   R$ {brl(todayRevenue)}
                 </span>{" "}
                 <span className="text-gray-500 font-normal">até agora.</span>
@@ -297,7 +297,7 @@ export default async function DashboardPage() {
               <>
                 {" "}
                 Você tem{" "}
-                <span className="text-amber-400 font-[family-name:var(--font-geist-mono)]">
+                <span className="text-accent-400 font-[family-name:var(--font-geist-mono)]">
                   {openOrdersCount} pedido{openOrdersCount > 1 ? "s" : ""}
                 </span>{" "}
                 <span className="text-gray-500 font-normal">aguardando confirmação.</span>
@@ -352,7 +352,7 @@ export default async function DashboardPage() {
           </Link>
           <Link
             href="/painel/estoque"
-            className="inline-flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20"
+            className="inline-flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black text-xs font-bold transition-all shadow-lg shadow-accent-500/20"
           >
             <svg
               viewBox="0 0 24 24"
@@ -470,20 +470,20 @@ export default async function DashboardPage() {
       <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-4 sm:p-5 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+            <p className="text-[10px] text-accent-400/70 font-semibold uppercase tracking-wider">
               Sua vitrine
             </p>
             <p className="text-sm font-bold text-white mt-0.5">Compartilhe com seus compradores</p>
           </div>
           <div className="flex items-center gap-2 min-w-0 sm:min-w-[380px]">
-            <div className="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06] font-[family-name:var(--font-geist-mono)] text-xs text-amber-400 truncate">
+            <div className="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06] font-[family-name:var(--font-geist-mono)] text-xs text-accent-400 truncate">
               {storeUrl}
             </div>
             <CopyLinkButton path={storeUrl} />
             <Link
               href={storeUrl}
               target="_blank"
-              className="px-3 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-bold transition-all shadow-lg shadow-amber-500/20 shrink-0"
+              className="px-3 py-2.5 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black text-xs font-bold transition-all shadow-lg shadow-accent-500/20 shrink-0"
             >
               Abrir ↗
             </Link>
@@ -497,7 +497,7 @@ export default async function DashboardPage() {
           <p className="text-sm font-bold text-white">Pedidos recentes</p>
           <Link
             href="/painel/pedidos"
-            className="text-[11px] text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+            className="text-[11px] text-accent-400 hover:text-accent-300 font-semibold transition-colors"
           >
             Ver todos →
           </Link>

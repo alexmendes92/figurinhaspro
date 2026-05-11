@@ -5,7 +5,7 @@ import { createInitiative, updateInitiativePhase } from "../actions";
 const PHASE_CONFIG: Record<string, { label: string; color: string }> = {
   BACKLOG: { label: "Backlog", color: "bg-gray-500" },
   PLANNED: { label: "Planejada", color: "bg-blue-500" },
-  IN_PROGRESS: { label: "Em progresso", color: "bg-amber-500" },
+  IN_PROGRESS: { label: "Em progresso", color: "bg-accent-500" },
   DONE: { label: "Concluida", color: "bg-emerald-500" },
   CANCELLED: { label: "Cancelada", color: "bg-red-500" },
 };
@@ -23,13 +23,13 @@ const CATEGORY_COLOR: Record<string, string> = {
   MONETIZATION: "bg-emerald-500/10 text-emerald-400",
   ACQUISITION: "bg-blue-500/10 text-blue-400",
   ACTIVATION: "bg-violet-500/10 text-violet-400",
-  RETENTION: "bg-amber-500/10 text-amber-400",
+  RETENTION: "bg-accent-500/10 text-accent-400",
   PRODUCT: "bg-cyan-500/10 text-cyan-400",
   INFRASTRUCTURE: "bg-gray-500/10 text-gray-400",
 };
 
 const inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function IniciativasPage({
   searchParams: searchParamsPromise,
@@ -85,7 +85,7 @@ export default async function IniciativasPage({
         </div>
         <Link
           href="/painel/comercial/iniciativas?new=1"
-          className="px-3 py-1.5 bg-amber-500 text-black text-xs font-medium rounded-lg hover:bg-amber-400 transition-colors flex-shrink-0"
+          className="px-3 py-1.5 bg-accent-500 text-black text-xs font-medium rounded-lg hover:bg-accent-400 transition-colors flex-shrink-0"
         >
           + Nova Iniciativa
         </Link>
@@ -134,7 +134,7 @@ export default async function IniciativasPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-accent-500 text-black text-sm font-medium rounded-lg hover:bg-accent-400 transition-colors"
             >
               Criar iniciativa
             </button>
@@ -262,7 +262,7 @@ function InitiativeCard({
                   m.status === "DONE"
                     ? "bg-emerald-500"
                     : m.status === "IN_PROGRESS"
-                      ? "bg-amber-500"
+                      ? "bg-accent-500"
                       : "bg-gray-600"
                 }`}
               />

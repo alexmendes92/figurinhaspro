@@ -100,10 +100,10 @@ function Magnifier({
       />
       {/* Crosshair central */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-3 h-[1px] bg-amber-500/30" />
+        <div className="w-3 h-[1px] bg-accent-500/30" />
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="h-3 w-[1px] bg-amber-500/30" />
+        <div className="h-3 w-[1px] bg-accent-500/30" />
       </div>
     </div>
   );
@@ -323,12 +323,12 @@ export default function AlbumViewer({
                   key={y}
                   href={`/albuns/${y}`}
                   className={`relative px-1.5 py-1 rounded text-[10px] font-[family-name:var(--font-geist-mono)] transition-all ${
-                    y === year ? "text-amber-400 font-bold" : "text-zinc-700 hover:text-zinc-400"
+                    y === year ? "text-accent-400 font-bold" : "text-zinc-700 hover:text-zinc-400"
                   }`}
                 >
                   {String(y).slice(2)}
                   {y === year && (
-                    <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500" />
+                    <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent-500" />
                   )}
                 </Link>
               ))}
@@ -340,7 +340,7 @@ export default function AlbumViewer({
                 onClick={() => setMagnifierActive((v) => !v)}
                 className={`w-7 h-7 rounded-md flex items-center justify-center transition-all text-[10px] ${
                   magnifierActive
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                    ? "bg-accent-500/15 text-accent-400 border border-accent-500/30"
                     : "text-zinc-700 hover:text-zinc-400"
                 }`}
                 title="Lupa (M)"
@@ -363,7 +363,7 @@ export default function AlbumViewer({
                 onClick={() => setAutoPlay((v) => !v)}
                 className={`w-7 h-7 rounded-md flex items-center justify-center transition-all ${
                   autoPlay
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                    ? "bg-accent-500/15 text-accent-400 border border-accent-500/30"
                     : "text-zinc-700 hover:text-zinc-400"
                 }`}
                 title="Auto-play (P)"
@@ -402,7 +402,7 @@ export default function AlbumViewer({
                 onClick={() => setShowMinimap((v) => !v)}
                 className={`w-7 h-7 rounded-md flex items-center justify-center transition-all ${
                   showMinimap
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                    ? "bg-accent-500/15 text-accent-400 border border-accent-500/30"
                     : "text-zinc-700 hover:text-zinc-400"
                 }`}
                 title="Minimap (N)"
@@ -426,7 +426,7 @@ export default function AlbumViewer({
                 onClick={() => setStickerPanelOpen((v) => !v)}
                 className={`w-7 h-7 rounded-md flex items-center justify-center transition-all text-[10px] ${
                   stickerPanelOpen
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                    ? "bg-accent-500/15 text-accent-400 border border-accent-500/30"
                     : "text-zinc-700 hover:text-zinc-400"
                 }`}
                 title="Figurinhas (S)"
@@ -465,7 +465,7 @@ export default function AlbumViewer({
                   />
                 </svg>
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[14px] h-[14px] rounded-full bg-amber-500 text-black text-[8px] font-bold flex items-center justify-center px-0.5">
+                  <span className="absolute -top-1 -right-1 min-w-[14px] h-[14px] rounded-full bg-accent-500 text-black text-[8px] font-bold flex items-center justify-center px-0.5">
                     {totalItems}
                   </span>
                 )}
@@ -494,7 +494,7 @@ export default function AlbumViewer({
           {/* Barra de progresso */}
           <div className="h-[1px] bg-zinc-900/30">
             <div
-              className="h-full bg-gradient-to-r from-amber-600/80 to-amber-400/80 transition-all duration-700 ease-out"
+              className="h-full bg-gradient-to-r from-accent-600/80 to-accent-400/80 transition-all duration-700 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -751,7 +751,7 @@ export default function AlbumViewer({
                 }}
                 className={`shrink-0 flex rounded-md overflow-hidden border transition-all hover:scale-105 ${
                   i === currentPage
-                    ? "border-amber-500 shadow-md shadow-amber-500/20 ring-1 ring-amber-500/30"
+                    ? "border-accent-500 shadow-md shadow-accent-500/20 ring-1 ring-accent-500/30"
                     : "border-zinc-800/40 hover:border-zinc-600 opacity-50 hover:opacity-100"
                 }`}
                 style={{ height: "56px" }}
@@ -807,7 +807,7 @@ export default function AlbumViewer({
 
             {/* Info central */}
             <div className="flex items-center gap-4">
-              <span className="text-amber-400/80 font-bold text-sm font-[family-name:var(--font-geist-mono)]">
+              <span className="text-accent-400/80 font-bold text-sm font-[family-name:var(--font-geist-mono)]">
                 {year}
               </span>
               <div className="flex items-center gap-2">
@@ -816,7 +816,7 @@ export default function AlbumViewer({
                 </span>
                 <div className="w-32 h-1 rounded-full bg-zinc-900 overflow-hidden">
                   <div
-                    className="h-full bg-amber-500/60 rounded-full transition-all duration-500"
+                    className="h-full bg-accent-500/60 rounded-full transition-all duration-500"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -889,7 +889,7 @@ export default function AlbumViewer({
       {!showUI && totalItems > 0 && (
         <button
           onClick={() => setCartOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-amber-500 text-black flex items-center justify-center shadow-lg shadow-amber-500/30 hover:bg-amber-400 transition-all hover:scale-105 active:scale-95"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-accent-500 text-black flex items-center justify-center shadow-lg shadow-accent-500/30 hover:bg-accent-400 transition-all hover:scale-105 active:scale-95"
         >
           <svg
             className="w-6 h-6"
@@ -904,7 +904,7 @@ export default function AlbumViewer({
               d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
             />
           </svg>
-          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-black text-amber-400 text-[10px] font-bold flex items-center justify-center px-1 border-2 border-amber-500">
+          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-black text-accent-400 text-[10px] font-bold flex items-center justify-center px-1 border-2 border-accent-500">
             {totalItems}
           </span>
         </button>

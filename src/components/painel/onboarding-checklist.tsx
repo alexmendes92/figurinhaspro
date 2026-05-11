@@ -64,7 +64,7 @@ export default function OnboardingChecklist(props: OnboardingProgressInput) {
           aria-label="Progresso de configuração da vitrine"
         >
           <div
-            className="h-full rounded-full bg-amber-500 transition-all duration-700"
+            className="h-full rounded-full bg-accent-500 transition-all duration-700"
             style={{ width: `${Math.max(percent, 4)}%` }}
           />
         </div>
@@ -84,7 +84,7 @@ export default function OnboardingChecklist(props: OnboardingProgressInput) {
               </div>
               <Link
                 href={`?edit=1#${field}`}
-                className="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors min-h-[44px] sm:min-h-0 shrink-0 flex items-center"
+                className="px-3 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-bold transition-colors min-h-[44px] sm:min-h-0 shrink-0 flex items-center"
               >
                 Configurar
               </Link>

@@ -54,7 +54,7 @@ function FlyParticle({ from, onDone }: { from: { x: number; y: number }; onDone:
   return (
     <div
       ref={ref}
-      className="fixed z-[500] w-6 h-6 rounded-full bg-amber-500 shadow-lg shadow-amber-500/50 pointer-events-none"
+      className="fixed z-[500] w-6 h-6 rounded-full bg-accent-500 shadow-lg shadow-accent-500/50 pointer-events-none"
       style={{ top: 0, left: 0 }}
     />
   );
@@ -143,7 +143,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
             <div>
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <svg
-                  className="w-4 h-4 text-amber-400"
+                  className="w-4 h-4 text-accent-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -158,7 +158,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                 Figurinhas
               </h3>
               {sectionName && (
-                <p className="text-[11px] text-amber-400/70 font-[family-name:var(--font-geist-mono)] mt-0.5">
+                <p className="text-[11px] text-accent-400/70 font-[family-name:var(--font-geist-mono)] mt-0.5">
                   {sectionName}
                 </p>
               )}
@@ -198,7 +198,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                     type === "all"
                       ? "bg-zinc-800 text-zinc-300"
                       : type === "foil"
-                        ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                        ? "bg-accent-500/10 text-accent-400 border border-accent-500/20"
                         : type === "shiny"
                           ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
                           : "bg-zinc-800/50 text-zinc-400"
@@ -248,7 +248,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                         justAdded
                           ? "border-green-500/50 bg-green-500/5 scale-95"
                           : isInCart
-                            ? "border-amber-500/30 bg-amber-500/5"
+                            ? "border-accent-500/30 bg-accent-500/5"
                             : "border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-600 hover:bg-zinc-800/50 hover:scale-[1.02] active:scale-95"
                       }`}
                     >
@@ -293,7 +293,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                         {/* Badge "no carrinho" */}
                         {isInCart && !justAdded && (
                           <div className="absolute top-1 left-1">
-                            <span className="flex items-center gap-0.5 px-1 py-0.5 rounded bg-amber-500/90 text-[7px] font-bold text-black">
+                            <span className="flex items-center gap-0.5 px-1 py-0.5 rounded bg-accent-500/90 text-[7px] font-bold text-black">
                               <svg
                                 className="w-2.5 h-2.5"
                                 fill="none"
@@ -313,7 +313,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
 
                         {/* Overlay hover com "+" */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                          <div className="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center shadow-lg shadow-accent-500/30">
                             <svg
                               className="w-4 h-4 text-black"
                               fill="none"
@@ -343,7 +343,7 @@ export default function StickerPanel({ isOpen, onClose, pagePath, albumYear }: S
                           <span
                             className={`text-[9px] font-bold font-[family-name:var(--font-geist-mono)] ${
                               sticker.type === "foil"
-                                ? "text-amber-400"
+                                ? "text-accent-400"
                                 : sticker.type === "shiny"
                                   ? "text-purple-400"
                                   : "text-zinc-400"

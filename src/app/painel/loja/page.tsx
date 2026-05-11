@@ -37,7 +37,7 @@ export default async function MinhaLojaPage() {
         <div className="flex items-center justify-between mb-3">
           <div>
             <p className="text-xs font-semibold text-[var(--accent)]">Link da sua vitrine</p>
-            <p className="text-[10px] text-amber-400/60 mt-0.5">Compartilhe com seus clientes</p>
+            <p className="text-[10px] text-accent-400/60 mt-0.5">Compartilhe com seus clientes</p>
           </div>
           <Link
             href={`/loja/${seller.shopSlug}`}
@@ -60,7 +60,7 @@ export default async function MinhaLojaPage() {
             Abrir vitrine
           </Link>
         </div>
-        <div className="px-4 py-3 rounded-xl bg-black/20 border border-amber-500/10 font-[family-name:var(--font-geist-mono)] text-sm text-[var(--accent)]">
+        <div className="px-4 py-3 rounded-xl bg-black/20 border border-accent-500/10 font-[family-name:var(--font-geist-mono)] text-sm text-[var(--accent)]">
           /loja/{seller.shopSlug}
         </div>
       </div>

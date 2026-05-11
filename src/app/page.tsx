@@ -168,13 +168,13 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 bg-[#0b0e14]/85 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/25">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center shadow-lg shadow-accent-500/25">
               <span className="text-black font-black text-sm font-[family-name:var(--font-geist-mono)]">
                 F
               </span>
             </div>
             <span className="font-black text-sm text-white tracking-tight">
-              Figurinhas<span className="text-amber-400">Pro</span>
+              Figurinhas<span className="text-accent-400">Pro</span>
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-1">
@@ -212,7 +212,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/registro"
-              className="px-4 sm:px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs sm:text-sm font-bold transition-all shadow-lg shadow-amber-500/20"
+              className="px-4 sm:px-5 py-2.5 rounded-xl bg-accent-500 hover:bg-accent-400 text-black text-xs sm:text-sm font-bold transition-all shadow-lg shadow-accent-500/20"
             >
               Abrir minha loja
             </Link>
@@ -225,13 +225,13 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(251,191,36,0.10),transparent_55%),radial-gradient(ellipse_at_10%_90%,rgba(34,197,94,0.06),transparent_60%)] pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-20 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
           <div className="slide-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/25 bg-amber-500/[0.06] text-amber-400 text-[11px] font-bold mb-6 sm:mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-500/25 bg-accent-500/[0.06] text-accent-400 text-[11px] font-bold mb-6 sm:mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-400 pulse-dot" />
               Copa 2026 · pré-venda aberta
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-[84px] font-black tracking-tight leading-[0.95] text-white mb-6">
-              Complete seu <span className="text-amber-400">álbum</span>.
+              Complete seu <span className="text-accent-400">álbum</span>.
               <br />
               Venda sem esforço.
             </h1>
@@ -245,7 +245,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href="/registro"
-                className="px-6 sm:px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-all shadow-lg shadow-amber-500/25 text-center inline-flex items-center justify-center gap-2"
+                className="px-6 sm:px-7 py-3.5 rounded-xl bg-accent-500 hover:bg-accent-400 text-black font-bold text-sm transition-all shadow-lg shadow-accent-500/25 text-center inline-flex items-center justify-center gap-2"
               >
                 Começar grátis <span aria-hidden>→</span>
               </Link>
@@ -259,13 +259,13 @@ export default function LandingPage() {
 
             <div className="flex flex-wrap gap-x-5 gap-y-2 mt-8 text-[12px] text-gray-500">
               <span className="inline-flex items-center gap-1.5">
-                <span className="text-amber-400">✓</span> 14 dias grátis, sem cartão
+                <span className="text-accent-400">✓</span> 14 dias grátis, sem cartão
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="text-amber-400">✓</span> Importa seu estoque em 3 min
+                <span className="text-accent-400">✓</span> Importa seu estoque em 3 min
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="text-amber-400">✓</span> PIX, cartão e Stripe
+                <span className="text-accent-400">✓</span> PIX, cartão e Stripe
               </span>
             </div>
           </div>
@@ -276,7 +276,7 @@ export default function LandingPage() {
             <div className="absolute top-10 right-0 w-[420px] z-10 rounded-2xl bg-[#0f1219] border border-white/[0.08] shadow-2xl shadow-black/60 p-5 slide-up">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-amber-400 font-bold mb-1">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-accent-400 font-bold mb-1">
                     Hoje
                   </p>
                   <p className="text-[34px] font-black tracking-tight text-white leading-none font-[family-name:var(--font-geist-mono)]">
@@ -291,7 +291,7 @@ export default function LandingPage() {
                     {[12, 14, 13, 18, 22, 19, 24, 28, 34].map((v, i) => (
                       <span
                         key={i}
-                        className="w-1 bg-amber-400/70 rounded-sm"
+                        className="w-1 bg-accent-400/70 rounded-sm"
                         style={{ height: `${(v / 34) * 100}%` }}
                       />
                     ))}
@@ -302,7 +302,7 @@ export default function LandingPage() {
               <div className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between text-[13px]">
                   <span className="flex items-center gap-2 text-gray-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Brasil #10 acabou
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-400" /> Brasil #10 acabou
                   </span>
                   <span className="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/20">
                     Repor
@@ -312,7 +312,7 @@ export default function LandingPage() {
                   <span className="flex items-center gap-2 text-gray-300">
                     3 pedidos aguardando Pix
                   </span>
-                  <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/20">
+                  <span className="px-2 py-0.5 rounded bg-accent-500/10 text-accent-400 text-[10px] font-bold border border-accent-500/20">
                     28min
                   </span>
                 </div>
@@ -360,7 +360,7 @@ export default function LandingPage() {
                   className="inline-flex items-center gap-12 pr-12"
                   aria-hidden={k === 1}
                 >
-                  <span className="text-amber-400 font-bold">AO VIVO</span>
+                  <span className="text-accent-400 font-bold">AO VIVO</span>
                   <span>
                     <b className="text-emerald-400 font-bold">+R$ 2.847</b> vendidos nas últimas 24h
                     pela rede
@@ -391,22 +391,22 @@ export default function LandingPage() {
       {/* Antes → Depois */}
       <section className="px-4 sm:px-6 py-16 sm:py-24">
         <div className="max-w-6xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             A rotina que some
           </p>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[0.95] text-white mb-12 max-w-4xl">
             83 mensagens no WhatsApp.
             <br />
-            <span className="text-amber-400">Zero</span> precisam da sua atenção.
+            <span className="text-accent-400">Zero</span> precisam da sua atenção.
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {painPairs.map((p, i) => (
               <div
                 key={i}
-                className="group p-6 rounded-2xl bg-[#0f1219] border border-white/[0.06] hover:border-amber-500/25 hover:bg-amber-500/[0.02] transition-all"
+                className="group p-6 rounded-2xl bg-[#0f1219] border border-white/[0.06] hover:border-accent-500/25 hover:bg-accent-500/[0.02] transition-all"
               >
-                <p className="text-amber-400 text-[10px] font-bold uppercase tracking-[0.18em] mb-3">
+                <p className="text-accent-400 text-[10px] font-bold uppercase tracking-[0.18em] mb-3">
                   Antes → Depois
                 </p>
                 <p className="text-[13px] text-gray-500 line-through leading-snug mb-2">{p.pain}</p>
@@ -423,7 +423,7 @@ export default function LandingPage() {
         className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.06] bg-[#0d1017]"
       >
         <div className="max-w-6xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             Um painel, toda a operação
           </p>
           <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[0.95] text-white mb-12 max-w-3xl">
@@ -437,7 +437,7 @@ export default function LandingPage() {
             <div className="rounded-2xl bg-[#0f1219] border border-white/[0.08] shadow-2xl shadow-black/50 p-5">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-amber-400 font-bold mb-1">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-accent-400 font-bold mb-1">
                     Copa 2026 · Argentina
                   </p>
                   <p className="text-[15px] font-bold text-white">20 figurinhas · 14 em estoque</p>
@@ -498,7 +498,7 @@ export default function LandingPage() {
                   Faltam <b className="text-white">7</b> para completar o time
                 </span>
                 <span className="text-gray-600">·</span>
-                <span className="text-amber-400">
+                <span className="text-accent-400">
                   Preço sugerido: <b>R$ 0,85</b>
                 </span>
               </div>
@@ -522,7 +522,7 @@ export default function LandingPage() {
       {/* Como funciona — 3 passos */}
       <section className="px-4 sm:px-6 py-16 sm:py-24">
         <div className="max-w-5xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             3 passos simples
           </p>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-12">
@@ -534,12 +534,12 @@ export default function LandingPage() {
               <div key={step.num} className="relative">
                 {i < steps.length - 1 && (
                   <div
-                    className="hidden sm:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-amber-500/30 to-transparent -translate-x-4"
+                    className="hidden sm:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-accent-500/30 to-transparent -translate-x-4"
                     aria-hidden
                   />
                 )}
-                <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center mb-5">
-                  <span className="text-xl font-black font-[family-name:var(--font-geist-mono)] text-amber-400">
+                <div className="w-16 h-16 rounded-2xl bg-accent-500/10 border border-accent-500/25 flex items-center justify-center mb-5">
+                  <span className="text-xl font-black font-[family-name:var(--font-geist-mono)] text-accent-400">
                     {step.num}
                   </span>
                 </div>
@@ -557,7 +557,7 @@ export default function LandingPage() {
         className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.06] bg-[#0d1017]"
       >
         <div className="max-w-6xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             Funcionalidades
           </p>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-12">
@@ -593,7 +593,7 @@ export default function LandingPage() {
             ].map((f) => (
               <div
                 key={f.title}
-                className="p-6 rounded-2xl bg-[#0f1219] border border-white/[0.06] hover:border-amber-500/25 transition-all"
+                className="p-6 rounded-2xl bg-[#0f1219] border border-white/[0.06] hover:border-accent-500/25 transition-all"
               >
                 <h3 className="font-bold text-white mb-2 text-[15px]">{f.title}</h3>
                 <p className="text-[13px] text-gray-400 leading-relaxed">{f.desc}</p>
@@ -606,7 +606,7 @@ export default function LandingPage() {
       {/* Social Proof */}
       <section className="px-4 sm:px-6 py-16 sm:py-24">
         <div className="max-w-5xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             Depoimentos
           </p>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-12">
@@ -620,7 +620,7 @@ export default function LandingPage() {
                   {[...Array(5)].map((_, i) => (
                     <svg
                       key={i}
-                      className="w-4 h-4 text-amber-400"
+                      className="w-4 h-4 text-accent-400"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       aria-hidden
@@ -635,7 +635,7 @@ export default function LandingPage() {
                     <p className="text-sm font-bold text-white">{t.name}</p>
                     <p className="text-xs text-gray-500">{t.city}</p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 text-[11px] font-bold font-[family-name:var(--font-geist-mono)] border border-amber-500/20">
+                  <span className="px-2.5 py-1 rounded-lg bg-accent-500/10 text-accent-400 text-[11px] font-bold font-[family-name:var(--font-geist-mono)] border border-accent-500/20">
                     {t.stickers} figs
                   </span>
                 </div>
@@ -651,7 +651,7 @@ export default function LandingPage() {
         className="px-4 sm:px-6 py-16 sm:py-24 border-t border-white/[0.06] bg-[#0d1017]"
       >
         <div className="max-w-5xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             Planos
           </p>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[0.95] text-white mb-3">
@@ -704,10 +704,10 @@ export default function LandingPage() {
             ].map((plan) => (
               <div
                 key={plan.name}
-                className={`relative p-7 rounded-2xl border transition-all ${plan.highlight ? "border-amber-500/40 bg-gradient-to-b from-amber-500/[0.06] to-transparent shadow-2xl shadow-amber-500/10 ring-1 ring-amber-500/20" : "border-white/[0.06] bg-[#0f1219]"}`}
+                className={`relative p-7 rounded-2xl border transition-all ${plan.highlight ? "border-accent-500/40 bg-gradient-to-b from-accent-500/[0.06] to-transparent shadow-2xl shadow-accent-500/10 ring-1 ring-accent-500/20" : "border-white/[0.06] bg-[#0f1219]"}`}
               >
                 {plan.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-500 text-black text-[10px] font-black uppercase tracking-[0.14em] shadow-lg shadow-amber-500/30">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent-500 text-black text-[10px] font-black uppercase tracking-[0.14em] shadow-lg shadow-accent-500/30">
                     Mais escolhido
                   </div>
                 )}
@@ -722,9 +722,9 @@ export default function LandingPage() {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-[13px] text-gray-300">
-                      <span className="w-4 h-4 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="w-4 h-4 rounded-full bg-accent-500/20 flex items-center justify-center shrink-0 mt-0.5">
                         <svg
-                          className="w-2.5 h-2.5 text-amber-400"
+                          className="w-2.5 h-2.5 text-accent-400"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -740,7 +740,7 @@ export default function LandingPage() {
                 </ul>
                 <Link
                   href="/registro"
-                  className={`block w-full text-center py-3 rounded-xl text-sm font-bold transition-all ${plan.highlight ? "bg-amber-500 hover:bg-amber-400 text-black shadow-lg shadow-amber-500/20" : "border border-white/10 text-gray-200 hover:bg-white/[0.04] hover:border-white/20"}`}
+                  className={`block w-full text-center py-3 rounded-xl text-sm font-bold transition-all ${plan.highlight ? "bg-accent-500 hover:bg-accent-400 text-black shadow-lg shadow-accent-500/20" : "border border-white/10 text-gray-200 hover:bg-white/[0.04] hover:border-white/20"}`}
                 >
                   {plan.cta}
                 </Link>
@@ -753,7 +753,7 @@ export default function LandingPage() {
       {/* FAQ */}
       <section id="faq" className="px-4 sm:px-6 py-16 sm:py-24">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
+          <p className="text-accent-400 text-[11px] font-bold uppercase tracking-[0.18em] mb-3">
             Dúvidas
           </p>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-12">
@@ -764,12 +764,12 @@ export default function LandingPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="group p-5 rounded-2xl bg-[#0f1219] border border-white/[0.06] open:border-amber-500/25 transition-all"
+                className="group p-5 rounded-2xl bg-[#0f1219] border border-white/[0.06] open:border-accent-500/25 transition-all"
               >
                 <summary className="flex items-center justify-between cursor-pointer list-none">
                   <span className="text-sm font-bold text-white">{faq.q}</span>
                   <span
-                    className="text-amber-400 text-xl leading-none transition-transform group-open:rotate-45"
+                    className="text-accent-400 text-xl leading-none transition-transform group-open:rotate-45"
                     aria-hidden
                   >
                     +
@@ -789,14 +789,14 @@ export default function LandingPage() {
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-5">
             O próximo álbum
             <br />
-            <span className="text-amber-400">é seu.</span>
+            <span className="text-accent-400">é seu.</span>
           </h2>
           <p className="text-base text-gray-400 mb-10 max-w-xl mx-auto">
             Seus concorrentes ainda estão digitando no WhatsApp. Você já pode estar dormindo.
           </p>
           <Link
             href="/registro"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-all shadow-2xl shadow-amber-500/30"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent-500 hover:bg-accent-400 text-black font-bold text-sm transition-all shadow-2xl shadow-accent-500/30"
           >
             Abrir minha loja agora <span aria-hidden>→</span>
           </Link>
@@ -810,7 +810,7 @@ export default function LandingPage() {
       <footer className="border-t border-white/[0.06] px-4 sm:px-6 py-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center">
               <span className="text-black text-[9px] font-black font-[family-name:var(--font-geist-mono)]">
                 F
               </span>

@@ -11,12 +11,12 @@ const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
 
 const PRIORITY_BADGE: Record<string, string> = {
   HIGH: "bg-red-500/10 text-red-400",
-  MEDIUM: "bg-amber-500/10 text-amber-400",
+  MEDIUM: "bg-accent-500/10 text-accent-400",
   LOW: "bg-gray-500/10 text-gray-400",
 };
 
 const inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function TarefasPage({
   searchParams: searchParamsPromise,
@@ -92,7 +92,7 @@ export default async function TarefasPage({
         </div>
         <Link
           href="/painel/comercial/tarefas?new=1"
-          className="px-3 py-1.5 bg-amber-500 text-black text-xs font-medium rounded-lg hover:bg-amber-400 transition-colors flex-shrink-0"
+          className="px-3 py-1.5 bg-accent-500 text-black text-xs font-medium rounded-lg hover:bg-accent-400 transition-colors flex-shrink-0"
         >
           + Nova Tarefa
         </Link>
@@ -146,7 +146,7 @@ export default async function TarefasPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-accent-500 text-black text-sm font-medium rounded-lg hover:bg-accent-400 transition-colors"
             >
               Criar tarefa
             </button>
@@ -180,7 +180,7 @@ export default async function TarefasPage({
                     className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                       task.status === "DONE"
                         ? "bg-emerald-500 border-emerald-500 text-white"
-                        : "border-gray-600 hover:border-amber-500"
+                        : "border-gray-600 hover:border-accent-500"
                     }`}
                   >
                     {task.status === "DONE" && (

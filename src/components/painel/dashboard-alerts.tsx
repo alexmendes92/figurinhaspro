@@ -86,7 +86,7 @@ const ICON: Record<AlertKind, React.ReactNode> = {
 
 const TONE: Record<DashboardAlert["severity"], { wrap: string; icon: string }> = {
   high: { wrap: "bg-red-500/[0.06] border-red-500/20", icon: "text-red-400 bg-red-500/10" },
-  med: { wrap: "bg-amber-500/[0.06] border-amber-500/20", icon: "text-amber-400 bg-amber-500/10" },
+  med: { wrap: "bg-accent-500/[0.06] border-accent-500/20", icon: "text-accent-400 bg-accent-500/10" },
   info: { wrap: "bg-white/[0.03] border-white/[0.06]", icon: "text-blue-400 bg-blue-500/10" },
 };
 
@@ -115,7 +115,7 @@ export function DashboardAlerts({ alerts }: { alerts: DashboardAlert[] }) {
     <div className="rounded-2xl border border-white/[0.06] bg-[#0f1219] p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider">
+          <p className="text-[10px] text-accent-400/70 font-semibold uppercase tracking-wider">
             Antecipamos
           </p>
           <p className="text-base font-bold text-white mt-0.5">Precisa da sua atenção</p>

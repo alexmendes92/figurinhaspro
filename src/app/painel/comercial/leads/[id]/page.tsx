@@ -9,13 +9,13 @@ const STAGE_CONFIG: Record<string, { label: string; color: string }> = {
   PROSPECT: { label: "Prospect", color: "bg-gray-500" },
   CONTACT: { label: "Contato", color: "bg-blue-500" },
   DEMO: { label: "Demo", color: "bg-violet-500" },
-  NEGOTIATION: { label: "Negociacao", color: "bg-amber-500" },
+  NEGOTIATION: { label: "Negociacao", color: "bg-accent-500" },
   WON: { label: "Ganho", color: "bg-emerald-500" },
   LOST: { label: "Perdido", color: "bg-red-500" },
 };
 
 const inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 function StageButton({
   leadId,
@@ -79,7 +79,7 @@ export default async function LeadDetailPage({
             {lead.phone && <span>{lead.phone}</span>}
             {lead.email && <span>{lead.email}</span>}
             {lead.potentialValue && (
-              <span className="text-amber-400">R$ {lead.potentialValue.toFixed(0)}</span>
+              <span className="text-accent-400">R$ {lead.potentialValue.toFixed(0)}</span>
             )}
             <span>{lead.source}</span>
           </div>
@@ -178,7 +178,7 @@ export default async function LeadDetailPage({
             <input name="result" placeholder="Resultado / proximo passo" className={inputClass} />
             <button
               type="submit"
-              className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-accent-500 text-black text-sm font-medium rounded-lg hover:bg-accent-400 transition-colors"
             >
               Registrar
             </button>
@@ -199,7 +199,7 @@ export default async function LeadDetailPage({
               <div key={a.id} className="flex gap-3 border-l-2 border-white/[0.06] pl-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-amber-400">{a.type}</span>
+                    <span className="text-xs font-medium text-accent-400">{a.type}</span>
                     {a.channel && <span className="text-xs text-gray-600">{a.channel}</span>}
                     <span className="text-xs text-gray-600">
                       {a.createdAt.toLocaleDateString("pt-BR")}
@@ -224,7 +224,7 @@ export default async function LeadDetailPage({
             {lead.tasks.map((t) => (
               <li key={t.id} className="flex items-center gap-2">
                 <span
-                  className={`w-2 h-2 rounded-full ${t.status === "DONE" ? "bg-emerald-500" : "bg-amber-500"}`}
+                  className={`w-2 h-2 rounded-full ${t.status === "DONE" ? "bg-emerald-500" : "bg-accent-500"}`}
                 />
                 <span
                   className={`text-sm ${t.status === "DONE" ? "text-gray-500 line-through" : "text-gray-300"}`}

@@ -46,7 +46,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex bg-[#0b0e14]">
       {/* Lado esquerdo — branding */}
-      <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-amber-950 via-[#0b0e14] to-[#0b0e14]">
+      <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-accent-950 via-[#0b0e14] to-[#0b0e14]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(245,158,11,0.12),transparent_60%)]" />
         {/* Grid pattern background */}
         <div
@@ -68,7 +68,7 @@ export default function LoginPage() {
               { v: "1970–2026", l: "cobertura" },
             ].map((s) => (
               <div key={s.l} className="text-center">
-                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+                <p className="text-lg font-bold font-[family-name:var(--font-geist-mono)] text-accent-400">
                   {s.v}
                 </p>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{s.l}</p>
@@ -116,7 +116,7 @@ export default function LoginPage() {
               <div className="flex justify-end mt-2">
                 <Link
                   href="/esqueci-senha"
-                  className="text-[12px] text-gray-500 hover:text-amber-400 transition-colors"
+                  className="text-[12px] text-gray-500 hover:text-accent-400 transition-colors"
                 >
                   Esqueci minha senha
                 </Link>

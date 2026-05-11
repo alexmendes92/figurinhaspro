@@ -16,19 +16,19 @@ const STAGE_COLOR: Record<string, string> = {
   PROSPECT: "bg-gray-500",
   CONTACT: "bg-blue-500",
   DEMO: "bg-violet-500",
-  NEGOTIATION: "bg-amber-500",
+  NEGOTIATION: "bg-accent-500",
   WON: "bg-emerald-500",
   LOST: "bg-red-500",
 };
 
 const PRIORITY_BADGE: Record<string, string> = {
   HIGH: "bg-red-500/10 text-red-400",
-  MEDIUM: "bg-amber-500/10 text-amber-400",
+  MEDIUM: "bg-accent-500/10 text-accent-400",
   LOW: "bg-gray-500/10 text-gray-400",
 };
 
 const inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function LeadsPage({
   searchParams: searchParamsPromise,
@@ -72,7 +72,7 @@ export default async function LeadsPage({
         </div>
         <Link
           href="/painel/comercial/leads?new=1"
-          className="px-3 py-1.5 bg-amber-500 text-black text-xs font-medium rounded-lg hover:bg-amber-400 transition-colors flex-shrink-0"
+          className="px-3 py-1.5 bg-accent-500 text-black text-xs font-medium rounded-lg hover:bg-accent-400 transition-colors flex-shrink-0"
         >
           + Novo Lead
         </Link>
@@ -115,7 +115,7 @@ export default async function LeadsPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="px-4 py-2 bg-amber-500 text-black text-sm font-medium rounded-lg hover:bg-amber-400 transition-colors"
+              className="px-4 py-2 bg-accent-500 text-black text-sm font-medium rounded-lg hover:bg-accent-400 transition-colors"
             >
               Criar lead
             </button>
@@ -135,7 +135,7 @@ export default async function LeadsPage({
           <p className="text-gray-500 text-sm">Nenhum lead encontrado</p>
           <Link
             href="/painel/comercial/leads?new=1"
-            className="text-amber-400 text-sm mt-2 inline-block hover:underline"
+            className="text-accent-400 text-sm mt-2 inline-block hover:underline"
           >
             Cadastrar primeiro lead
           </Link>
@@ -146,7 +146,7 @@ export default async function LeadsPage({
             <Link
               key={lead.id}
               href={`/painel/comercial/leads/${lead.id}`}
-              className="block bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 hover:ring-1 hover:ring-amber-500/30 transition-all"
+              className="block bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 hover:ring-1 hover:ring-accent-500/30 transition-all"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">

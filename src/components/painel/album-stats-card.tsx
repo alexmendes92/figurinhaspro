@@ -41,14 +41,14 @@ export default function AlbumStatsCard({
     coveragePercent >= 80
       ? "bg-emerald-500"
       : coveragePercent >= 30
-        ? "bg-amber-500"
+        ? "bg-accent-500"
         : "bg-zinc-500";
 
   const progressTextColor =
     coveragePercent >= 80
       ? "text-emerald-400"
       : coveragePercent >= 30
-        ? "text-amber-400"
+        ? "text-accent-400"
         : "text-zinc-400";
 
   const missing = totalStickers - inStock;
@@ -63,7 +63,7 @@ export default function AlbumStatsCard({
   return (
     <div
       className={`rounded-2xl border overflow-hidden transition-all ${
-        isCustom ? "border-amber-500/20 bg-amber-500/[0.02]" : "border-white/[0.06] bg-white/[0.02]"
+        isCustom ? "border-accent-500/20 bg-accent-500/[0.02]" : "border-white/[0.06] bg-white/[0.02]"
       }`}
     >
       {/* Header do card */}
@@ -74,7 +74,7 @@ export default function AlbumStatsCard({
               <span className="text-lg">{albumFlag}</span>
               {albumTitle}
               {isCustom && (
-                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/20 shrink-0">
+                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-accent-500/15 text-accent-400 border border-accent-500/20 shrink-0">
                   CUSTOM
                 </span>
               )}

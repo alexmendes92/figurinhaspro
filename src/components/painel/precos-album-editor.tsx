@@ -279,7 +279,7 @@ export default function PrecosAlbumEditor({
             {tab.count > 0 && (
               <span
                 className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
-                  activeTab === tab.id ? "bg-amber-500 text-black" : "bg-zinc-700 text-zinc-400"
+                  activeTab === tab.id ? "bg-accent-500 text-black" : "bg-zinc-700 text-zinc-400"
                 }`}
               >
                 {tab.count}
@@ -304,7 +304,7 @@ export default function PrecosAlbumEditor({
                 key={tc.type}
                 className={`p-4 rounded-2xl border transition-all ${
                   hasOverride
-                    ? "border-amber-500/30 bg-amber-500/5"
+                    ? "border-accent-500/30 bg-accent-500/5"
                     : "border-[var(--border)] bg-[var(--card)]"
                 }`}
               >
@@ -346,7 +346,7 @@ export default function PrecosAlbumEditor({
                           updateTypePrice(tc.type, val);
                         }
                       }}
-                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-amber-500/40 focus:outline-none transition-colors"
+                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
                     />
                     {hasOverride && (
                       <button
@@ -511,7 +511,7 @@ function SectionRulesTab({
             key={name}
             className={`p-3 rounded-xl border transition-all ${
               rule
-                ? "border-amber-500/20 bg-amber-500/5"
+                ? "border-accent-500/20 bg-accent-500/5"
                 : "border-[var(--border)] bg-[var(--card)]"
             }`}
           >
@@ -540,14 +540,14 @@ function SectionRulesTab({
                         if (e.key === "Enter") handleSave(name);
                       }}
                       placeholder={editType === "FLAT" ? "5.00" : "1.00"}
-                      className="!w-20 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold"
+                      className="!w-20 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold"
                     />
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleSave(name)}
-                    className="flex-1 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors"
+                    className="flex-1 py-1.5 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-semibold transition-colors"
                   >
                     Salvar
                   </button>
@@ -564,7 +564,7 @@ function SectionRulesTab({
                 <div>
                   <p className="text-xs font-semibold">{name}</p>
                   {rule && (
-                    <p className="text-[10px] text-amber-400 font-[family-name:var(--font-geist-mono)] mt-0.5">
+                    <p className="text-[10px] text-accent-400 font-[family-name:var(--font-geist-mono)] mt-0.5">
                       {rule.adjustType === "FLAT"
                         ? `R$${rule.value.toFixed(2).replace(".", ",")} fixo`
                         : `${rule.value >= 0 ? "+" : ""}R$${rule.value.toFixed(2).replace(".", ",")} ajuste`}
@@ -578,7 +578,7 @@ function SectionRulesTab({
                   {saved === key && <span className="text-[10px] text-[var(--success)]">✓</span>}
                   <button
                     onClick={() => startEdit(name)}
-                    className="px-2 py-1 rounded-lg text-[10px] font-semibold text-zinc-400 hover:text-amber-400 border border-zinc-700 hover:border-amber-500/30 transition-all"
+                    className="px-2 py-1 rounded-lg text-[10px] font-semibold text-zinc-400 hover:text-accent-400 border border-zinc-700 hover:border-accent-500/30 transition-all"
                   >
                     {rule ? "Editar" : "Definir"}
                   </button>
@@ -671,7 +671,7 @@ function QuantityTiersTab({
           <p className="text-xs text-[var(--muted)] mb-2">Nenhuma faixa de desconto configurada.</p>
           <button
             onClick={() => setAdding(true)}
-            className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-400 hover:bg-amber-500/20 transition-all"
+            className="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/20 text-xs font-semibold text-accent-400 hover:bg-accent-500/20 transition-all"
           >
             + Adicionar faixa
           </button>
@@ -716,7 +716,7 @@ function QuantityTiersTab({
                           onSave(tier.minQuantity, val);
                         }
                       }}
-                      className="!w-14 text-center font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold text-sm py-1 px-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-amber-500/40 focus:outline-none transition-colors"
+                      className="!w-14 text-center font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold text-sm py-1 px-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
                     />
                     <span className="text-xs text-zinc-500">%</span>
                   </div>
@@ -753,7 +753,7 @@ function QuantityTiersTab({
           {!adding && (
             <button
               onClick={() => setAdding(true)}
-              className="w-full py-2 rounded-xl border border-dashed border-zinc-700 text-xs text-zinc-500 hover:text-amber-400 hover:border-amber-500/30 transition-all"
+              className="w-full py-2 rounded-xl border border-dashed border-zinc-700 text-xs text-zinc-500 hover:text-accent-400 hover:border-accent-500/30 transition-all"
             >
               + Adicionar faixa
             </button>
@@ -763,8 +763,8 @@ function QuantityTiersTab({
 
       {/* Form nova faixa */}
       {adding && (
-        <div className="p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5">
-          <p className="text-xs font-semibold text-amber-400 mb-3">Nova faixa de desconto</p>
+        <div className="p-4 rounded-2xl border border-accent-500/20 bg-accent-500/5">
+          <p className="text-xs font-semibold text-accent-400 mb-3">Nova faixa de desconto</p>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div>
               <label className="text-[10px] text-zinc-500 mb-1 block">A partir de (qtd)</label>
@@ -789,7 +789,7 @@ function QuantityTiersTab({
                   if (e.key === "Enter") handleAdd();
                 }}
                 placeholder="Ex: 10"
-                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600"
               />
             </div>
           </div>
@@ -797,7 +797,7 @@ function QuantityTiersTab({
             <button
               onClick={handleAdd}
               disabled={!newMinQty || !newDiscount}
-              className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-xs font-semibold transition-colors"
+              className="flex-1 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-xs font-semibold transition-colors"
             >
               Adicionar
             </button>

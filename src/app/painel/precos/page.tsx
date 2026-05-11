@@ -111,7 +111,7 @@ export default async function PrecosPage() {
                 key={album.slug}
                 href={`/painel/precos/${album.slug}`}
                 className={`group relative rounded-2xl border bg-zinc-900/60 overflow-hidden hover:border-zinc-600 transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-black/30 ${
-                  isCustom ? "border-amber-500/20" : "border-zinc-800"
+                  isCustom ? "border-accent-500/20" : "border-zinc-800"
                 }`}
               >
                 {/* Capa */}
@@ -126,9 +126,9 @@ export default async function PrecosPage() {
                     />
                   ) : isCustom ? (
                     <div className="text-center">
-                      <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-2">
+                      <div className="w-12 h-12 rounded-2xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mx-auto mb-2">
                         <svg
-                          className="w-6 h-6 text-amber-400"
+                          className="w-6 h-6 text-accent-400"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -141,7 +141,7 @@ export default async function PrecosPage() {
                           />
                         </svg>
                       </div>
-                      <p className="text-[10px] text-amber-400/70 font-medium">Personalizado</p>
+                      <p className="text-[10px] text-accent-400/70 font-medium">Personalizado</p>
                     </div>
                   ) : (
                     <div className="text-center">
@@ -155,7 +155,7 @@ export default async function PrecosPage() {
                   {/* Badges */}
                   <div className="absolute top-2 right-2 flex flex-col gap-1">
                     {rulesCount > 0 && (
-                      <div className="px-1.5 py-0.5 rounded-full bg-amber-500/90 text-[9px] font-bold text-black">
+                      <div className="px-1.5 py-0.5 rounded-full bg-accent-500/90 text-[9px] font-bold text-black">
                         {rulesCount} {rulesCount === 1 ? "regra" : "regras"}
                       </div>
                     )}

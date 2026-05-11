@@ -160,7 +160,7 @@ export default function PedidosClient({ shopUrl }: PedidosClientProps) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por nome do cliente..."
-            className="w-full sm:max-w-xs px-4 py-2.5 rounded-xl bg-white/[0.04] border border-[var(--border)] text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all"
+            className="w-full sm:max-w-xs px-4 py-2.5 rounded-xl bg-white/[0.04] border border-[var(--border)] text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all"
           />
         </div>
       )}

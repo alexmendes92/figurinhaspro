@@ -6,7 +6,7 @@ const STAGE_CONFIG: Record<string, { label: string; color: string }> = {
   PROSPECT: { label: "Prospects", color: "bg-gray-500" },
   CONTACT: { label: "Contato", color: "bg-blue-500" },
   DEMO: { label: "Demo", color: "bg-violet-500" },
-  NEGOTIATION: { label: "Negociacao", color: "bg-amber-500" },
+  NEGOTIATION: { label: "Negociacao", color: "bg-accent-500" },
   WON: { label: "Ganhos", color: "bg-emerald-500" },
   LOST: { label: "Perdidos", color: "bg-red-500" },
 };
@@ -30,7 +30,7 @@ function Card({
     return (
       <Link
         href={href}
-        className="block hover:ring-1 hover:ring-amber-500/30 rounded-xl transition-all"
+        className="block hover:ring-1 hover:ring-accent-500/30 rounded-xl transition-all"
       >
         {content}
       </Link>
@@ -103,7 +103,7 @@ export default async function ComercialDashboard() {
 
   const PRIORITY_COLOR: Record<string, string> = {
     HIGH: "text-red-400",
-    MEDIUM: "text-amber-400",
+    MEDIUM: "text-accent-400",
     LOW: "text-gray-400",
   };
 
@@ -111,9 +111,9 @@ export default async function ComercialDashboard() {
     <div className="space-y-6">
       {/* Seed banner */}
       {kpiCount === 0 && (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex items-center justify-between">
+        <div className="bg-accent-500/10 border border-accent-500/20 rounded-xl p-4 flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-400">Cockpit vazio</p>
+            <p className="text-sm font-medium text-accent-400">Cockpit vazio</p>
             <p className="text-xs text-gray-500 mt-1">
               Popule com os dados da analise estrategica para comecar.
             </p>
@@ -240,7 +240,7 @@ export default async function ComercialDashboard() {
           <Link
             key={s.label}
             href={s.href}
-            className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 hover:ring-1 hover:ring-amber-500/30 transition-all"
+            className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 hover:ring-1 hover:ring-accent-500/30 transition-all"
           >
             <p className="text-xs text-gray-500">{s.label}</p>
             <p className="text-2xl font-bold text-white mt-1">{s.value}</p>

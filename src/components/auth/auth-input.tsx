@@ -40,7 +40,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(function A
         <input
           ref={ref}
           type={inputType}
-          className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all ${
+          className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all ${
             icon ? "pl-10" : ""
           } ${isPassword ? "pr-11" : ""} ${
             error

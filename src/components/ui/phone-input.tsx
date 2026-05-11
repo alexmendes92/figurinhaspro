@@ -37,7 +37,7 @@ export default function PhoneInput({
       onChange={handleChange}
       placeholder={placeholder}
       required={required}
-      className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500/40 focus:ring-2 focus:ring-amber-500/10 transition-all ${className}`}
+      className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all ${className}`}
     />
   );
 }

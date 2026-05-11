@@ -46,7 +46,7 @@ export default async function ModalRoiVariantPage({
       <div className="relative z-10 flex min-h-[calc(100dvh-4rem)] items-center justify-center">
         <PlanLimitModalPreview denied={denied} priceAvg={priceAvg} variant={variant} />
       </div>
-      <div className="pointer-events-none fixed bottom-4 left-1/2 z-20 -translate-x-1/2 select-none rounded-full border border-amber-500/40 bg-[#0b0e14]/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-amber-300">
+      <div className="pointer-events-none fixed bottom-4 left-1/2 z-20 -translate-x-1/2 select-none rounded-full border border-accent-500/40 bg-[#0b0e14]/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-accent-300">
         Protótipo · variante {variant}
       </div>
     </main>

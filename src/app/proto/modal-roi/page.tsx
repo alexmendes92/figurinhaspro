@@ -68,7 +68,7 @@ function FakePainelBackground() {
 
 function PrototypeBadge() {
   return (
-    <div className="pointer-events-none fixed bottom-4 left-1/2 z-20 -translate-x-1/2 select-none rounded-full border border-amber-500/40 bg-[#0b0e14]/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-amber-300 shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
+    <div className="pointer-events-none fixed bottom-4 left-1/2 z-20 -translate-x-1/2 select-none rounded-full border border-accent-500/40 bg-[#0b0e14]/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-accent-300 shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
       Protótipo · não cobra
     </div>
   );

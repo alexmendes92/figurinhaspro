@@ -34,8 +34,8 @@ export default function AppShell({ albums }: { albums: Album[] }) {
                 </svg>
               </button>
             )}
-            <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-              <span className="text-amber-500 font-bold font-[family-name:var(--font-geist-mono)]">
+            <div className="w-9 h-9 rounded-lg bg-accent-500/10 border border-accent-500/20 flex items-center justify-center">
+              <span className="text-accent-500 font-bold font-[family-name:var(--font-geist-mono)]">
                 P
               </span>
             </div>
@@ -56,7 +56,7 @@ export default function AppShell({ albums }: { albums: Album[] }) {
           {/* Botão do carrinho */}
           <button
             onClick={() => setIsOpen(true)}
-            className="relative flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:border-amber-500/40 hover:bg-zinc-800 transition-all"
+            className="relative flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:border-accent-500/40 hover:bg-zinc-800 transition-all"
           >
             <svg
               className="w-5 h-5 text-zinc-300"
@@ -73,7 +73,7 @@ export default function AppShell({ albums }: { albums: Album[] }) {
             </svg>
             <span className="text-sm text-zinc-300 hidden sm:inline">Carrinho</span>
             {totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-amber-500 text-black text-[11px] font-bold flex items-center justify-center cart-badge-bounce">
+              <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-accent-500 text-black text-[11px] font-bold flex items-center justify-center cart-badge-bounce">
                 {totalItems}
               </span>
             )}

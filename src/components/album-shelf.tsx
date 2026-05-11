@@ -32,7 +32,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
               <button
                 key={album.slug}
                 onClick={() => onSelect(album)}
-                className="group relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden text-left transition-all hover:border-amber-500/40 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="group relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden text-left transition-all hover:border-accent-500/40 hover:scale-[1.02] hover:shadow-lg hover:shadow-accent-500/5 focus:outline-none focus:ring-2 focus:ring-accent-500/50"
               >
                 {/* Miniatura com mosaico de figurinhas */}
                 <div className="relative aspect-[3/4] bg-zinc-800 overflow-hidden">
@@ -59,7 +59,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
 
                   {/* Badge do ano */}
                   <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm border border-zinc-700 rounded-md px-2 py-0.5">
-                    <span className="font-[family-name:var(--font-geist-mono)] text-xs font-bold text-amber-400">
+                    <span className="font-[family-name:var(--font-geist-mono)] text-xs font-bold text-accent-400">
                       {album.year}
                     </span>
                   </div>
@@ -71,7 +71,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <p className="text-xs font-medium text-white truncate">{album.host}</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[10px] text-amber-400/80">🏆 {album.champion}</span>
+                      <span className="text-[10px] text-accent-400/80">🏆 {album.champion}</span>
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@ export default function AlbumShelf({ albums, onSelect }: AlbumShelfProps) {
                     {album.totalStickers} figurinhas
                   </span>
                   <svg
-                    className="w-3.5 h-3.5 text-zinc-600 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all"
+                    className="w-3.5 h-3.5 text-zinc-600 group-hover:text-accent-400 group-hover:translate-x-0.5 transition-all"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

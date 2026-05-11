@@ -15,13 +15,13 @@ const STATUS_BADGE: Record<string, { label: string; class: string }> = {
 
 const PLAN_BADGE: Record<string, { label: string; class: string }> = {
   FREE: { label: "Free", class: "bg-gray-500/10 text-gray-400" },
-  PRO: { label: "Pro", class: "bg-amber-500/10 text-amber-400" },
+  PRO: { label: "Pro", class: "bg-accent-500/10 text-accent-400" },
   UNLIMITED: { label: "Unlimited", class: "bg-violet-500/10 text-violet-400" },
 };
 
 const ALBUM_STATUS: Record<string, { label: string; class: string }> = {
   ACTIVE: { label: "Ativo", class: "bg-emerald-500/10 text-emerald-400" },
-  DRAFT: { label: "Rascunho", class: "bg-amber-500/10 text-amber-400" },
+  DRAFT: { label: "Rascunho", class: "bg-accent-500/10 text-accent-400" },
   ARCHIVED: { label: "Arquivado", class: "bg-gray-500/10 text-gray-400" },
 };
 
@@ -33,7 +33,7 @@ const TX_TYPE: Record<string, { label: string; class: string }> = {
 
 const TX_STATUS: Record<string, { label: string; class: string }> = {
   PAID: { label: "Pago", class: "bg-emerald-500/10 text-emerald-400" },
-  PENDING: { label: "Pendente", class: "bg-amber-500/10 text-amber-400" },
+  PENDING: { label: "Pendente", class: "bg-accent-500/10 text-accent-400" },
   FAILED: { label: "Falhou", class: "bg-red-500/10 text-red-400" },
 };
 
@@ -83,7 +83,7 @@ export default async function SellerDetailPage({
       {/* Back link */}
       <Link
         href="/painel/admin/revendedores"
-        className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-amber-400 transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-accent-400 transition-colors"
       >
         <svg
           className="w-3.5 h-3.5"
@@ -101,7 +101,7 @@ export default async function SellerDetailPage({
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5">
         <div className="flex flex-col sm:flex-row sm:items-start gap-4">
           {/* Avatar */}
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-amber-500/20 shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-accent-500/20 shrink-0">
             {seller.name
               .split(" ")
               .map((n) => n[0])
@@ -144,7 +144,7 @@ export default async function SellerDetailPage({
             {/* Mini KPIs */}
             <div className="flex items-center gap-6 mt-4 pt-4 border-t border-white/[0.04]">
               <div>
-                <span className="text-lg font-bold text-amber-400">{seller.albumCount}</span>
+                <span className="text-lg font-bold text-accent-400">{seller.albumCount}</span>
                 <span className="text-xs text-gray-500 ml-1.5">albums</span>
               </div>
               <div>
@@ -183,7 +183,7 @@ export default async function SellerDetailPage({
               }`}
             >
               {t.label}
-              <span className={`ml-1.5 ${active ? "text-amber-400" : "text-gray-600"}`}>
+              <span className={`ml-1.5 ${active ? "text-accent-400" : "text-gray-600"}`}>
                 {count}
               </span>
             </Link>

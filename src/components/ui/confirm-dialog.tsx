@@ -42,7 +42,7 @@ export default function ConfirmDialog({
   const confirmClass =
     variant === "danger"
       ? "bg-red-500 hover:bg-red-400 text-white shadow-lg shadow-red-500/20"
-      : "bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black shadow-lg shadow-amber-500/20";
+      : "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black shadow-lg shadow-accent-500/20";
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">

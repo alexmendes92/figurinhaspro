@@ -182,7 +182,7 @@ export default function PrecosEditor({
                           updatePrice(tc.type, val);
                         }
                       }}
-                      className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-amber-500/40 focus:outline-none transition-colors"
+                      className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
                     />
                     <div className="w-14 text-right">
                       {isSaving && (
@@ -221,7 +221,7 @@ export default function PrecosEditor({
               {canUseAlbumRules && (
                 <button
                   onClick={() => setAddingAlbumRule(true)}
-                  className="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-400 hover:bg-amber-500/20 transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg bg-accent-500/10 border border-accent-500/20 text-xs font-semibold text-accent-400 hover:bg-accent-500/20 transition-all flex items-center gap-1.5"
                 >
                   <svg
                     className="w-3.5 h-3.5"
@@ -238,11 +238,11 @@ export default function PrecosEditor({
             </div>
 
             {!canUseAlbumRules ? (
-              <div className="p-5 rounded-2xl border border-amber-500/20 bg-amber-500/5">
+              <div className="p-5 rounded-2xl border border-accent-500/20 bg-accent-500/5">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center shrink-0">
                     <svg
-                      className="w-5 h-5 text-amber-400"
+                      className="w-5 h-5 text-accent-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -256,14 +256,14 @@ export default function PrecosEditor({
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-amber-400">Recurso PRO</p>
+                    <p className="text-sm font-semibold text-accent-400">Recurso PRO</p>
                     <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
                       Defina preços diferentes por álbum — ex: cobrar mais por figurinhas da Copa
                       2022. Disponível nos planos PRO e Unlimited.
                     </p>
                     <Link
                       href="/painel/planos"
-                      className="inline-block mt-2 text-xs text-amber-400 font-semibold hover:underline"
+                      className="inline-block mt-2 text-xs text-accent-400 font-semibold hover:underline"
                     >
                       Ver planos →
                     </Link>
@@ -363,8 +363,8 @@ export default function PrecosEditor({
 
             {/* Form para adicionar nova regra */}
             {addingAlbumRule && canUseAlbumRules && (
-              <div className="mt-3 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5">
-                <p className="text-xs font-semibold text-amber-400 mb-3">Nova regra por álbum</p>
+              <div className="mt-3 p-4 rounded-2xl border border-accent-500/20 bg-accent-500/5">
+                <p className="text-xs font-semibold text-accent-400 mb-3">Nova regra por álbum</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
                   <select
                     value={newAlbumSlug}
@@ -401,7 +401,7 @@ export default function PrecosEditor({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") addAlbumRule();
                       }}
-                      className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600"
+                      className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600"
                     />
                   </div>
                 </div>
@@ -409,7 +409,7 @@ export default function PrecosEditor({
                   <button
                     onClick={addAlbumRule}
                     disabled={!newAlbumSlug || !newPrice}
-                    className="flex-1 py-2.5 sm:py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-sm sm:text-xs font-semibold transition-colors active:bg-amber-400"
+                    className="flex-1 py-2.5 sm:py-2 rounded-lg bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:cursor-not-allowed text-black text-sm sm:text-xs font-semibold transition-colors active:bg-accent-400"
                   >
                     Adicionar
                   </button>

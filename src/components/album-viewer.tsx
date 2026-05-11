@@ -53,7 +53,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
               }}
               className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
                 i === activeSection
-                  ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                  ? "bg-accent-500/10 text-accent-400 border border-accent-500/20"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border border-transparent"
               }`}
             >
@@ -86,7 +86,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                   `Todas as ${section.stickers.length} figurinhas de "${section.name}" adicionadas!`
                 );
               }}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 transition-all"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-accent-400 hover:border-accent-500/40 transition-all"
             >
               <svg
                 className="w-3.5 h-3.5"
@@ -111,11 +111,11 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                 <button
                   key={sticker.code}
                   onClick={() => setSelectedSticker(sticker)}
-                  className={`group relative rounded-lg overflow-hidden border transition-all hover:scale-105 hover:z-10 focus:outline-none focus:ring-2 focus:ring-amber-500/50 ${
+                  className={`group relative rounded-lg overflow-hidden border transition-all hover:scale-105 hover:z-10 focus:outline-none focus:ring-2 focus:ring-accent-500/50 ${
                     inCart
                       ? "border-green-500/40 ring-1 ring-green-500/20"
                       : isSpecial
-                        ? "border-amber-500/30 hover:border-amber-400/60"
+                        ? "border-accent-500/30 hover:border-accent-400/60"
                         : "border-zinc-700 hover:border-zinc-500"
                   }`}
                 >
@@ -132,7 +132,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                     {/* Overlay ao hover */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shadow-lg">
+                        <div className="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center shadow-lg">
                           <svg
                             className="w-4 h-4 text-black"
                             fill="none"
@@ -148,7 +148,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
 
                     {/* Badge especial */}
                     {isSpecial && (
-                      <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-amber-500/80 flex items-center justify-center">
+                      <div className="absolute top-1 right-1 w-4 h-4 rounded-full bg-accent-500/80 flex items-center justify-center">
                         <span className="text-[8px]">✨</span>
                       </div>
                     )}
@@ -175,7 +175,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                       <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-zinc-400 truncate">
                         {sticker.code}
                       </span>
-                      <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-amber-400">
+                      <span className="font-[family-name:var(--font-geist-mono)] text-[10px] text-accent-400">
                         R${getDefaultPrice(sticker.type).toFixed(2).replace(".", ",")}
                       </span>
                     </div>
@@ -232,12 +232,12 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                   </p>
                   <h4 className="text-lg font-semibold">{selectedSticker.name}</h4>
                   {selectedSticker.type !== "regular" && (
-                    <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-medium">
+                    <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-400 text-[10px] font-medium">
                       ✨ {getStickerTypeShortLabel(selectedSticker.type)}
                     </span>
                   )}
                 </div>
-                <span className="text-xl font-bold text-amber-400 font-[family-name:var(--font-geist-mono)]">
+                <span className="text-xl font-bold text-accent-400 font-[family-name:var(--font-geist-mono)]">
                   R${getDefaultPrice(selectedSticker.type).toFixed(2).replace(".", ",")}
                 </span>
               </div>
@@ -247,7 +247,7 @@ export default function AlbumViewer({ album, onBack }: { album: Album; onBack?: 
                   handleAddToCart(selectedSticker);
                   setSelectedSticker(null);
                 }}
-                className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-accent-500 hover:bg-accent-400 text-black font-semibold text-sm transition-colors flex items-center justify-center gap-2"
               >
                 <svg
                   className="w-4 h-4"

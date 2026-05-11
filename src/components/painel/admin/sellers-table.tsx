@@ -11,7 +11,7 @@ const STATUS_BADGE: Record<string, { label: string; class: string }> = {
 
 const PLAN_BADGE: Record<string, { label: string; class: string }> = {
   FREE: { label: "Free", class: "bg-gray-500/10 text-gray-400" },
-  PRO: { label: "Pro", class: "bg-amber-500/10 text-amber-400" },
+  PRO: { label: "Pro", class: "bg-accent-500/10 text-accent-400" },
   UNLIMITED: { label: "Unlimited", class: "bg-violet-500/10 text-violet-400" },
 };
 
@@ -70,7 +70,7 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
             placeholder="Buscar por nome, email ou loja..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg pl-10 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none transition-colors"
+            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg pl-10 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none transition-colors"
           />
         </div>
         <span className="text-xs text-gray-500">
@@ -110,7 +110,7 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
                     >
                       <td className="px-4 py-3">
                         <Link href={`/painel/admin/revendedores/${seller.id}`} className="block">
-                          <p className="text-sm text-white font-medium group-hover:text-amber-400 transition-colors">
+                          <p className="text-sm text-white font-medium group-hover:text-accent-400 transition-colors">
                             {seller.name}
                           </p>
                           <p className="text-xs text-gray-500 mt-0.5">{seller.email}</p>
@@ -152,7 +152,7 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
                       <td className="px-4 py-3 text-right">
                         <Link
                           href={`/painel/admin/revendedores/${seller.id}`}
-                          className="text-sm text-gray-300 font-medium group-hover:text-amber-400 transition-colors"
+                          className="text-sm text-gray-300 font-medium group-hover:text-accent-400 transition-colors"
                         >
                           {formatCurrency(seller.totalTransacted)}
                         </Link>
@@ -183,7 +183,7 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
                 onClick={() => setPage(i)}
                 className={`w-8 h-8 text-xs font-medium rounded-lg transition-colors ${
                   i === safePage
-                    ? "bg-amber-500/15 text-amber-400"
+                    ? "bg-accent-500/15 text-accent-400"
                     : "text-gray-500 hover:text-white hover:bg-white/[0.04]"
                 }`}
               >

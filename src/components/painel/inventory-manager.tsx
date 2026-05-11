@@ -133,7 +133,7 @@ function PriceModal({
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleSave();
                     }}
-                    className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 font-semibold placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
+                    className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600 focus:outline-none focus:border-accent-500/40 transition-colors"
                   />
                 </div>
               </div>
@@ -143,7 +143,7 @@ function PriceModal({
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition-colors"
+                  className="flex-1 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-semibold transition-colors"
                 >
                   Salvar preço
                 </button>
@@ -160,14 +160,14 @@ function PriceModal({
             </>
           ) : (
             /* Gate PRO+ */
-            <div className="p-3 rounded-xl bg-amber-500/5 border border-amber-500/20">
-              <p className="text-xs text-amber-400 font-medium mb-1">Recurso PRO</p>
+            <div className="p-3 rounded-xl bg-accent-500/5 border border-accent-500/20">
+              <p className="text-xs text-accent-400 font-medium mb-1">Recurso PRO</p>
               <p className="text-[11px] text-zinc-500 leading-relaxed">
                 Preço customizado por figurinha requer plano PRO ou superior.
               </p>
               <Link
                 href="/painel/planos"
-                className="inline-block mt-2 text-[10px] text-amber-400 font-semibold hover:underline"
+                className="inline-block mt-2 text-[10px] text-accent-400 font-semibold hover:underline"
               >
                 Ver planos →
               </Link>
@@ -289,8 +289,8 @@ function StickerCard({
             aria-label={hasCustomPrice ? "Editar preço customizado" : "Definir preço customizado"}
             className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
               hasCustomPrice
-                ? "bg-amber-500 text-black hover:bg-amber-400"
-                : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-70 group-hover:opacity-100 focus:opacity-100"
+                ? "bg-accent-500 text-black hover:bg-accent-400"
+                : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-accent-400 hover:border-accent-500/40 opacity-70 group-hover:opacity-100 focus:opacity-100"
             }`}
           >
             <span className="text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
@@ -309,7 +309,7 @@ function StickerCard({
           {hasIt && (
             <span
               className={`font-[family-name:var(--font-geist-mono)] text-[10px] font-bold shrink-0 ${
-                hasCustomPrice ? "text-amber-400" : "text-zinc-400"
+                hasCustomPrice ? "text-accent-400" : "text-zinc-400"
               }`}
             >
               R$
@@ -354,14 +354,14 @@ function StickerCard({
                 }}
                 autoFocus
                 onFocus={(e) => e.target.select()}
-                className="min-w-[2rem] w-12 text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 bg-zinc-900 border border-zinc-700 rounded focus:outline-none focus:border-amber-500/40"
+                className="min-w-[2rem] w-12 text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 bg-zinc-900 border border-zinc-700 rounded focus:outline-none focus:border-accent-500/40"
                 aria-label="Editar quantidade"
               />
             ) : (
               <button
                 type="button"
                 onClick={startEditingQty}
-                className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 hover:text-amber-400 transition-colors cursor-text"
+                className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 hover:text-accent-400 transition-colors cursor-text"
                 aria-label={`Quantidade ${qty} (clique para editar)`}
                 title="Clique para digitar a quantidade"
               >
@@ -382,7 +382,7 @@ function StickerCard({
           <button
             type="button"
             onClick={() => toggleSticker(sticker.code)}
-            className="w-full mt-1 h-7 rounded bg-amber-500/10 border border-amber-500/30 text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 hover:border-amber-500/50 transition-colors active:bg-amber-500/30"
+            className="w-full mt-1 h-7 rounded bg-accent-500/10 border border-accent-500/30 text-[11px] font-semibold text-accent-400 hover:bg-accent-500/20 hover:border-accent-500/50 transition-colors active:bg-accent-500/30"
             aria-label={`Adicionar ${sticker.name} ao estoque`}
           >
             + Adicionar
@@ -743,7 +743,7 @@ export default function InventoryManager({
           <div className="hidden lg:block px-3 py-2">
             <Link
               href="/painel/estoque"
-              className="text-[10px] text-zinc-500 hover:text-amber-400 transition-colors flex items-center gap-1"
+              className="text-[10px] text-zinc-500 hover:text-accent-400 transition-colors flex items-center gap-1"
             >
               <svg
                 className="w-3 h-3"
@@ -773,7 +773,7 @@ export default function InventoryManager({
             }}
             className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
               activeSection === "all" && !isSearching
-                ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                ? "bg-accent-500/10 text-accent-400 border border-accent-500/20"
                 : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border border-transparent"
             }`}
           >
@@ -798,9 +798,9 @@ export default function InventoryManager({
                 onClick={() => handleSidebarSectionClick(i)}
                 className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap border relative ${
                   isIsolated
-                    ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                    ? "bg-accent-500/10 text-accent-400 border-accent-500/20"
                     : isVisibleInAll
-                      ? "text-zinc-300 border-transparent lg:before:absolute lg:before:left-0 lg:before:top-1.5 lg:before:bottom-1.5 lg:before:w-0.5 lg:before:rounded-full lg:before:bg-amber-500/60 lg:pl-3.5 hover:text-zinc-200 hover:bg-zinc-800"
+                      ? "text-zinc-300 border-transparent lg:before:absolute lg:before:left-0 lg:before:top-1.5 lg:before:bottom-1.5 lg:before:w-0.5 lg:before:rounded-full lg:before:bg-accent-500/60 lg:pl-3.5 hover:text-zinc-200 hover:bg-zinc-800"
                       : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 border-transparent"
                 }`}
                 aria-current={isIsolated ? "true" : isVisibleInAll ? "location" : undefined}
@@ -850,7 +850,7 @@ export default function InventoryManager({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar figurinha por número ou nome..."
                 aria-label="Buscar figurinha"
-                className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/40 transition-colors"
+                className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-accent-500/40 transition-colors"
               />
               {search ? (
                 <button
@@ -886,7 +886,7 @@ export default function InventoryManager({
                     <span className="text-sm leading-none shrink-0">{album.flag}</span>
                     <span className="truncate">Copa {album.year}</span>
                     <span className="text-zinc-700 shrink-0">/</span>
-                    <span className="text-amber-400 truncate">{section.name}</span>
+                    <span className="text-accent-400 truncate">{section.name}</span>
                   </div>
                 )}
                 <h3 className="text-base sm:text-lg font-semibold truncate">
@@ -927,7 +927,7 @@ export default function InventoryManager({
                         <span className="ml-1 text-zinc-500">({counter.contextHint})</span>
                       )}
                       {counter.saving && (
-                        <span className="ml-2 text-amber-400">Salvando...</span>
+                        <span className="ml-2 text-accent-400">Salvando...</span>
                       )}
                     </p>
                   );
@@ -973,7 +973,7 @@ export default function InventoryManager({
                     const active = filter === key;
                     const activeClass =
                       accent === "amber"
-                        ? "bg-amber-500/10 text-amber-400"
+                        ? "bg-accent-500/10 text-accent-400"
                         : accent === "green"
                           ? "bg-green-500/10 text-green-400"
                           : "bg-red-500/10 text-red-400";

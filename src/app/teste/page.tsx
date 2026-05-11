@@ -434,7 +434,7 @@ export default function TestPage() {
 
   const statusIcon: Record<StepStatus, string> = {
     idle: "text-zinc-600",
-    running: "text-amber-400 animate-pulse",
+    running: "text-accent-400 animate-pulse",
     pass: "text-emerald-400",
     fail: "text-red-400",
     skip: "text-zinc-500",
@@ -466,7 +466,7 @@ export default function TestPage() {
               </svg>
             </Link>
             <h1 className="text-sm font-bold">Teste E2E</h1>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold">
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-500/10 text-accent-400 border border-accent-500/20 font-semibold">
               Manual
             </span>
           </div>
@@ -518,7 +518,7 @@ export default function TestPage() {
                       value={config[key]}
                       onChange={(e) => setConfig({ ...config, [key]: e.target.value })}
                       disabled={running}
-                      className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-xs font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-amber-500/50 disabled:opacity-50"
+                      className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white text-xs font-[family-name:var(--font-geist-mono)] focus:outline-none focus:border-accent-500/50 disabled:opacity-50"
                     />
                   </div>
                 ))}
@@ -531,7 +531,7 @@ export default function TestPage() {
         <button
           onClick={runAll}
           disabled={running}
-          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-sm transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mb-8"
+          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black font-bold text-sm transition-all shadow-lg shadow-accent-500/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mb-8"
         >
           {running ? (
             <span className="flex items-center justify-center gap-2">
@@ -629,7 +629,7 @@ export default function TestPage() {
               <Link
                 href={`/loja/${shopSlug}`}
                 target="_blank"
-                className="text-xs text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                className="text-xs text-accent-400 hover:text-accent-300 font-medium transition-colors"
               >
                 Loja publica &rarr;
               </Link>

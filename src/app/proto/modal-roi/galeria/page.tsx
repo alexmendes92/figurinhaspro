@@ -14,7 +14,7 @@ export default function ModalRoiGaleriaPage() {
     <main className="min-h-dvh bg-[#0b0e14] px-4 py-10 sm:px-6 sm:py-14">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8">
-          <p className="text-xs uppercase tracking-widest text-amber-400">
+          <p className="text-xs uppercase tracking-widest text-accent-400">
             Galeria interna · não compartilhar
           </p>
           <h1 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
@@ -42,7 +42,7 @@ export default function ModalRoiGaleriaPage() {
                   </div>
                   <Link
                     href={`/proto/modal-roi/${variant}`}
-                    className="shrink-0 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-300 transition-colors hover:bg-amber-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/60"
+                    className="shrink-0 rounded-lg border border-accent-500/40 bg-accent-500/10 px-3 py-1.5 text-xs font-medium text-accent-300 transition-colors hover:bg-accent-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500/60"
                   >
                     Abrir
                   </Link>

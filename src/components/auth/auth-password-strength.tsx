@@ -13,7 +13,7 @@ function getStrength(pw: string): { score: number; label: string; color: string 
   if (/[^A-Za-z0-9]/.test(pw)) score++;
 
   if (score <= 1) return { score: 1, label: "Fraca", color: "bg-red-500" };
-  if (score <= 2) return { score: 2, label: "Razoável", color: "bg-amber-500" };
+  if (score <= 2) return { score: 2, label: "Razoável", color: "bg-accent-500" };
   if (score <= 3) return { score: 3, label: "Boa", color: "bg-yellow-400" };
   return { score: 4, label: "Forte", color: "bg-emerald-400" };
 }
@@ -40,7 +40,7 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
           score <= 1
             ? "text-red-400"
             : score <= 2
-              ? "text-amber-400"
+              ? "text-accent-400"
               : score <= 3
                 ? "text-yellow-400"
                 : "text-emerald-400"

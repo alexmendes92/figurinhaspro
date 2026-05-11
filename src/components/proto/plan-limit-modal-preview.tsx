@@ -49,7 +49,7 @@ export function PlanLimitModalPreview({
       <button
         type="button"
         aria-label="Fechar"
-        className="absolute right-4 top-4 rounded-full p-2 text-zinc-500 transition-colors hover:bg-white/5 hover:text-zinc-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/60"
+        className="absolute right-4 top-4 rounded-full p-2 text-zinc-500 transition-colors hover:bg-white/5 hover:text-zinc-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500/60"
       >
         <svg
           aria-hidden="true"
@@ -71,7 +71,7 @@ export function PlanLimitModalPreview({
           className={`mb-3 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide ${
             isUrgent
               ? "border-red-500/40 bg-red-500/10 text-red-300"
-              : "border-amber-500/40 bg-amber-500/10 text-amber-300"
+              : "border-accent-500/40 bg-accent-500/10 text-accent-300"
           }`}
         >
           {config.badgeText}
@@ -91,11 +91,11 @@ export function PlanLimitModalPreview({
 
       <p className="text-sm text-zinc-400">No PRO, você teria adicionado as últimas</p>
 
-      <div className="mt-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-5 py-6 text-center">
-        <div className="font-mono text-5xl font-bold tabular-nums text-amber-300 sm:text-6xl">
+      <div className="mt-3 rounded-xl border border-accent-500/40 bg-accent-500/10 px-5 py-6 text-center">
+        <div className="font-mono text-5xl font-bold tabular-nums text-accent-300 sm:text-6xl">
           {denied}
         </div>
-        <div className="mt-1 text-sm font-medium text-amber-200/80">
+        <div className="mt-1 text-sm font-medium text-accent-200/80">
           {denied === 1 ? "figurinha" : "figurinhas"}
         </div>
       </div>
@@ -113,10 +113,10 @@ export function PlanLimitModalPreview({
       <button
         type="button"
         onClick={handleCtaClick}
-        className={`mt-6 w-full rounded-xl px-4 py-3 text-base font-semibold shadow-[0_8px_24px_rgba(245,158,11,0.25)] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/60 active:scale-[0.99] ${
+        className={`mt-6 w-full rounded-xl px-4 py-3 text-base font-semibold shadow-[0_8px_24px_rgba(245,158,11,0.25)] transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500/60 active:scale-[0.99] ${
           isUrgent
             ? "bg-red-500 text-white hover:bg-red-400"
-            : "bg-amber-400 text-[#0b0e14] hover:bg-amber-300"
+            : "bg-accent-400 text-[#0b0e14] hover:bg-accent-300"
         }`}
       >
         {config.ctaText}
@@ -124,7 +124,7 @@ export function PlanLimitModalPreview({
 
       <button
         type="button"
-        className="mt-3 block w-full rounded-lg px-4 py-2 text-sm text-zinc-400 transition-colors hover:text-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500/60"
+        className="mt-3 block w-full rounded-lg px-4 py-2 text-sm text-zinc-400 transition-colors hover:text-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500/60"
       >
         {config.secondaryText}
       </button>

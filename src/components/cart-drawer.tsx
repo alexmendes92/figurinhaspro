@@ -115,13 +115,13 @@ export default function CartDrawer() {
                     <p className="text-[10px] text-zinc-500 font-[family-name:var(--font-geist-mono)]">
                       {item.albumYear} · {item.sticker.code}
                       {item.sticker.type !== "regular" && (
-                        <span className="ml-1 text-amber-400">
+                        <span className="ml-1 text-accent-400">
                           {getStickerTypeShortLabel(item.sticker.type)}
                         </span>
                       )}
                     </p>
                     {/* Preço - inline no mobile */}
-                    <p className="text-[11px] font-[family-name:var(--font-geist-mono)] text-amber-400 mt-0.5 sm:hidden">
+                    <p className="text-[11px] font-[family-name:var(--font-geist-mono)] text-accent-400 mt-0.5 sm:hidden">
                       R${(item.sticker.price * item.quantity).toFixed(2).replace(".", ",")}
                     </p>
                   </div>
@@ -152,7 +152,7 @@ export default function CartDrawer() {
                   </div>
 
                   {/* Preço - só desktop */}
-                  <span className="hidden sm:inline text-sm font-[family-name:var(--font-geist-mono)] text-amber-400 w-16 text-right">
+                  <span className="hidden sm:inline text-sm font-[family-name:var(--font-geist-mono)] text-accent-400 w-16 text-right">
                     R$
                     {(item.sticker.price * item.quantity).toFixed(2).replace(".", ",")}
                   </span>
@@ -188,14 +188,14 @@ export default function CartDrawer() {
           <div className="border-t border-zinc-800 p-4 space-y-3 safe-area-bottom">
             <div className="flex items-center justify-between">
               <span className="text-sm text-zinc-400">Total</span>
-              <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-amber-400">
+              <span className="text-xl font-bold font-[family-name:var(--font-geist-mono)] text-accent-400">
                 R${totalPrice.toFixed(2).replace(".", ",")}
               </span>
             </div>
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
-              className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl bg-accent-500 hover:bg-accent-400 text-black font-semibold text-sm transition-colors flex items-center justify-center gap-2"
             >
               <svg
                 className="w-4 h-4"

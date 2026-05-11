@@ -128,13 +128,13 @@ export default function EmptyOrdersKit({ shopUrl }: EmptyOrdersKitProps) {
           Link da sua vitrine
         </p>
         <div className="flex items-center gap-3 flex-wrap">
-          <code className="font-[family-name:var(--font-geist-mono)] text-xs sm:text-sm text-amber-300 break-all flex-1 min-w-0">
+          <code className="font-[family-name:var(--font-geist-mono)] text-xs sm:text-sm text-accent-300 break-all flex-1 min-w-0">
             {shopUrl}
           </code>
           <button
             type="button"
             onClick={() => copyToClipboard(shopUrl, "link", "Link copiado")}
-            className="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors min-h-[44px] sm:min-h-0 shrink-0"
+            className="px-3 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-bold transition-colors min-h-[44px] sm:min-h-0 shrink-0"
           >
             {copiedId === "link" ? "Copiado" : "Copiar link"}
           </button>

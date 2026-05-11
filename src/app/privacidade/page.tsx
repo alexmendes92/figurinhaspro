@@ -12,7 +12,7 @@ export default function PrivacidadePage() {
       <header className="border-b border-white/[0.04] bg-[#0b0e14]">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-accent-400 to-accent-500 flex items-center justify-center">
               <span className="text-white text-[9px] font-black font-[family-name:var(--font-geist-mono)]">
                 F
               </span>

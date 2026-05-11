@@ -162,14 +162,14 @@ export default function PlanosPage() {
               key={plan.key}
               className={`relative p-6 rounded-2xl border transition-all ${
                 isCurrent
-                  ? "border-amber-500/40 bg-amber-500/[0.04] ring-1 ring-amber-500/20"
+                  ? "border-accent-500/40 bg-accent-500/[0.04] ring-1 ring-accent-500/20"
                   : plan.popular
-                    ? "border-amber-500/20 bg-zinc-900/60"
+                    ? "border-accent-500/20 bg-zinc-900/60"
                     : "border-zinc-800 bg-zinc-900/40"
               }`}
             >
               {plan.popular && !isCurrent && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black uppercase tracking-wider">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-accent-500 text-black text-[10px] font-black uppercase tracking-wider">
                   Popular
                 </div>
               )}
@@ -193,7 +193,7 @@ export default function PlanosPage() {
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-[13px] text-zinc-300">
                     <svg
-                      className="w-4 h-4 text-amber-400 shrink-0 mt-0.5"
+                      className="w-4 h-4 text-accent-400 shrink-0 mt-0.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -234,7 +234,7 @@ export default function PlanosPage() {
                   disabled={loading === plan.key}
                   className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50 ${
                     plan.popular
-                      ? "bg-amber-500 hover:bg-amber-400 text-black"
+                      ? "bg-accent-500 hover:bg-accent-400 text-black"
                       : "bg-white/10 hover:bg-white/15 text-white"
                   }`}
                 >

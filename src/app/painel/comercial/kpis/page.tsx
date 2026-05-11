@@ -11,13 +11,13 @@ const UNIT_FORMAT: Record<string, (v: number) => string> = {
 const CATEGORY_COLOR: Record<string, string> = {
   REVENUE: "border-emerald-500/30",
   GROWTH: "border-blue-500/30",
-  CONVERSION: "border-amber-500/30",
+  CONVERSION: "border-accent-500/30",
   ENGAGEMENT: "border-violet-500/30",
   COST: "border-red-500/30",
 };
 
 const _inputClass =
-  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-amber-500/40 focus:outline-none";
+  "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none";
 
 export default async function KpisPage() {
   const kpis = await db.bizKpi.findMany({
@@ -116,7 +116,7 @@ export default async function KpisPage() {
                               progressPct >= 80
                                 ? "bg-emerald-500"
                                 : progressPct >= 40
-                                  ? "bg-amber-500"
+                                  ? "bg-accent-500"
                                   : "bg-red-500"
                             }`}
                             style={{ width: `${progressPct}%` }}
@@ -158,7 +158,7 @@ export default async function KpisPage() {
                         step="0.01"
                         placeholder="Novo valor"
                         required
-                        className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded px-2 py-1 text-xs text-white placeholder-gray-600 focus:border-amber-500/40 focus:outline-none"
+                        className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded px-2 py-1 text-xs text-white placeholder-gray-600 focus:border-accent-500/40 focus:outline-none"
                       />
                       <button
                         type="submit"

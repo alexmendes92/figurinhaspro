@@ -3,7 +3,7 @@
 import { useToast } from "@/lib/toast-context";
 
 const variantStyles = {
-  default: "bg-amber-500 text-black shadow-lg shadow-amber-500/20",
+  default: "bg-accent-500 text-black shadow-lg shadow-accent-500/20",
   success: "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20",
   error: "bg-red-500 text-white shadow-lg shadow-red-500/20",
 };

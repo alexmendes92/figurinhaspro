@@ -14,7 +14,7 @@ export function AuthLogo({ size = "md", showText = false }: AuthLogoProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div
-        className={`${s.box} bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center ${s.shadow} shadow-amber-500/20`}
+        className={`${s.box} bg-gradient-to-br from-accent-400 to-accent-500 flex items-center justify-center ${s.shadow} shadow-accent-500/20`}
       >
         <span
           className={`text-white ${s.letter} font-black font-[family-name:var(--font-geist-mono)]`}
@@ -24,7 +24,7 @@ export function AuthLogo({ size = "md", showText = false }: AuthLogoProps) {
       </div>
       {showText && (
         <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-          Figurinhas<span className="text-amber-400">Pro</span>
+          Figurinhas<span className="text-accent-400">Pro</span>
         </h2>
       )}
     </div>

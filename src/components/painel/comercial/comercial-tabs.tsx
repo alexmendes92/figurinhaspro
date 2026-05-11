@@ -26,7 +26,7 @@ export function ComercialTabs() {
             href={tab.href}
             className={`px-3 py-2 text-[13px] font-medium whitespace-nowrap border-b-2 transition-colors ${
               active
-                ? "text-amber-400 border-amber-400"
+                ? "text-accent-400 border-accent-400"
                 : "text-gray-500 border-transparent hover:text-gray-300 hover:border-gray-600"
             }`}
           >

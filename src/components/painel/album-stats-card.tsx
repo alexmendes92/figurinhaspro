@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { calculateAlbumCoverage, getCoverageColor } from "@/lib/album-helpers";
 import { getStickerTypeConfig } from "@/lib/sticker-types";
 
 interface Blocker {
@@ -37,21 +38,11 @@ export default function AlbumStatsCard({
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const progressColor =
-    coveragePercent >= 80
-      ? "bg-emerald-500"
-      : coveragePercent >= 30
-        ? "bg-accent-500"
-        : "bg-zinc-500";
+  const coverageColor = getCoverageColor(coveragePercent);
+  const progressColor = coverageColor.bg;
+  const progressTextColor = coverageColor.text;
 
-  const progressTextColor =
-    coveragePercent >= 80
-      ? "text-emerald-400"
-      : coveragePercent >= 30
-        ? "text-accent-400"
-        : "text-zinc-400";
-
-  const missing = totalStickers - inStock;
+  const { missing } = calculateAlbumCoverage(inStock, totalStickers);
 
   async function copyBlockers() {
     const text = blockers.map((b) => b.code).join(", ");

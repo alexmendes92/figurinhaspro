@@ -1,8 +1,8 @@
 ---
 data: 2026-05-11
-versao: v2 (pós /p8-master:valida + /p8-master:itera)
+versao: v3 (pós Task 2.7 sub-commits 1-6 + Task 2.8 descartada N/A)
 tipo: plano
-status: fase-2-parcial (6/8 tasks commitadas — 2.1-2.6 ✅; 2.7+2.8 pendentes pra sessão nova)
+status: fase-2-completa (Task 2.7: 6 sub-commits deployados; Task 2.8: descartada — empty-orders-kit nao reduz a EmptyState sem regressao)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:
@@ -217,12 +217,15 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
   - `refactor(loja): usa Button shadcn em hero + sidebar + footer + album-view`
   - `refactor(auth): usa Button shadcn em login + registro + reset-senha`
 
-### 2.8 Migrar `empty-orders-kit.tsx` para `<EmptyState>` existente (sem inventar slots)
-- **Arquivo**: `src/components/ui/empty-state.tsx` (já existe, ~54 LOC, API atual)
-- **Mudança**: substituir `<EmptyOrdersKit />` por `<EmptyState icon={...} title="..." description="..." />` usando a API ATUAL do EmptyState. NÃO inventar slots novos.
-- **Por quê** (ajuste pós-validação): Rule of Three diz 2 ocorrências = coincidência, 3 = padrão. Hoje é 1 (EmptyState atual) → 2 (após migração). Inventar API de slots prematuramente azara o 3º caso que ainda não apareceu. Quando o 3º EmptyState diferente surgir (inventário vazio, vitrine sem resultados), aí extrair slots.
-- **TDD**: não (refactor com mesmo comportamento)
-- **Commit**: `refactor(ui): migra empty-orders-kit pro EmptyState compartilhado`
+### 2.8 ~~Migrar `empty-orders-kit.tsx` para `<EmptyState>` existente~~ ✅ N/A — descartada em 2026-05-11
+
+- **Status**: NÃO APLICÁVEL. Descoberto durante implementação que `empty-orders-kit.tsx` (218 LOC) NÃO é um empty state simples — é um onboarding kit com features ativas:
+  - Link da vitrine + botão Copiar
+  - QR code + botão Baixar PNG (com canvas → PNG)
+  - 3 templates de mensagem (WhatsApp grupo, cliente antigo, Instagram Stories) com Copy individual
+- **Por quê N/A**: a API atual do `<EmptyState>` (icon, title, description, action) reduziria o kit a um placeholder, deletando QR + copy link + 3 templates. Regressão UX significativa no fluxo de primeiro pedido. Rule of Three foi aplicado corretamente — não há 2ª ocorrência real de empty state que justifique migração.
+- **Em vez disso (em 2026-05-11)**: migrei apenas os 3 botões inline de `empty-orders-kit.tsx` (Copiar link, Baixar PNG, Copiar template) pra `<Button>` shadcn como complemento da Task 2.7 (sub-commit pedidos). O kit em si fica como componente bespoke até o 3º caso aparecer.
+- **Commit**: `refactor(painel): usa Button shadcn em empty-orders-kit` (final)
 
 ### Gate Fase 2
 - ✅ 8 commits passaram pre-commit gate

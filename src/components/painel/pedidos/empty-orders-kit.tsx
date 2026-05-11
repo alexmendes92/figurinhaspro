@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import QRCode from "react-qr-code";
+import { Button } from "@/components/ui/button";
 import {
   instagramStoriesCaption,
   whatsappGroupTemplate,
@@ -131,13 +132,15 @@ export default function EmptyOrdersKit({ shopUrl }: EmptyOrdersKitProps) {
           <code className="font-[family-name:var(--font-geist-mono)] text-xs sm:text-sm text-accent-300 break-all flex-1 min-w-0">
             {shopUrl}
           </code>
-          <button
+          <Button
             type="button"
+            variant="primary"
+            size="sm"
             onClick={() => copyToClipboard(shopUrl, "link", "Link copiado")}
-            className="px-3 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-bold transition-colors min-h-[44px] sm:min-h-0 shrink-0"
+            className="min-h-[44px] sm:min-h-0 shrink-0"
           >
             {copiedId === "link" ? "Copiado" : "Copiar link"}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -166,13 +169,15 @@ export default function EmptyOrdersKit({ shopUrl }: EmptyOrdersKitProps) {
             <p className="text-xs text-[var(--muted)] mb-3">
               Imprime e cola na vitrine física, ou compartilha em foto/Stories.
             </p>
-            <button
+            <Button
               type="button"
+              variant="secondary"
+              size="sm"
               onClick={downloadQrAsPng}
-              className="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs text-white font-medium transition-colors min-h-[44px] sm:min-h-0"
+              className="min-h-[44px] sm:min-h-0"
             >
               Baixar PNG
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -196,13 +201,15 @@ export default function EmptyOrdersKit({ shopUrl }: EmptyOrdersKitProps) {
                     <p className="text-sm font-semibold text-white">{t.label}</p>
                     <p className="text-[11px] text-[var(--muted)]">{t.sub}</p>
                   </div>
-                  <button
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="sm"
                     onClick={() => copyToClipboard(text, t.id, "Mensagem copiada")}
-                    className="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs text-white font-medium transition-colors min-h-[44px] sm:min-h-0 shrink-0"
+                    className="min-h-[44px] sm:min-h-0 shrink-0"
                   >
                     {isCopied ? "Copiado" : "Copiar"}
-                  </button>
+                  </Button>
                 </div>
                 <pre className="text-xs text-zinc-300 whitespace-pre-wrap font-sans bg-zinc-900/50 rounded-lg p-3 border border-zinc-800/50">
                   {text}

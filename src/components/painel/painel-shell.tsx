@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
-import { formatCrumbSegment } from "@/lib/format-breadcrumb";
 import styles from "./painel-shell.module.css";
 import { MobileNav } from "./shell/mobile-nav";
 import type { NavItem } from "./shell/nav-types";
+import { TopBar } from "./shell/topbar";
 
 interface SellerInfo {
   id: string;
@@ -282,11 +282,6 @@ export default function PainelShell({
     );
   }
 
-  const crumbSegments = pathname
-    .replace("/painel", "")
-    .split("/")
-    .filter(Boolean);
-
   return (
     <div className={styles.root}>
       <aside className={sidebarClass} aria-label="Navegação principal">
@@ -368,48 +363,11 @@ export default function PainelShell({
       )}
 
       <div className={styles.main}>
-        <header className={styles.topbar}>
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className={styles.menuBtn}
-            aria-label="Abrir menu"
-          >
-            <I.menu className="" />
-          </button>
-
-          <nav aria-label="Breadcrumb" className={styles.crumbs}>
-            <Link href="/painel" className={styles.crumbHome}>
-              Painel
-            </Link>
-            {crumbSegments.map((seg, i) => {
-              const isLast = i === crumbSegments.length - 1;
-              return (
-                <span key={`${seg}-${i}`} className={styles.crumbSeg}>
-                  <span className={styles.crumbSep}>/</span>{" "}
-                  <span
-                    className={isLast ? styles.crumbCurrent : ""}
-                    aria-current={isLast ? "page" : undefined}
-                  >
-                    {formatCrumbSegment(seg)}
-                  </span>
-                </span>
-              );
-            })}
-          </nav>
-
-          <div className={styles.topbarSpacer} />
-
-          <Link
-            href={`/loja/${seller.shopSlug}`}
-            target="_blank"
-            className={styles.topbarLink}
-          >
-            <I.external className={styles.topbarLinkIcon} />
-            Vitrine
-          </Link>
-        </header>
-
+        <TopBar
+          pathname={pathname}
+          shopSlug={seller.shopSlug}
+          onOpenMenu={() => setMobileOpen(true)}
+        />
         <main className={styles.content}>{children}</main>
       </div>
 

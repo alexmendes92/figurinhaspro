@@ -1,8 +1,61 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════
+   Design tokens — Tailwind 4 @theme
+   ───────────────────────────────────────────────────────────────
+   Escalas brutas (@theme):       geram utilities `bg-accent-500`
+   Tokens semânticos (@theme inline): apontam pra escala bruta
+                                       gera `bg-card`, `text-muted`, etc.
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Escala accent (laranja Panini) — 50→950 */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03;
+
+  /* Estados semânticos */
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-info-400: #60a5fa;
+  --color-info-500: #3b82f6;
+
+  /* Surfaces (cards, painéis) */
+  --color-surface-0: #0b0e14; /* background root */
+  --color-surface-1: #111318; /* card */
+  --color-surface-2: #161921; /* card-hover */
+  --color-surface-3: #1f2937; /* scrollbar, divisores fortes */
+}
+
 @theme inline {
-  --color-background: #0b0e14;
+  /* Cor de base (mantém compat com Tailwind defaults) */
+  --color-background: var(--color-surface-0);
   --color-foreground: #e8eaed;
+
+  /* Tokens semânticos referenciam escalas */
+  --color-card: var(--color-surface-1);
+  --color-card-hover: var(--color-surface-2);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-muted: #9ca3af;
+  --color-muted-foreground: #6b7280;
+  --color-accent: var(--color-accent-400);
+  --color-accent-dim: rgba(245, 158, 11, 0.08);
+  --color-accent-border: rgba(245, 158, 11, 0.2);
+  --color-success: var(--color-success-400);
+  --color-info: var(--color-info-400);
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -212,19 +265,22 @@ body {
   border-radius: 99px;
 }
 
-/* ═══ Design tokens ═══ */
+/* ═══ Aliases de compat reverso (CSS Modules usam var(--card), var(--accent) etc) ═══
+   Vars semânticas oficiais agora estão em @theme inline (linha 50+).
+   Estes aliases mantêm os CSS Modules existentes funcionando sem mudança.
+   Migrar gradualmente em Fase 2.2 e seguintes. */
 :root {
-  --card: #111318;
-  --card-hover: #161921;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --muted: #9ca3af;
-  --muted-foreground: #6b7280;
-  --accent: #fbbf24;
-  --accent-dim: rgba(245, 158, 11, 0.08);
-  --accent-border: rgba(245, 158, 11, 0.2);
-  --success: #34d399;
-  --info: #60a5fa;
+  --card: var(--color-card);
+  --card-hover: var(--color-card-hover);
+  --border: var(--color-border);
+  --border-hover: var(--color-border-hover);
+  --muted: var(--color-muted);
+  --muted-foreground: var(--color-muted-foreground);
+  --accent: var(--color-accent);
+  --accent-dim: var(--color-accent-dim);
+  --accent-border: var(--color-accent-border);
+  --success: var(--color-success);
+  --info: var(--color-info);
 }
 
 /* ═══ Badges ═══ */

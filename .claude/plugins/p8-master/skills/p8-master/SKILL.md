@@ -52,6 +52,28 @@ Se a intenção for ambígua, pergunto entre 2-3 candidatos antes de despachar.
 - **Deploy é parte da tarefa em P8** — mas exige gate humano (Akita override do CLAUDE.md "deploy automático").
 - **Não acumulo escopo.** "Já que estou aqui" → volta como tarefa nova, não amplia.
 
+## Antes de afirmar fato de domínio (regra dura — anti-hallucination)
+
+Esta regra vale pra TODA sub-skill, não só `ui-review`. Knowledge cutoff é jan/2026 — não cobre convenções específicas de produtos pós-cutoff nem do catálogo P8.
+
+**Antes de afirmar QUALQUER fato sobre:**
+- Código/nome/numeração de figurinha (`QAT13`, `FWC1`, `BRA12`, etc.)
+- Convenção de coleção Panini, álbum, edição
+- Estrutura de seção, prefixo de país, ordem do catálogo
+- Nome de jogador, time, cobertura de uma edição
+
+**Faço grep contra a fonte de verdade do projeto:**
+```
+src/lib/albums.ts      # catálogo Panini completo, 44k linhas — fonte canônica
+prisma/schema.prisma   # entidades, enums, relations
+src/lib/sticker-types.ts  # tipos canônicos (Regular/Especial/Brilhante)
+src/lib/price-resolver.ts # eixos de preço
+```
+
+**Caso real 2026-05-10:** afirmei "QAT13 é convenção interna P8" e "convenção Panini canônica é 1-670 numérica" — ambos falsos. `QAT13` é código oficial Panini do álbum Qatar 2022, literal em `albums.ts:242`. User (dono de empresa de figurinhas há anos) ficou justificadamente bravo. Custo: confiança quebrada, retrabalho de skills.
+
+**Princípio:** achismo de domínio é igual a achismo de API — mesma classe de erro, mesmo fix (verificar contra código). Ver `~/.claude/ANTIPATTERNS.md` `DOMAIN_FACT_HALLUCINATION`.
+
 ## Restrições do P8
 
 - Stack proibida em P8: `'use client'` desnecessário (React Compiler resolve), `useMemo`/`useCallback` (idem), `tailwind.config.js` (Tailwind 4 usa CSS-first), APIs sync de request (Next 16 exige `await`).
@@ -71,15 +93,22 @@ Se a intenção for ambígua, pergunto entre 2-3 candidatos antes de despachar.
 
 ## Modelos por agent (delegação multi-tier)
 
-Main session: **Opus 4.7** (roteamento + decisão estratégica em diálogo com user). Quando delego pra subagent via tool `Agent`, o modelo do worker é definido no frontmatter do próprio agent — não preciso passar `model:` na invocação a menos que queira override explícito.
+Main session: **Opus 4.7**. Quando delego via tool `Agent`, modelo do worker vem do frontmatter — só passo `model:` na invocação se quiser override.
 
-| Tier | Modelo | Agents | Quando |
-|---|---|---|---|
-| Análise profunda | **opus** + `effort: high` | `arquiteto-estrategico`, `critico-adversarial` | Síntese big-picture, paralaxe cognitiva — onde erro de raciocínio se propaga pra outros agents |
-| Julgamento local | **sonnet** | `analista-gerador`, `pesquisador`, `p8-domain-expert`, `revisor` | Redação estruturada PT-BR, interpretação de docs externas, trade-offs de segurança/complexidade, semântica P8 |
-| Trabalho braçal | **haiku** | `explorador`, `historiador`, `extrator`, `qa-estrutural`, `deploy-watcher` | Grep/Glob, scripts Python, polling Vercel, validação determinística de frontmatter |
+### Cheat-sheet rápido (decisão em 5 segundos)
 
-**Princípio:** Opus é caro — reservo só pra agents cuja saída ALIMENTA outros agents (a qualidade se propaga). Sonnet pra ~80% dos trabalhos com julgamento mas local. Haiku pra tudo determinístico (padrão Anthropic — `Explore` built-in já é Haiku).
+| Tarefa | Modelo certo | Agents típicos |
+|---|---|---|
+| Grep / Glob / ls / count | **haiku** | `explorador`, `extrator`, `historiador` |
+| Validar frontmatter / rodar script Python | **haiku** | `qa-estrutural`, `deploy-watcher` |
+| Redação estruturada PT-BR | **sonnet** | `analista-gerador` |
+| Pesquisa externa (WebFetch, context7) | **sonnet** | `pesquisador` |
+| Revisão de diff (segurança + complexidade) | **sonnet** | `revisor` |
+| Semântica P8 (Stripe, plan-limits, custom albums) | **sonnet** | `p8-domain-expert` |
+| Síntese big-picture cross-fase | **opus** + `effort: high` | `arquiteto-estrategico` |
+| Paralaxe cognitiva / crítica adversarial | **opus** + `effort: high` | `critico-adversarial` |
+
+**Heurística de bolso:** se o agent vai ALIMENTAR outros agents (erro se propaga) → opus. Se vai produzir texto pro user → sonnet. Se é determinístico → haiku.
 
 Detalhes + 3 exemplos de pipeline: [references/agent-model-routing.md](../../references/agent-model-routing.md).
 

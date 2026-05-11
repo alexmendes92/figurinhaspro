@@ -51,7 +51,15 @@ Vou executar o plano: $ARGUMENTS
    - Compacto status no plano: progresso, decisões tomadas, blockers.
    - Sugiro `/compact` (built-in do Claude Code) se sessão estiver longa.
 
-4. **Ao final do plano:**
+4. **Pause threshold (gate humano de continuidade).** Após CADA uma destas marcas, paro e pergunto ao humano se continua ou pausa pra retomar em sessão fresca:
+   - **≥6 commits** desde início da invocação atual desta skill (cache prompt já passou do sweet spot)
+   - **≥5 tasks** completadas em sequência (próxima task fica com menos context budget)
+   - **fim de uma FASE inteira** quando a próxima é "mais complexa" (ex: sed em massa → reorganização de arquivos)
+   - **gate vermelho que exigiu >1 ciclo de retry** (sinal de fadiga ou cache cold)
+
+   Pergunta padrão: _"Já fiz N commits / completei FASE X. Próximo é Y (complexidade Z). Continuo aqui ou pauso com checkpoint pra sessão nova?"_ — humano decide. Caso real 2026-05-11: sessão acumulou ~40min + 10 commits ininterruptos antes do user reconhecer a fadiga. Esta gate evita repetir.
+
+5. **Ao final do plano:**
    - Confirmo que a DoD está completa.
    - **Não faço deploy automático.** Pergunto: "Plano executado, build verde, pronto pra `/p8-master:p8-deploy`? [s/n]". Esta é a regra Akita-style — sobrescreve o "deploy automático" do CLAUDE.md de P8.
 

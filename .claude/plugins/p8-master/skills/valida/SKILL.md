@@ -34,6 +34,7 @@ Vou validar o plano: $ARGUMENTS
    - **Custom albums**: se toca `src/lib/custom-albums.ts`, plano respeita slug `custom_*` e parser de ranges?
    - **Next 16 async APIs**: plano usa `await params`, `await cookies()`, `await headers()` (não sync)?
    - **Prisma 7 driver adapter**: novo `PrismaClient` usa `adapter: new PrismaNeon(...)`?
+   - **Cache tag scoping (multi-tenant)**: plano usa `'use cache'` / `cacheTag` / `revalidateTag`? Se sim, a tag inclui `seller.id` quando o dado é por-seller? Tag `album-${slug}` sem prefixo de seller = **bloqueante** — leak cross-tenant. Padrão correto: `store-${seller.id}-${albumSlug}`. Caso real 2026-05-11: bloqueante B1 do plano de layout era exatamente isso.
    - **Deploy obrigatório**: plano inclui `npx vercel deploy --prod` na fase final (com gate humano)?
 
 3. **Output**: lista de issues por severidade:

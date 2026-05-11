@@ -1,4 +1,7 @@
-interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface AuthButtonProps extends Omit<ButtonProps, "variant" | "size"> {
   loading?: boolean;
   variant?: "primary" | "ghost";
   children: React.ReactNode;
@@ -12,20 +15,17 @@ export function AuthButton({
   disabled,
   ...props
 }: AuthButtonProps) {
-  const base =
-    "w-full py-3.5 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-2";
-
-  const variants = {
-    primary:
-      "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-black shadow-xl shadow-accent-500/20 hover:shadow-accent-500/30 disabled:opacity-50 disabled:cursor-not-allowed",
-    ghost:
-      "border border-white/10 text-gray-300 hover:bg-white/[0.04] hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed",
-  };
+  const shadow =
+    variant === "primary"
+      ? "shadow-xl shadow-accent-500/20 hover:shadow-accent-500/30"
+      : "";
 
   return (
-    <button
-      className={`${base} ${variants[variant]} ${className || ""}`}
+    <Button
+      variant={variant}
+      size="lg"
       disabled={disabled || loading}
+      className={cn("w-full py-3.5 text-sm font-bold", shadow, className)}
       {...props}
     >
       {loading ? (
@@ -50,6 +50,6 @@ export function AuthButton({
       ) : (
         children
       )}
-    </button>
+    </Button>
   );
 }

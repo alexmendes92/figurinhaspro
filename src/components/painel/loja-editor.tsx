@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/lib/toast-context";
 
 interface LojaEditorProps {
@@ -177,27 +178,36 @@ export default function LojaEditor({
           )}
           {editing ? (
             <div className="flex gap-1.5">
-              <button
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
                 onClick={resetFields}
-                className="text-[10px] text-zinc-500 hover:text-white px-2 py-1 rounded-lg border border-[var(--border)] transition-colors"
+                className="h-auto px-2 py-1 text-[10px]"
               >
                 Cancelar
-              </button>
-              <button
+              </Button>
+              <Button
+                type="button"
+                variant="primary"
+                size="sm"
                 onClick={handleSave}
                 disabled={saving}
-                className="text-[10px] text-black font-semibold bg-[var(--accent)] hover:brightness-110 px-2.5 py-1 rounded-lg transition-all disabled:opacity-50"
+                className="h-auto px-2.5 py-1 text-[10px]"
               >
                 {saving ? "Salvando..." : "Salvar"}
-              </button>
+              </Button>
             </div>
           ) : (
-            <button
+            <Button
+              type="button"
+              variant="link"
+              size="sm"
               onClick={() => setEditing(true)}
-              className="text-[10px] text-[var(--accent)] hover:underline font-medium"
+              className="h-auto p-0 text-[10px] font-medium"
             >
               Editar
-            </button>
+            </Button>
           )}
         </div>
       </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { MockSeller } from "@/app/painel/admin/revendedores/mock-data";
+import { Button } from "@/components/ui/button";
 
 const STATUS_BADGE: Record<string, { label: string; class: string }> = {
   ACTIVE: { label: "Ativo", class: "bg-emerald-500/10 text-emerald-400" },
@@ -169,13 +170,16 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={safePage === 0}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/[0.04] text-gray-400 hover:text-white hover:bg-white/[0.08] transition-colors disabled:opacity-30 disabled:pointer-events-none"
+            className="border-0 bg-white/[0.04] text-gray-400 hover:text-white hover:bg-white/[0.08]"
           >
             Anterior
-          </button>
+          </Button>
           <div className="flex items-center gap-1">
             {Array.from({ length: totalPages }, (_, i) => (
               <button
@@ -191,13 +195,16 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
               </button>
             ))}
           </div>
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={safePage === totalPages - 1}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/[0.04] text-gray-400 hover:text-white hover:bg-white/[0.08] transition-colors disabled:opacity-30 disabled:pointer-events-none"
+            className="border-0 bg-white/[0.04] text-gray-400 hover:text-white hover:bg-white/[0.08]"
           >
             Proximo
-          </button>
+          </Button>
         </div>
       )}
     </div>

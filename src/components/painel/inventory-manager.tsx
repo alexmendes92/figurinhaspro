@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { Button } from "@/components/ui/button";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import type { Album, Sticker } from "@/lib/albums";
 import { flagFor } from "@/lib/country-flags";
@@ -85,15 +86,16 @@ function PriceModal({
               {sticker.code}
             </p>
           </div>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={onClose}
             aria-label="Fechar"
             title="Fechar (Esc)"
-            className="ml-auto w-7 h-7 rounded-lg border border-zinc-700/50 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all shrink-0"
+            className="ml-auto h-7 w-7 shrink-0 [&_svg]:size-3.5"
           >
             <svg
-              className="w-3.5 h-3.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -102,7 +104,7 @@ function PriceModal({
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-          </button>
+          </Button>
         </div>
 
         <div className="px-4 py-4 space-y-3">
@@ -140,21 +142,25 @@ function PriceModal({
 
               {/* Botões */}
               <div className="flex gap-2">
-                <button
+                <Button
                   type="button"
+                  variant="primary"
+                  size="sm"
                   onClick={handleSave}
-                  className="flex-1 py-2 rounded-lg bg-accent-500 hover:bg-accent-400 text-black text-xs font-semibold transition-colors"
+                  className="flex-1"
                 >
                   Salvar preço
-                </button>
+                </Button>
                 {currentCustomPrice !== null && (
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={onClear}
-                    className="px-3 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-rose-400 hover:border-rose-500/40 transition-all"
+                    className="hover:text-rose-400 hover:border-rose-500/40"
                   >
                     Limpar
-                  </button>
+                  </Button>
                 )}
               </div>
             </>
@@ -937,23 +943,27 @@ export default function InventoryManager({
               {/* Ações em lote - compacto */}
               {!isSearching && (
                 <div className="flex gap-1.5 shrink-0">
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={() => setShowMarkAllConfirm(true)}
                     title="Marcar todas como tenho 1"
-                    className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-green-400 hover:border-green-500/40 transition-all active:bg-green-500/10"
+                    className="hover:text-green-400 hover:border-green-500/40 active:bg-green-500/10"
                   >
                     Marcar todas
-                  </button>
+                  </Button>
                   {baseInStock > 0 && (
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setShowClearConfirm(true)}
                       title="Zerar esta seção"
-                      className="px-2.5 sm:px-3 py-2 rounded-lg border border-zinc-700 text-[11px] sm:text-xs text-zinc-400 hover:text-red-400 hover:border-red-500/40 transition-all active:bg-red-500/10"
+                      className="hover:text-red-400 hover:border-red-500/40 active:bg-red-500/10"
                     >
                       Zerar
-                    </button>
+                    </Button>
                   )}
                 </div>
               )}

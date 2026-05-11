@@ -588,6 +588,7 @@
   height: 60px;
 }
 
+/* WCAG 2.5.8 AAA: 44x44 min touch target */
 .mobileNavItem {
   position: relative;
   display: flex;
@@ -597,6 +598,8 @@
   gap: 2px;
   flex: 1;
   height: 100%;
+  min-height: 44px;
+  min-width: 44px;
   color: var(--c-fg-mute);
   text-decoration: none;
   transition:

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useDialog } from "@/lib/use-dialog";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -23,19 +23,7 @@ export default function ConfirmDialog({
   cancelLabel = "Cancelar",
   variant = "default",
 }: ConfirmDialogProps) {
-  const confirmRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    confirmRef.current?.focus();
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onCancel();
-    }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onCancel]);
+  const dialogRef = useDialog<HTMLDivElement>(open, onCancel);
 
   if (!open) return null;
 
@@ -47,20 +35,22 @@ export default function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
-      <div className="relative w-full max-w-sm rounded-2xl border border-white/[0.08] bg-[#0f1219] p-6 shadow-2xl fade-in">
+      <div
+        ref={dialogRef}
+        className="relative w-full max-w-sm rounded-2xl border border-white/[0.08] bg-[#0f1219] p-6 shadow-2xl fade-in"
+      >
         <h3 className="text-base font-bold text-white mb-1">{title}</h3>
         {description && <p className="text-sm text-gray-400 leading-relaxed mb-6">{description}</p>}
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onCancel}
-            className="px-4 py-2.5 rounded-xl border border-white/[0.08] text-sm font-medium text-gray-400 hover:bg-white/[0.04] hover:text-white transition-all cursor-pointer"
+            className="min-h-[44px] px-4 py-2.5 rounded-xl border border-white/[0.08] text-sm font-medium text-gray-400 hover:bg-white/[0.04] hover:text-white transition-all cursor-pointer"
           >
             {cancelLabel}
           </button>
           <button
-            ref={confirmRef}
             onClick={onConfirm}
-            className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${confirmClass}`}
+            className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${confirmClass}`}
           >
             {confirmLabel}
           </button>

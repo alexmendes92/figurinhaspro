@@ -248,7 +248,7 @@ function StickerCard({
         <button
           type="button"
           onClick={() => toggleSticker(sticker.code)}
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950"
           aria-label={
             hasIt ? `Remover ${sticker.name} do estoque` : `Adicionar ${sticker.name} ao estoque`
           }
@@ -293,7 +293,7 @@ function StickerCard({
                 : "Definir preço customizado"
             }
             aria-label={hasCustomPrice ? "Editar preço customizado" : "Definir preço customizado"}
-            className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
+            className={`absolute bottom-1 right-1 z-10 w-6 h-6 min-h-[24px] min-w-[24px] rounded-md flex items-center justify-center transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950 ${
               hasCustomPrice
                 ? "bg-accent-500 text-black hover:bg-accent-400"
                 : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-accent-400 hover:border-accent-500/40 opacity-70 group-hover:opacity-100 focus:opacity-100"
@@ -360,14 +360,14 @@ function StickerCard({
                 }}
                 autoFocus
                 onFocus={(e) => e.target.select()}
-                className="min-w-[2rem] w-12 text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 bg-zinc-900 border border-zinc-700 rounded focus:outline-none focus:border-accent-500/40"
+                className="min-w-[2rem] w-12 text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 bg-zinc-900 border border-zinc-700 rounded focus:outline-none focus:border-accent-500/40 focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950"
                 aria-label="Editar quantidade"
               />
             ) : (
               <button
                 type="button"
                 onClick={startEditingQty}
-                className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 hover:text-accent-400 transition-colors cursor-text"
+                className="min-w-[32px] min-h-[24px] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400 hover:text-accent-400 transition-colors cursor-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950"
                 aria-label={`Quantidade ${qty} (clique para editar)`}
                 title="Clique para digitar a quantidade"
               >
@@ -771,6 +771,7 @@ export default function InventoryManager({
           {/* Botão "Todas" */}
           <button
             type="button"
+            aria-label="Ver todas as figurinhas"
             onClick={() => {
               setActiveSection("all");
               setFilter("all");
@@ -856,13 +857,13 @@ export default function InventoryManager({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar figurinha por número ou nome..."
                 aria-label="Buscar figurinha"
-                className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-accent-500/40 transition-colors"
+                className="w-full pl-9 pr-20 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-accent-500/40 focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950 transition-colors"
               />
               {search ? (
                 <button
                   type="button"
                   onClick={() => setSearch("")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 min-h-[24px] min-w-[24px] flex items-center justify-center text-zinc-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/40 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-950"
                   aria-label="Limpar busca"
                 >
                   <svg

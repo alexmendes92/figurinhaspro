@@ -183,7 +183,7 @@ export default function PrecosEditor({
                           updatePrice(tc.type, val);
                         }
                       }}
-                      className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
+                      className="!w-28 sm:!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-base sm:text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     <div className="w-14 text-right">
                       {isSaving && (
@@ -321,7 +321,7 @@ export default function PrecosEditor({
                                     updatePrice(rule.stickerType, val, slug);
                                   }
                                 }}
-                                className="!w-20 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm"
+                                className="!w-20 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm focus-ring"
                               />
                               <div className="w-14 text-right">
                                 {saving === key && (
@@ -373,7 +373,8 @@ export default function PrecosEditor({
                   <select
                     value={newAlbumSlug}
                     onChange={(e) => setNewAlbumSlug(e.target.value)}
-                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white"
+                    aria-label="Selecionar álbum"
+                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white focus-ring"
                   >
                     <option value="">Selecionar álbum...</option>
                     {albumList.map((a) => (
@@ -385,7 +386,8 @@ export default function PrecosEditor({
                   <select
                     value={newStickerType}
                     onChange={(e) => setNewStickerType(e.target.value)}
-                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white"
+                    aria-label="Tipo de figurinha"
+                    className="px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs text-white focus-ring"
                   >
                     {STICKER_TYPE_CONFIG.map((tc) => (
                       <option key={tc.type} value={tc.type}>
@@ -405,7 +407,7 @@ export default function PrecosEditor({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") addAlbumRule();
                       }}
-                      className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600"
+                      className="flex-1 px-3 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-sm sm:text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600 focus-ring"
                     />
                   </div>
                 </div>

@@ -347,7 +347,7 @@ export default function PrecosAlbumEditor({
                           updateTypePrice(tc.type, val);
                         }
                       }}
-                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
+                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     {hasOverride && (
                       <Button
@@ -526,7 +526,7 @@ function SectionRulesTab({
                   <select
                     value={editType}
                     onChange={(e) => setEditType(e.target.value as "FLAT" | "OFFSET")}
-                    className="px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs text-white"
+                    className="px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs text-white focus-ring"
                   >
                     <option value="FLAT">Preço fixo (R$)</option>
                     <option value="OFFSET">Ajuste (+/−R$)</option>
@@ -544,7 +544,7 @@ function SectionRulesTab({
                         if (e.key === "Enter") handleSave(name);
                       }}
                       placeholder={editType === "FLAT" ? "5.00" : "1.00"}
-                      className="!w-20 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold"
+                      className="!w-20 px-2 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold focus-ring"
                     />
                   </div>
                 </div>
@@ -728,7 +728,7 @@ function QuantityTiersTab({
                           onSave(tier.minQuantity, val);
                         }
                       }}
-                      className="!w-14 text-center font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold text-sm py-1 px-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
+                      className="!w-14 text-center font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold text-sm py-1 px-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     <span className="text-xs text-zinc-500">%</span>
                   </div>
@@ -789,7 +789,7 @@ function QuantityTiersTab({
                 value={newMinQty}
                 onChange={(e) => setNewMinQty(e.target.value)}
                 placeholder="Ex: 11"
-                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-white placeholder:text-zinc-600"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-white placeholder:text-zinc-600 focus-ring"
               />
             </div>
             <div>
@@ -804,7 +804,7 @@ function QuantityTiersTab({
                   if (e.key === "Enter") handleAdd();
                 }}
                 placeholder="Ex: 10"
-                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600"
+                className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm font-[family-name:var(--font-geist-mono)] text-accent-400 font-semibold placeholder:text-zinc-600 focus-ring"
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useId, useState } from "react";
 
 interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -15,12 +15,18 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(function A
   ref
 ) {
   const [showPassword, setShowPassword] = useState(false);
+  const id = useId();
+  // aria-describedby: error takes priority over hint when both are present
+  const describedById = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
 
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
 
   return (
     <div>
-      <label className="block text-[12px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
+      <label
+        htmlFor={id}
+        className="block text-[12px] font-semibold text-gray-400 uppercase tracking-wider mb-2"
+      >
         {label}
       </label>
       <div className="relative">
@@ -39,7 +45,10 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(function A
         )}
         <input
           ref={ref}
+          id={id}
           type={inputType}
+          aria-describedby={describedById}
+          aria-invalid={error ? true : undefined}
           className={`w-full px-4 py-3 rounded-xl bg-white/[0.04] border text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent-500/40 focus:ring-2 focus:ring-accent-500/10 transition-all ${
             icon ? "pl-10" : ""
           } ${isPassword ? "pr-11" : ""} ${
@@ -94,8 +103,16 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(function A
           </button>
         )}
       </div>
-      {error && <p className="text-red-400 text-xs mt-1.5 pl-1">{error}</p>}
-      {hint && !error && <p className="text-gray-600 text-xs mt-1.5 pl-1">{hint}</p>}
+      {error && (
+        <p id={`${id}-error`} className="text-red-400 text-xs mt-1.5 pl-1">
+          {error}
+        </p>
+      )}
+      {hint && !error && (
+        <p id={`${id}-hint`} className="text-gray-600 text-xs mt-1.5 pl-1">
+          {hint}
+        </p>
+      )}
     </div>
   );
 });

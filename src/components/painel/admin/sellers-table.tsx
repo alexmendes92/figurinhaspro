@@ -71,7 +71,8 @@ export default function SellersTable({ sellers }: { sellers: MockSeller[] }) {
             placeholder="Buscar por nome, email ou loja..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg pl-10 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none transition-colors"
+            aria-label="Buscar revendedor"
+            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg pl-10 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
           />
         </div>
         <span className="text-xs text-gray-500">

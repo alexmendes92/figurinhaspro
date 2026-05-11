@@ -68,16 +68,19 @@ export default function LojaEditor({
   }
 
   const inputClass =
-    "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)]";
+    "bg-transparent border border-[var(--border)] rounded-lg px-2 py-1 text-sm font-medium w-48 text-right focus:outline-none focus:border-[var(--accent)] focus-ring";
   const emptyClass = "text-sm font-medium text-zinc-600";
 
   const infoItems: Array<{ label: string; id?: string; value: React.ReactNode }> = [
     {
       label: "Nome da loja",
+      id: "shopName",
       value: editing ? (
         <input
+          id="shopName-input"
           value={shopName}
           onChange={(e) => setShopName(e.target.value)}
+          aria-label="Nome da loja"
           className={inputClass}
         />
       ) : (
@@ -86,11 +89,14 @@ export default function LojaEditor({
     },
     {
       label: "WhatsApp",
+      id: "phone",
       value: editing ? (
         <input
+          id="phone-input"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="(11) 99999-9999"
+          aria-label="WhatsApp"
           className={inputClass}
         />
       ) : (
@@ -104,9 +110,11 @@ export default function LojaEditor({
       id: "shopDescription",
       value: editing ? (
         <input
+          id="shopDescription-input"
           value={shopDescription}
           onChange={(e) => setShopDescription(e.target.value.slice(0, 200))}
           placeholder="Sobre sua loja (max 200)"
+          aria-label="Descrição da loja"
           className={inputClass}
         />
       ) : (
@@ -120,9 +128,11 @@ export default function LojaEditor({
       id: "businessHours",
       value: editing ? (
         <input
+          id="businessHours-input"
           value={businessHours}
           onChange={(e) => setBusinessHours(e.target.value)}
           placeholder="Seg-Sex 9h-18h"
+          aria-label="Horário de atendimento"
           className={inputClass}
         />
       ) : (
@@ -136,9 +146,11 @@ export default function LojaEditor({
       id: "paymentMethods",
       value: editing ? (
         <input
+          id="paymentMethods-input"
           value={paymentMethods}
           onChange={(e) => setPaymentMethods(e.target.value)}
           placeholder="PIX, Cartao"
+          aria-label="Métodos de pagamento aceitos"
           className={inputClass}
         />
       ) : (

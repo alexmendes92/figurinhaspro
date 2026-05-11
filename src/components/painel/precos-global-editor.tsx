@@ -120,7 +120,7 @@ export default function PrecosGlobalEditor({ sellerPlan }: { sellerPlan: string 
                           updatePrice(tc.type, val);
                         }
                       }}
-                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors"
+                      className="!w-24 text-right font-[family-name:var(--font-geist-mono)] text-[var(--accent)] font-semibold text-sm py-2 px-3 rounded-lg bg-zinc-900 border border-zinc-700 focus:border-accent-500/40 focus:outline-none transition-colors focus-ring"
                     />
                     <div className="w-14 text-right">
                       {isSaving && (

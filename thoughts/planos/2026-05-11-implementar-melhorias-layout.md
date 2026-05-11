@@ -1,8 +1,8 @@
 ---
 data: 2026-05-11
-versao: v3 (pós Task 2.7 sub-commits 1-6 + Task 2.8 descartada N/A)
+versao: v4 (Fase 3 implementada via 10-agent fan-out: 2 Opus + 3 Sonnet + 5 Haiku + critico adversarial)
 tipo: plano
-status: fase-2-completa (Task 2.7: 6 sub-commits deployados; Task 2.8: descartada — empty-orders-kit nao reduz a EmptyState sem regressao)
+status: fase-3-parcial (3.1/3.2/3.3 completos; 3.4 com gap conhecido: 8 inputs em precos-* sem aria-label/htmlFor — labels visíveis adjacentes mitigam mas Lighthouse pode flaggar)
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:

@@ -246,6 +246,13 @@
     color: #fff;
     border-color: rgba(255, 255, 255, 0.12);
   }
+
+  /* A11y — focus ring reusável (Fase 3).
+     Aplicar em elementos interativos que precisam de foco visível consistente.
+     Usa tokens semânticos accent + background pra manter coerência com o tema. */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

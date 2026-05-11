@@ -1,7 +1,8 @@
 ---
 data: 2026-05-11
+versao: v2 (pós /p8-master:valida + /p8-master:itera)
 tipo: plano
-status: rascunho-aguardando-aprovacao
+status: v2-revisado-aguardando-aprovacao-final
 gate-humano: sim (por fase)
 autor: alex (via claude opus 4.7 + p8-orchestrator)
 pesquisas-base:
@@ -12,8 +13,32 @@ referencias-canonicas:
   - ui.shadcn.com/docs/components/button
   - nextjs.org/docs/app/api-reference/directives/use-cache
   - w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
-proxima-fase: /p8-master:valida (validar este plano) → /p8-master:implementa (executar fase a fase)
-estimativa-total: ~12-15 dias úteis
+proxima-fase: /p8-master:implementa (executar Fase 1 após aprovação)
+estimativa-total: 12-19 dias úteis
+---
+
+## 📝 Histórico de iterações
+
+### v2 — 2026-05-11 03:50 (pós /p8-master:valida + /p8-master:itera)
+
+Fixes aplicados após validação que achou 1 bloqueante + 8 atenções:
+
+| # | Fix | Onde | Severidade |
+|---|---|---|---|
+| B1 | `cacheTag` inclui `seller.id` (evita cross-seller data leak) | Fase 5.3 | 🔴 Bloqueante |
+| A1 | Estimativa frontmatter alinhada (12-19, não 12-15) | frontmatter | 🟡 |
+| A2 | Fase 2.7 commits reorganizados em ~6 (cobre ~30 componentes) | Fase 2.7 | 🟡 |
+| A3 | `await cookies()` Next 16 explicitado | Fase 5.3 | 🟡 |
+| A4 | Item 3.5 duplicado deletado (já em 2.6) | Fase 3 | 🟡 |
+| A5 | EmptyState slots adiado (Rule of Three: 1→2 não justifica) | Fase 2.8 | 🟡 |
+| A6 | `nav-config` fica no shell (não promove pra `lib/`) | Fase 4.5 | 🟡 |
+| A7 | `rel="noopener noreferrer"` no link da loja | Fase 1.2 | 🟡 |
+| A8 | Deploy ao final de cada fase explicitado | Princípios | 🟡 |
+
+### v1 — 2026-05-11 03:36 (criação inicial)
+
+Plano original gerado a partir de `thoughts/pesquisas/2026-05-11-20-melhorias-layout.md` + `thoughts/pesquisas/2026-05-11-best-practices-2026-layout.md`. 5 fases, 28 commits, 12-19 dias úteis.
+
 ---
 
 # Plano — Implementar 21 melhorias de layout no P8-FigurinhasPro
@@ -39,6 +64,7 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 - **Gate pre-commit**: `npm run test → tsc --noEmit → npm run build` automático antes de cada commit.
 - **Validação visual após cada melhoria de UI**: `/p8-master:ui-review <rota>` em 3 breakpoints (375/768/1280).
 - **DOMAIN_FACT_HALLUCINATION**: NUNCA afirmar fato sobre Panini sticker codes sem `grep src/lib/albums.ts` (regra já em LESSONS.md global).
+- **Deploy ao final de cada fase**: `npx vercel deploy --prod` com gate humano explícito após cada gate verde de fase. Deploy a cada commit (28×) é excessivo; deploy a cada fase (5×) entrega valor incremental sem fricção. Smoke test em prod após cada deploy (vitrine pública + login + 1 rota crítica do painel).
 
 ---
 
@@ -56,8 +82,9 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 
 ### 1.2 Atribuição "Imagens: LastSticker.com / © Panini" no rodapé da loja
 - **Arquivo**: `src/components/loja/store-footer.tsx`
-- **Mudança**: adicionar linha discreta `<p className="text-[10px] text-zinc-600">Imagens dos álbuns: catálogo público <a href="https://laststicker.com">LastSticker.com</a>. Direitos das figurinhas: © Panini S.p.A.</p>`
+- **Mudança**: adicionar linha discreta `<p className="text-[10px] text-zinc-600">Imagens dos álbuns: catálogo público <a href="https://laststicker.com" target="_blank" rel="noopener noreferrer">LastSticker.com</a>. Direitos das figurinhas: © Panini S.p.A.</p>`
 - **Por quê**: mitiga risco legal/comercial das covers raspadas (review #1 atualizado)
+- **Segurança**: `target="_blank"` + `rel="noopener noreferrer"` obrigatórios — evita reverse tabnabbing e leak de referrer (padrão já usado no link de WhatsApp do mesmo footer)
 - **TDD**: não (display only)
 - **Validação**: visual em `/loja/[slug]`
 - **Commit**: `feat(loja): atribuição de fonte dos covers no rodapé`
@@ -182,20 +209,24 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 - **Commit**: `feat(ui): instala shadcn Button como primitive`
 
 ### 2.7 Substituir botões inline por `<Button>` shadcn
-- **Arquivos**: ~30 componentes em `src/components/painel/*` + `src/components/loja/*`
+- **Arquivos**: ~30 componentes em `src/components/painel/*` + `src/components/loja/*` + `src/components/auth/*`
 - **Mudança**: `<button className="bg-amber-500 ...">Click</button>` → `<Button variant="primary">Click</Button>`
-- **Estratégia**: substituir gradualmente, 5-7 componentes por commit
+- **Estratégia**: substituir gradualmente, ~5 componentes por commit (rastreabilidade granular)
 - **TDD**: SIM em componentes com lógica (handlers) — verificar onClick continua disparando
-- **Commits sugeridos**:
-  - `refactor(painel): usa Button shadcn em estoque + preços`
-  - `refactor(painel): usa Button shadcn em pedidos + loja editor`
-  - `refactor(loja): usa Button shadcn em hero + sidebar + footer`
+- **Commits sugeridos** (~6 commits cobrindo ~30 componentes):
+  - `refactor(painel): usa Button shadcn em estoque (inventory-manager + sub-components)`
+  - `refactor(painel): usa Button shadcn em preços (precos-global + precos-album + precos editors)`
+  - `refactor(painel): usa Button shadcn em pedidos + dashboard (alerts, hot, sparks)`
+  - `refactor(painel): usa Button shadcn em loja editor + onboarding + comercial`
+  - `refactor(loja): usa Button shadcn em hero + sidebar + footer + album-view`
+  - `refactor(auth): usa Button shadcn em login + registro + reset-senha`
 
-### 2.8 Unificar `<EmptyState>` (remover `empty-orders-kit.tsx`)
-- **Arquivo**: `src/components/ui/empty-state.tsx` (já existe, estender com slots)
-- **Mudança**: aceitar slots `icon | title | description | action`. Migrar `empty-orders-kit.tsx` pra usar EmptyState.
+### 2.8 Migrar `empty-orders-kit.tsx` para `<EmptyState>` existente (sem inventar slots)
+- **Arquivo**: `src/components/ui/empty-state.tsx` (já existe, ~54 LOC, API atual)
+- **Mudança**: substituir `<EmptyOrdersKit />` por `<EmptyState icon={...} title="..." description="..." />` usando a API ATUAL do EmptyState. NÃO inventar slots novos.
+- **Por quê** (ajuste pós-validação): Rule of Three diz 2 ocorrências = coincidência, 3 = padrão. Hoje é 1 (EmptyState atual) → 2 (após migração). Inventar API de slots prematuramente azara o 3º caso que ainda não apareceu. Quando o 3º EmptyState diferente surgir (inventário vazio, vitrine sem resultados), aí extrair slots.
 - **TDD**: não (refactor com mesmo comportamento)
-- **Commit**: `refactor(ui): consolida EmptyState com slots reutilizáveis`
+- **Commit**: `refactor(ui): migra empty-orders-kit pro EmptyState compartilhado`
 
 ### Gate Fase 2
 - ✅ 8 commits passaram pre-commit gate
@@ -244,14 +275,8 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 - **TDD**: SIM — testar com `@testing-library/react` `getByLabelText`
 - **Commit**: `a11y: labels semânticos + aria-describedby em todos inputs`
 
-### 3.5 Cursor pointer fix (Tailwind 4 breaking change)
-- **Arquivo**: `src/app/globals.css` `@layer base`
-- **Mudança**: já incluído em 2.6 mas garantir que cobre `<a>` e elementos com `role="button"` também
-- **TDD**: não
-- **Commit**: (combinado com 2.6 se na mesma fase)
-
 ### Gate Fase 3
-- ✅ 5 commits passaram pre-commit gate
+- ✅ **4 commits** (#3.1-#3.4) passaram pre-commit gate
 - ✅ Lighthouse a11y score ≥95 (era ≤90)
 - ✅ Navegação 100% por teclado em 5 rotas críticas
 - ✅ Screen reader (VoiceOver/NVDA) lê corretamente formulário de login
@@ -290,15 +315,15 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 ### 4.5 Quebrar `<PainelShell>` (458 LOC) em Shell + Sidebar + TopBar + MobileNav
 - **Arquivo origem**: `src/components/painel/painel-shell.tsx`
 - **Arquivos destino**:
-  - `src/components/painel/shell/painel-shell.tsx` (orchestrator ~120 LOC)
+  - `src/components/painel/shell/painel-shell.tsx` (orchestrator ~120 LOC, NavItems arrays no topo deste arquivo — não promover pra `src/lib/`)
   - `src/components/painel/shell/sidebar.tsx` (~100 LOC)
   - `src/components/painel/shell/topbar.tsx` (~80 LOC)
   - `src/components/painel/shell/mobile-nav.tsx` (~80 LOC)
-  - `src/lib/nav-config.ts` (NavItems como data fora do JSX)
-- **TDD**: SIM — caracterização: logout confirm, breadcrumb, mobile nav toggle
-- **Commits**: 1 por sub-componente (4 commits)
-  - `refactor(painel): extrai nav-config (data fora do JSX)`
-  - `refactor(painel): extrai Sidebar do PainelShell`
+- **Decisão pós-validação**: NavItems (`operationNav`, `toolsNav`, `adminNav`, `mobileNav`) ficam no topo do `painel-shell.tsx` novo — dados estáticos de produto com 1 consumidor. Promover pra `src/lib/nav-config.ts` seria indireção sem 2º cliente concreto. Se um dia surgir 2º consumidor (mobile app, sidebar customizada por seller), aí extrair pra `lib/`.
+- **TDD**: SIM — caracterização: logout confirm, breadcrumb, mobile nav toggle, gate de `isAdmin` (prop recebido do layout, não recalculado)
+- **Segurança**: confirmar que `isAdmin` continua sendo prop calculada em `src/app/painel/layout.tsx` (Server Component) e passada pro PainelShell — refactor NÃO move o gate de auth pra dentro do shell.
+- **Commits**: 3 commits (1 por sub-componente)
+  - `refactor(painel): extrai Sidebar do PainelShell (com NavItems inline)`
   - `refactor(painel): extrai TopBar do PainelShell`
   - `refactor(painel): extrai MobileNav do PainelShell`
 
@@ -307,7 +332,7 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 - **Commit**: `chore: validação anti-regressão pós-refactor (Fase 4)`
 
 ### Gate Fase 4
-- ✅ 6 commits passaram pre-commit gate
+- ✅ **6 commits** (4 em inventory-manager: #4.1-4.4 + 3 em painel-shell: #4.5) passaram pre-commit gate. Total efetivo: **6 commits** (1 do #4.6 validação não conta como mudança nova).
 - ✅ `inventory-manager.tsx` reduziu de 1079 → ~250 LOC
 - ✅ `painel-shell.tsx` reduziu de 458 → ~120 LOC
 - ✅ Bug Turbopack `jest-worker` não reproduz em 1h de dev server
@@ -333,15 +358,28 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 - **TDD**: não (config)
 - **Commit**: `feat(next): habilita Cache Components feature`
 
-### 5.3 Aplicar `'use cache'` em `/loja/[slug]/[albumSlug]/page.tsx` + `cacheTag`
-- **Arquivos**: `src/app/loja/[slug]/[albumSlug]/page.tsx` + Server Actions de inventory
+### 5.3 Aplicar `'use cache'` em `/loja/[slug]/[albumSlug]/page.tsx` + `cacheTag` com seller.id
+- **Arquivos**: `src/app/loja/[slug]/[albumSlug]/page.tsx` + Server Actions de inventory que atualizam essa rota
 - **Mudanças**:
-  - No topo do `page.tsx`: `'use cache'` + `cacheTag(\`album-\${albumSlug}\`)`
-  - Em cada Server Action de inventory: `updateTag(\`album-\${albumSlug}\`)`
-  - Carregar `cookies()` ou outras runtime APIs FORA do escopo cached (passar como argumento se necessário)
-- **TDD**: SIM — cache invalida ao mudar inventory, recarrega após `updateTag`
-- **Validação**: profiling antes/depois (FCP, TTFB)
-- **Commit**: `feat(loja): adota use cache na rota pública [slug]/[albumSlug]`
+  - **Resolver seller ANTES do escopo cached** (`params.slug → db.seller.findUnique({where: {shopSlug: slug}})`), capturar `seller.id` em variável local.
+  - Passar `seller.id` + `albumSlug` como ARGUMENTOS pra função cacheada (não relê do `params` nem de `cookies()` dentro do escopo cached).
+  - No escopo cached: `'use cache'` + `cacheTag(\`store-\${seller.id}-\${albumSlug}\`)`
+  - Em cada Server Action de inventory que muda essa rota: `updateTag(\`store-\${seller.id}-\${albumSlug}\`)`
+- **🔴 Vetor de segurança corrigido pós-validação (B1)**:
+  - Tag ANTES era `album-${albumSlug}`. **Vetor**: dois sellers com mesmo albumSlug (ex: ambos têm `panini_copa_2022`) compartilhavam cache key → request a `/loja/seller-a/panini_copa_2022` podia retornar HTML com `seller.phone`, `seller.shopDescription`, `seller.businessHours`, `seller.paymentMethods` de `seller-b`.
+  - Tag AGORA é `store-${seller.id}-${albumSlug}`. Isola por seller. Vetor fechado.
+- **Next 16 sintaxe obrigatória** (princípio aplicável):
+  ```tsx
+  const { slug, albumSlug } = await params       // ✅ Next 16 async
+  // const { slug, albumSlug } = params           // ❌ Removido em Next 16
+  // const cookieStore = await cookies()         // se precisar (não é o caso desta rota pública)
+  ```
+- **TDD**: SIM —
+  1. Cache hit retorna mesmos dados em 2 requests consecutivos do mesmo seller (golden path do cache)
+  2. `updateTag` na Server Action invalida e força refetch
+  3. **Teste de isolamento (golden path do fix B1)**: dois sellers com mesmo `albumSlug` retornam dados DIFERENTES — verificar `seller.phone` no payload
+- **Validação**: profiling antes/depois (FCP, TTFB) + smoke manual cross-seller pra confirmar isolamento
+- **Commit**: `feat(loja): use cache com isolamento por seller na rota pública`
 
 ### Gate Fase 5
 - ✅ 3 commits passaram pre-commit gate
@@ -352,16 +390,19 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 
 ---
 
-## Estimativa total e custos
+## Estimativa total e custos (revisado v2)
 
 | Fase | Dias úteis | Commits | Custo claude estimado |
 |---|---|---|---|
 | 1. Quick Wins | 1-2 | 6 | ~$8 |
-| 2. Foundation | 3-5 | 8 | ~$20 |
-| 3. A11y | 2-3 | 5 | ~$12 |
-| 4. Refactor estrutural | 4-6 | 6 | ~$25 |
+| 2. Foundation | 3-5 | **10** (#2.7 virou 6 commits) | ~$22 |
+| 3. A11y | 2-3 | **4** (#3.5 deletado, dup) | ~$10 |
+| 4. Refactor estrutural | 4-6 | **6** (3 inventory + 3 shell) | ~$25 |
 | 5. Vitrine + Cache | 2-3 | 3 | ~$10 |
-| **Total** | **12-19 dias** | **28 commits** | **~$75** |
+| Deploy (5×) | (incluso) | 0 commits (tag + push) | ~$5 |
+| **Total** | **12-19 dias** | **29 commits** | **~$80** |
+
+**Diff v1→v2**: +1 commit total (#3.5 deletado, mas #2.7 ganhou 3 commits a mais → líquido +1). Custo +$5 (deploy 5× incluso). Dias úteis inalterados.
 
 ## Riscos identificados
 
@@ -384,18 +425,18 @@ Cada fase tem **gate humano explícito** antes de prosseguir pra próxima. TDD o
 
 ## Próximos passos
 
-1. **AGORA**: humano revisa este plano. Aprova fase 1 ou pede ajustes
-2. **Após aprovação**: `/p8-master:valida thoughts/planos/2026-05-11-implementar-melhorias-layout.md` (valida placeholders, contradições, escopo)
-3. **Após validação**: `/p8-master:implementa Fase 1` (executa 6 commits da Fase 1)
-4. **Após cada fase**: review humano + decisão de continuar pra próxima
+1. ✅ **/p8-master:valida** executado (achou 1 bloqueante + 8 atenções)
+2. ✅ **/p8-master:itera** executado (este v2 corrige todos)
+3. **AGORA**: humano revisa este v2. Aprova Fase 1 ou pede mais ajustes
+4. **Após aprovação**: `/p8-master:implementa Fase 1` (executa 6 commits da Fase 1 + deploy ao final)
+5. **Após cada fase**: review humano + smoke prod + decisão de continuar pra próxima
 
 ## Gates de aprovação por fase
 
-| Fase | Gate antes | Gate depois |
-|---|---|---|
-| 1 | Aprovação deste plano | 6 commits + visual conferido |
-| 2 | "Pode seguir pra Fase 2" | Build verde + visual ok |
-| 3 | "Pode seguir pra Fase 3" | Lighthouse a11y ≥95 |
-| 4 | "Pode seguir pra Fase 4" | TDD obrigatório, rede de testes pronta |
-| 5 | "Pode seguir pra Fase 5" | Profiling antes/depois |
-| Deploy | "Pode deployar" | Smoke test prod após cada deploy |
+| Fase | Gate antes | Gate depois | Deploy |
+|---|---|---|---|
+| 1 | Aprovação deste plano v2 | 6 commits + visual conferido + pinch zoom mobile | ✅ `vercel deploy --prod` + smoke (vitrine + login + estoque) |
+| 2 | "Pode seguir pra Fase 2" | Build verde + visual sem regressão em 10 rotas + bundle +5% max | ✅ deploy + smoke |
+| 3 | "Pode seguir pra Fase 3" | Lighthouse a11y ≥95 + teclado 100% + screen reader login | ✅ deploy + smoke |
+| 4 | "Pode seguir pra Fase 4" | TDD obrigatório, rede de testes pronta antes de extrair | ✅ deploy + smoke + monitorar Sentry 1h pós-deploy |
+| 5 | "Pode seguir pra Fase 5" | Profiling FCP-30% TTFB-50% + teste cross-seller isolamento | ✅ deploy + smoke + monitorar Vercel Analytics 24h |

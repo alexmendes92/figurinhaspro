@@ -345,12 +345,7 @@ export default async function DashboardPage() {
                 </span>{" "}
                 <span className="text-gray-500 font-normal">aguardando confirmação.</span>
               </>
-            ) : (
-              <>
-                {" "}
-                <span className="text-gray-500 font-normal">Bora vender hoje?</span>
-              </>
-            )}
+            ) : null}
           </h1>
         </div>
         <DashboardQuickActions storeUrl={storeUrl} />

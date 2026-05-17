@@ -12,5 +12,22 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npm run build
+      # Bug npm 7+ com optionalDependencies cross-plataforma
+      # (https://github.com/npm/cli/issues/4828): se package-lock.json
+      # foi gerado em Windows/macOS, npm ci em Linux NÃO baixa os
+      # binários .node corretos (lightningcss-linux-x64-gnu etc).
+      # Workaround: descartar lockfile e forçar resolução fresca.
+      - name: Install (sem lockfile p/ resolver opcionais Linux)
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
+      # tsc precisa do Prisma Client gerado (src/generated/prisma/client)
+      # antes de validar tipos. `npm run build` fazia isso implicitamente
+      # via `prisma generate && next build`.
+      - run: npx prisma generate
+      # Gate cobre correção (tipos + testes). Build completo é validado
+      # pelo deploy preview do Vercel com env vars reais — evita ter que
+      # passar dummies de DATABASE_URL/SESSION_SECRET aqui e tropeçar em
+      # prerender SSG de páginas admin que tentam acessar DB em build.
+      - run: npx tsc --noEmit
+      - run: npm run test

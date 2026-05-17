@@ -8,12 +8,24 @@ import { imgUrl } from "@/lib/images";
 import type { SectionRule } from "@/lib/price-resolver";
 import { resolveQuantityDiscount, resolveUnitPrice } from "@/lib/price-resolver";
 import { getStickerTypeConfig, STICKER_TYPES } from "@/lib/sticker-types";
+import { useToast } from "@/lib/toast-context";
 import { useDialog } from "@/lib/use-dialog";
 import styles from "./store-album-view.module.css";
 import StoreFooter from "./store-footer";
 import StoreHero from "./store-hero";
 import StorePromoRow from "./store-promo-row";
 import StoreSidebar from "./store-sidebar";
+import { submitOrder, type SubmitOrderErrorCode } from "./submit-order";
+
+const ERROR_MESSAGES: Record<SubmitOrderErrorCode, string> = {
+  price_mismatch: "Os preços mudaram. Recarregue a página e tente novamente.",
+  out_of_stock: "Estoque insuficiente para um ou mais itens. Ajuste seu carrinho.",
+  album_not_found: "Álbum não encontrado. Recarregue a página.",
+  plan_limit: "O vendedor atingiu o limite de pedidos do plano. Tente novamente mais tarde.",
+  validation: "Dados inválidos. Confira nome e telefone.",
+  network: "Falha de conexão. Verifique sua internet e tente novamente.",
+  server: "Erro ao registrar o pedido. Tente novamente em alguns instantes.",
+};
 
 interface CartItem {
   sticker: Sticker;
@@ -77,6 +89,8 @@ export default function StoreAlbumView({
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     try {
@@ -908,31 +922,37 @@ export default function StoreAlbumView({
               </div>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                if (submitting) return;
                 const form = new FormData(e.currentTarget);
                 const name = form.get("name") as string;
+                const phone = (form.get("phone") as string) || undefined;
+
+                setSubmitting(true);
+                const result = await submitOrder({
+                  sellerSlug,
+                  customerName: name,
+                  customerPhone: phone,
+                  channel: sellerPhone ? "WHATSAPP" : "SYSTEM",
+                  items: cart.map((item) => ({
+                    albumSlug: album.slug,
+                    stickerCode: item.sticker.code,
+                    stickerName: item.sticker.name,
+                    quantity: item.quantity,
+                    unitPrice: item.price,
+                  })),
+                });
+                setSubmitting(false);
+
+                if (!result.ok) {
+                  toast.error(ERROR_MESSAGES[result.error]);
+                  return;
+                }
+
                 if (sellerPhone) {
                   window.open(getWhatsAppUrl(name), "_blank");
                 }
-                fetch("/api/orders", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    sellerSlug,
-                    customerName: name,
-                    customerPhone: form.get("phone") || undefined,
-                    channel: sellerPhone ? "WHATSAPP" : "SYSTEM",
-                    discountPercent,
-                    items: cart.map((item) => ({
-                      albumSlug: album.slug,
-                      stickerCode: item.sticker.code,
-                      stickerName: item.sticker.name,
-                      quantity: item.quantity,
-                      unitPrice: item.price,
-                    })),
-                  }),
-                });
                 setShowCheckout(false);
                 setCart([]);
                 setShowSuccess(true);
@@ -979,8 +999,15 @@ export default function StoreAlbumView({
                 >
                   Voltar
                 </button>
-                <button type="submit" className={styles.whatsBtn}>
-                  {sellerPhone ? (
+                <button
+                  type="submit"
+                  className={styles.whatsBtn}
+                  disabled={submitting}
+                  aria-busy={submitting}
+                >
+                  {submitting ? (
+                    "Enviando..."
+                  ) : sellerPhone ? (
                     <>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />

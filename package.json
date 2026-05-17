@@ -10,7 +10,9 @@
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "gate:fast": "tsc --noEmit && vitest run --changed",
+    "gate:full": "tsc --noEmit && vitest run && next build"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1032.0",
@@ -37,7 +39,7 @@
     "react-dom": "^19.2.5",
     "react-qr-code": "^2.0.18",
     "sharp": "^0.34.5",
-    "stripe": "^22.0.2",
+    "stripe": "22.0.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {

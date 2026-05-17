@@ -6,13 +6,6 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    # env.ts valida DATABASE_URL e SESSION_SECRET em NODE_ENV=production
-    # (que `next build` define automaticamente). CI não tem Neon real, então
-    # passamos dummies que satisfaçam o schema Zod (prefix postgres + 32 chars).
-    # Não há leak — dummies não conectam a nada.
-    env:
-      DATABASE_URL: postgres://ci:ci@localhost:5432/ci
-      SESSION_SECRET: ci-dummy-secret-at-least-thirty-two-chars
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,15 +14,16 @@ jobs:
           cache: npm
       # Bug npm 7+ com optionalDependencies cross-plataforma
       # (https://github.com/npm/cli/issues/4828): se package-lock.json
-      # foi gerado em Windows/macOS, npm ci/install em Linux NÃO baixa
-      # os binários .node corretos (lightningcss-linux-x64-gnu,
-      # @tailwindcss/oxide-linux-x64-gnu). Tailwind 4 + lightningcss
-      # falham em runtime com "Cannot find module".
-      # Único workaround confiável: descartar o lockfile no CI e forçar
-      # resolução fresca na plataforma alvo. Trade-off: drift mínimo
-      # de patches (mitigado pelo cache de npm do setup-node).
+      # foi gerado em Windows/macOS, npm ci em Linux NÃO baixa os
+      # binários .node corretos (lightningcss-linux-x64-gnu etc).
+      # Workaround: descartar lockfile e forçar resolução fresca.
       - name: Install (sem lockfile p/ resolver opcionais Linux)
         run: |
           rm -f package-lock.json
           npm install --no-audit --no-fund
-      - run: npm run build
+      # Gate cobre correção (tipos + testes). Build completo é validado
+      # pelo deploy preview do Vercel com env vars reais — evita ter que
+      # passar dummies de DATABASE_URL/SESSION_SECRET aqui e tropeçar em
+      # prerender SSG de páginas admin que tentam acessar DB em build.
+      - run: npx tsc --noEmit
+      - run: npm run test

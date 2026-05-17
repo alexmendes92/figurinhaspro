@@ -12,5 +12,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # `npm ci` em Linux não baixa optionalDependencies binárias quando o
+      # package-lock.json foi gerado em outra plataforma (Windows/macOS).
+      # Bug conhecido em npm 7+ (https://github.com/npm/cli/issues/4828) —
+      # afeta lightningcss (Tailwind 4) e @tailwindcss/oxide. Workaround:
+      # forçar instalação dos opcionais.
+      - run: npm ci --include=optional
       - run: npm run build

@@ -21,6 +21,10 @@ jobs:
         run: |
           rm -f package-lock.json
           npm install --no-audit --no-fund
+      # tsc precisa do Prisma Client gerado (src/generated/prisma/client)
+      # antes de validar tipos. `npm run build` fazia isso implicitamente
+      # via `prisma generate && next build`.
+      - run: npx prisma generate
       # Gate cobre correção (tipos + testes). Build completo é validado
       # pelo deploy preview do Vercel com env vars reais — evita ter que
       # passar dummies de DATABASE_URL/SESSION_SECRET aqui e tropeçar em

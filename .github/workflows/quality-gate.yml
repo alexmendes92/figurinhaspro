@@ -6,6 +6,13 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    # env.ts valida DATABASE_URL e SESSION_SECRET em NODE_ENV=production
+    # (que `next build` define automaticamente). CI não tem Neon real, então
+    # passamos dummies que satisfaçam o schema Zod (prefix postgres + 32 chars).
+    # Não há leak — dummies não conectam a nada.
+    env:
+      DATABASE_URL: postgres://ci:ci@localhost:5432/ci
+      SESSION_SECRET: ci-dummy-secret-at-least-thirty-two-chars
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

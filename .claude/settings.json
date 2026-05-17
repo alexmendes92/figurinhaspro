@@ -46,6 +46,16 @@
     ]
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c '[ -f .claude/hooks/in-flight-summary.sh ] && bash .claude/hooks/in-flight-summary.sh || true'"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",

@@ -12,11 +12,17 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      # Usa `npm install` em vez de `npm ci` porque o lockfile pode ter sido
-      # gerado em Windows/macOS e o npm 7+ não baixa optionalDependencies
-      # binárias cross-plataforma (https://github.com/npm/cli/issues/4828).
-      # Sem isso, lightningcss (Tailwind 4) e @tailwindcss/oxide falham em
-      # Linux com "Cannot find module ../lightningcss.linux-x64-gnu.node".
-      # `npm install` re-resolve opcionais na plataforma alvo.
-      - run: npm install --no-audit --no-fund
+      # Bug npm 7+ com optionalDependencies cross-plataforma
+      # (https://github.com/npm/cli/issues/4828): se package-lock.json
+      # foi gerado em Windows/macOS, npm ci/install em Linux NÃO baixa
+      # os binários .node corretos (lightningcss-linux-x64-gnu,
+      # @tailwindcss/oxide-linux-x64-gnu). Tailwind 4 + lightningcss
+      # falham em runtime com "Cannot find module".
+      # Único workaround confiável: descartar o lockfile no CI e forçar
+      # resolução fresca na plataforma alvo. Trade-off: drift mínimo
+      # de patches (mitigado pelo cache de npm do setup-node).
+      - name: Install (sem lockfile p/ resolver opcionais Linux)
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
       - run: npm run build

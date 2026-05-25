@@ -408,33 +408,37 @@ export default function PainelShell({
           </Link>
         </header>
 
-        <main className={styles.content}>{children}</main>
+        <main className={`${styles.content} ${collapsed ? styles.contentCollapsed : ""}`}>
+          {children}
+        </main>
       </div>
 
-      <nav className={styles.mobileNav} aria-label="Navegação rápida">
-        <div className={styles.mobileNavRow}>
-          {mobileNav.map((item) => {
-            const active = isActive(item);
-            const showBadge = item.href === "/painel/pedidos" && pendingOrders > 0;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.mobileNavItem} ${active ? styles.mobileNavActive : ""}`}
-              >
-                <item.icon className={styles.mobileNavIcon} />
-                <span className={styles.mobileNavLabel}>{item.label}</span>
-                {showBadge && (
-                  <span className={styles.mobileNavBadge}>
-                    {pendingOrders > 9 ? "9+" : pendingOrders}
-                  </span>
-                )}
-                {active && <span className={styles.mobileNavDot} />}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      {!collapsed && (
+        <nav className={styles.mobileNav} aria-label="Navegação rápida">
+          <div className={styles.mobileNavRow}>
+            {mobileNav.map((item) => {
+              const active = isActive(item);
+              const showBadge = item.href === "/painel/pedidos" && pendingOrders > 0;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.mobileNavItem} ${active ? styles.mobileNavActive : ""}`}
+                >
+                  <item.icon className={styles.mobileNavIcon} />
+                  <span className={styles.mobileNavLabel}>{item.label}</span>
+                  {showBadge && (
+                    <span className={styles.mobileNavBadge}>
+                      {pendingOrders > 9 ? "9+" : pendingOrders}
+                    </span>
+                  )}
+                  {active && <span className={styles.mobileNavDot} />}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      )}
     </div>
   );
 }

@@ -549,11 +549,14 @@
   }
 }
 
-/* ═══ Content area ═══ */
 .content {
   flex: 1;
   overflow-y: auto;
   padding-bottom: 72px;
+}
+
+.contentCollapsed {
+  padding-bottom: 0;
 }
 
 @media (min-width: 1024px) {

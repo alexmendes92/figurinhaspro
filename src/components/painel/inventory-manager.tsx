@@ -192,6 +192,7 @@ function StickerCard({
   updateQuantity: (code: string, qty: number) => void;
   setPriceModalSticker: (s: Sticker) => void;
 }) {
+  const [addVal, setAddVal] = useState("");
   const qty = stock[sticker.code]?.quantity || 0;
   const hasIt = qty > 0;
   const customPrice = stock[sticker.code]?.customPrice ?? null;
@@ -203,14 +204,14 @@ function StickerCard({
     <div
       data-sticker-code={sticker.code}
       data-missing={!hasIt ? "true" : "false"}
-      className={`group relative rounded-lg overflow-hidden border transition-all ${
+      className={`group relative rounded-lg overflow-hidden border p-[5%] transition-all ${
         hasIt
           ? "border-green-500/40 ring-1 ring-green-500/10 bg-zinc-900/90"
           : "border-dashed border-zinc-700/60 bg-zinc-900/30"
       } ${justSaved ? "sticker-added" : ""}`}
     >
       {/* Área da imagem (toggle) */}
-      <div className="relative aspect-[2/3] bg-zinc-800 p-1.5">
+      <div className="relative aspect-[2/3] bg-zinc-800 rounded-sm overflow-hidden mb-2">
         <Image
           src={imgUrl(sticker.image)}
           alt={`${sticker.code} - ${sticker.name}`}
@@ -219,7 +220,6 @@ function StickerCard({
           sizes="(max-width: 640px) 33vw, 16vw"
         />
 
-        {/* Botão invisível que cobre a imagem — toggle de "tenho" */}
         <button
           type="button"
           onClick={() => toggleSticker(sticker.code)}
@@ -228,31 +228,6 @@ function StickerCard({
             hasIt ? `Remover ${sticker.name} do estoque` : `Adicionar ${sticker.name} ao estoque`
           }
         />
-
-        {/* Badge de tipo (canto superior esquerdo) */}
-        {sticker.type !== "regular" && (
-          <div
-            className={`pointer-events-none absolute top-1 left-1 z-10 px-1.5 py-0.5 rounded text-[8px] font-bold shadow-sm ${typeConf.badgeClass}`}
-            title={typeConf.shortLabel}
-          >
-            {typeConf.shortLabel}
-          </div>
-        )}
-
-        {/* Check (canto superior direito) */}
-        {hasIt && (
-          <div className="pointer-events-none absolute top-1 right-1 z-10 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
-            <svg
-              className="w-3 h-3 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={3}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-        )}
 
         {/* Ícone $ — preço customizado (canto inferior direito, dentro da imagem) */}
         {hasIt && (
@@ -268,71 +243,60 @@ function StickerCard({
                 : "Definir preço customizado"
             }
             aria-label={hasCustomPrice ? "Editar preço customizado" : "Definir preço customizado"}
-            className={`absolute bottom-1 right-1 z-10 w-6 h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
+            className={`absolute bottom-1 right-1 z-10 w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center transition-all shadow-md ${
               hasCustomPrice
                 ? "bg-amber-500 text-black hover:bg-amber-400"
                 : "bg-zinc-900/85 border border-zinc-700 text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 opacity-70 group-hover:opacity-100 focus:opacity-100"
             }`}
           >
-            <span className="text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
+            <span className="text-[9px] sm:text-[11px] font-bold font-[family-name:var(--font-geist-mono)]">
               $
             </span>
           </button>
         )}
       </div>
 
-      {/* Rodapé: código + preço + nome + stepper */}
-      <div className="px-2 py-1.5 space-y-1">
-        <div className="flex items-baseline justify-between gap-1">
-          <span className="font-[family-name:var(--font-geist-mono)] text-xs font-semibold text-zinc-200 truncate">
+      {/* Info: Current Stock + Add Input */}
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-1">
+          <span className="font-[family-name:var(--font-geist-mono)] text-[10px] sm:text-xs font-bold text-zinc-300 truncate">
+            x{qty}
+          </span>
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              const val = parseInt(addVal, 10);
+              if (val) {
+                updateQuantity(sticker.code, qty + val);
+                setAddVal("");
+              }
+            }}
+            className="flex-1 max-w-[50px] sm:max-w-[60px]"
+          >
+            <input
+              type="number"
+              value={addVal}
+              onChange={(e) => setAddVal(e.target.value)}
+              placeholder="+0"
+              className="w-full h-5 sm:h-6 px-1 text-center rounded bg-zinc-950 border border-zinc-700 text-[9px] sm:text-[11px] text-white font-[family-name:var(--font-geist-mono)] focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 outline-none transition-all placeholder:text-zinc-600"
+            />
+          </form>
+        </div>
+
+        {/* Code & Type */}
+        <div className="flex items-center gap-1 mt-0.5">
+          <span className="font-[family-name:var(--font-geist-mono)] text-[9px] sm:text-[10px] font-bold text-amber-400 shrink-0">
             {sticker.code}
           </span>
-          {hasIt && (
-            <span
-              className={`font-[family-name:var(--font-geist-mono)] text-[10px] font-bold shrink-0 ${
-                hasCustomPrice ? "text-amber-400" : "text-zinc-400"
-              }`}
-            >
-              R$
-              {(hasCustomPrice ? customPrice : getDefaultPrice(sticker.type))
-                .toFixed(2)
-                .replace(".", ",")}
-            </span>
-          )}
+          <span className="text-[8px] sm:text-[9px] px-1 rounded bg-zinc-800 text-zinc-400 shrink-0 truncate">
+            {typeConf.shortLabel}
+          </span>
         </div>
-        <p
-          className={`text-[10px] truncate leading-tight ${
-            hasIt ? "text-zinc-400" : "text-zinc-500"
-          }`}
-        >
+
+        {/* Name */}
+        <p className="text-[8px] sm:text-[10px] text-zinc-400 leading-tight line-clamp-2 mt-0.5" title={sticker.name}>
           {sticker.name}
         </p>
-        {hasIt && (
-          <div className="flex items-center gap-1 pt-0.5">
-            <button
-              type="button"
-              onClick={() => updateQuantity(sticker.code, qty - 1)}
-              className="flex-1 h-7 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
-              aria-label="Diminuir quantidade"
-            >
-              −
-            </button>
-            <span
-              className="min-w-[2rem] text-center font-[family-name:var(--font-geist-mono)] text-xs font-bold text-green-400"
-              aria-label={`Quantidade ${qty}`}
-            >
-              {qty}
-            </span>
-            <button
-              type="button"
-              onClick={() => updateQuantity(sticker.code, qty + 1)}
-              className="flex-1 h-7 rounded bg-zinc-800 border border-zinc-700 text-sm text-zinc-400 hover:text-white hover:border-zinc-600 flex items-center justify-center transition-colors active:bg-zinc-700"
-              aria-label="Aumentar quantidade"
-            >
-              +
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -984,7 +948,7 @@ export default function InventoryManager({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-10 gap-2">
               {(() => {
                 // Quando "all" está ativo e sem busca, renderizar com headers por seção
                 if (activeSection === "all" && !isSearching) {
